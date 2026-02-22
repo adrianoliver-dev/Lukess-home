@@ -2,6 +2,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import toast from 'react-hot-toast'
 import { CartItem, Product } from '@/lib/types'
+import { trackAddToCart, trackRemoveFromCart } from '@/lib/analytics'
 
 interface CartContextType {
   cart: CartItem[]
@@ -84,10 +85,27 @@ export function CartProvider({ children }: { children: ReactNode }) {
         color 
       }])
     }
+
+    trackAddToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      quantity,
+      category: product.categories?.name,
+    })
   }
 
   const removeFromCart = (itemId: string) => {
-    setCart(cart.filter(item => item.id !== itemId))
+    const item = cart.find(i => i.id === itemId)
+    if (item) {
+      trackRemoveFromCart({
+        id: item.product.id,
+        name: item.product.name,
+        price: item.product.price,
+        quantity: item.quantity,
+      })
+    }
+    setCart(cart.filter(i => i.id !== itemId))
   }
 
   const updateQuantity = (itemId: string, quantity: number) => {

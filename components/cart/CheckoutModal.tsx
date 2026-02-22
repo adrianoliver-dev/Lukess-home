@@ -22,6 +22,7 @@ import {
 } from 'lucide-react'
 import { useCart } from '@/lib/context/CartContext'
 import { useAuth } from '@/lib/context/AuthContext'
+import { trackBeginCheckout, trackPurchase } from '@/lib/analytics'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import toast from 'react-hot-toast'
@@ -147,6 +148,21 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
       }))
     }
   }, [isLoggedIn, user, customerName])
+
+  // GA4: begin_checkout cuando se abre el modal
+  useEffect(() => {
+    if (isOpen && step === 'form' && cart.length > 0) {
+      trackBeginCheckout({
+        items: cart.map((item) => ({
+          id: item.product.id,
+          name: item.product.name,
+          price: item.product.price,
+          quantity: item.quantity,
+        })),
+        total,
+      })
+    }
+  }, [isOpen]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Reset on modal close
   useEffect(() => {
@@ -451,6 +467,18 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   const handlePaymentConfirmed = () => {
     setStep('success')
     setShowConfetti(true)
+
+    trackPurchase({
+      orderId,
+      total: orderTotal,
+      items: cart.map((item) => ({
+        id: item.product.id,
+        name: item.product.name,
+        price: item.product.price,
+        quantity: item.quantity,
+        category: item.product.categories?.name,
+      })),
+    })
 
     // Fire-and-forget: email de confirmación al hacer click en "Ya Pagué"
     if (notifyByEmail && customerData.email.trim()) {

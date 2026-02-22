@@ -1,8 +1,9 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Container from '@/components/ui/Container'
 import { Product } from '@/lib/types'
 import { useCart } from '@/lib/context/CartContext'
+import { trackViewItem } from '@/lib/analytics'
 import { ShoppingCart, MessageCircle, Package, TrendingUp, ChevronRight, Home, Percent, Ruler, Truck, Store } from 'lucide-react'
 import { FREE_SHIPPING_THRESHOLD } from '@/lib/utils/shipping'
 import Image from 'next/image'
@@ -23,6 +24,16 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
   const [selectedColor, setSelectedColor] = useState<string>('')
   const [quantity, setQuantity] = useState(1)
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false)
+
+  useEffect(() => {
+    trackViewItem({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      category: product.categories?.name,
+      brand: product.brand ?? undefined,
+    })
+  }, [product.id]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const getTotalStock = (p: Product): number => {
     return p.inventory?.reduce(

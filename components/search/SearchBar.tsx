@@ -6,6 +6,7 @@ import { Product } from '@/lib/types'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
+import { trackSearch } from '@/lib/analytics'
 
 export function SearchBar() {
   const [query, setQuery] = useState('')
@@ -53,6 +54,9 @@ export function SearchBar() {
       setResults(data || [])
       setIsOpen(true)
       setIsLoading(false)
+      if (query.length > 2) {
+        trackSearch(query)
+      }
     }
 
     const debounce = setTimeout(searchProducts, 300)
