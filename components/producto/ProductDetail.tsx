@@ -243,8 +243,8 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                 <div className="flex items-center gap-2">
                   <Package className="w-5 h-5 text-gray-600" />
                   <span className={`px-3 py-1.5 rounded-full text-sm font-semibold ${stock === 0
-                      ? 'bg-gray-100 text-gray-600'
-                      : 'bg-amber-100 text-amber-700'
+                    ? 'bg-gray-100 text-gray-600'
+                    : 'bg-amber-100 text-amber-700'
                     }`}>
                     {stock === 0 ? 'Sin stock' : '⚠️ Últimas unidades disponibles'}
                   </span>
@@ -305,10 +305,10 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                             }}
                             disabled={sizeAgotada}
                             className={`px-5 py-2 rounded-lg font-semibold transition-all ${sizeAgotada
-                                ? 'opacity-40 cursor-not-allowed line-through bg-gray-100 text-gray-400'
-                                : isSelected
-                                  ? 'bg-primary-600 text-white ring-2 ring-primary-300'
-                                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                              ? 'opacity-40 cursor-not-allowed line-through bg-gray-100 text-gray-400'
+                              : isSelected
+                                ? 'bg-primary-600 text-white ring-2 ring-primary-300'
+                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                               }`}
                           >
                             {size}
@@ -342,8 +342,8 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                         key={color}
                         onClick={() => setSelectedColor(color)}
                         className={`px-5 py-2 rounded-lg font-semibold transition-all ${selectedColor === color
-                            ? 'bg-primary-600 text-white ring-2 ring-primary-300'
-                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                          ? 'bg-primary-600 text-white ring-2 ring-primary-300'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                           }`}
                       >
                         {color}
@@ -376,16 +376,6 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                       +
                     </button>
                   </div>
-                  {needsSize && selectedSize && selectedSizeStock <= 3 && (
-                    <p className="text-xs text-amber-600 mt-2">
-                      ⚠️ Últimas {selectedSizeStock} en talla {selectedSize}
-                    </p>
-                  )}
-                  {!needsSize && stock <= 5 && (
-                    <p className="text-xs text-amber-600 mt-2">
-                      ⚠️ Últimas unidades disponibles
-                    </p>
-                  )}
                 </div>
               )}
 
@@ -395,8 +385,8 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                   onClick={handleAddToCart}
                   disabled={addToCartDisabled}
                   className={`flex-1 py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 ${addToCartDisabled
-                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 transform hover:scale-105 shadow-lg'
+                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    : 'bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 transform hover:scale-105 shadow-lg'
                     }`}
                 >
                   <ShoppingCart className="w-5 h-5" />

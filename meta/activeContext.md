@@ -16,7 +16,7 @@
 - **Block Number:** 9b-A
 - **Block Name:** Bugs + Fixes Urgentes — Parte A
 - **Completed:** 2026-02-26
-- **Commit:** pending
+- **Commit:** 7a0d980
 
 ### Files Changed
 - `lib/utils/whatsapp.ts` — extracted WhatsApp logic to single source of truth
@@ -72,7 +72,7 @@ None.
 | Block | Name | Status | Date | Commit |
 |---|---|---|---|---|
 | Cleanup-01 | framer-motion removal + Memory Bank | ✅ DONE | 2026-02-26 | pending |
-| 9b-A | Bugs + Fixes Urgentes A | ✅ DONE | 2026-02-26 | pending |
+| 9b-A | Bugs + Fixes Urgentes A | ✅ DONE | 2026-02-26 | 7a0d980 |
 | 9b-B | Bugs + Fixes Urgentes B | ⬜ PENDING | — | — |
 | 9c-A | Inventario: BD + formulario descuentos/is_new | ⬜ PENDING | — | — |
 | 9c-B | Inventario: Upload múltiples imágenes | ⬜ PENDING | — | — |

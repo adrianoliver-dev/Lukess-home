@@ -12,10 +12,10 @@ import { NewsletterPopup } from "@/components/marketing/NewsletterPopup";
 
 export default async function Home() {
   let products = []
-  
+
   try {
     const supabase = await createClient()
-    
+
     // Fetch productos del inventario real de Supabase
     const { data, error } = await supabase
       .from('products')
@@ -32,56 +32,46 @@ export default async function Home() {
       .eq('is_active', true)
       .eq('published_to_landing', true)
       .order('created_at', { ascending: false })
-    
+
     if (error) {
-      console.error('❌ Error fetching products:', {
-        message: error.message,
-        details: error.details,
-        hint: error.hint,
-        code: error.code
-      })
+      // Error handled silently in production
     } else {
       products = data || []
-      console.log('✅ Products fetched successfully:', {
-        count: products.length,
-        firstProduct: products[0]?.name
-      })
     }
-  } catch (err: any) {
-    console.error('❌ Unexpected error:', err.message)
+  } catch (_err: unknown) {
+    // Error handled silently in production
   }
-  
-  // Fecha objetivo para countdown (3 días desde ahora)
-  const countdownDate = new Date()
-  countdownDate.setDate(countdownDate.getDate() + 3)
-  
+
+  // Fixed promo end date
+  const PROMO_END_DATE = new Date('2026-03-28T23:59:59-04:00')
+
   return (
     <>
       <HeroSection />
-      
+
       {/* Banner rotativo promocional */}
       <section className="py-8 bg-gray-50">
         <Container>
           <PromoBanner />
         </Container>
       </section>
-      
+
       {/* Countdown timer */}
       <section className="py-6">
         <Container>
-          <CountdownTimer 
-            targetDate={countdownDate}
+          <CountdownTimer
+            targetDate={PROMO_END_DATE}
             message="Cyber Week termina en"
           />
         </Container>
       </section>
-      
+
       <PuestosSection />
       <CatalogoClient initialProducts={products} />
       <TestimoniosSection />
       <UbicacionSection />
       <CTAFinalSection />
-      
+
       {/* Popup newsletter */}
       <NewsletterPopup />
     </>

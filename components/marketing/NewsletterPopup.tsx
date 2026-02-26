@@ -1,17 +1,19 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { X, Mail, Gift } from 'lucide-react'
+import { X, Mail, Gift, Loader2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import toast from 'react-hot-toast'
+import { createClient } from '@/lib/supabase/client'
 
 export function NewsletterPopup() {
   const [isOpen, setIsOpen] = useState(false)
   const [email, setEmail] = useState('')
   const [mounted, setMounted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
     setMounted(true)
-    
+
     // Mostrar después de 10 segundos, solo si no se ha mostrado antes
     const hasSeenPopup = localStorage.getItem('newsletter-popup-seen')
     if (!hasSeenPopup) {
@@ -25,16 +27,30 @@ export function NewsletterPopup() {
     localStorage.setItem('newsletter-popup-seen', 'true')
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault()
-    if (!email) return
+    if (!email || isSubmitting) return
 
-    // Aquí conectarías con tu servicio de email (ej: Mailchimp, Supabase)
-    // Por ahora solo guardamos en localStorage
-    localStorage.setItem('newsletter-email', email)
-    
-    toast.success('¡Suscripción exitosa! Revisa tu email.')
-    handleClose()
+    setIsSubmitting(true)
+    try {
+      const supabase = createClient()
+      const { error } = await supabase
+        .from('subscribers')
+        .insert({ email: email.trim().toLowerCase(), source: 'popup' })
+
+      if (error?.code === '23505') {
+        toast('Ya estás suscrito 😊')
+        handleClose()
+        return
+      }
+      if (error) throw error
+      toast.success('¡Suscripción exitosa! Revisa tu email.')
+      handleClose()
+    } catch {
+      toast.error('Error al suscribir, intenta de nuevo')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (!mounted) return null
@@ -94,14 +110,19 @@ export function NewsletterPopup() {
                       placeholder="tucorreo@ejemplo.com"
                       className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-600 focus:outline-none"
                       required
+                      disabled={isSubmitting}
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full bg-primary-800 text-white py-3 rounded-lg font-bold hover:bg-primary-900 transition-colors shadow-lg"
+                    disabled={isSubmitting}
+                    className="w-full bg-primary-800 text-white py-3 rounded-lg font-bold hover:bg-primary-900 transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
-                    Obtener mi descuento
+                    {isSubmitting ? (
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : null}
+                    {isSubmitting ? 'Suscribiendo...' : 'Obtener mi descuento'}
                   </button>
 
                   <button

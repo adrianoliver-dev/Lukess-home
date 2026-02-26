@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import dynamic from 'next/dynamic'
 import {
   X,
@@ -77,6 +77,16 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   const [selectedPayment, setSelectedPayment] = useState<PaymentMethod>('qr')
   const [whatsappMessage, setWhatsappMessage] = useState('')
 
+  // Refs for BUG-04 & BUG-05 fixes
+  const hasManuallyEditedRecipient = useRef(false)
+  const modalContentRef = useRef<HTMLDivElement>(null)
+
+  const scrollModalToTop = (): void => {
+    setTimeout(() => {
+      modalContentRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
+    }, 50)
+  }
+
   const [customerData, setCustomerData] = useState({
     name: '',
     phone: '',
@@ -132,9 +142,11 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   const orderTotal = total + shippingCost
   const selectedPickup = PICKUP_LOCATIONS.find((p) => p.id === pickupLocation)
 
-  // Pre-fill recipient from customer data
+  // Pre-fill recipient from customer data (only if user hasn't manually edited)
   useEffect(() => {
-    setRecipientName((prev) => prev || customerData.name)
+    if (!hasManuallyEditedRecipient.current) {
+      setRecipientName(customerData.name)
+    }
     setRecipientPhone((prev) => prev || customerData.phone)
   }, [customerData.name, customerData.phone])
 
@@ -170,6 +182,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
     if (!isOpen) {
       setTimeout(() => {
         setStep('form')
+        hasManuallyEditedRecipient.current = false
         setShowConfetti(false)
         setEmailError('')
         setNotifyByEmail(true)
@@ -455,6 +468,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
       )
 
       setStep('qr')
+      scrollModalToTop()
       toast.success('¡Orden creada! Procede al pago', { position: 'bottom-center', icon: '🎉' })
     } catch (error: unknown) {
       const msg = error instanceof Error ? error.message : 'Intenta de nuevo'
@@ -467,6 +481,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
   const handlePaymentConfirmed = () => {
     setStep('success')
+    scrollModalToTop()
     setShowConfetti(true)
 
     trackPurchase({
@@ -569,6 +584,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
     clearCart()
     onClose()
     setStep('form')
+    hasManuallyEditedRecipient.current = false
     setCustomerData({ name: '', phone: '', email: '', website: '' })
     setNotifyByEmail(true)
     setNotifyByWhatsapp(false)
@@ -626,7 +642,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
               exit={{ scale: 0.9, opacity: 0 }}
               className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
             >
-              <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg pointer-events-auto max-h-[90vh] overflow-y-auto">
+              <div ref={modalContentRef} className="bg-white rounded-2xl shadow-2xl w-full max-w-lg pointer-events-auto max-h-[90vh] overflow-y-auto">
                 {/* Header */}
                 <div
                   className={`p-6 border-b-2 border-gray-100 flex items-center justify-between rounded-t-2xl transition-colors ${step === 'success'
@@ -1226,7 +1242,10 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                       <input
                                         type="text"
                                         value={recipientName}
-                                        onChange={(e) => setRecipientName(e.target.value)}
+                                        onChange={(e) => {
+                                          hasManuallyEditedRecipient.current = true
+                                          setRecipientName(e.target.value)
+                                        }}
                                         className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg text-sm focus:border-[#c89b6e] focus:outline-none"
                                         placeholder="Puede ser diferente al tuyo"
                                       />
@@ -1486,13 +1505,13 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         <p className="text-gray-700 mb-4 font-semibold">
                           Escanea este QR con tu app de pagos
                         </p>
-                        <div className="bg-white p-4 rounded-xl border-4 border-primary-200 inline-block">
+                        <div className="bg-white p-4 rounded-xl border-4 border-primary-200 inline-block max-w-full overflow-hidden">
                           <Image
                             src="/qr-yolo-pago.png"
                             alt="QR Yolo Pago"
                             width={280}
                             height={280}
-                            className="rounded-lg"
+                            className="rounded-lg w-full max-w-[280px] h-auto"
                           />
                         </div>
                       </div>

@@ -1,22 +1,40 @@
 'use client'
 import { useState } from 'react'
 import Container from '@/components/ui/Container'
-import { Mail, MapPin, Phone, Facebook, Instagram, Send } from 'lucide-react'
+import { Mail, MapPin, Phone, Facebook, Instagram, Send, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import { buildWhatsAppUrl, formatWhatsAppNumber } from '@/lib/utils/whatsapp'
+import { createClient } from '@/lib/supabase/client'
 
 export default function Footer() {
   const [email, setEmail] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
+  const handleNewsletterSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault()
-    if (!email) return
+    if (!email || isSubmitting) return
 
-    // Guardar en localStorage (después conectar con servicio de email)
-    localStorage.setItem('newsletter-email', email)
-    toast.success('¡Suscripción exitosa! Revisa tu email.')
-    setEmail('')
+    setIsSubmitting(true)
+    try {
+      const supabase = createClient()
+      const { error } = await supabase
+        .from('subscribers')
+        .insert({ email: email.trim().toLowerCase(), source: 'footer' })
+
+      if (error?.code === '23505') {
+        toast('Ya estás suscrito 😊')
+        setEmail('')
+        return
+      }
+      if (error) throw error
+      toast.success('¡Suscripción exitosa!')
+      setEmail('')
+    } catch {
+      toast.error('Error al suscribir, intenta de nuevo')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -37,13 +55,19 @@ export default function Footer() {
                 placeholder="tucorreo@ejemplo.com"
                 className="flex-1 px-4 py-3 rounded-lg text-gray-900 border-2 border-white/30 focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
                 required
+                disabled={isSubmitting}
               />
               <button
                 type="submit"
-                className="w-full sm:w-auto bg-primary-800 px-6 py-3 rounded-lg font-bold hover:bg-primary-900 transition-colors flex items-center justify-center gap-2 shadow-lg whitespace-nowrap"
+                disabled={isSubmitting}
+                className="w-full sm:w-auto bg-primary-800 px-6 py-3 rounded-lg font-bold hover:bg-primary-900 transition-colors flex items-center justify-center gap-2 shadow-lg whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Send className="w-5 h-5" />
-                Suscribir
+                {isSubmitting ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <Send className="w-5 h-5" />
+                )}
+                {isSubmitting ? 'Suscribiendo...' : 'Suscribir'}
               </button>
             </form>
           </div>

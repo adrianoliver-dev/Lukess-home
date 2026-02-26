@@ -18,7 +18,7 @@ export function CountdownTimer({ targetDate, message = 'Oferta termina en' }: Co
 
   useEffect(() => {
     setMounted(true)
-    
+
     const calculateTimeLeft = () => {
       const now = new Date().getTime()
       const distance = targetDate.getTime() - now
@@ -53,6 +53,12 @@ export function CountdownTimer({ targetDate, message = 'Oferta termina en' }: Co
         </div>
       </div>
     )
+  }
+
+  // Hide countdown if promo has expired
+  const isExpired = timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0
+  if (isExpired) {
+    return null
   }
 
   return (
