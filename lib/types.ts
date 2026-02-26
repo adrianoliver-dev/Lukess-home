@@ -12,9 +12,11 @@ export interface Product {
   images: string[] | null  // Array de URLs de imágenes para galería
   is_active: boolean
   is_new?: boolean  // Badge "NUEVO" - productos de la nueva colección
+  is_new_until?: string | null  // Fecha hasta la cual se muestra badge NUEVO
   is_best_seller?: boolean  // Badge "MÁS VENDIDO"
   discount: number | null  // Descuento en porcentaje (0-100)
   discount_percentage?: number | null  // Alias para compatibilidad
+  discount_expires_at?: string | null  // Fecha de expiración del descuento
   is_featured: boolean | null  // Producto destacado
   collection?: string | null  // Colección: 'primavera', 'verano', etc.
   subcategory?: string | null  // Subcategoría: 'manga-larga', 'oversize', 'elegante', etc.

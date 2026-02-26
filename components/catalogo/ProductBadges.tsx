@@ -2,17 +2,29 @@ import { Sparkles, Percent, TrendingUp, Leaf } from 'lucide-react'
 
 interface ProductBadgesProps {
   isNew?: boolean
+  isNewUntil?: string | null
   discount?: number
+  discountExpiresAt?: string | null
   lowStock?: number
   isBestSeller?: boolean
   collection?: string | null
 }
 
-export function ProductBadges({ isNew, discount, lowStock, isBestSeller, collection }: ProductBadgesProps) {
+export function ProductBadges({ isNew, isNewUntil, discount, discountExpiresAt, lowStock, isBestSeller, collection }: ProductBadgesProps) {
+  // Badge NUEVO: solo si is_new=true Y (no tiene fecha límite O la fecha no ha expirado)
+  const isActuallyNew = isNew === true && (
+    !isNewUntil || new Date(isNewUntil) > new Date()
+  )
+
+  // Descuento activo: solo si discount > 0 Y (no tiene fecha límite O la fecha no ha expirado)
+  const hasActiveDiscount = !!(discount && discount > 0) && (
+    !discountExpiresAt || new Date(discountExpiresAt) > new Date()
+  )
+
   return (
     <>
       {/* Badge NUEVO - Círculo en la parte inferior izquierda */}
-      {isNew && (
+      {isActuallyNew && (
         <div className="absolute bottom-2 left-2 z-20">
           <div className="relative">
             <div className="w-12 h-12 bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 rounded-full flex items-center justify-center shadow-xl animate-pulse">
@@ -30,20 +42,20 @@ export function ProductBadges({ isNew, discount, lowStock, isBestSeller, collect
       {/* Badges en la esquina superior izquierda */}
       <div className="absolute top-3 left-3 flex flex-col gap-2 z-10">
         {/* Badge de colección Primavera */}
-        {collection === 'primavera' && !isNew && (
+        {collection === 'primavera' && !isActuallyNew && (
           <span className="bg-gradient-to-r from-green-400 to-emerald-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
             <Leaf className="w-3 h-3" />
             PRIMAVERA
           </span>
         )}
-        
-        {discount && discount > 0 && (
+
+        {hasActiveDiscount && (
           <span className="bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
             <Percent className="w-3 h-3" />
             -{discount}%
           </span>
         )}
-        
+
         {isBestSeller && (
           <span className="bg-primary-800 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
             <TrendingUp className="w-3 h-3" />

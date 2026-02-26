@@ -73,7 +73,7 @@ None.
 |---|---|---|---|---|
 | Cleanup-01 | framer-motion removal + Memory Bank | ✅ DONE | 2026-02-26 | pending |
 | 9b-A | Bugs + Fixes Urgentes A | ✅ DONE | 2026-02-26 | 7a0d980 |
-| 9b-B | Bugs + Fixes Urgentes B | ✅ DONE | 2026-02-26 | pending-push |
+| 9b-B | Bugs + Fixes Urgentes B | ✅ DONE | 2026-02-26 | dc0d079 |
 | 9c-A | Inventario: BD + formulario descuentos/is_new | ⬜ PENDING | — | — |
 | 9c-B | Inventario: Upload múltiples imágenes | ⬜ PENDING | — | — |
 | 9d-A | Landing: Badges + Galería múltiple | ⬜ PENDING | — | — |

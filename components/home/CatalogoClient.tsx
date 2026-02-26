@@ -211,14 +211,18 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
     }
   }, [searchParams, searchQuery])
 
-  // Función para verificar si un producto es nuevo (usa el campo is_new de la BD)
+  // Función para verificar si un producto es nuevo (con expiración)
   const isProductNew = useCallback((product: Product): boolean => {
-    return product.is_new === true
+    return product.is_new === true && (
+      !product.is_new_until || new Date(product.is_new_until) > new Date()
+    )
   }, [])
 
-  // Función para verificar si tiene descuento
+  // Función para verificar si tiene descuento activo (con expiración)
   const hasDiscount = useCallback((product: Product): boolean => {
-    return !!(product.discount && product.discount > 0) || !!(product.discount_percentage && product.discount_percentage > 0)
+    const hasValue = !!(product.discount && product.discount > 0) || !!(product.discount_percentage && product.discount_percentage > 0)
+    if (!hasValue) return false
+    return !product.discount_expires_at || new Date(product.discount_expires_at) > new Date()
   }, [])
 
   // Función para obtener el porcentaje de descuento
@@ -289,7 +293,6 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
 
   // Filtrar y ordenar productos con todos los filtros
   const filteredProducts = useMemo(() => {
-    console.log('🔍 Filtrando productos con búsqueda:', searchQuery)
 
     let filtered = initialProducts.filter(p => {
       // Filtro de búsqueda - MEJORADO para incluir más campos
@@ -364,12 +367,17 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
       return true
     })
 
-    // Ordenar productos: sin stock siempre al final
+    // Ordenar productos: sin stock al final, featured primero, luego por sortOrder
     const sorted = [...filtered].sort((a, b) => {
       const stockA = getTotalStock(a)
       const stockB = getTotalStock(b)
       if (stockA === 0 && stockB > 0) return 1
       if (stockA > 0 && stockB === 0) return -1
+
+      // Featured products primero (dentro de cada grupo de stock)
+      const featA = a.is_featured ? 1 : 0
+      const featB = b.is_featured ? 1 : 0
+      if (featA !== featB) return featB - featA
 
       switch (sortOrder) {
         case 'price-asc':
@@ -1052,7 +1060,9 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                           {/* Badges promocionales */}
                           <ProductBadges
                             isNew={product.is_new}
+                            isNewUntil={product.is_new_until}
                             discount={getDiscount(product) || undefined}
+                            discountExpiresAt={product.discount_expires_at}
                             lowStock={isOutOfStock ? 0 : stock}
                             isBestSeller={product.is_best_seller}
                             collection={product.collection}
