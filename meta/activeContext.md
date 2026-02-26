@@ -7,8 +7,9 @@
 ## CURRENT BLOCK
 - **Block Number:** 9b-B
 - **Block Name:** Bugs + Fixes Urgentes — Parte B
-- **Status:** PENDING
-- **Started:** —
+- **Status:** DONE
+- **Started:** 2026-02-26
+- **Completed:** 2026-02-26
 
 ---
 
@@ -46,25 +47,24 @@ None.
 ## OPEN ISSUES
 - [x] BUG-WA: ~20 files have hardcoded WhatsApp `76020369` — must use `NEXT_PUBLIC_WHATSAPP_NUMBER=72643753`
 - [x] BUG-07: `CatalogoClient` — hash/searchParams useEffect causes hydration warning
-- [ ] BUG-04: `recipientName` pre-fill only captures first character typed
-- [ ] BUG-05: No `scrollTo({top:0})` when switching modal steps (form → qr → success)
-- [ ] BUG-06: "⚠️ Últimas X" badge appears 3× simultaneously in ProductDetail
-- [ ] BUG-01: QR image overflows on screens < 360px → `max-w-[280px]` in CheckoutModal
-- [ ] CRITICAL: Newsletter (Footer + Popup) saves to localStorage only — needs Supabase `subscribers` table
-- [ ] CRITICAL: Countdown timer recalculates on every reload (always shows 3 days) — needs fixed date
+- [x] BUG-04: `recipientName` pre-fill only captures first character typed → fixed with `hasManuallyEditedRecipient` ref
+- [x] BUG-05: No `scrollTo({top:0})` when switching modal steps → fixed with `modalContentRef` + `scrollModalToTop()`
+- [x] BUG-06: "⚠️ Últimas X" badge appears 3× simultaneously → removed duplicate warnings in quantity section
+- [x] BUG-01: QR image overflows on screens < 360px → added `w-full max-w-[280px] h-auto` responsive classes
+- [x] CRITICAL: Newsletter (Footer + Popup) saves to localStorage only → now uses Supabase `subscribers` table
+- [x] CRITICAL: Countdown timer recalculates on every reload → now uses fixed PROMO_END_DATE (2026-03-28)
 - [ ] BUG: PromoBanner area not fully clickable — only CTA button triggers navigation
 - [ ] BUG: `useRouter` imported but never used in PromoBanner.tsx (dead code)
 - [ ] BUG: Hero image is Unsplash URL (external dependency) — needs local asset
-- [ ] TODO: `handleNewsletterSubmit` in Footer.tsx → replace localStorage with Supabase INSERT
 - [ ] TODO: TikTok icon in Footer uses `<Send />` lucide icon (incorrect) — needs SVG replacement
 
 ---
 
 ## NEXT BLOCK
-- **Block:** 9b-B
-- **Name:** Bugs + Fixes Urgentes — Parte B
-- **Dependencies:** 9b-A
-- **Scope:** Fix remaining UI bugs (BUG-04, 05, 06, 01) and minor component bugs (PromoBanner, external URLs).
+- **Block:** 9c-A
+- **Name:** Inventario: BD + formulario descuentos/is_new
+- **Dependencies:** 9b-B
+- **Scope:** Database schema changes for discount fields and is_new flag, plus inventory form updates.
 
 ---
 
@@ -73,7 +73,7 @@ None.
 |---|---|---|---|---|
 | Cleanup-01 | framer-motion removal + Memory Bank | ✅ DONE | 2026-02-26 | pending |
 | 9b-A | Bugs + Fixes Urgentes A | ✅ DONE | 2026-02-26 | 7a0d980 |
-| 9b-B | Bugs + Fixes Urgentes B | ⬜ PENDING | — | — |
+| 9b-B | Bugs + Fixes Urgentes B | ✅ DONE | 2026-02-26 | pending-push |
 | 9c-A | Inventario: BD + formulario descuentos/is_new | ⬜ PENDING | — | — |
 | 9c-B | Inventario: Upload múltiples imágenes | ⬜ PENDING | — | — |
 | 9d-A | Landing: Badges + Galería múltiple | ⬜ PENDING | — | — |
