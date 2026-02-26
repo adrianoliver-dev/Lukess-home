@@ -37,6 +37,7 @@ import {
   getMapsLink,
 } from '@/lib/utils/shipping'
 import { buildWhatsAppUrl, WHATSAPP_NUMBER } from '@/lib/utils/whatsapp'
+import { supabase } from '@/lib/supabase/client'
 
 const DeliveryMapPicker = dynamic(
   () => import('@/components/cart/DeliveryMapPicker'),
@@ -122,6 +123,16 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   // Delivery instructions (optional)
   const [deliveryInstructions, setDeliveryInstructions] = useState('')
 
+  // Discount Code
+  const [discountCode, setDiscountCode] = useState('')
+  const [discountValidation, setDiscountValidation] = useState<{
+    valid: boolean
+    discount_type: 'percentage' | 'fixed' | null
+    discount_amount: number
+    message: string
+  } | null>(null)
+  const [isValidatingCode, setIsValidatingCode] = useState(false)
+
   // Comprobante de pago (opcional)
   const [receiptUploadState, setReceiptUploadState] = useState<ReceiptUploadState>('idle')
   const [receiptFile, setReceiptFile] = useState<File | null>(null)
@@ -139,7 +150,17 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
   const isOutOfRange = rawShippingCost === 'out_of_range'
   const shippingCost = isOutOfRange ? 0 : (rawShippingCost as number)
-  const orderTotal = total + shippingCost
+
+  let appliedDiscountAmount = 0
+  if (discountValidation?.valid) {
+    if (discountValidation.discount_type === 'fixed') {
+      appliedDiscountAmount = discountValidation.discount_amount
+    } else if (discountValidation.discount_type === 'percentage') {
+      appliedDiscountAmount = total * (discountValidation.discount_amount / 100)
+    }
+  }
+
+  const orderTotal = Math.max(0, total - appliedDiscountAmount) + shippingCost
   const selectedPickup = PICKUP_LOCATIONS.find((p) => p.id === pickupLocation)
 
   // Pre-fill recipient from customer data (only if user hasn't manually edited)
@@ -207,6 +228,9 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
         setRecipientPhone('')
         setRecipientPhoneError('')
         setDeliveryInstructions('')
+        setDiscountCode('')
+        setDiscountValidation(null)
+        setIsValidatingCode(false)
         setReceiptUploadState('idle')
         setReceiptFile(null)
         setReceiptPreviewUrl(null)
@@ -280,6 +304,60 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
         `Hola! Quiero cotizar un envío 📦\n*Productos:*\n${cart.map((i) => `• ${i.product.name} x${i.quantity}`).join('\n')}\n💰 Total del pedido: Bs ${total.toFixed(2)}\n📍 Ubicación de entrega: ${mapsLink}\n¿Cuánto cuesta el envío hasta allí? 🙏`,
       )
       : ''
+
+  const handleValidateDiscountCode = async () => {
+    if (!discountCode.trim()) {
+      setDiscountValidation(null)
+      return
+    }
+
+    setIsValidatingCode(true)
+    setDiscountValidation(null)
+
+    try {
+      const { data, error } = await supabase
+        .from('discount_codes')
+        .select('*')
+        .eq('code', discountCode.trim().toUpperCase())
+        .single()
+
+      if (error || !data) {
+        setDiscountValidation({ valid: false, discount_type: null, discount_amount: 0, message: 'Código no válido' })
+        return
+      }
+
+      if (!data.is_active) {
+        setDiscountValidation({ valid: false, discount_type: null, discount_amount: 0, message: 'Código inactivo' })
+        return
+      }
+
+      if (data.expires_at && new Date(data.expires_at) < new Date()) {
+        setDiscountValidation({ valid: false, discount_type: null, discount_amount: 0, message: 'Código expirado' })
+        return
+      }
+
+      if (data.max_uses !== null && data.used_count !== null && data.used_count >= data.max_uses) {
+        setDiscountValidation({ valid: false, discount_type: null, discount_amount: 0, message: 'Límite de usos alcanzado' })
+        return
+      }
+
+      if (data.min_order_amount && total < data.min_order_amount) {
+        setDiscountValidation({ valid: false, discount_type: null, discount_amount: 0, message: `Requisito: Bs ${data.min_order_amount} mínimo` })
+        return
+      }
+
+      setDiscountValidation({
+        valid: true,
+        discount_type: data.discount_type as 'percentage' | 'fixed',
+        discount_amount: data.discount_amount,
+        message: 'Código aplicado con éxito',
+      })
+    } catch {
+      setDiscountValidation({ valid: false, discount_type: null, discount_amount: 0, message: 'Error de conexión' })
+    } finally {
+      setIsValidatingCode(false)
+    }
+  }
 
   const handleReceiptSelect = async (file: File) => {
     if (!file.type.startsWith('image/')) {
@@ -459,10 +537,14 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
           ? `\n\n📍 *Dirección:* ${shippingAddress}${shippingReference ? `\nRef: ${shippingReference}` : ''}\n👤 *Recibe:* ${recipientName} · ${recipientPhone}${deliveryInstructions.trim() ? `\n📝 Instrucciones: ${deliveryInstructions.trim()}` : ''}${mapsLink ? `\n📍 Ubicación exacta: ${mapsLink}` : ''}`
           : `\n\n🏪 *Recojo en tienda:* ${PICKUP_LOCATIONS.find((p) => p.id === pickupLocation)?.name ?? pickupLocation}`
 
+      const discountText = discountValidation?.valid
+        ? `\n💰 *Descuento:* -Bs ${appliedDiscountAmount.toFixed(2)} (${discountCode.toUpperCase()})`
+        : ''
+
       setWhatsappMessage(
         encodeURIComponent(
           `Hola! Realicé el pedido #${shortId} por Bs ${orderTotal.toFixed(2)}.\n\n` +
-          `🛍️ *Productos:*\n${productList}${deliveryInfo}\n\n` +
+          `🛍️ *Productos:*\n${productList}${discountText}${deliveryInfo}\n\n` +
           `Ya realicé el pago por QR. ¿Pueden confirmar? 🙏`,
         ),
       )
@@ -514,8 +596,8 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
             shippingDistance: gpsDistanceKm,
             deliveryAddress: deliveryMethod === 'delivery' && shippingAddress.trim() ? shippingAddress.trim() : null,
             locationUrl: deliveryMethod === 'delivery' && mapsLink ? mapsLink : null,
-            discountAmount: 0,
-            discountCode: null,
+            discountAmount: discountValidation?.valid ? appliedDiscountAmount : 0,
+            discountCode: discountValidation?.valid ? discountCode.toUpperCase() : null,
             total: orderTotal,
             notifyByEmail: true,
             notifyByWhatsapp,
@@ -552,6 +634,8 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
               : null,
           locationUrl: deliveryMethod === 'delivery' && mapsLink ? mapsLink : null,
           deliveryInstructions: deliveryInstructions ?? null,
+          discountAmount: discountValidation?.valid ? appliedDiscountAmount : 0,
+          discountCode: discountValidation?.valid ? discountCode.toUpperCase() : null,
           total: orderTotal,
           deliveryMethod,
           hasReceipt: receiptUploadState === 'success',
@@ -602,6 +686,9 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
     setRecipientName('')
     setRecipientPhone('')
     setDeliveryInstructions('')
+    setDiscountCode('')
+    setDiscountValidation(null)
+    setIsValidatingCode(false)
     setReceiptUploadState('idle')
     setReceiptFile(null)
     if (receiptPreviewUrl) URL.revokeObjectURL(receiptPreviewUrl)
@@ -1372,12 +1459,60 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         )}
                       </div>
 
+                      {/* ── Código de Descuento ── */}
+                      <div className="space-y-4 mb-6">
+                        <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+                          CÓDIGO DE DESCUENTO
+                        </h3>
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            value={discountCode}
+                            onChange={(e) => {
+                              setDiscountCode(e.target.value)
+                              if (discountValidation) setDiscountValidation(null)
+                            }}
+                            className="flex-1 px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:outline-none transition-colors uppercase"
+                            placeholder="Ej: VERANO20"
+                            disabled={isValidatingCode}
+                          />
+                          <button
+                            type="button"
+                            onClick={handleValidateDiscountCode}
+                            disabled={isValidatingCode || !discountCode.trim()}
+                            className="px-6 py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-black transition-colors disabled:opacity-50 flex items-center gap-2"
+                          >
+                            {isValidatingCode ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Aplicar'}
+                          </button>
+                        </div>
+                        <AnimatePresence>
+                          {discountValidation && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              className={`flex items-center gap-2 text-sm ${discountValidation.valid ? 'text-green-600' : 'text-red-500'}`}
+                            >
+                              {discountValidation.valid ? <CheckCircle className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
+                              <span>{discountValidation.message}</span>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+
                       {/* ── Order Summary ── */}
                       <div className="bg-primary-50 p-4 rounded-lg border-2 border-primary-200 space-y-2">
                         <div className="flex items-center justify-between text-sm text-gray-600">
                           <span>Subtotal:</span>
                           <span>Bs {total.toFixed(2)}</span>
                         </div>
+
+                        {discountValidation?.valid && (
+                          <div className="flex items-center justify-between text-sm text-green-600">
+                            <span>Descuento ({discountCode.toUpperCase()}):</span>
+                            <span>-Bs {appliedDiscountAmount.toFixed(2)}</span>
+                          </div>
+                        )}
 
                         <div className="flex items-center justify-between text-sm">
                           <span className="text-gray-600">Envío:</span>
