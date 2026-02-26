@@ -6,12 +6,14 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import { Product } from '@/lib/types'
 import { useCart } from '@/lib/context/CartContext'
 import toast from 'react-hot-toast'
 import { FilterSidebar, type Filters } from '@/components/catalogo/FilterSidebar'
 import { ProductBadges } from '@/components/catalogo/ProductBadges'
 import { WishlistButton } from '@/components/wishlist/WishlistButton'
+import { buildWhatsAppUrl } from '@/lib/utils/whatsapp'
 
 interface CatalogoClientProps {
   initialProducts: Product[]
@@ -92,56 +94,122 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
   const [displayLimit, setDisplayLimit] = useState(20)
   const [sortOrder, setSortOrder] = useState<'recent' | 'price-asc' | 'price-desc'>('recent')
   const { addToCart } = useCart()
-  const { ref, inView } = useInView({ 
-    triggerOnce: true, 
+  const { ref, inView } = useInView({
+    triggerOnce: true,
     threshold: 0.05,
     rootMargin: '50px'
   })
 
-  // Detectar búsqueda desde URL - Se ejecuta al montar y cuando hay eventos
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const pathname = usePathname()
+
+  // Sincronizar búsqueda y filtros principales desde la URL
   useEffect(() => {
-    const updateSearchFromURL = () => {
-      if (typeof window !== 'undefined') {
-        const params = new URLSearchParams(window.location.search)
-        const busqueda = params.get('busqueda')
-        const newQuery = busqueda ? decodeURIComponent(busqueda) : ''
-        
-        // Solo actualizar si es diferente para evitar loops
-        if (newQuery !== searchQuery) {
-          console.log('📝 Actualizando búsqueda desde URL:', newQuery)
-          
-          // IMPORTANTE: Limpiar todos los filtros antes de aplicar la búsqueda
-          if (newQuery) {
-            setSelectedCategories([])
-            setSelectedSubcategories([])
-            setSelectedBrands([])
-            setSelectedColors([])
-            setStockFilter('all')
-            setShowNew(false)
-            setShowDiscount(false)
-            setShowCollection(null)
-          }
-          
-          setSearchQuery(newQuery)
-        }
+    if (!searchParams) return
+
+    const busqueda = searchParams.get('busqueda') || ''
+    const filter = searchParams.get('filter') || ''
+
+    // Manejar parámetro de búsqueda
+    if (busqueda !== searchQuery) {
+      if (busqueda) {
+        // Limpiar otros filtros al buscar
+        setSelectedCategories([])
+        setSelectedSubcategories([])
+        setSelectedBrands([])
+        setSelectedColors([])
+        setStockFilter('all')
+        setShowNew(false)
+        setShowDiscount(false)
+        setShowCollection(null)
       }
+      setSearchQuery(busqueda)
     }
-    
-    updateSearchFromURL()
-    
-    // Escuchar cambios en la búsqueda y en el popstate (navegación)
-    const handleSearchUpdate = () => {
-      setTimeout(updateSearchFromURL, 100)
+
+    // Manejar parámetro de filtro (viene de Navbar, Banners, etc.)
+    if (filter) {
+      let newCategories: string[] = []
+      let newSubcategories: string[] = []
+      let newBrands: string[] = []
+      let newShowNew = false
+      let newShowDiscount = false
+      let newShowCollection: string | null = null
+
+      if (filter === 'nuevo') {
+        newShowNew = true
+      } else if (filter === 'descuento' || filter === 'descuentos') {
+        newShowDiscount = true
+      } else if (filter === 'primavera' || filter === 'collection-primavera') {
+        newShowCollection = 'primavera'
+      } else if (filter === 'camisas') {
+        newCategories = ['Camisas']
+      } else if (filter === 'pantalones') {
+        newCategories = ['Pantalones']
+      } else if (filter === 'blazers') {
+        newCategories = ['Blazers']
+      } else if (filter === 'accesorios') {
+        newCategories = ['Accesorios']
+      } else if (filter === 'chaquetas') {
+        newCategories = ['Chaquetas']
+      } else if (filter === 'polos') {
+        newCategories = ['Polos']
+      } else if (filter === 'camisas-columbia') {
+        newCategories = ['Camisas']
+        newBrands = ['Columbia']
+      } else if (filter === 'camisas-manga-larga') {
+        newCategories = ['Camisas']
+        newSubcategories = ['manga-larga']
+      } else if (filter === 'camisas-manga-corta') {
+        newCategories = ['Camisas']
+        newSubcategories = ['manga-corta']
+      } else if (filter === 'camisas-elegantes') {
+        newCategories = ['Camisas']
+        newSubcategories = ['elegante']
+      } else if (filter === 'pantalones-oversize') {
+        newCategories = ['Pantalones']
+        newSubcategories = ['oversize']
+      } else if (filter === 'pantalones-jeans') {
+        newCategories = ['Pantalones']
+        newSubcategories = ['jeans']
+      } else if (filter === 'pantalones-elegantes') {
+        newCategories = ['Pantalones']
+        newSubcategories = ['elegante']
+      } else if (filter === 'accesorios-sombreros') {
+        newCategories = ['Accesorios']
+        newSubcategories = ['sombreros']
+      } else if (filter === 'accesorios-gorras') {
+        newCategories = ['Accesorios']
+        newSubcategories = ['gorras']
+      } else if (filter === 'accesorios-cinturones') {
+        newCategories = ['Accesorios']
+        newSubcategories = ['cinturones']
+      } else if (filter === 'accesorios-billeteras') {
+        newCategories = ['Accesorios']
+        newSubcategories = ['billeteras']
+      }
+
+      // Reiniciar filtros completamente basados en el parametro
+      setSelectedCategories(newCategories)
+      setSelectedSubcategories(newSubcategories)
+      setSelectedBrands(newBrands)
+      setShowNew(newShowNew)
+      setShowDiscount(newShowDiscount)
+      setShowCollection(newShowCollection)
+      setSidebarFilters({
+        priceRange: [0, 1000],
+        brands: [],
+        colors: [],
+        sizes: [],
+        inStock: false,
+        category: null,
+        hasDiscount: null,
+      })
+      setStockFilter('all')
+      setSelectedColors([])
+      setSearchQuery('')
     }
-    
-    window.addEventListener('searchUpdate', handleSearchUpdate)
-    window.addEventListener('popstate', updateSearchFromURL)
-    
-    return () => {
-      window.removeEventListener('searchUpdate', handleSearchUpdate)
-      window.removeEventListener('popstate', updateSearchFromURL)
-    }
-  }, [])
+  }, [searchParams, searchQuery])
 
   // Función para verificar si un producto es nuevo (usa el campo is_new de la BD)
   const isProductNew = useCallback((product: Product): boolean => {
@@ -170,116 +238,6 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
     return product.price * (discount / 100)
   }, [getDiscount])
 
-  // Detectar filtros desde URL hash (navbar) y eventos de banners
-  useEffect(() => {
-    const resetFilters = () => {
-      setShowNew(false)
-      setShowDiscount(false)
-      setShowCollection(null)
-      setSelectedSubcategories([])
-      setSelectedCategories([])
-      setSelectedBrands([])
-      setSelectedColors([])
-    }
-
-    const handleHashChange = () => {
-      const hash = window.location.hash
-      const params = new URLSearchParams(hash.split('?')[1] || '')
-      const filter = params.get('filter')
-      
-      // Resetear filtros primero
-      resetFilters()
-      
-      if (!filter) return
-      
-      // Filtros especiales
-      if (filter === 'nuevo') {
-        setShowNew(true)
-      } else if (filter === 'descuento' || filter === 'descuentos') {
-        setShowDiscount(true)
-      } else if (filter === 'primavera' || filter === 'collection-primavera') {
-        setShowCollection('primavera')
-      } 
-      // Categorías principales
-      else if (filter === 'camisas') {
-        setSelectedCategories(['Camisas'])
-      } else if (filter === 'pantalones') {
-        setSelectedCategories(['Pantalones'])
-      } else if (filter === 'blazers') {
-        setSelectedCategories(['Blazers'])
-      } else if (filter === 'accesorios') {
-        setSelectedCategories(['Accesorios'])
-      } else if (filter === 'chaquetas') {
-        setSelectedCategories(['Chaquetas'])
-      } else if (filter === 'polos') {
-        setSelectedCategories(['Polos'])
-      }
-      // Subcategorías de camisas
-      else if (filter === 'camisas-columbia') {
-        setSelectedCategories(['Camisas'])
-        setSelectedBrands(['Columbia'])
-      } else if (filter === 'camisas-manga-larga') {
-        setSelectedCategories(['Camisas'])
-        setSelectedSubcategories(['manga-larga'])
-      } else if (filter === 'camisas-manga-corta') {
-        setSelectedCategories(['Camisas'])
-        setSelectedSubcategories(['manga-corta'])
-      } else if (filter === 'camisas-elegantes') {
-        setSelectedCategories(['Camisas'])
-        setSelectedSubcategories(['elegante'])
-      }
-      // Subcategorías de pantalones
-      else if (filter === 'pantalones-oversize') {
-        setSelectedCategories(['Pantalones'])
-        setSelectedSubcategories(['oversize'])
-      } else if (filter === 'pantalones-jeans') {
-        setSelectedCategories(['Pantalones'])
-        setSelectedSubcategories(['jeans'])
-      } else if (filter === 'pantalones-elegantes') {
-        setSelectedCategories(['Pantalones'])
-        setSelectedSubcategories(['elegante'])
-      }
-      // Subcategorías de accesorios
-      else if (filter === 'accesorios-sombreros') {
-        setSelectedCategories(['Accesorios'])
-        setSelectedSubcategories(['sombreros'])
-      } else if (filter === 'accesorios-gorras') {
-        setSelectedCategories(['Accesorios'])
-        setSelectedSubcategories(['gorras'])
-      } else if (filter === 'accesorios-cinturones') {
-        setSelectedCategories(['Accesorios'])
-        setSelectedSubcategories(['cinturones'])
-      } else if (filter === 'accesorios-billeteras') {
-        setSelectedCategories(['Accesorios'])
-        setSelectedSubcategories(['billeteras'])
-      }
-    }
-    
-    // Escuchar eventos de los banners promocionales
-    const handlePromoFilter = (e: CustomEvent) => {
-      const filter = e.detail
-      resetFilters()
-      
-      if (filter === 'descuento' || filter === 'descuentos') {
-        setShowDiscount(true)
-      } else if (filter === 'primavera' || filter === 'collection-primavera') {
-        setShowCollection('primavera')
-      } else if (filter === 'camisas-columbia') {
-        setSelectedCategories(['Camisas'])
-        setSelectedBrands(['Columbia'])
-      }
-    }
-    
-    handleHashChange()
-    window.addEventListener('hashchange', handleHashChange)
-    window.addEventListener('applyPromoFilter', handlePromoFilter as EventListener)
-    
-    return () => {
-      window.removeEventListener('hashchange', handleHashChange)
-      window.removeEventListener('applyPromoFilter', handlePromoFilter as EventListener)
-    }
-  }, [])
-
   // Extraer categorías únicas
   const categories = useMemo(() => {
     const cats = new Set<string>()
@@ -303,7 +261,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
   const colors = useMemo(() => {
     const standardColors = ['Blanco', 'Negro', 'Gris', 'Azul', 'Rojo', 'Verde', 'Beige', 'Café', 'Amarillo']
     const availableColors = new Set<string>()
-    
+
     initialProducts.forEach(p => {
       if (p.colors && Array.isArray(p.colors)) {
         p.colors.forEach(c => {
@@ -317,7 +275,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
         })
       }
     })
-    
+
     return ['Todos', ...standardColors.filter(c => availableColors.has(c))]
   }, [initialProducts])
 
@@ -332,7 +290,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
   // Filtrar y ordenar productos con todos los filtros
   const filteredProducts = useMemo(() => {
     console.log('🔍 Filtrando productos con búsqueda:', searchQuery)
-    
+
     let filtered = initialProducts.filter(p => {
       // Filtro de búsqueda - MEJORADO para incluir más campos
       if (searchQuery.trim()) {
@@ -342,67 +300,67 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
         const matchesCategory = p.categories?.name.toLowerCase().includes(query)
         const matchesDescription = p.description?.toLowerCase().includes(query)
         const matchesSKU = p.sku?.toLowerCase().includes(query)
-        
+
         // Buscar en colores
-        const matchesColor = p.colors?.some(color => 
+        const matchesColor = p.colors?.some(color =>
           color.toLowerCase().includes(query)
         )
-        
+
         // Buscar en tallas
-        const matchesSize = p.sizes?.some(size => 
+        const matchesSize = p.sizes?.some(size =>
           size.toLowerCase().includes(query)
         )
-        
+
         // Buscar palabras clave especiales
-        const matchesKeywords = 
+        const matchesKeywords =
           (query === 'nuevo' || query === 'nuevos') && p.is_new === true ||
           (query === 'descuento' || query === 'descuentos' || query === 'oferta' || query === 'ofertas') && hasDiscount(p) ||
           (query === 'primavera') && p.collection === 'primavera'
-        
-        if (!matchesName && !matchesBrand && !matchesCategory && !matchesDescription && 
-            !matchesSKU && !matchesColor && !matchesSize && !matchesKeywords) {
+
+        if (!matchesName && !matchesBrand && !matchesCategory && !matchesDescription &&
+          !matchesSKU && !matchesColor && !matchesSize && !matchesKeywords) {
           return false
         }
       }
-      
+
       // Filtro por "NUEVO" (productos con is_new = true)
       if (showNew && !isProductNew(p)) return false
-      
+
       // Filtro por "DESCUENTO"
       if (showDiscount && !hasDiscount(p)) return false
-      
+
       // Filtro por colección (primavera, verano, etc.)
       if (showCollection && p.collection !== showCollection) return false
-      
+
       // Filtro por subcategorías (multiselección)
       if (selectedSubcategories.length > 0 && !selectedSubcategories.includes(p.subcategory || '')) return false
-      
+
       // Filtros del sidebar - Precio
       if (p.price < sidebarFilters.priceRange[0] || p.price > sidebarFilters.priceRange[1]) return false
-      
+
       // Filtros del sidebar - Talla
       if (sidebarFilters.sizes.length > 0 && (!p.sizes || !p.sizes.some(s => sidebarFilters.sizes.includes(s)))) return false
-      
+
       // Filtros del sidebar - Stock
       const stock = getTotalStock(p)
       if (sidebarFilters.inStock && stock === 0) return false
-      
+
       // Filtros del sidebar - Descuento
       if (sidebarFilters.hasDiscount && !hasDiscount(p)) return false
-      
+
       // Filtro por categorías (multiselección)
       if (selectedCategories.length > 0 && !selectedCategories.includes(p.categories?.name || '')) return false
-      
+
       // Filtro por marcas (multiselección)
       if (selectedBrands.length > 0 && !selectedBrands.includes(p.brand || '')) return false
-      
+
       // Filtro por colores (multiselección)
       if (selectedColors.length > 0 && (!p.colors || !p.colors.some(c => selectedColors.includes(c)))) return false
-      
+
       // Filtro por stock (botones superiores)
       if (stockFilter === 'inStock' && stock === 0) return false
       if (stockFilter === 'lowStock' && (stock === 0 || stock >= 5)) return false
-      
+
       return true
     })
 
@@ -463,8 +421,8 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
       hasDiscount: null,
     })
     setSearchQuery('')
-    // Limpiar la URL
-    window.history.pushState(null, '', '/#catalogo')
+    // Limpiar la URL usando el router de Next.js
+    router.push('/#catalogo', { scroll: false })
   }
 
   const handleAddToCart = (product: Product) => {
@@ -473,7 +431,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
       toast.error('Producto sin stock', { position: 'bottom-center', duration: 1500 })
       return
     }
-    
+
     addToCart(product, 1)
     showAddedToast(product.name)
   }
@@ -485,14 +443,14 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
     const message =
       totalStock === 0
         ? 'Hola! Me interesa este producto 👇\n' +
-          `*${product.name}*\n` +
-          `💰 Precio: Bs ${formatPrice(product.price)}\n` +
-          '¿Cuándo habrá stock disponible? 🙏'
+        `*${product.name}*\n` +
+        `💰 Precio: Bs ${formatPrice(product.price)}\n` +
+        '¿Cuándo habrá stock disponible? 🙏'
         : 'Hola! Me interesa este producto 👇\n' +
-          `*${product.name}*\n` +
-          `💰 Precio: Bs ${formatPrice(product.price)}\n` +
-          '¿Me pueden dar más información? 🙏'
-    window.open(`https://wa.me/59176020369?text=${encodeURIComponent(message)}`, '_blank')
+        `*${product.name}*\n` +
+        `💰 Precio: Bs ${formatPrice(product.price)}\n` +
+        '¿Me pueden dar más información? 🙏'
+    window.open(buildWhatsAppUrl(message), '_blank')
   }
 
   return (
@@ -548,10 +506,9 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                 className={`
                   px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold
                   transition-all duration-300 flex items-center gap-2
-                  ${
-                    showNew
-                      ? 'bg-gradient-to-r from-amber-400 to-orange-500 text-white shadow-lg shadow-amber-400/30 scale-105'
-                      : 'bg-secondary-100 text-secondary-600 hover:bg-secondary-200 hover:text-secondary-800'
+                  ${showNew
+                    ? 'bg-gradient-to-r from-amber-400 to-orange-500 text-white shadow-lg shadow-amber-400/30 scale-105'
+                    : 'bg-secondary-100 text-secondary-600 hover:bg-secondary-200 hover:text-secondary-800'
                   }
                 `}
               >
@@ -568,10 +525,9 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                 className={`
                   px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold
                   transition-all duration-300 flex items-center gap-2
-                  ${
-                    showDiscount
-                      ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg shadow-red-500/30 scale-105'
-                      : 'bg-secondary-100 text-secondary-600 hover:bg-secondary-200 hover:text-secondary-800'
+                  ${showDiscount
+                    ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg shadow-red-500/30 scale-105'
+                    : 'bg-secondary-100 text-secondary-600 hover:bg-secondary-200 hover:text-secondary-800'
                   }
                 `}
               >
@@ -588,10 +544,9 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                 className={`
                   px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold
                   transition-all duration-300 flex items-center gap-2
-                  ${
-                    showCollection === 'primavera'
-                      ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white shadow-lg shadow-green-400/30 scale-105'
-                      : 'bg-secondary-100 text-secondary-600 hover:bg-secondary-200 hover:text-secondary-800'
+                  ${showCollection === 'primavera'
+                    ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white shadow-lg shadow-green-400/30 scale-105'
+                    : 'bg-secondary-100 text-secondary-600 hover:bg-secondary-200 hover:text-secondary-800'
                   }
                 `}
               >
@@ -604,11 +559,10 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-4">
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-md ${
-                  showFilters
-                    ? 'bg-primary-800 text-white'
-                    : 'bg-primary-700 text-white hover:bg-primary-800'
-                }`}
+                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-md ${showFilters
+                  ? 'bg-primary-800 text-white'
+                  : 'bg-primary-700 text-white hover:bg-primary-800'
+                  }`}
               >
                 <SlidersHorizontal className="w-4 h-4" />
                 Filtros
@@ -635,7 +589,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
               <span className="text-sm font-semibold text-secondary-700">
                 {filteredProducts.length} producto{filteredProducts.length !== 1 ? 's' : ''} encontrado{filteredProducts.length !== 1 ? 's' : ''}
               </span>
-              
+
               <div className="flex items-center gap-2">
                 <label htmlFor="sort-order" className="text-sm text-secondary-600 font-medium">
                   Ordenar por:
@@ -658,7 +612,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
               <div className="px-4 mt-4">
                 <div className="flex flex-wrap gap-2 items-center">
                   <span className="text-xs font-semibold text-secondary-600">Filtros activos:</span>
-                  
+
                   {searchQuery && (
                     <span className="inline-flex items-center gap-1 bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">
                       🔍 "{searchQuery}"
@@ -670,7 +624,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                       </button>
                     </span>
                   )}
-                  
+
                   {selectedCategories.map(cat => (
                     <span key={cat} className="inline-flex items-center gap-1 bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-xs font-medium">
                       {cat}
@@ -679,7 +633,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                       </button>
                     </span>
                   ))}
-                  
+
                   {selectedSubcategories.map(sub => (
                     <span key={sub} className="inline-flex items-center gap-1 bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-medium">
                       {sub}
@@ -688,7 +642,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                       </button>
                     </span>
                   ))}
-                  
+
                   {selectedBrands.map(brand => (
                     <span key={brand} className="inline-flex items-center gap-1 bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-medium">
                       {brand}
@@ -697,7 +651,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                       </button>
                     </span>
                   ))}
-                  
+
                   {selectedColors.map(color => (
                     <span key={color} className="inline-flex items-center gap-1 bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-xs font-medium">
                       {color}
@@ -706,16 +660,16 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                       </button>
                     </span>
                   ))}
-                  
+
                   {sidebarFilters.sizes.map(size => (
                     <span key={size} className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
                       Talla {size}
-                      <button onClick={() => setSidebarFilters({...sidebarFilters, sizes: sidebarFilters.sizes.filter(s => s !== size)})} className="hover:text-green-900">
+                      <button onClick={() => setSidebarFilters({ ...sidebarFilters, sizes: sidebarFilters.sizes.filter(s => s !== size) })} className="hover:text-green-900">
                         <X className="w-3 h-3" />
                       </button>
                     </span>
                   ))}
-                  
+
                   {showNew && (
                     <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-medium">
                       ✨ Nuevo
@@ -724,7 +678,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                       </button>
                     </span>
                   )}
-                  
+
                   {showDiscount && (
                     <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-medium">
                       % Descuentos
@@ -733,7 +687,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                       </button>
                     </span>
                   )}
-                  
+
                   {showCollection && (
                     <span className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
                       🌸 {showCollection}
@@ -757,7 +711,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                 >
                   <div className="mt-6 p-6 bg-secondary-50 rounded-2xl border border-secondary-200">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                      
+
                       {/* Categoría - Multiselección con checkboxes */}
                       <div>
                         <div className="flex items-center justify-between mb-3">
@@ -991,11 +945,10 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                                   : [...sidebarFilters.sizes, size]
                                 setSidebarFilters({ ...sidebarFilters, sizes: newSizes })
                               }}
-                              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all min-w-[40px] ${
-                                sidebarFilters.sizes.includes(size)
-                                  ? 'bg-primary-500 text-white'
-                                  : 'bg-white text-secondary-600 border border-secondary-200 hover:border-primary-300'
-                              }`}
+                              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all min-w-[40px] ${sidebarFilters.sizes.includes(size)
+                                ? 'bg-primary-500 text-white'
+                                : 'bg-white text-secondary-600 border border-secondary-200 hover:border-primary-300'
+                                }`}
                             >
                               {size}
                             </button>
@@ -1012,31 +965,28 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                         <div className="flex flex-wrap gap-2">
                           <button
                             onClick={() => setStockFilter('all')}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                              stockFilter === 'all'
-                                ? 'bg-primary-500 text-white'
-                                : 'bg-white text-secondary-600 border border-secondary-200 hover:border-primary-300'
-                            }`}
+                            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${stockFilter === 'all'
+                              ? 'bg-primary-500 text-white'
+                              : 'bg-white text-secondary-600 border border-secondary-200 hover:border-primary-300'
+                              }`}
                           >
                             Todos
                           </button>
                           <button
                             onClick={() => setStockFilter('inStock')}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                              stockFilter === 'inStock'
-                                ? 'bg-green-500 text-white'
-                                : 'bg-white text-secondary-600 border border-secondary-200 hover:border-green-300'
-                            }`}
+                            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${stockFilter === 'inStock'
+                              ? 'bg-green-500 text-white'
+                              : 'bg-white text-secondary-600 border border-secondary-200 hover:border-green-300'
+                              }`}
                           >
                             En Stock
                           </button>
                           <button
                             onClick={() => setStockFilter('lowStock')}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                              stockFilter === 'lowStock'
-                                ? 'bg-amber-500 text-white'
-                                : 'bg-white text-secondary-600 border border-secondary-200 hover:border-amber-300'
-                            }`}
+                            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${stockFilter === 'lowStock'
+                              ? 'bg-amber-500 text-white'
+                              : 'bg-white text-secondary-600 border border-secondary-200 hover:border-amber-300'
+                              }`}
                           >
                             Últimas unidades
                           </button>
@@ -1051,250 +1001,249 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
 
           {/* ── Grid de productos ── */}
           <div>
-              {filteredProducts.length === 0 ? (
-                /* Estado vacío */
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex flex-col items-center justify-center py-20 px-4"
+            {filteredProducts.length === 0 ? (
+              /* Estado vacío */
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex flex-col items-center justify-center py-20 px-4"
+              >
+                <div className="w-24 h-24 bg-secondary-100 rounded-full flex items-center justify-center mb-6">
+                  <ShoppingBag className="w-12 h-12 text-secondary-400" />
+                </div>
+                <h3 className="text-2xl font-bold text-secondary-800 mb-2">
+                  No se encontraron productos
+                </h3>
+                <p className="text-secondary-500 text-center mb-6 max-w-md">
+                  No hay productos que coincidan con los filtros seleccionados. Intenta ajustar tus criterios de búsqueda.
+                </p>
+                <button
+                  onClick={clearAllFilters}
+                  className="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
                 >
-                  <div className="w-24 h-24 bg-secondary-100 rounded-full flex items-center justify-center mb-6">
-                    <ShoppingBag className="w-12 h-12 text-secondary-400" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-secondary-800 mb-2">
-                    No se encontraron productos
-                  </h3>
-                  <p className="text-secondary-500 text-center mb-6 max-w-md">
-                    No hay productos que coincidan con los filtros seleccionados. Intenta ajustar tus criterios de búsqueda.
-                  </p>
-                  <button
-                    onClick={clearAllFilters}
-                    className="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
-                  >
-                    <X className="w-4 h-4" />
-                    Limpiar todos los filtros
-                  </button>
-                </motion.div>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 lg:gap-6">
+                  <X className="w-4 h-4" />
+                  Limpiar todos los filtros
+                </button>
+              </motion.div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 lg:gap-6">
                 {filteredProducts.slice(0, displayLimit).map((product) => {
-                const stock = getTotalStock(product)
-                const isOutOfStock = stock === 0
-                
-                return (
-                  <div
-                    key={product.id}
-                    className="group bg-white rounded-2xl border border-secondary-100 hover:border-primary-300 overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/10 md:hover:-translate-y-1 cursor-pointer"
-                  >
-                    {/* Wrapper clickeable para toda la card */}
-                    <Link href={`/producto/${product.id}`} className="block">
-                      {/* Imagen */}
-                      <div className="relative aspect-[4/5] overflow-hidden bg-white p-4">
-                      <Image
-                        src={product.image_url || '/placeholder.png'}
-                        alt={product.name}
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                        className="object-contain transition-transform duration-300 group-hover:scale-105"
-                        loading="lazy"
-                      />
+                  const stock = getTotalStock(product)
+                  const isOutOfStock = stock === 0
 
-                      {/* Badges promocionales */}
-                      <ProductBadges
-                        isNew={product.is_new}
-                        discount={getDiscount(product) || undefined}
-                        lowStock={isOutOfStock ? 0 : stock}
-                        isBestSeller={product.is_best_seller}
-                        collection={product.collection}
-                      />
+                  return (
+                    <div
+                      key={product.id}
+                      className="group bg-white rounded-2xl border border-secondary-100 hover:border-primary-300 overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/10 md:hover:-translate-y-1 cursor-pointer"
+                    >
+                      {/* Wrapper clickeable para toda la card */}
+                      <Link href={`/producto/${product.id}`} className="block">
+                        {/* Imagen */}
+                        <div className="relative aspect-[4/5] overflow-hidden bg-white p-4">
+                          <Image
+                            src={product.image_url || '/placeholder.png'}
+                            alt={product.name}
+                            fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                            className="object-contain transition-transform duration-300 group-hover:scale-105"
+                            loading="lazy"
+                          />
 
-                      {/* Botón Wishlist */}
-                      <WishlistButton 
-                        productId={product.id} 
-                        productName={product.name}
-                      />
+                          {/* Badges promocionales */}
+                          <ProductBadges
+                            isNew={product.is_new}
+                            discount={getDiscount(product) || undefined}
+                            lowStock={isOutOfStock ? 0 : stock}
+                            isBestSeller={product.is_best_seller}
+                            collection={product.collection}
+                          />
 
-                      {/* AGOTADO overlay */}
-                      {isOutOfStock && (
-                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center z-10 pointer-events-none">
-                          <span className="bg-red-600 text-white font-black text-sm px-4 py-2 rounded-full tracking-widest shadow-lg">
-                            AGOTADO
-                          </span>
-                        </div>
-                      )}
-                    </div>
+                          {/* Botón Wishlist */}
+                          <WishlistButton
+                            productId={product.id}
+                            productName={product.name}
+                          />
 
-                    {/* Info */}
-                    <div className="p-4 sm:p-5">
-                      {/* Categoría + Marca */}
-                      <div className="flex items-center justify-between mb-1.5">
-                        <div className="flex items-center gap-1.5">
-                          <Tag className="w-3 h-3 text-primary-400" aria-hidden="true" />
-                          <span className="text-xs text-secondary-400 font-medium uppercase tracking-wide">
-                            {product.categories?.name || 'Sin categoría'}
-                          </span>
-                        </div>
-                        {product.brand && (
-                          <span className="text-[10px] bg-accent-100 text-accent-700 px-2 py-0.5 rounded-full font-semibold">
-                            {product.brand}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Nombre */}
-                      <h3 className="text-sm sm:text-base font-bold text-secondary-800 mb-1.5 leading-snug line-clamp-2 min-h-[2.5rem] group-hover:text-primary-600 transition-colors">
-                        {product.name}
-                      </h3>
-
-                      {/* Descripción */}
-                      {product.description && (
-                        <p className="text-xs text-secondary-400 mb-2 line-clamp-2">
-                          {product.description}
-                        </p>
-                      )}
-
-                      {/* Colores disponibles */}
-                      {product.colors && product.colors.length > 0 && (
-                        <div className="flex items-center gap-2 mb-2">
-                          <Palette className="w-3 h-3 text-secondary-400" />
-                          <div className="flex flex-wrap gap-1">
-                            {product.colors.slice(0, 3).map((color) => (
-                              <span
-                                key={color}
-                                className="text-[10px] text-secondary-500 bg-secondary-100 rounded px-1.5 py-0.5"
-                              >
-                                {color}
-                              </span>
-                            ))}
-                            {product.colors.length > 3 && (
-                              <span className="text-[10px] text-secondary-400">
-                                +{product.colors.length - 3}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Tallas */}
-                      {product.sizes && product.sizes.length > 0 && (
-                        <div className="flex items-center gap-2 mb-3">
-                          <Ruler className="w-3 h-3 text-secondary-400" />
-                          <div className="flex flex-wrap gap-1">
-                            {product.sizes.slice(0, 4).map((size) => (
-                              <span
-                                key={size}
-                                className="text-[10px] text-secondary-400 border border-secondary-200 rounded px-1.5 py-0.5"
-                              >
-                                {size}
-                              </span>
-                            ))}
-                            {product.sizes.length > 4 && (
-                              <span className="text-[10px] text-secondary-400 border border-secondary-200 rounded px-1.5 py-0.5">
-                                +{product.sizes.length - 4}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Precio + Stock */}
-                      <div className="flex items-end justify-between pt-2 border-t border-secondary-100">
-                        <div>
-                          {hasDiscount(product) ? (
-                            <div className="flex flex-col gap-0.5">
-                              <div className="flex items-baseline gap-2">
-                                <span className="text-2xl font-black text-red-600">
-                                  Bs {getPriceWithDiscount(product).toFixed(2)}
-                                </span>
-                              </div>
-                              <span className="text-xs text-gray-400 line-through decoration-red-500 decoration-1">
-                                Bs {product.price.toFixed(2)}
-                              </span>
-                            </div>
-                          ) : (
-                            <div className="flex items-baseline">
-                              <span className="text-2xl font-black text-primary-600">
-                                Bs {product.price.toFixed(2)}
+                          {/* AGOTADO overlay */}
+                          {isOutOfStock && (
+                            <div className="absolute inset-0 bg-black/40 flex items-center justify-center z-10 pointer-events-none">
+                              <span className="bg-red-600 text-white font-black text-sm px-4 py-2 rounded-full tracking-widest shadow-lg">
+                                AGOTADO
                               </span>
                             </div>
                           )}
                         </div>
-                        <div className="text-right">
-                          {isOutOfStock ? (
-                            <span className="text-red-400 text-xs font-semibold">
-                              Agotado · Consultar disponibilidad
-                            </span>
-                          ) : stock <= 5 ? (
-                            <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-amber-500 text-white shadow-md">
-                              ⚠️ Últimas unidades
-                            </span>
-                          ) : null}
-                        </div>
-                      </div>
-                    </div>
-                    </Link>
 
-                    {/* Botones: Ver detalles + WhatsApp (una sola entrada WhatsApp por card) */}
-                    <div className="px-4 pb-4 sm:px-5 sm:pb-5 flex gap-2">
-                      <Link
-                        href={`/producto/${product.id}`}
-                        onClick={(e) => e.stopPropagation()}
-                        className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
-                          isOutOfStock
+                        {/* Info */}
+                        <div className="p-4 sm:p-5">
+                          {/* Categoría + Marca */}
+                          <div className="flex items-center justify-between mb-1.5">
+                            <div className="flex items-center gap-1.5">
+                              <Tag className="w-3 h-3 text-primary-400" aria-hidden="true" />
+                              <span className="text-xs text-secondary-400 font-medium uppercase tracking-wide">
+                                {product.categories?.name || 'Sin categoría'}
+                              </span>
+                            </div>
+                            {product.brand && (
+                              <span className="text-[10px] bg-accent-100 text-accent-700 px-2 py-0.5 rounded-full font-semibold">
+                                {product.brand}
+                              </span>
+                            )}
+                          </div>
+
+                          {/* Nombre */}
+                          <h3 className="text-sm sm:text-base font-bold text-secondary-800 mb-1.5 leading-snug line-clamp-2 min-h-[2.5rem] group-hover:text-primary-600 transition-colors">
+                            {product.name}
+                          </h3>
+
+                          {/* Descripción */}
+                          {product.description && (
+                            <p className="text-xs text-secondary-400 mb-2 line-clamp-2">
+                              {product.description}
+                            </p>
+                          )}
+
+                          {/* Colores disponibles */}
+                          {product.colors && product.colors.length > 0 && (
+                            <div className="flex items-center gap-2 mb-2">
+                              <Palette className="w-3 h-3 text-secondary-400" />
+                              <div className="flex flex-wrap gap-1">
+                                {product.colors.slice(0, 3).map((color) => (
+                                  <span
+                                    key={color}
+                                    className="text-[10px] text-secondary-500 bg-secondary-100 rounded px-1.5 py-0.5"
+                                  >
+                                    {color}
+                                  </span>
+                                ))}
+                                {product.colors.length > 3 && (
+                                  <span className="text-[10px] text-secondary-400">
+                                    +{product.colors.length - 3}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Tallas */}
+                          {product.sizes && product.sizes.length > 0 && (
+                            <div className="flex items-center gap-2 mb-3">
+                              <Ruler className="w-3 h-3 text-secondary-400" />
+                              <div className="flex flex-wrap gap-1">
+                                {product.sizes.slice(0, 4).map((size) => (
+                                  <span
+                                    key={size}
+                                    className="text-[10px] text-secondary-400 border border-secondary-200 rounded px-1.5 py-0.5"
+                                  >
+                                    {size}
+                                  </span>
+                                ))}
+                                {product.sizes.length > 4 && (
+                                  <span className="text-[10px] text-secondary-400 border border-secondary-200 rounded px-1.5 py-0.5">
+                                    +{product.sizes.length - 4}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Precio + Stock */}
+                          <div className="flex items-end justify-between pt-2 border-t border-secondary-100">
+                            <div>
+                              {hasDiscount(product) ? (
+                                <div className="flex flex-col gap-0.5">
+                                  <div className="flex items-baseline gap-2">
+                                    <span className="text-2xl font-black text-red-600">
+                                      Bs {getPriceWithDiscount(product).toFixed(2)}
+                                    </span>
+                                  </div>
+                                  <span className="text-xs text-gray-400 line-through decoration-red-500 decoration-1">
+                                    Bs {product.price.toFixed(2)}
+                                  </span>
+                                </div>
+                              ) : (
+                                <div className="flex items-baseline">
+                                  <span className="text-2xl font-black text-primary-600">
+                                    Bs {product.price.toFixed(2)}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+                            <div className="text-right">
+                              {isOutOfStock ? (
+                                <span className="text-red-400 text-xs font-semibold">
+                                  Agotado · Consultar disponibilidad
+                                </span>
+                              ) : stock <= 5 ? (
+                                <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-amber-500 text-white shadow-md">
+                                  ⚠️ Últimas unidades
+                                </span>
+                              ) : null}
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+
+                      {/* Botones: Ver detalles + WhatsApp (una sola entrada WhatsApp por card) */}
+                      <div className="px-4 pb-4 sm:px-5 sm:pb-5 flex gap-2">
+                        <Link
+                          href={`/producto/${product.id}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${isOutOfStock
                             ? 'bg-gray-300 text-gray-500 cursor-not-allowed pointer-events-none opacity-50'
                             : 'bg-primary-800 hover:bg-primary-900 text-white'
-                        }`}
-                      >
-                        <ShoppingCart className="w-4 h-4" />
-                        {isOutOfStock ? 'Agotado' : 'Ver detalles'}
-                      </Link>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          handleWhatsAppConsult(product)
-                        }}
-                        className="px-4 py-2.5 bg-whatsapp hover:bg-whatsapp-dark text-white rounded-full transition-all duration-300"
-                      >
-                        <MessageCircle className="w-4 h-4" />
-                      </button>
+                            }`}
+                        >
+                          <ShoppingCart className="w-4 h-4" />
+                          {isOutOfStock ? 'Agotado' : 'Ver detalles'}
+                        </Link>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleWhatsAppConsult(product)
+                          }}
+                          className="px-4 py-2.5 bg-whatsapp hover:bg-whatsapp-dark text-white rounded-full transition-all duration-300"
+                        >
+                          <MessageCircle className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                )
-              })}
-                </div>
-              )}
+                  )
+                })}
+              </div>
+            )}
 
-              {/* ── Botón Cargar Más ── */}
-              {filteredProducts.length > 0 && filteredProducts.length > displayLimit && (
-                <div className="text-center mt-8">
-                  <button
-                    onClick={() => setDisplayLimit(prev => prev + 12)}
-                    className="inline-flex items-center gap-2 bg-primary-800 hover:bg-primary-900 text-white px-8 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
-                  >
-                    <Plus className="w-4 h-4" />
-                    Cargar más productos ({filteredProducts.length - displayLimit} restantes)
-                  </button>
-                </div>
-              )}
-
-              {/* ── CTA inferior ── */}
-              <motion.div
-                variants={headingVariants}
-                className="text-center mt-12 md:mt-16"
-              >
-                <p className="text-secondary-400 text-sm mb-4">
-                  ¿No encontraste lo que buscas? Tenemos mucho más en tienda
-                </p>
-                <a
-                  href="https://wa.me/59176020369?text=Hola%20Lukess%20Home%2C%20quiero%20consultar%20sobre%20otros%20productos"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-secondary-800 hover:bg-secondary-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg shadow-secondary-800/25"
+            {/* ── Botón Cargar Más ── */}
+            {filteredProducts.length > 0 && filteredProducts.length > displayLimit && (
+              <div className="text-center mt-8">
+                <button
+                  onClick={() => setDisplayLimit(prev => prev + 12)}
+                  className="inline-flex items-center gap-2 bg-primary-800 hover:bg-primary-900 text-white px-8 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
                 >
                   <Plus className="w-4 h-4" />
-                  Pregunta por más productos
-                </a>
-              </motion.div>
+                  Cargar más productos ({filteredProducts.length - displayLimit} restantes)
+                </button>
+              </div>
+            )}
+
+            {/* ── CTA inferior ── */}
+            <motion.div
+              variants={headingVariants}
+              className="text-center mt-12 md:mt-16"
+            >
+              <p className="text-secondary-400 text-sm mb-4">
+                ¿No encontraste lo que buscas? Tenemos mucho más en tienda
+              </p>
+              <a
+                href={buildWhatsAppUrl("Hola Lukess Home, quiero consultar sobre otros productos")}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-secondary-800 hover:bg-secondary-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg shadow-secondary-800/25"
+              >
+                <Plus className="w-4 h-4" />
+                Pregunta por más productos
+              </a>
+            </motion.div>
           </div>
         </motion.div>
       </Container>

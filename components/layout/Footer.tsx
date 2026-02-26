@@ -4,6 +4,7 @@ import Container from '@/components/ui/Container'
 import { Mail, MapPin, Phone, Facebook, Instagram, Send } from 'lucide-react'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
+import { buildWhatsAppUrl, formatWhatsAppNumber } from '@/lib/utils/whatsapp'
 
 export default function Footer() {
   const [email, setEmail] = useState('')
@@ -11,7 +12,7 @@ export default function Footer() {
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!email) return
-    
+
     // Guardar en localStorage (después conectar con servicio de email)
     localStorage.setItem('newsletter-email', email)
     toast.success('¡Suscripción exitosa! Revisa tu email.')
@@ -144,8 +145,8 @@ export default function Footer() {
                   <Phone className="w-5 h-5 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-semibold text-sm">WhatsApp</p>
-                    <a href="https://wa.me/59176020369" className="hover:text-accent-400 transition-colors text-sm">
-                      +591 76020369
+                    <a href={buildWhatsAppUrl("Hola, vengo desde la web de Lukess Home")} className="hover:text-accent-400 transition-colors text-sm">
+                      {formatWhatsAppNumber()}
                     </a>
                   </div>
                 </li>
@@ -211,9 +212,9 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/70">
             <p>© 2026 Lukess Home. Todos los derechos reservados.</p>
             <p>
-              📍 Mercado Mutualista, Santa Cruz, Bolivia | 
-              <a href="https://wa.me/59176020369" className="hover:text-white ml-1">
-                WhatsApp: +591 76020369
+              📍 Mercado Mutualista, Santa Cruz, Bolivia |
+              <a href={buildWhatsAppUrl("Hola, vengo desde la web de Lukess Home")} className="hover:text-white ml-1">
+                WhatsApp: {formatWhatsAppNumber()}
               </a>
             </p>
           </div>

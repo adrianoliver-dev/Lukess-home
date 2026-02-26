@@ -1,3 +1,4 @@
+import { buildWhatsAppUrl, formatWhatsAppNumber } from '@/lib/utils/whatsapp'
 import { LegalPageTemplate } from '@/components/legal/LegalPageTemplate'
 import { Metadata } from 'next'
 
@@ -83,9 +84,9 @@ export default function PoliticasEnvioPage() {
           Contacto
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          Para consultas sobre envíos, contáctanos por WhatsApp: 
-          <a href="https://wa.me/59176020369" className="text-primary-600 font-semibold ml-1">
-            +591 76020369
+          Para consultas sobre envíos, contáctanos por WhatsApp:
+          <a href={buildWhatsAppUrl("Hola, consulta sobre envíos")} className="text-primary-600 font-semibold ml-1">
+            {formatWhatsAppNumber()}
           </a>
         </p>
       </section>

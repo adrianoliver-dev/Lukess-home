@@ -1,3 +1,4 @@
+import { buildWhatsAppUrl, formatWhatsAppNumber } from '@/lib/utils/whatsapp'
 import { LegalPageTemplate } from '@/components/legal/LegalPageTemplate'
 import { Metadata } from 'next'
 
@@ -43,7 +44,7 @@ export default function ComoComprarPage() {
         <ol className="space-y-4">
           <li>
             <strong>1. Contáctanos</strong>
-            <p>Envía un mensaje a <a href="https://wa.me/59176020369" className="text-primary-600 font-semibold">+591 76020369</a></p>
+            <p>Envía un mensaje a <a href={buildWhatsAppUrl("Hola, vengo desde la web de Lukess Home")} className="text-primary-600 font-semibold">{formatWhatsAppNumber()}</a></p>
           </li>
           <li>
             <strong>2. Indica el producto</strong>
@@ -86,7 +87,7 @@ export default function ComoComprarPage() {
             Nuestro equipo está listo para ayudarte en cada paso del proceso de compra.
           </p>
           <a
-            href="https://wa.me/59176020369?text=Hola,%20tengo%20dudas%20sobre%20cómo%20comprar"
+            href={buildWhatsAppUrl("Hola, tengo dudas sobre cómo comprar")}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-whatsapp text-white px-6 py-3 rounded-lg font-semibold hover:bg-whatsapp-dark transition-colors"

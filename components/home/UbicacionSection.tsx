@@ -1,14 +1,14 @@
 "use client";
 
 import { MapPin, Clock, Phone, MessageCircle, Bus, ParkingCircle, Landmark } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useInView } from "react-intersection-observer";
 import Container from "@/components/ui/Container";
+import { buildWhatsAppUrl, formatWhatsAppNumber } from "@/lib/utils/whatsapp";
 
 /* ───────── Constantes ───────── */
 
-const WHATSAPP_URL =
-  "https://wa.me/59176020369?text=Hola%20Lukess%20Home%2C%20quiero%20consultar%20sobre%20sus%20productos";
+const WHATSAPP_URL = buildWhatsAppUrl("Hola Lukess Home, quiero consultar sobre sus productos");
 
 const MAPS_EMBED_SRC =
   "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3798.537!2d-63.161667!3d-17.762778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTfCsDQ1JzQ2LjAiUyA2M8KwMDknNDIuMCJX!5e0!3m2!1ses!2sbo!4v1234567890";
@@ -156,10 +156,10 @@ export default function UbicacionSection() {
                     Teléfono
                   </h3>
                   <a
-                    href="tel:+59176020369"
+                    href={`tel:${formatWhatsAppNumber().replace(' ', '')}`}
                     className="text-primary-500 hover:text-primary-700 text-sm font-semibold transition-colors"
                   >
-                    (+591) 76020369
+                    {formatWhatsAppNumber()}
                   </a>
                 </div>
               </div>

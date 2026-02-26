@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { MessageCircle, ShoppingBag, Tag, ShoppingCart } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { useInView } from "react-intersection-observer";
 import Container from "@/components/ui/Container";
 import { Product } from "@/lib/types";
@@ -16,14 +16,9 @@ import {
 import { useCart } from "@/lib/context/CartContext";
 import toast from "react-hot-toast";
 
-/* ───────── WhatsApp helper ───────── */
+import { buildWhatsAppUrl } from "@/lib/utils/whatsapp";
 
-function buildWhatsAppUrl(name: string, price: number): string {
-  const msg = encodeURIComponent(
-    `Hola Lukess Home, me interesa el ${name} de ${price} Bs. ¿Está disponible?`
-  );
-  return `https://wa.me/59176020369?text=${msg}`;
-}
+/* ───────── Constantes ───────── */
 
 /* ───────── Variantes de animación ───────── */
 
@@ -94,7 +89,7 @@ export function CatalogoSection() {
       categories: { name: product.category },
       inventory: [{ quantity: 99, location_id: '', locations: { name: 'Tienda' } }]
     };
-    
+
     addToCart(productForCart, 1);
     toast.success(`${product.name} agregado al carrito`);
   };
@@ -153,10 +148,9 @@ export function CatalogoSection() {
                 className={`
                   px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold
                   transition-all duration-300
-                  ${
-                    activeFilter === cat
-                      ? "bg-primary-500 text-white shadow-lg shadow-primary-500/25 scale-105"
-                      : "bg-secondary-100 text-secondary-600 hover:bg-secondary-200 hover:text-secondary-800"
+                  ${activeFilter === cat
+                    ? "bg-primary-500 text-white shadow-lg shadow-primary-500/25 scale-105"
+                    : "bg-secondary-100 text-secondary-600 hover:bg-secondary-200 hover:text-secondary-800"
                   }
                 `}
               >
@@ -198,10 +192,9 @@ export function CatalogoSection() {
                       <span
                         className={`
                           absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide shadow-sm
-                          ${
-                            product.badge === "Nuevo"
-                              ? "bg-primary-500 text-white"
-                              : "bg-accent-500 text-secondary-900"
+                          ${product.badge === "Nuevo"
+                            ? "bg-primary-500 text-white"
+                            : "bg-accent-500 text-secondary-900"
                           }
                         `}
                       >
@@ -219,7 +212,7 @@ export function CatalogoSection() {
                         Agregar
                       </button>
                       <a
-                        href={buildWhatsAppUrl(product.name, product.price)}
+                        href={buildWhatsAppUrl(`Hola Lukess Home, me interesa el ${product.name} de ${product.price} Bs. ¿Está disponible?`)}
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`Consultar sobre ${product.name} por WhatsApp`}
@@ -299,7 +292,7 @@ export function CatalogoSection() {
                       Agregar
                     </button>
                     <a
-                      href={buildWhatsAppUrl(product.name, product.price)}
+                      href={buildWhatsAppUrl(`Hola Lukess Home, me interesa el ${product.name} de ${product.price} Bs. ¿Está disponible?`)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-4 py-2.5 bg-whatsapp hover:bg-whatsapp-dark text-white rounded-full transition-all duration-300 flex items-center justify-center"
@@ -321,7 +314,7 @@ export function CatalogoSection() {
               ¿No encontraste lo que buscas? Tenemos mucho más en tienda
             </p>
             <a
-              href="https://wa.me/59176020369?text=Hola%20Lukess%20Home%2C%20quiero%20consultar%20sobre%20otros%20productos"
+              href={buildWhatsAppUrl("Hola Lukess Home, quiero consultar sobre otros productos")}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-secondary-800 hover:bg-secondary-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg shadow-secondary-800/25"

@@ -1,3 +1,4 @@
+import { buildWhatsAppUrl } from '@/lib/utils/whatsapp'
 import { LegalPageTemplate } from '@/components/legal/LegalPageTemplate'
 import { Metadata } from 'next'
 
@@ -123,7 +124,7 @@ export default function GuiaTallasPage() {
             Nuestro equipo está disponible para asesorarte y ayudarte a elegir la talla perfecta.
           </p>
           <a
-            href="https://wa.me/59176020369?text=Hola,%20necesito%20ayuda%20con%20las%20tallas"
+            href={buildWhatsAppUrl("Hola, necesito ayuda con las tallas")}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-whatsapp text-white px-6 py-3 rounded-lg font-semibold hover:bg-whatsapp-dark transition-colors"

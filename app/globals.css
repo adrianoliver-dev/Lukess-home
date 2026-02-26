@@ -1,4 +1,12 @@
 @import "tailwindcss";
+@plugin "tailwindcss-motion";
+
+@theme {
+  --color-accent-500: #c89b6e;
+  /* resto de tus variables */
+}
+
+
 
 /* ===== Colores de marca Lukess Home - Premium Masculine ===== */
 @theme {
@@ -106,6 +114,7 @@
 
 /* ===== Reduced motion ===== */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {

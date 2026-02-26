@@ -13,6 +13,7 @@ import { useCart } from '@/lib/context/CartContext'
 import toast from 'react-hot-toast'
 import { ProductBadges } from '@/components/catalogo/ProductBadges'
 import { AuthModal } from '@/components/auth/AuthModal'
+import { buildWhatsAppUrl } from '@/lib/utils/whatsapp'
 
 interface WishlistClientProps {
   allProducts: Product[]
@@ -89,14 +90,13 @@ export function WishlistClient({ allProducts }: WishlistClientProps) {
   }
 
   const handleWhatsAppConsult = (product: Product) => {
-    const message = encodeURIComponent(
-      `Hola! Estoy interesado en:\n\n` +
+    const message = `Hola! Estoy interesado en:\n\n` +
       `📦 ${product.name}\n` +
       `💰 Precio: Bs ${product.price.toFixed(2)}\n` +
       `${product.brand ? `🏷️ Marca: ${product.brand}\n` : ''}` +
       `\n¿Tienen disponible?`
-    )
-    window.open(`https://wa.me/59176020369?text=${message}`, '_blank')
+
+    window.open(buildWhatsAppUrl(message), '_blank')
   }
 
   const handleShareWishlist = () => {
@@ -176,8 +176,8 @@ export function WishlistClient({ allProducts }: WishlistClientProps) {
                 Mi Lista de Deseos
               </h1>
               <p className="text-gray-600">
-                {wishlistProducts.length === 0 
-                  ? 'No tienes productos guardados aún' 
+                {wishlistProducts.length === 0
+                  ? 'No tienes productos guardados aún'
                   : `${wishlistProducts.length} producto${wishlistProducts.length !== 1 ? 's' : ''} guardado${wishlistProducts.length !== 1 ? 's' : ''}`
                 }
               </p>
@@ -235,7 +235,7 @@ export function WishlistClient({ allProducts }: WishlistClientProps) {
             {wishlistProducts.map((product) => {
               const stock = getTotalStock(product)
               const isOutOfStock = stock === 0
-              
+
               return (
                 <motion.div
                   key={product.id}
@@ -335,11 +335,10 @@ export function WishlistClient({ allProducts }: WishlistClientProps) {
                     <button
                       onClick={() => handleAddToCart(product)}
                       disabled={isOutOfStock}
-                      className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-semibold transition-all ${
-                        isOutOfStock
+                      className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-semibold transition-all ${isOutOfStock
                           ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                           : 'bg-primary-600 hover:bg-primary-700 text-white hover:scale-105'
-                      }`}
+                        }`}
                     >
                       <ShoppingCart className="w-4 h-4" />
                       {isOutOfStock ? 'Sin Stock' : 'Agregar'}

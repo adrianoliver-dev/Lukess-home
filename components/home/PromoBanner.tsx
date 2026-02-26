@@ -11,7 +11,7 @@ const promos = [
     title: '20% OFF',
     subtitle: 'Descuentos en productos seleccionados',
     cta: 'Ver ofertas',
-    href: '/#catalogo?filter=descuentos',
+    href: '/?filter=descuentos#catalogo',
     filter: 'descuentos',
     bg: 'linear-gradient(135deg, #DC2626 0%, #991B1B 100%)',
     textColor: 'white',
@@ -21,7 +21,7 @@ const promos = [
     title: 'Nueva Colección Primavera',
     subtitle: 'Descubre los nuevos estilos de temporada',
     cta: 'Ver colección',
-    href: '/#catalogo?filter=primavera',
+    href: '/?filter=primavera#catalogo',
     filter: 'primavera',
     bg: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
     textColor: 'white',
@@ -54,25 +54,24 @@ export function PromoBanner() {
 
   const handlePromoClick = (e: React.MouseEvent, promo: typeof promos[0]) => {
     e.preventDefault()
-    
-    // Extraer el ID del hash
-    const [hashBase] = promo.href.split('?')
-    const id = hashBase.replace('/#', '')
-    const element = document.getElementById(id)
-    
-    if (element) {
-      // Actualizar la URL con el filtro
-      window.history.pushState(null, '', promo.href)
-      
-      // Hacer scroll al elemento
-      const navbarHeight = 80
-      const top = element.getBoundingClientRect().top + window.scrollY - navbarHeight
-      window.scrollTo({ top, behavior: 'smooth' })
-      
-      // Disparar evento hashchange para que el catálogo lo detecte
-      setTimeout(() => {
-        window.dispatchEvent(new HashChangeEvent('hashchange'))
-      }, 300)
+
+    // Navegar usando el router de Next.js
+    router.push(promo.href)
+
+    // Extraer el ID del hash (ej: de '/?filter=x#catalogo' extraemos 'catalogo')
+    const hashPart = promo.href.split('#')[1]
+    if (hashPart) {
+      const id = hashPart.split('?')[0]
+      const element = document.getElementById(id)
+
+      if (element) {
+        // Pequeño delay para permitir que el router comience la navegación y el DOM se actualice si es necesario
+        setTimeout(() => {
+          const navbarHeight = 80
+          const top = element.getBoundingClientRect().top + window.scrollY - navbarHeight
+          window.scrollTo({ top, behavior: 'smooth' })
+        }, 100)
+      }
     }
   }
 
@@ -131,9 +130,8 @@ export function PromoBanner() {
           <button
             key={i}
             onClick={() => setCurrent(i)}
-            className={`h-2 rounded-full transition-all ${
-              i === current ? 'bg-white w-8' : 'bg-white/50 w-2'
-            }`}
+            className={`h-2 rounded-full transition-all ${i === current ? 'bg-white w-8' : 'bg-white/50 w-2'
+              }`}
             aria-label={`Ir a banner ${i + 1}`}
           />
         ))}

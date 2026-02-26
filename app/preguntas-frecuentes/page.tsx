@@ -1,4 +1,5 @@
 'use client'
+import { buildWhatsAppUrl } from '@/lib/utils/whatsapp'
 import { LegalPageTemplate } from '@/components/legal/LegalPageTemplate'
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
@@ -88,7 +89,7 @@ export default function PreguntasFrecuentesPage() {
             Contáctanos y te responderemos de inmediato.
           </p>
           <a
-            href="https://wa.me/59176020369?text=Hola,%20tengo%20una%20pregunta"
+            href={buildWhatsAppUrl("Hola, tengo una pregunta")}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-whatsapp text-white px-6 py-3 rounded-lg font-semibold hover:bg-whatsapp-dark transition-colors"

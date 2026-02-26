@@ -1,3 +1,4 @@
+import { formatWhatsAppNumber } from '@/lib/utils/whatsapp'
 import { LegalPageTemplate } from '@/components/legal/LegalPageTemplate'
 import { Metadata } from 'next'
 
@@ -14,8 +15,8 @@ export default function TerminosPage() {
           1. Aceptación de los Términos
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          Al acceder y utilizar lukesshome.com, usted acepta estar sujeto a estos 
-          términos y condiciones de uso, todas las leyes y regulaciones aplicables, 
+          Al acceder y utilizar lukesshome.com, usted acepta estar sujeto a estos
+          términos y condiciones de uso, todas las leyes y regulaciones aplicables,
           y acepta que es responsable del cumplimiento de las leyes locales aplicables.
         </p>
       </section>
@@ -25,7 +26,7 @@ export default function TerminosPage() {
           2. Uso del Sitio
         </h2>
         <p className="text-gray-700 leading-relaxed mb-4">
-          Este sitio web está destinado únicamente para uso personal y no comercial. 
+          Este sitio web está destinado únicamente para uso personal y no comercial.
           Usted no puede:
         </p>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
@@ -41,9 +42,9 @@ export default function TerminosPage() {
           3. Productos y Precios
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          Todos los productos están sujetos a disponibilidad en nuestros 3 puestos del 
-          Mercado Mutualista. Los precios pueden cambiar sin previo aviso. Nos reservamos 
-          el derecho de limitar las cantidades de compra por persona o pedido. Las imágenes 
+          Todos los productos están sujetos a disponibilidad en nuestros 3 puestos del
+          Mercado Mutualista. Los precios pueden cambiar sin previo aviso. Nos reservamos
+          el derecho de limitar las cantidades de compra por persona o pedido. Las imágenes
           son referenciales y pueden variar del producto real.
         </p>
       </section>
@@ -53,10 +54,10 @@ export default function TerminosPage() {
           4. Proceso de Compra
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          Al realizar un pedido a través de WhatsApp o en tienda, usted garantiza que toda 
-          la información proporcionada es verdadera y precisa. Lukess Home se reserva el 
-          derecho de rechazar cualquier pedido por cualquier motivo, incluyendo pero no 
-          limitado a: disponibilidad de producto, errores en precios, o información 
+          Al realizar un pedido a través de WhatsApp o en tienda, usted garantiza que toda
+          la información proporcionada es verdadera y precisa. Lukess Home se reserva el
+          derecho de rechazar cualquier pedido por cualquier motivo, incluyendo pero no
+          limitado a: disponibilidad de producto, errores en precios, o información
           incompleta del cliente.
         </p>
       </section>
@@ -81,8 +82,8 @@ export default function TerminosPage() {
           6. Limitaciones de Responsabilidad
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          Lukess Home no será responsable de ningún daño directo, indirecto, incidental, 
-          especial o consecuente que surja del uso o la incapacidad de usar nuestros 
+          Lukess Home no será responsable de ningún daño directo, indirecto, incidental,
+          especial o consecuente que surja del uso o la incapacidad de usar nuestros
           servicios, incluso si hemos sido notificados de la posibilidad de dichos daños.
         </p>
       </section>
@@ -92,8 +93,8 @@ export default function TerminosPage() {
           7. Modificaciones
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          Lukess Home se reserva el derecho de revisar estos términos en cualquier momento 
-          sin previo aviso. Al continuar utilizando este sitio web después de que se 
+          Lukess Home se reserva el derecho de revisar estos términos en cualquier momento
+          sin previo aviso. Al continuar utilizando este sitio web después de que se
           publiquen cambios, usted acepta estar sujeto a la versión revisada.
         </p>
       </section>
@@ -107,7 +108,7 @@ export default function TerminosPage() {
         </p>
         <div className="space-y-2 text-gray-700">
           <p>📧 Email: info@lukesshome.com</p>
-          <p>📱 WhatsApp: +591 76020369</p>
+          <p>📱 WhatsApp: {formatWhatsAppNumber()}</p>
           <p>📍 Mercado Mutualista, Santa Cruz, Bolivia</p>
         </div>
       </section>

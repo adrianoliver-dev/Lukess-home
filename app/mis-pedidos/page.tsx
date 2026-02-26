@@ -1,4 +1,5 @@
 'use client'
+import { buildWhatsAppUrl } from '@/lib/utils/whatsapp'
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
@@ -287,7 +288,7 @@ function OrderCard({ order }: { order: Order }) {
         </div>
         <div className="flex gap-2">
           <a
-            href={`https://wa.me/59176020369?text=Hola,%20quiero%20consultar%20mi%20pedido%20%23${order.id.slice(0, 8).toUpperCase()}`}
+            href={buildWhatsAppUrl(`Hola, quiero consultar mi pedido #${order.id.slice(0, 8).toUpperCase()}`)}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-all"
@@ -382,7 +383,7 @@ function GuestSearch() {
                 <p className="text-sm mt-1">
                   Verifica el email o{' '}
                   <a
-                    href="https://wa.me/59176020369?text=Hola,%20quiero%20consultar%20mi%20pedido"
+                    href={buildWhatsAppUrl("Hola, quiero consultar mi pedido")}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[#25d366] hover:underline font-medium"

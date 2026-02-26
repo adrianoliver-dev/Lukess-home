@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Star, Quote } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useInView } from "react-intersection-observer";
 import Container from "@/components/ui/Container";
 
@@ -88,11 +88,10 @@ function StarRating({ count }: { count: number }) {
       {Array.from({ length: 5 }).map((_, i) => (
         <Star
           key={i}
-          className={`w-4 h-4 ${
-            i < count
+          className={`w-4 h-4 ${i < count
               ? "text-accent-500 fill-accent-500"
               : "text-secondary-200"
-          }`}
+            }`}
         />
       ))}
     </div>
@@ -284,10 +283,9 @@ export default function TestimoniosSection() {
                   aria-label={`Ir al testimonio ${i + 1}`}
                   className={`
                     rounded-full transition-all duration-300
-                    ${
-                      activeIndex === i
-                        ? "w-8 h-2.5 bg-primary-500"
-                        : "w-2.5 h-2.5 bg-secondary-300 hover:bg-primary-300"
+                    ${activeIndex === i
+                      ? "w-8 h-2.5 bg-primary-500"
+                      : "w-2.5 h-2.5 bg-secondary-300 hover:bg-primary-300"
                     }
                   `}
                 />

@@ -1,7 +1,7 @@
 "use client";
 
 import { MapPin, Clock, Navigation } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useInView } from "react-intersection-observer";
 import Container from "@/components/ui/Container";
 

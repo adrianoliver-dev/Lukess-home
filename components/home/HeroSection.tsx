@@ -1,12 +1,12 @@
 "use client";
 
 import { MessageCircle, ChevronDown, MapPin } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
+import { buildWhatsAppUrl } from "@/lib/utils/whatsapp";
 
 /* ───────── Constantes ───────── */
 
-const WHATSAPP_URL =
-  "https://wa.me/59176020369?text=Hola%20Lukess%20Home,%20quiero%20consultar%20sobre%20sus%20productos";
+const WHATSAPP_URL = buildWhatsAppUrl("Hola Lukess Home, quiero consultar sobre sus productos");
 
 /* ───────── Variantes de animación ───────── */
 

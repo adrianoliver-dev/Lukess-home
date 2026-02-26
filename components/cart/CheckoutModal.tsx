@@ -36,6 +36,7 @@ import {
   getDistanceFromMutualista,
   getMapsLink,
 } from '@/lib/utils/shipping'
+import { buildWhatsAppUrl, WHATSAPP_NUMBER } from '@/lib/utils/whatsapp'
 
 const DeliveryMapPicker = dynamic(
   () => import('@/components/cart/DeliveryMapPicker'),
@@ -262,9 +263,9 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   // Out-of-range WhatsApp cotización
   const outOfRangeWaUrl =
     mapsLink
-      ? `https://wa.me/59176020369?text=${encodeURIComponent(
-          `Hola! Quiero cotizar un envío 📦\n*Productos:*\n${cart.map((i) => `• ${i.product.name} x${i.quantity}`).join('\n')}\n💰 Total del pedido: Bs ${total.toFixed(2)}\n📍 Ubicación de entrega: ${mapsLink}\n¿Cuánto cuesta el envío hasta allí? 🙏`,
-        )}`
+      ? buildWhatsAppUrl(
+        `Hola! Quiero cotizar un envío 📦\n*Productos:*\n${cart.map((i) => `• ${i.product.name} x${i.quantity}`).join('\n')}\n💰 Total del pedido: Bs ${total.toFixed(2)}\n📍 Ubicación de entrega: ${mapsLink}\n¿Cuánto cuesta el envío hasta allí? 🙏`,
+      )
       : ''
 
   const handleReceiptSelect = async (file: File) => {
@@ -448,8 +449,8 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
       setWhatsappMessage(
         encodeURIComponent(
           `Hola! Realicé el pedido #${shortId} por Bs ${orderTotal.toFixed(2)}.\n\n` +
-            `🛍️ *Productos:*\n${productList}${deliveryInfo}\n\n` +
-            `Ya realicé el pago por QR. ¿Pueden confirmar? 🙏`,
+          `🛍️ *Productos:*\n${productList}${deliveryInfo}\n\n` +
+          `Ya realicé el pago por QR. ¿Pueden confirmar? 🙏`,
         ),
       )
 
@@ -628,11 +629,10 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
               <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg pointer-events-auto max-h-[90vh] overflow-y-auto">
                 {/* Header */}
                 <div
-                  className={`p-6 border-b-2 border-gray-100 flex items-center justify-between rounded-t-2xl transition-colors ${
-                    step === 'success'
-                      ? 'bg-gradient-to-r from-green-500 to-green-600 text-white'
-                      : 'bg-primary-600 text-white'
-                  }`}
+                  className={`p-6 border-b-2 border-gray-100 flex items-center justify-between rounded-t-2xl transition-colors ${step === 'success'
+                    ? 'bg-gradient-to-r from-green-500 to-green-600 text-white'
+                    : 'bg-primary-600 text-white'
+                    }`}
                 >
                   <div className="flex items-center gap-3">
                     {step === 'form' && <ShoppingBag className="w-6 h-6" />}
@@ -689,10 +689,10 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                               className="flex items-center gap-1.5 bg-white border border-gray-300 hover:border-gray-400 text-gray-700 font-semibold text-xs px-3 py-1.5 rounded-lg shadow-sm transition-all whitespace-nowrap"
                             >
                               <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05" />
+                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
                               </svg>
                               Continuar con Google
                             </button>
@@ -770,11 +770,10 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             onBlur={(e) => {
                               if (e.target.value.trim()) setEmailError(validateEmail(e.target.value))
                             }}
-                            className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors ${
-                              emailError
-                                ? 'border-red-400 focus:border-red-500'
-                                : 'border-gray-200 focus:border-primary-500'
-                            }`}
+                            className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors ${emailError
+                              ? 'border-red-400 focus:border-red-500'
+                              : 'border-gray-200 focus:border-primary-500'
+                              }`}
                             placeholder="tucorreo@gmail.com"
                           />
                           {emailError && (
@@ -796,14 +795,13 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                               if (emailError && notifyByEmail) setEmailError('')
                             }}
                           >
-                            <div className={`w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-colors ${
-                              notifyByEmail
-                                ? 'bg-[#D4AF37] border-[#D4AF37]'
-                                : 'bg-transparent border-gray-500 group-hover:border-gray-300'
-                            }`}>
+                            <div className={`w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-colors ${notifyByEmail
+                              ? 'bg-[#D4AF37] border-[#D4AF37]'
+                              : 'bg-transparent border-gray-500 group-hover:border-gray-300'
+                              }`}>
                               {notifyByEmail && (
                                 <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-                                  <path d="M1 4L3.5 6.5L9 1" stroke="#111" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                  <path d="M1 4L3.5 6.5L9 1" stroke="#111" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                               )}
                             </div>
@@ -819,14 +817,13 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                               setNotifyByWhatsapp(!notifyByWhatsapp)
                             }}
                           >
-                            <div className={`w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-colors ${
-                              notifyByWhatsapp
-                                ? 'bg-[#D4AF37] border-[#D4AF37]'
-                                : 'bg-transparent border-gray-500 group-hover:border-gray-300'
-                            }`}>
+                            <div className={`w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-colors ${notifyByWhatsapp
+                              ? 'bg-[#D4AF37] border-[#D4AF37]'
+                              : 'bg-transparent border-gray-500 group-hover:border-gray-300'
+                              }`}>
                               {notifyByWhatsapp && (
                                 <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-                                  <path d="M1 4L3.5 6.5L9 1" stroke="#111" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                  <path d="M1 4L3.5 6.5L9 1" stroke="#111" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                               )}
                             </div>
@@ -858,11 +855,10 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                           <button
                             type="button"
                             onClick={() => setDeliveryMethod('delivery')}
-                            className={`p-4 rounded-xl border-2 text-left transition-all ${
-                              deliveryMethod === 'delivery'
-                                ? 'border-[#c89b6e] bg-[#fdf8f3] shadow-md'
-                                : 'border-gray-200 hover:border-gray-300'
-                            }`}
+                            className={`p-4 rounded-xl border-2 text-left transition-all ${deliveryMethod === 'delivery'
+                              ? 'border-[#c89b6e] bg-[#fdf8f3] shadow-md'
+                              : 'border-gray-200 hover:border-gray-300'
+                              }`}
                           >
                             <Truck
                               className={`w-6 h-6 mb-2 ${deliveryMethod === 'delivery' ? 'text-[#c89b6e]' : 'text-gray-400'}`}
@@ -888,11 +884,10 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                           <button
                             type="button"
                             onClick={() => setDeliveryMethod('pickup')}
-                            className={`p-4 rounded-xl border-2 text-left transition-all ${
-                              deliveryMethod === 'pickup'
-                                ? 'border-[#c89b6e] bg-[#fdf8f3] shadow-md'
-                                : 'border-gray-200 hover:border-gray-300'
-                            }`}
+                            className={`p-4 rounded-xl border-2 text-left transition-all ${deliveryMethod === 'pickup'
+                              ? 'border-[#c89b6e] bg-[#fdf8f3] shadow-md'
+                              : 'border-gray-200 hover:border-gray-300'
+                              }`}
                           >
                             <Store
                               className={`w-6 h-6 mb-2 ${deliveryMethod === 'pickup' ? 'text-[#c89b6e]' : 'text-gray-400'}`}
@@ -908,401 +903,399 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         {/* ── DELIVERY: location flow ── */}
                         {deliveryMethod === 'delivery' && (
                           <>
-                          <div className="bg-gray-50 border-2 border-gray-200 rounded-xl p-4 space-y-4">
-                            <div className="flex items-center gap-2">
-                              <MapPin className="w-4 h-4 text-[#c89b6e]" />
-                              <p className="text-sm font-semibold text-gray-700">
-                                ¿Dónde entregamos tu pedido?
-                              </p>
-                            </div>
-
-                            {/* STEP A — Initial: two options */}
-                            {locationState === 'initial' && (
-                              <div className="space-y-3">
-                                <button
-                                  type="button"
-                                  onClick={handleGps}
-                                  className="flex items-center gap-3 w-full p-3 rounded-xl border-2 border-[#c89b6e] bg-[#fdf8f3] hover:bg-[#f5ede0] transition-all text-left"
-                                >
-                                  <Navigation className="w-5 h-5 text-[#c89b6e] flex-shrink-0" />
-                                  <div>
-                                    <p className="text-sm font-bold text-gray-800">
-                                      Usar mi ubicación actual
-                                    </p>
-                                    <p className="text-xs text-gray-500">Rápido y preciso</p>
-                                  </div>
-                                </button>
-
-                                <div className="flex items-center gap-2">
-                                  <div className="flex-1 h-px bg-gray-200" />
-                                  <span className="text-xs text-gray-400 px-1">o</span>
-                                  <div className="flex-1 h-px bg-gray-200" />
-                                </div>
-
-                                <button
-                                  type="button"
-                                  onClick={handleOpenMap}
-                                  className="flex items-center gap-3 w-full p-3 rounded-xl border-2 border-gray-200 hover:border-gray-300 transition-all text-left"
-                                >
-                                  <Map className="w-5 h-5 text-gray-500 flex-shrink-0" />
-                                  <div>
-                                    <p className="text-sm font-bold text-gray-800">
-                                      Elegir en el mapa
-                                    </p>
-                                    <p className="text-xs text-gray-500">
-                                      Mueve el pin al lugar exacto
-                                    </p>
-                                  </div>
-                                </button>
-                              </div>
-                            )}
-
-                            {/* GPS Loading */}
-                            {locationState === 'gps_loading' && (
-                              <div className="flex items-center justify-center gap-3 py-6">
-                                <Loader2 className="w-6 h-6 animate-spin text-[#c89b6e]" />
-                                <p className="text-sm text-gray-600 font-medium">
-                                  Obteniendo tu ubicación...
+                            <div className="bg-gray-50 border-2 border-gray-200 rounded-xl p-4 space-y-4">
+                              <div className="flex items-center gap-2">
+                                <MapPin className="w-4 h-4 text-[#c89b6e]" />
+                                <p className="text-sm font-semibold text-gray-700">
+                                  ¿Dónde entregamos tu pedido?
                                 </p>
                               </div>
-                            )}
 
-                            {/* GPS Denied — instructions + map option */}
-                            {locationState === 'gps_denied' && (
-                              <div className="space-y-3">
-                                <div className="bg-red-50 border border-red-200 rounded-xl p-3 space-y-2.5">
-                                  <p className="text-xs font-bold text-red-700">
-                                    📍 Ubicación bloqueada
-                                  </p>
-                                  <p className="text-xs text-red-600">
-                                    GPS no disponible en este navegador.
-                                  </p>
-                                  <div className="space-y-1.5">
-                                    <p className="text-xs font-semibold text-gray-700">
-                                      Cómo activar:
-                                    </p>
-                                    <div className="bg-white border border-red-100 rounded-lg p-2.5">
-                                      <p className="text-xs text-gray-700 font-medium mb-0.5">
-                                        🖥️ Chrome / Edge:
-                                      </p>
-                                      <p className="text-xs text-gray-600 leading-relaxed">
-                                        Haz clic en el ícono 📍 tachado en la barra de dirección
-                                        (arriba izquierda) → activa{' '}
-                                        <strong>Ubicación</strong> → Permitir → recarga la página
-                                      </p>
-                                    </div>
-                                    <div className="bg-white border border-red-100 rounded-lg p-2.5">
-                                      <p className="text-xs text-gray-700 font-medium mb-0.5">
-                                        📱 Celular:
-                                      </p>
-                                      <p className="text-xs text-gray-600 leading-relaxed">
-                                        Toca el ícono en la barra de dirección → Permisos →{' '}
-                                        <strong>Ubicación</strong> → Permitir
-                                      </p>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="flex items-center gap-2">
-                                  <div className="flex-1 h-px bg-gray-200" />
-                                  <span className="text-xs text-gray-400 px-1">o elige en el mapa</span>
-                                  <div className="flex-1 h-px bg-gray-200" />
-                                </div>
-
-                                <button
-                                  type="button"
-                                  onClick={handleOpenMap}
-                                  className="flex items-center gap-3 w-full p-3 rounded-xl border-2 border-[#c89b6e] bg-[#fdf8f3] hover:bg-[#f5ede0] transition-all text-left"
-                                >
-                                  <Map className="w-5 h-5 text-[#c89b6e] flex-shrink-0" />
-                                  <div>
-                                    <p className="text-sm font-bold text-gray-800">
-                                      Elegir ubicación en el mapa
-                                    </p>
-                                    <p className="text-xs text-gray-500">
-                                      Sin necesidad de GPS
-                                    </p>
-                                  </div>
-                                </button>
-                              </div>
-                            )}
-
-                            {/* STEP B — Map open (draggable, with live cost) */}
-                            {locationState === 'map_open' &&
-                              gpsLat !== null &&
-                              gpsLng !== null && (
+                              {/* STEP A — Initial: two options */}
+                              {locationState === 'initial' && (
                                 <div className="space-y-3">
-                                  {locationSource === 'gps' && (
-                                    <div className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-lg px-3 py-2">
-                                      <Navigation className="w-3.5 h-3.5 text-green-600 flex-shrink-0" />
-                                      <p className="text-xs text-green-700 font-medium">
-                                        ✓ Ubicación GPS · puedes ajustar el pin si es necesario
+                                  <button
+                                    type="button"
+                                    onClick={handleGps}
+                                    className="flex items-center gap-3 w-full p-3 rounded-xl border-2 border-[#c89b6e] bg-[#fdf8f3] hover:bg-[#f5ede0] transition-all text-left"
+                                  >
+                                    <Navigation className="w-5 h-5 text-[#c89b6e] flex-shrink-0" />
+                                    <div>
+                                      <p className="text-sm font-bold text-gray-800">
+                                        Usar mi ubicación actual
+                                      </p>
+                                      <p className="text-xs text-gray-500">Rápido y preciso</p>
+                                    </div>
+                                  </button>
+
+                                  <div className="flex items-center gap-2">
+                                    <div className="flex-1 h-px bg-gray-200" />
+                                    <span className="text-xs text-gray-400 px-1">o</span>
+                                    <div className="flex-1 h-px bg-gray-200" />
+                                  </div>
+
+                                  <button
+                                    type="button"
+                                    onClick={handleOpenMap}
+                                    className="flex items-center gap-3 w-full p-3 rounded-xl border-2 border-gray-200 hover:border-gray-300 transition-all text-left"
+                                  >
+                                    <Map className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                                    <div>
+                                      <p className="text-sm font-bold text-gray-800">
+                                        Elegir en el mapa
+                                      </p>
+                                      <p className="text-xs text-gray-500">
+                                        Mueve el pin al lugar exacto
                                       </p>
                                     </div>
-                                  )}
+                                  </button>
+                                </div>
+                              )}
 
-                                  <DeliveryMapPicker
-                                    key="map-open"
-                                    lat={gpsLat}
-                                    lng={gpsLng}
-                                    draggable={true}
-                                    height={280}
-                                    onLocationSelect={handleMapLocationUpdate}
-                                  />
+                              {/* GPS Loading */}
+                              {locationState === 'gps_loading' && (
+                                <div className="flex items-center justify-center gap-3 py-6">
+                                  <Loader2 className="w-6 h-6 animate-spin text-[#c89b6e]" />
+                                  <p className="text-sm text-gray-600 font-medium">
+                                    Obteniendo tu ubicación...
+                                  </p>
+                                </div>
+                              )}
 
-                                  {/* Live cost preview */}
-                                  {gpsDistanceKm !== null && !isOutOfRange && (
-                                    <div className="bg-white border border-gray-200 rounded-lg px-3 py-2 space-y-0.5">
-                                      <p className="text-xs text-gray-600">
+                              {/* GPS Denied — instructions + map option */}
+                              {locationState === 'gps_denied' && (
+                                <div className="space-y-3">
+                                  <div className="bg-red-50 border border-red-200 rounded-xl p-3 space-y-2.5">
+                                    <p className="text-xs font-bold text-red-700">
+                                      📍 Ubicación bloqueada
+                                    </p>
+                                    <p className="text-xs text-red-600">
+                                      GPS no disponible en este navegador.
+                                    </p>
+                                    <div className="space-y-1.5">
+                                      <p className="text-xs font-semibold text-gray-700">
+                                        Cómo activar:
+                                      </p>
+                                      <div className="bg-white border border-red-100 rounded-lg p-2.5">
+                                        <p className="text-xs text-gray-700 font-medium mb-0.5">
+                                          🖥️ Chrome / Edge:
+                                        </p>
+                                        <p className="text-xs text-gray-600 leading-relaxed">
+                                          Haz clic en el ícono 📍 tachado en la barra de dirección
+                                          (arriba izquierda) → activa{' '}
+                                          <strong>Ubicación</strong> → Permitir → recarga la página
+                                        </p>
+                                      </div>
+                                      <div className="bg-white border border-red-100 rounded-lg p-2.5">
+                                        <p className="text-xs text-gray-700 font-medium mb-0.5">
+                                          📱 Celular:
+                                        </p>
+                                        <p className="text-xs text-gray-600 leading-relaxed">
+                                          Toca el ícono en la barra de dirección → Permisos →{' '}
+                                          <strong>Ubicación</strong> → Permitir
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div className="flex items-center gap-2">
+                                    <div className="flex-1 h-px bg-gray-200" />
+                                    <span className="text-xs text-gray-400 px-1">o elige en el mapa</span>
+                                    <div className="flex-1 h-px bg-gray-200" />
+                                  </div>
+
+                                  <button
+                                    type="button"
+                                    onClick={handleOpenMap}
+                                    className="flex items-center gap-3 w-full p-3 rounded-xl border-2 border-[#c89b6e] bg-[#fdf8f3] hover:bg-[#f5ede0] transition-all text-left"
+                                  >
+                                    <Map className="w-5 h-5 text-[#c89b6e] flex-shrink-0" />
+                                    <div>
+                                      <p className="text-sm font-bold text-gray-800">
+                                        Elegir ubicación en el mapa
+                                      </p>
+                                      <p className="text-xs text-gray-500">
+                                        Sin necesidad de GPS
+                                      </p>
+                                    </div>
+                                  </button>
+                                </div>
+                              )}
+
+                              {/* STEP B — Map open (draggable, with live cost) */}
+                              {locationState === 'map_open' &&
+                                gpsLat !== null &&
+                                gpsLng !== null && (
+                                  <div className="space-y-3">
+                                    {locationSource === 'gps' && (
+                                      <div className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-lg px-3 py-2">
+                                        <Navigation className="w-3.5 h-3.5 text-green-600 flex-shrink-0" />
+                                        <p className="text-xs text-green-700 font-medium">
+                                          ✓ Ubicación GPS · puedes ajustar el pin si es necesario
+                                        </p>
+                                      </div>
+                                    )}
+
+                                    <DeliveryMapPicker
+                                      key="map-open"
+                                      lat={gpsLat}
+                                      lng={gpsLng}
+                                      draggable={true}
+                                      height={280}
+                                      onLocationSelect={handleMapLocationUpdate}
+                                    />
+
+                                    {/* Live cost preview */}
+                                    {gpsDistanceKm !== null && !isOutOfRange && (
+                                      <div className="bg-white border border-gray-200 rounded-lg px-3 py-2 space-y-0.5">
+                                        <p className="text-xs text-gray-600">
+                                          📍{' '}
+                                          <span className="font-semibold">
+                                            {gpsDistanceKm.toFixed(1)} km
+                                          </span>{' '}
+                                          del local
+                                        </p>
+                                        <p className="text-xs text-gray-600">
+                                          🚚 Costo de envío:{' '}
+                                          {shippingCost === 0 ? (
+                                            <span className="text-green-600 font-bold">
+                                              Gratis 🎉
+                                            </span>
+                                          ) : (
+                                            <span className="font-bold text-gray-800">
+                                              Bs {shippingCost}
+                                            </span>
+                                          )}
+                                        </p>
+                                      </div>
+                                    )}
+
+                                    {/* Out of range warning in map_open */}
+                                    {isOutOfRange && gpsDistanceKm !== null && (
+                                      <div className="bg-red-50 border border-red-200 rounded-xl p-3 space-y-2">
+                                        <p className="text-xs font-bold text-red-700">
+                                          📍 {gpsDistanceKm.toFixed(1)} km — Fuera de zona de envío
+                                        </p>
+                                        <p className="text-xs text-red-600">
+                                          Máximo {MAX_DELIVERY_DISTANCE_KM} km. Mueve el pin a una
+                                          zona más cercana o cotiza por WhatsApp:
+                                        </p>
+                                        <a
+                                          href={outOfRangeWaUrl}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="flex items-center justify-center gap-2 w-full bg-[#25d366] hover:bg-[#1fb855] text-white text-xs font-semibold py-2 rounded-lg transition-all"
+                                        >
+                                          <MessageCircle className="w-3.5 h-3.5" />
+                                          Cotizar envío por WhatsApp
+                                        </a>
+                                        <div className="flex items-center gap-2 pt-1">
+                                          <div className="flex-1 h-px bg-red-200" />
+                                          <span className="text-xs text-red-400">ó</span>
+                                          <div className="flex-1 h-px bg-red-200" />
+                                        </div>
+                                        <button
+                                          type="button"
+                                          onClick={() => setDeliveryMethod('pickup')}
+                                          className="text-xs text-[#c89b6e] font-semibold underline hover:no-underline w-full text-center"
+                                        >
+                                          🏪 Ver opciones de recojo →
+                                        </button>
+                                      </div>
+                                    )}
+
+                                    {/* Confirm button (only if within range) */}
+                                    {!isOutOfRange && (
+                                      <button
+                                        type="button"
+                                        onClick={handleConfirmLocation}
+                                        className="w-full bg-[#c89b6e] hover:bg-[#b8895e] text-white font-bold py-2.5 rounded-xl text-sm transition-all"
+                                      >
+                                        ✓ Confirmar esta ubicación
+                                      </button>
+                                    )}
+                                  </div>
+                                )}
+
+                              {/* STEP C — Confirmed: smaller static map + summary */}
+                              {locationState === 'confirmed' &&
+                                gpsLat !== null &&
+                                gpsLng !== null && (
+                                  <div className="space-y-3">
+                                    <div className="flex items-center justify-between">
+                                      <p className="text-xs font-bold text-green-700">
+                                        ✓ Ubicación de entrega confirmada
+                                      </p>
+                                      <button
+                                        type="button"
+                                        onClick={handleResetLocation}
+                                        className="text-xs text-gray-500 hover:text-gray-700 underline"
+                                      >
+                                        Cambiar
+                                      </button>
+                                    </div>
+
+                                    <DeliveryMapPicker
+                                      key="map-confirmed"
+                                      lat={gpsLat}
+                                      lng={gpsLng}
+                                      draggable={false}
+                                      height={200}
+                                    />
+
+                                    <div className="bg-green-50 border border-green-200 rounded-lg px-3 py-2 space-y-0.5">
+                                      <p className="text-xs text-green-700">
                                         📍{' '}
                                         <span className="font-semibold">
-                                          {gpsDistanceKm.toFixed(1)} km
+                                          {gpsDistanceKm?.toFixed(1)} km
                                         </span>{' '}
                                         del local
                                       </p>
-                                      <p className="text-xs text-gray-600">
+                                      <p className="text-xs text-green-700">
                                         🚚 Costo de envío:{' '}
                                         {shippingCost === 0 ? (
-                                          <span className="text-green-600 font-bold">
-                                            Gratis 🎉
-                                          </span>
+                                          <span className="font-bold">Gratis 🎉</span>
                                         ) : (
-                                          <span className="font-bold text-gray-800">
-                                            Bs {shippingCost}
-                                          </span>
+                                          <span className="font-bold">Bs {shippingCost}</span>
                                         )}
                                       </p>
-                                    </div>
-                                  )}
-
-                                  {/* Out of range warning in map_open */}
-                                  {isOutOfRange && gpsDistanceKm !== null && (
-                                    <div className="bg-red-50 border border-red-200 rounded-xl p-3 space-y-2">
-                                      <p className="text-xs font-bold text-red-700">
-                                        📍 {gpsDistanceKm.toFixed(1)} km — Fuera de zona de envío
-                                      </p>
-                                      <p className="text-xs text-red-600">
-                                        Máximo {MAX_DELIVERY_DISTANCE_KM} km. Mueve el pin a una
-                                        zona más cercana o cotiza por WhatsApp:
-                                      </p>
-                                      <a
-                                        href={outOfRangeWaUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center justify-center gap-2 w-full bg-[#25d366] hover:bg-[#1fb855] text-white text-xs font-semibold py-2 rounded-lg transition-all"
-                                      >
-                                        <MessageCircle className="w-3.5 h-3.5" />
-                                        Cotizar envío por WhatsApp
-                                      </a>
-                                      <div className="flex items-center gap-2 pt-1">
-                                        <div className="flex-1 h-px bg-red-200" />
-                                        <span className="text-xs text-red-400">ó</span>
-                                        <div className="flex-1 h-px bg-red-200" />
-                                      </div>
-                                      <button
-                                        type="button"
-                                        onClick={() => setDeliveryMethod('pickup')}
-                                        className="text-xs text-[#c89b6e] font-semibold underline hover:no-underline w-full text-center"
-                                      >
-                                        🏪 Ver opciones de recojo →
-                                      </button>
-                                    </div>
-                                  )}
-
-                                  {/* Confirm button (only if within range) */}
-                                  {!isOutOfRange && (
-                                    <button
-                                      type="button"
-                                      onClick={handleConfirmLocation}
-                                      className="w-full bg-[#c89b6e] hover:bg-[#b8895e] text-white font-bold py-2.5 rounded-xl text-sm transition-all"
-                                    >
-                                      ✓ Confirmar esta ubicación
-                                    </button>
-                                  )}
-                                </div>
-                              )}
-
-                            {/* STEP C — Confirmed: smaller static map + summary */}
-                            {locationState === 'confirmed' &&
-                              gpsLat !== null &&
-                              gpsLng !== null && (
-                                <div className="space-y-3">
-                                  <div className="flex items-center justify-between">
-                                    <p className="text-xs font-bold text-green-700">
-                                      ✓ Ubicación de entrega confirmada
-                                    </p>
-                                    <button
-                                      type="button"
-                                      onClick={handleResetLocation}
-                                      className="text-xs text-gray-500 hover:text-gray-700 underline"
-                                    >
-                                      Cambiar
-                                    </button>
-                                  </div>
-
-                                  <DeliveryMapPicker
-                                    key="map-confirmed"
-                                    lat={gpsLat}
-                                    lng={gpsLng}
-                                    draggable={false}
-                                    height={200}
-                                  />
-
-                                  <div className="bg-green-50 border border-green-200 rounded-lg px-3 py-2 space-y-0.5">
-                                    <p className="text-xs text-green-700">
-                                      📍{' '}
-                                      <span className="font-semibold">
-                                        {gpsDistanceKm?.toFixed(1)} km
-                                      </span>{' '}
-                                      del local
-                                    </p>
-                                    <p className="text-xs text-green-700">
-                                      🚚 Costo de envío:{' '}
-                                      {shippingCost === 0 ? (
-                                        <span className="font-bold">Gratis 🎉</span>
-                                      ) : (
-                                        <span className="font-bold">Bs {shippingCost}</span>
+                                      {mapsLink && (
+                                        <a
+                                          href={mapsLink}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="inline-block text-xs text-[#c89b6e] hover:underline"
+                                        >
+                                          Ver en Maps →
+                                        </a>
                                       )}
-                                    </p>
-                                    {mapsLink && (
-                                      <a
-                                        href={mapsLink}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-block text-xs text-[#c89b6e] hover:underline"
-                                      >
-                                        Ver en Maps →
-                                      </a>
-                                    )}
+                                    </div>
                                   </div>
-                                </div>
-                              )}
+                                )}
 
-                            {/* Address + Reference + Recipient — only when confirmed */}
-                            {locationState === 'confirmed' && !isOutOfRange && (
-                              <>
-                                <div>
-                                  <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                                    Dirección *
-                                  </label>
-                                  <input
-                                    type="text"
-                                    value={shippingAddress}
-                                    onChange={(e) => {
-                                      setShippingAddress(e.target.value)
-                                      if (shippingAddressError) setShippingAddressError('')
-                                    }}
-                                    className={`w-full px-3 py-2.5 border-2 rounded-lg text-sm focus:outline-none transition-colors ${
-                                      shippingAddressError
-                                        ? 'border-red-400 focus:border-red-500'
-                                        : 'border-gray-200 focus:border-[#c89b6e]'
-                                    }`}
-                                    placeholder="Calle, número, zona/barrio"
-                                  />
-                                  {shippingAddressError && (
-                                    <p className="mt-1 text-xs text-red-500">
-                                      {shippingAddressError}
-                                    </p>
-                                  )}
-                                </div>
-
-                                <div>
-                                  <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                                    Referencia
-                                  </label>
-                                  <input
-                                    type="text"
-                                    value={shippingReference}
-                                    onChange={(e) => setShippingReference(e.target.value)}
-                                    className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg text-sm focus:border-[#c89b6e] focus:outline-none"
-                                    placeholder="Ej: Frente al parque, edificio azul"
-                                  />
-                                </div>
-
-                                {/* Recipient info */}
-                                <div className="border-t border-gray-200 pt-3 space-y-3">
-                                  <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">
-                                    ¿Quién recibe el pedido?
-                                  </p>
-
+                              {/* Address + Reference + Recipient — only when confirmed */}
+                              {locationState === 'confirmed' && !isOutOfRange && (
+                                <>
                                   <div>
                                     <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                                      Nombre de quien recibe *
+                                      Dirección *
                                     </label>
                                     <input
                                       type="text"
-                                      value={recipientName}
-                                      onChange={(e) => setRecipientName(e.target.value)}
-                                      className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg text-sm focus:border-[#c89b6e] focus:outline-none"
-                                      placeholder="Puede ser diferente al tuyo"
+                                      value={shippingAddress}
+                                      onChange={(e) => {
+                                        setShippingAddress(e.target.value)
+                                        if (shippingAddressError) setShippingAddressError('')
+                                      }}
+                                      className={`w-full px-3 py-2.5 border-2 rounded-lg text-sm focus:outline-none transition-colors ${shippingAddressError
+                                        ? 'border-red-400 focus:border-red-500'
+                                        : 'border-gray-200 focus:border-[#c89b6e]'
+                                        }`}
+                                      placeholder="Calle, número, zona/barrio"
                                     />
+                                    {shippingAddressError && (
+                                      <p className="mt-1 text-xs text-red-500">
+                                        {shippingAddressError}
+                                      </p>
+                                    )}
                                   </div>
 
                                   <div>
                                     <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                                      Teléfono de quien recibe *
+                                      Referencia
                                     </label>
                                     <input
-                                      type="tel"
-                                      value={recipientPhone}
-                                      onChange={(e) => {
-                                        setRecipientPhone(e.target.value)
-                                        if (recipientPhoneError) setRecipientPhoneError('')
-                                      }}
-                                      className={`w-full px-3 py-2.5 border-2 rounded-lg text-sm focus:outline-none transition-colors ${
-                                        recipientPhoneError
+                                      type="text"
+                                      value={shippingReference}
+                                      onChange={(e) => setShippingReference(e.target.value)}
+                                      className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg text-sm focus:border-[#c89b6e] focus:outline-none"
+                                      placeholder="Ej: Frente al parque, edificio azul"
+                                    />
+                                  </div>
+
+                                  {/* Recipient info */}
+                                  <div className="border-t border-gray-200 pt-3 space-y-3">
+                                    <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                                      ¿Quién recibe el pedido?
+                                    </p>
+
+                                    <div>
+                                      <label className="block text-xs font-semibold text-gray-600 mb-1.5">
+                                        Nombre de quien recibe *
+                                      </label>
+                                      <input
+                                        type="text"
+                                        value={recipientName}
+                                        onChange={(e) => setRecipientName(e.target.value)}
+                                        className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg text-sm focus:border-[#c89b6e] focus:outline-none"
+                                        placeholder="Puede ser diferente al tuyo"
+                                      />
+                                    </div>
+
+                                    <div>
+                                      <label className="block text-xs font-semibold text-gray-600 mb-1.5">
+                                        Teléfono de quien recibe *
+                                      </label>
+                                      <input
+                                        type="tel"
+                                        value={recipientPhone}
+                                        onChange={(e) => {
+                                          setRecipientPhone(e.target.value)
+                                          if (recipientPhoneError) setRecipientPhoneError('')
+                                        }}
+                                        className={`w-full px-3 py-2.5 border-2 rounded-lg text-sm focus:outline-none transition-colors ${recipientPhoneError
                                           ? 'border-red-400 focus:border-red-500'
                                           : 'border-gray-200 focus:border-[#c89b6e]'
-                                      }`}
-                                      placeholder="Para coordinar la entrega"
+                                          }`}
+                                        placeholder="Para coordinar la entrega"
+                                      />
+                                      {recipientPhoneError && (
+                                        <p className="mt-1 text-xs text-red-500">
+                                          {recipientPhoneError}
+                                        </p>
+                                      )}
+                                    </div>
+                                  </div>
+
+                                  {/* Delivery instructions — optional */}
+                                  <div>
+                                    <div className="flex items-center justify-between mb-1.5">
+                                      <label className="text-xs font-semibold text-gray-600">
+                                        📝 Instrucciones para el mensajero
+                                      </label>
+                                      <span className="text-xs text-gray-400">
+                                        {deliveryInstructions.length}/200
+                                      </span>
+                                    </div>
+                                    <textarea
+                                      value={deliveryInstructions}
+                                      onChange={(e) => {
+                                        if (e.target.value.length <= 200)
+                                          setDeliveryInstructions(e.target.value)
+                                      }}
+                                      rows={3}
+                                      className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg text-sm focus:border-[#c89b6e] focus:outline-none resize-none"
+                                      placeholder='Ej: "Tocar el timbre", "Llamar al llegar", "Casa azul con reja negra"'
                                     />
-                                    {recipientPhoneError && (
-                                      <p className="mt-1 text-xs text-red-500">
-                                        {recipientPhoneError}
-                                      </p>
-                                    )}
                                   </div>
-                                </div>
-
-                                {/* Delivery instructions — optional */}
-                                <div>
-                                  <div className="flex items-center justify-between mb-1.5">
-                                    <label className="text-xs font-semibold text-gray-600">
-                                      📝 Instrucciones para el mensajero
-                                    </label>
-                                    <span className="text-xs text-gray-400">
-                                      {deliveryInstructions.length}/200
-                                    </span>
-                                  </div>
-                                  <textarea
-                                    value={deliveryInstructions}
-                                    onChange={(e) => {
-                                      if (e.target.value.length <= 200)
-                                        setDeliveryInstructions(e.target.value)
-                                    }}
-                                    rows={3}
-                                    className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg text-sm focus:border-[#c89b6e] focus:outline-none resize-none"
-                                    placeholder='Ej: "Tocar el timbre", "Llamar al llegar", "Casa azul con reja negra"'
-                                  />
-                                </div>
-                              </>
-                            )}
-                          </div>
-
-                          {/* Coordination notice */}
-                          <div className="flex items-start gap-2.5 bg-blue-50 border border-blue-200 rounded-xl px-3 py-2.5">
-                            <span className="text-base flex-shrink-0 mt-0.5">ℹ️</span>
-                            <div>
-                              <p className="text-xs font-semibold text-blue-700 mb-0.5">
-                                Importante
-                              </p>
-                              <p className="text-xs text-blue-600 leading-relaxed">
-                                Te avisaremos por WhatsApp antes de enviar tu pedido para
-                                coordinar la entrega. Asegúrate de estar disponible en la
-                                ubicación indicada.
-                              </p>
+                                </>
+                              )}
                             </div>
-                          </div>
+
+                            {/* Coordination notice */}
+                            <div className="flex items-start gap-2.5 bg-blue-50 border border-blue-200 rounded-xl px-3 py-2.5">
+                              <span className="text-base flex-shrink-0 mt-0.5">ℹ️</span>
+                              <div>
+                                <p className="text-xs font-semibold text-blue-700 mb-0.5">
+                                  Importante
+                                </p>
+                                <p className="text-xs text-blue-600 leading-relaxed">
+                                  Te avisaremos por WhatsApp antes de enviar tu pedido para
+                                  coordinar la entrega. Asegúrate de estar disponible en la
+                                  ubicación indicada.
+                                </p>
+                              </div>
+                            </div>
                           </>
                         )}
 
@@ -1328,11 +1321,10 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                   setPickupLocation(loc.id)
                                   if (pickupLocationError) setPickupLocationError('')
                                 }}
-                                className={`w-full p-3 rounded-xl border-2 text-left transition-all ${
-                                  pickupLocation === loc.id
-                                    ? 'border-[#c89b6e] bg-[#fdf8f3]'
-                                    : 'border-gray-200 hover:border-gray-300'
-                                }`}
+                                className={`w-full p-3 rounded-xl border-2 text-left transition-all ${pickupLocation === loc.id
+                                  ? 'border-[#c89b6e] bg-[#fdf8f3]'
+                                  : 'border-gray-200 hover:border-gray-300'
+                                  }`}
                               >
                                 <div className="flex items-start justify-between gap-2">
                                   <div className="flex-1 min-w-0">
@@ -1454,11 +1446,10 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                           <button
                             type="button"
                             onClick={() => setSelectedPayment('qr')}
-                            className={`p-4 rounded-xl border-2 text-left transition-all ${
-                              selectedPayment === 'qr'
-                                ? 'border-[#c89b6e] bg-[#fdf8f3] shadow-md'
-                                : 'border-gray-200 hover:border-gray-300'
-                            }`}
+                            className={`p-4 rounded-xl border-2 text-left transition-all ${selectedPayment === 'qr'
+                              ? 'border-[#c89b6e] bg-[#fdf8f3] shadow-md'
+                              : 'border-gray-200 hover:border-gray-300'
+                              }`}
                           >
                             <div className="text-xl mb-1">📱</div>
                             <p className="font-semibold text-sm text-gray-800">Pago con QR</p>
@@ -1860,7 +1851,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             ¿Ya realizaste el pago QR?
                           </p>
                           <a
-                            href={`https://wa.me/59176020369?text=${whatsappMessage}${receiptUploadState === 'success' ? encodeURIComponent('\n📎 Ya subí mi comprobante de pago en el sistema.') : ''}`}
+                            href={`https://wa.me/591${WHATSAPP_NUMBER}?text=${whatsappMessage}${receiptUploadState === 'success' ? encodeURIComponent('\n📎 Ya subí mi comprobante de pago en el sistema.') : ''}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center justify-center gap-2 w-full bg-[#25d366] hover:bg-[#1fb855] text-white font-semibold py-3 rounded-xl transition-all shadow-md hover:shadow-lg text-sm"

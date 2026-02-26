@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { WHATSAPP_NUMBER } from '@/lib/utils/whatsapp'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -198,7 +199,7 @@ function buildWhatsappCta(): string {
           <tr>
             <td style="background-color: #1a2e1a; border: 1px solid #2d5a2d; border-radius: 8px; padding: 16px 20px; text-align: center;">
               <p style="margin: 0 0 4px; font-size: 13px; color: #aaa;">¿Tenés dudas sobre tu pedido?</p>
-              <p style="margin: 0; font-size: 14px; font-weight: 700; color: #4caf50;">💬 WhatsApp: +591 76020369</p>
+              <p style="margin: 0; font-size: 14px; font-weight: 700; color: #4caf50;">💬 WhatsApp: +${WHATSAPP_NUMBER}</p>
             </td>
           </tr>
         </table>
@@ -535,7 +536,7 @@ export async function POST(req: NextRequest) {
           '#3a1a1a',
           '#6a2d2d',
           '#f87171',
-          'Tu pedido fue cancelado. Si tenés dudas contáctanos por WhatsApp +591 76020369.',
+          `Tu pedido fue cancelado. Si tenés dudas contáctanos por WhatsApp +${WHATSAPP_NUMBER}.`,
         )
         break
 

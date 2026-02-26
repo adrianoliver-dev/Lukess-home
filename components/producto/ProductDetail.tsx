@@ -12,6 +12,7 @@ import toast from 'react-hot-toast'
 import { motion } from 'framer-motion'
 import { ProductGallery } from './ProductGallery'
 import { SizeGuideModal } from './SizeGuideModal'
+import { buildWhatsAppUrl } from '@/lib/utils/whatsapp'
 
 interface ProductDetailProps {
   product: Product
@@ -143,7 +144,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
         (selectedSize ? `📏 Talla: ${selectedSize}\n` : '') +
         '¿Me pueden dar más información? 🙏'
     }
-    window.open(`https://wa.me/59176020369?text=${encodeURIComponent(message)}`, '_blank')
+    window.open(buildWhatsAppUrl(message), '_blank')
   }
 
   return (
@@ -174,9 +175,9 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
             >
-              <ProductGallery 
-                images={product.images && product.images.length > 0 
-                  ? product.images 
+              <ProductGallery
+                images={product.images && product.images.length > 0
+                  ? product.images
                   : [product.image_url || '/placeholder.png']
                 }
                 productName={product.name}
@@ -237,19 +238,18 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                 )}
               </div>
 
-            {/* Stock — solo visible si agotado o quedan ≤ 5 unidades */}
-            {(stock === 0 || stock <= 5) && (
-              <div className="flex items-center gap-2">
-                <Package className="w-5 h-5 text-gray-600" />
-                <span className={`px-3 py-1.5 rounded-full text-sm font-semibold ${
-                  stock === 0
-                    ? 'bg-gray-100 text-gray-600'
-                    : 'bg-amber-100 text-amber-700'
-                }`}>
-                  {stock === 0 ? 'Sin stock' : '⚠️ Últimas unidades disponibles'}
-                </span>
-              </div>
-            )}
+              {/* Stock — solo visible si agotado o quedan ≤ 5 unidades */}
+              {(stock === 0 || stock <= 5) && (
+                <div className="flex items-center gap-2">
+                  <Package className="w-5 h-5 text-gray-600" />
+                  <span className={`px-3 py-1.5 rounded-full text-sm font-semibold ${stock === 0
+                      ? 'bg-gray-100 text-gray-600'
+                      : 'bg-amber-100 text-amber-700'
+                    }`}>
+                    {stock === 0 ? 'Sin stock' : '⚠️ Últimas unidades disponibles'}
+                  </span>
+                </div>
+              )}
 
               {/* Description */}
               {product.description && (
@@ -304,13 +304,12 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                               }
                             }}
                             disabled={sizeAgotada}
-                            className={`px-5 py-2 rounded-lg font-semibold transition-all ${
-                              sizeAgotada
+                            className={`px-5 py-2 rounded-lg font-semibold transition-all ${sizeAgotada
                                 ? 'opacity-40 cursor-not-allowed line-through bg-gray-100 text-gray-400'
                                 : isSelected
                                   ? 'bg-primary-600 text-white ring-2 ring-primary-300'
                                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                            }`}
+                              }`}
                           >
                             {size}
                           </button>
@@ -342,11 +341,10 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                       <button
                         key={color}
                         onClick={() => setSelectedColor(color)}
-                        className={`px-5 py-2 rounded-lg font-semibold transition-all ${
-                          selectedColor === color
+                        className={`px-5 py-2 rounded-lg font-semibold transition-all ${selectedColor === color
                             ? 'bg-primary-600 text-white ring-2 ring-primary-300'
                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                        }`}
+                          }`}
                       >
                         {color}
                       </button>
@@ -396,11 +394,10 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                 <button
                   onClick={handleAddToCart}
                   disabled={addToCartDisabled}
-                  className={`flex-1 py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 ${
-                    addToCartDisabled
+                  className={`flex-1 py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 ${addToCartDisabled
                       ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                       : 'bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 transform hover:scale-105 shadow-lg'
-                  }`}
+                    }`}
                 >
                   <ShoppingCart className="w-5 h-5" />
                   {addToCartLabel}

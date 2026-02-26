@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Menu, X, MessageCircle, Search, Heart, ShoppingCart, User, ChevronDown, Package, LogOut } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Container from "@/components/ui/Container";
@@ -14,19 +14,19 @@ import { AuthModal } from "@/components/auth/AuthModal";
 import { useCart } from "@/lib/context/CartContext";
 import { useWishlist } from "@/lib/context/WishlistContext";
 import { useAuth } from "@/lib/context/AuthContext";
+import { buildWhatsAppUrl } from "@/lib/utils/whatsapp";
 
-const WHATSAPP_URL =
-  "https://wa.me/59176020369?text=Hola%20Lukess%20Home%2C%20me%20interesa%20conocer%20sus%20productos";
+const WHATSAPP_URL = buildWhatsAppUrl("Hola Lukess Home, me interesa conocer sus productos");
 
 const categories = [
   {
     name: 'NUEVO',
-    href: '/#catalogo?filter=nuevo',
+    href: '/?filter=nuevo#catalogo',
     filter: 'nuevo',
   },
   {
     name: 'CAMISAS',
-    href: '/#catalogo?filter=camisas',
+    href: '/?filter=camisas#catalogo',
     filter: 'camisas',
     subcategories: [
       { name: 'Columbia', filter: 'camisas-columbia' },
@@ -37,7 +37,7 @@ const categories = [
   },
   {
     name: 'PANTALONES',
-    href: '/#catalogo?filter=pantalones',
+    href: '/?filter=pantalones#catalogo',
     filter: 'pantalones',
     subcategories: [
       { name: 'Oversize', filter: 'pantalones-oversize' },
@@ -47,12 +47,12 @@ const categories = [
   },
   {
     name: 'BLAZERS',
-    href: '/#catalogo?filter=blazers',
+    href: '/?filter=blazers#catalogo',
     filter: 'blazers',
   },
   {
     name: 'ACCESORIOS',
-    href: '/#catalogo?filter=accesorios',
+    href: '/?filter=accesorios#catalogo',
     filter: 'accesorios',
     subcategories: [
       { name: 'Sombreros', filter: 'accesorios-sombreros' },
@@ -111,11 +111,11 @@ export default function Navbar() {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    
+
     // Extraer el hash base y los parámetros
     const [hashBase, queryString] = href.split('?');
     const id = hashBase.replace('/#', '');
-    
+
     if (pathname !== '/') {
       // Si no estamos en la home, navegar primero
       setIsOpen(false);
@@ -124,14 +124,14 @@ export default function Navbar() {
       // Si ya estamos en la home, hacer scroll y aplicar filtro
       // Cerrar menú primero y esperar un poco para el scroll
       setIsOpen(false);
-      
+
       setTimeout(() => {
         const element = document.getElementById(id);
         if (element) {
           const navbarHeight = 80;
           const top = element.getBoundingClientRect().top + window.scrollY - navbarHeight;
           window.scrollTo({ top, behavior: 'smooth' });
-          
+
           // Actualizar el hash con el filtro para que el catálogo lo detecte
           if (queryString) {
             window.history.pushState(null, '', href);
@@ -147,25 +147,25 @@ export default function Navbar() {
     e.preventDefault();
     if (searchQuery.trim()) {
       const searchUrl = `/?busqueda=${encodeURIComponent(searchQuery)}#catalogo`;
-      
+
       // Cerrar menú móvil si está abierto
       setIsOpen(false);
-      
+
       if (pathname !== '/') {
         // Si no estamos en la home, navegar
         router.push(searchUrl);
       } else {
-        // Si ya estamos en la home, actualizar URL y hacer scroll
+        // Si ya estamos en la home, usamos router.push para que Next.js actualice useSearchParams
+        router.push(searchUrl);
+
+        // Hacemos scroll manual para asegurar la posición
         setTimeout(() => {
-          window.history.pushState(null, '', searchUrl);
           const element = document.getElementById('catalogo');
           if (element) {
             const navbarHeight = 80;
             const top = element.getBoundingClientRect().top + window.scrollY - navbarHeight;
             window.scrollTo({ top, behavior: 'smooth' });
           }
-          // Disparar evento para que el catálogo detecte el cambio
-          window.dispatchEvent(new Event('searchUpdate'));
         }, 100);
       }
       setSearchQuery('');
@@ -175,11 +175,10 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled || isOpen
-            ? "bg-white shadow-lg"
-            : "bg-white/95 backdrop-blur-md"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled || isOpen
+          ? "bg-white shadow-lg"
+          : "bg-white/95 backdrop-blur-md"
+          }`}
       >
         <Container>
           <div className="flex items-center justify-between h-[72px] md:h-20 gap-4">
@@ -210,15 +209,15 @@ export default function Navbar() {
                   >
                     {category.name}
                   </Link>
-                  
+
                   {category.subcategories && (
                     <div className="absolute left-0 top-full mt-2 w-48 bg-white shadow-xl rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border border-gray-100">
                       <div className="py-3 px-4">
                         {category.subcategories.map((sub) => (
                           <Link
                             key={sub.name}
-                            href={`/#catalogo?filter=${sub.filter}`}
-                            onClick={(e) => handleNavClick(e, `/#catalogo?filter=${sub.filter}`)}
+                            href={`/?filter=${sub.filter}#catalogo`}
+                            onClick={(e) => handleNavClick(e, `/?filter=${sub.filter}#catalogo`)}
                             className="block py-2 text-sm text-gray-700 hover:text-primary-800 hover:translate-x-1 transition-all"
                           >
                             {sub.name}
@@ -417,14 +416,14 @@ export default function Navbar() {
                     >
                       <span>{category.name}</span>
                     </Link>
-                    
+
                     {category.subcategories && (
                       <div className="ml-4 mt-1 space-y-1">
                         {category.subcategories.map((sub) => (
                           <Link
                             key={sub.name}
-                            href={`/#catalogo?filter=${sub.filter}`}
-                            onClick={(e) => handleNavClick(e, `/#catalogo?filter=${sub.filter}`)}
+                            href={`/?filter=${sub.filter}#catalogo`}
+                            onClick={(e) => handleNavClick(e, `/?filter=${sub.filter}#catalogo`)}
                             className="block py-2 px-4 text-sm text-gray-600 hover:text-primary-800 transition-colors"
                           >
                             {sub.name}
@@ -584,8 +583,8 @@ export default function Navbar() {
       </button>
 
       {/* Cart Drawer */}
-      <CartDrawer 
-        isOpen={isCartOpen} 
+      <CartDrawer
+        isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
         onCheckout={() => setIsCheckoutOpen(true)}
       />

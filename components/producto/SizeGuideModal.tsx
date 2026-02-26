@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Ruler, MessageCircle } from 'lucide-react'
+import { buildWhatsAppUrl } from '@/lib/utils/whatsapp'
 
 interface SizeGuideModalProps {
   isOpen: boolean
@@ -53,11 +54,10 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
   }, [isOpen, onClose])
 
   const handleWhatsAppConsult = () => {
-    const message = encodeURIComponent(
-      `Hola! Tengo dudas sobre las tallas.\n\n` +
+    const message = `Hola! Tengo dudas sobre las tallas.\n\n` +
       `¿Me pueden ayudar a elegir la talla correcta?`
-    )
-    window.open(`https://wa.me/59176020369?text=${message}`, '_blank')
+
+    window.open(buildWhatsAppUrl(message), '_blank')
   }
 
   if (!isOpen) return null
@@ -107,11 +107,10 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                 <div className="flex gap-1 px-6">
                   <button
                     onClick={() => setActiveTab('camisas')}
-                    className={`px-6 py-3 text-sm font-semibold transition-all relative ${
-                      activeTab === 'camisas'
+                    className={`px-6 py-3 text-sm font-semibold transition-all relative ${activeTab === 'camisas'
                         ? 'text-primary-600'
                         : 'text-gray-600 hover:text-gray-900'
-                    }`}
+                      }`}
                   >
                     Camisas / Polos
                     {activeTab === 'camisas' && (
@@ -124,11 +123,10 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                   </button>
                   <button
                     onClick={() => setActiveTab('pantalones')}
-                    className={`px-6 py-3 text-sm font-semibold transition-all relative ${
-                      activeTab === 'pantalones'
+                    className={`px-6 py-3 text-sm font-semibold transition-all relative ${activeTab === 'pantalones'
                         ? 'text-primary-600'
                         : 'text-gray-600 hover:text-gray-900'
-                    }`}
+                      }`}
                   >
                     Pantalones
                     {activeTab === 'pantalones' && (
@@ -141,11 +139,10 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                   </button>
                   <button
                     onClick={() => setActiveTab('como-medir')}
-                    className={`px-6 py-3 text-sm font-semibold transition-all relative ${
-                      activeTab === 'como-medir'
+                    className={`px-6 py-3 text-sm font-semibold transition-all relative ${activeTab === 'como-medir'
                         ? 'text-primary-600'
                         : 'text-gray-600 hover:text-gray-900'
-                    }`}
+                      }`}
                   >
                     Cómo Medir
                     {activeTab === 'como-medir' && (
@@ -174,7 +171,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                         Medidas para Camisas y Polos
                       </h3>
                       <p className="text-sm text-gray-600 mb-6">
-                        Todas las medidas están en centímetros (cm). Para obtener la medida correcta, 
+                        Todas las medidas están en centímetros (cm). Para obtener la medida correcta,
                         mide sobre una prenda similar que te quede bien.
                       </p>
 
@@ -229,7 +226,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
 
                       <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
                         <p className="text-sm text-blue-900">
-                          <strong>💡 Consejo:</strong> Si estás entre dos tallas, te recomendamos elegir 
+                          <strong>💡 Consejo:</strong> Si estás entre dos tallas, te recomendamos elegir
                           la talla más grande para mayor comodidad.
                         </p>
                       </div>
@@ -248,7 +245,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                         Medidas para Pantalones
                       </h3>
                       <p className="text-sm text-gray-600 mb-6">
-                        Todas las medidas están en centímetros (cm). Mide tu pantalón favorito 
+                        Todas las medidas están en centímetros (cm). Mide tu pantalón favorito
                         para comparar con nuestra tabla.
                       </p>
 
@@ -303,7 +300,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
 
                       <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
                         <p className="text-sm text-blue-900">
-                          <strong>💡 Consejo:</strong> Para un ajuste perfecto, mide la cintura donde 
+                          <strong>💡 Consejo:</strong> Para un ajuste perfecto, mide la cintura donde
                           normalmente usas el pantalón (no la cintura natural).
                         </p>
                       </div>
@@ -321,7 +318,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                       <h3 className="text-lg font-bold text-gray-900 mb-4">
                         Cómo Tomar tus Medidas
                       </h3>
-                      
+
                       <div className="space-y-6">
                         {/* Camisas */}
                         <div>
@@ -336,7 +333,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                               <div>
                                 <p className="font-semibold text-gray-900">Pecho</p>
                                 <p className="text-sm text-gray-600">
-                                  Mide alrededor de la parte más ancha del pecho, pasando la cinta 
+                                  Mide alrededor de la parte más ancha del pecho, pasando la cinta
                                   por debajo de las axilas y sobre los omóplatos.
                                 </p>
                               </div>
@@ -349,7 +346,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                               <div>
                                 <p className="font-semibold text-gray-900">Cintura</p>
                                 <p className="text-sm text-gray-600">
-                                  Mide alrededor de la cintura natural, donde normalmente se dobla 
+                                  Mide alrededor de la cintura natural, donde normalmente se dobla
                                   el cuerpo hacia los lados.
                                 </p>
                               </div>
@@ -362,7 +359,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                               <div>
                                 <p className="font-semibold text-gray-900">Hombros</p>
                                 <p className="text-sm text-gray-600">
-                                  Mide de un extremo del hombro al otro, pasando por la parte 
+                                  Mide de un extremo del hombro al otro, pasando por la parte
                                   posterior del cuello.
                                 </p>
                               </div>
@@ -375,7 +372,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                               <div>
                                 <p className="font-semibold text-gray-900">Largo</p>
                                 <p className="text-sm text-gray-600">
-                                  Mide desde el punto más alto del hombro hasta donde quieres 
+                                  Mide desde el punto más alto del hombro hasta donde quieres
                                   que llegue la camisa.
                                 </p>
                               </div>
@@ -396,7 +393,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                               <div>
                                 <p className="font-semibold text-gray-900">Cintura</p>
                                 <p className="text-sm text-gray-600">
-                                  Mide alrededor de donde normalmente usas el pantalón, 
+                                  Mide alrededor de donde normalmente usas el pantalón,
                                   no la cintura natural.
                                 </p>
                               </div>
@@ -421,7 +418,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                               <div>
                                 <p className="font-semibold text-gray-900">Entrepierna</p>
                                 <p className="text-sm text-gray-600">
-                                  Mide desde la entrepierna hasta el final del pantalón 
+                                  Mide desde la entrepierna hasta el final del pantalón
                                   (donde quieres que llegue).
                                 </p>
                               </div>

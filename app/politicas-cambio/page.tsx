@@ -1,3 +1,4 @@
+import { buildWhatsAppUrl, formatWhatsAppNumber } from '@/lib/utils/whatsapp'
 import { LegalPageTemplate } from '@/components/legal/LegalPageTemplate'
 import { Metadata } from 'next'
 
@@ -13,7 +14,7 @@ export default function PoliticasCambioPage() {
           Plazo para Cambios
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          Tienes <strong>30 días</strong> desde la fecha de compra para solicitar un cambio 
+          Tienes <strong>30 días</strong> desde la fecha de compra para solicitar un cambio
           de producto, siempre que cumpla con las condiciones establecidas.
         </p>
       </section>
@@ -51,7 +52,7 @@ export default function PoliticasCambioPage() {
           Proceso de Cambio
         </h2>
         <ol className="list-decimal list-inside space-y-3 text-gray-700">
-          <li>Contacta por WhatsApp (+591 76020369) indicando el producto a cambiar</li>
+          <li>Contacta por WhatsApp ({formatWhatsAppNumber()}) indicando el producto a cambiar</li>
           <li>Envía foto del producto y comprobante de compra</li>
           <li>Nuestro equipo verificará que cumpla las condiciones</li>
           <li>Acércate a cualquiera de nuestros 3 puestos con el producto</li>
@@ -64,8 +65,8 @@ export default function PoliticasCambioPage() {
           Devoluciones de Dinero
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          <strong>No realizamos devoluciones de dinero.</strong> Solo ofrecemos cambios 
-          por otro producto de igual o mayor valor. En caso de defecto de fábrica comprobado, 
+          <strong>No realizamos devoluciones de dinero.</strong> Solo ofrecemos cambios
+          por otro producto de igual o mayor valor. En caso de defecto de fábrica comprobado,
           se evaluará cada caso individualmente.
         </p>
       </section>
@@ -75,8 +76,8 @@ export default function PoliticasCambioPage() {
           Defectos de Fábrica
         </h2>
         <p className="text-gray-700 leading-relaxed">
-          Si detectas un defecto de fábrica en tu producto, contáctanos inmediatamente. 
-          Evaluaremos el caso y, si procede, realizaremos el cambio sin costo adicional 
+          Si detectas un defecto de fábrica en tu producto, contáctanos inmediatamente.
+          Evaluaremos el caso y, si procede, realizaremos el cambio sin costo adicional
           o gestionaremos la garantía con el fabricante.
         </p>
       </section>
@@ -89,7 +90,7 @@ export default function PoliticasCambioPage() {
           Para solicitar un cambio o consultar sobre nuestras políticas:
         </p>
         <div className="mt-4 space-y-2 text-gray-700">
-          <p>📱 WhatsApp: <a href="https://wa.me/59176020369" className="text-primary-600 font-semibold">+591 76020369</a></p>
+          <p>📱 WhatsApp: <a href={buildWhatsAppUrl("Hola, tengo una consulta sobre cambios")} className="text-primary-600 font-semibold">{formatWhatsAppNumber()}</a></p>
           <p>📍 Mercado Mutualista - 3 puestos (Pasillos -2, -3 y -5)</p>
           <p>🕐 Lun-Sáb: 8:00 AM - 10:00 PM | Dom: 9:00 AM - 9:00 PM</p>
         </div>
