@@ -2,10 +2,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 const CATEGORIES = [
-    { id: 'camisas', name: 'Camisas', href: '/catalogo?categoria=camisas', image: '/images/categories/camisas.jpg' },
-    { id: 'pantalones', name: 'Pantalones', href: '/catalogo?categoria=pantalones', image: '/images/categories/pantalones.jpg' },
-    { id: 'cinturones', name: 'Cinturones', href: '/catalogo?categoria=cinturones', image: '/images/categories/cinturones.jpg' },
-    { id: 'sombreros', name: 'Sombreros', href: '/catalogo?categoria=sombreros', image: '/images/categories/sombreros.jpg' },
+    { id: 'camisas', name: 'Camisas', href: '/?filter=camisas#catalogo', image: '/products/camisa-columbia-verde.png' },
+    { id: 'pantalones', name: 'Pantalones', href: '/?filter=pantalones#catalogo', image: '/products/pantalon-jean-indigo-oscuro.png' },
+    { id: 'cinturones', name: 'Cinturones', href: '/?filter=accesorios-cinturones#catalogo', image: '/products/cinturon-cuero-cafe.png' },
+    { id: 'sombreros', name: 'Sombreros', href: '/?filter=accesorios-sombreros#catalogo', image: '/products/gorra-azul-minimalista.png' },
 ]
 
 export default function QuickLinksRow() {

@@ -17,7 +17,7 @@
 - **Block Number:** 9d-B
 - **Block Name:** Landing: Banner + Códigos descuento (REVISION)
 - **Completed:** 2026-02-26
-- **Commit:** b597c45
+- **Commit:** 5b18fcc
 
 ### Files Changed (9d-B REVISION)
 - `components/landing/AnnouncementBar.tsx` [NEW] — sticky top announcement bar with 2 messages and localStorage dismiss.
@@ -61,7 +61,7 @@ None.
 | 9c-A | Inventario: BD + formulario descuentos/is_new | ✅ DONE | — | — |
 | 9c-B | Inventario: Upload múltiples imágenes | ✅ DONE | — | — |
 | 9d-A | Landing: Badges + Galería múltiple | ✅ DONE | 2026-02-26 | 7956e0f |
-| 9d-B | Landing: Banner + Códigos descuento | ✅ DONE | 2026-02-26 | b597c45 |
+| 9d-B | Landing: Banner + Códigos descuento | ✅ DONE | 2026-02-26 | 5b18fcc |
 | 9e-A | Visual Polish: Footer + Navbar mobile | ✅ DONE | 2026-02-27 | pending |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |

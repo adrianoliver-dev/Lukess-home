@@ -11,7 +11,7 @@ export default function HeroSection() {
             <div className="absolute inset-0 w-full h-full">
                 {/* Mobile Default */}
                 <Image
-                    src="/images/hero/lukess-hero-mobile.jpg"
+                    src="/products/polo-azul-texturizado.png"
                     alt="Hombre vistiendo ropa premium Columbia en Santa Cruz de la Sierra"
                     fill
                     priority
@@ -21,7 +21,7 @@ export default function HeroSection() {
                 />
                 {/* Desktop Image */}
                 <Image
-                    src="/images/hero/lukess-hero-desktop.jpg"
+                    src="/products/polo-azul-texturizado.png"
                     alt="Hombre vistiendo ropa premium Columbia en Santa Cruz de la Sierra"
                     fill
                     priority
@@ -35,7 +35,7 @@ export default function HeroSection() {
             </div>
 
             {/* Hero Content Area */}
-            <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32 md:pb-40">
+            <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32 md:pb-40 pt-16 md:pt-24">
                 <div className="max-w-2xl text-left">
                     {/* Eyebrow */}
                     <span className="block text-accent-500 font-bold uppercase tracking-wider text-xs md:text-sm mb-2 drop-shadow-sm">

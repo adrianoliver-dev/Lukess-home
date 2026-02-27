@@ -47,7 +47,7 @@ export default async function Home() {
   const PROMO_END_DATE = new Date('2026-03-28T23:59:59-04:00')
 
   return (
-    <main>
+    <>
       <AnnouncementBar />
       <HeroSection />
 
@@ -69,6 +69,6 @@ export default async function Home() {
 
       {/* Popup newsletter */}
       <NewsletterPopup />
-    </main>
+    </>
   );
 }
