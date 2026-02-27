@@ -14,17 +14,19 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 10-D
-- **Block Name:** Polish Sprint: Hero & Trust Section Redesign
+- **Block Number:** 10-E.1
+- **Block Name:** Polish Sprint: Brand Foundation & Global Constants
 - **Completed:** 2026-02-27
-- **Commit:** 184d5c0
+- **Commit:** 8a75be2
 
 ### Files Changed
-- `components/landing/HeroSection.tsx` — Rewrote Hero, added promo pill, red CTA, dark overlay.
-- `components/landing/TrustBanner.tsx` — [NEW] Added horizontal sliding trust banner with 3 pillars.
-- `app/page.tsx` — Integrated TrustBanner.
-- `app/globals.css` — Added `heroPromoEnter` keyframes for animation.
-- `components/home/HeroSection.tsx` — [DELETED] Old unused variant.
+- `lib/utils/whatsapp.ts` — Defined global `WHATSAPP_NUMBER` and updated `buildWhatsAppUrl`
+- `components/landing/HeroSection.tsx` — Replaced hardcoded WhatsApp links
+- `components/landing/AnnouncementBar.tsx` — Replaced hardcoded WhatsApp links
+- `components/cart/CheckoutModal.tsx` — Replaced hardcoded numbers (76020369) and URLs
+- `components/producto/SizeGuideModal.tsx` — Added size guides for Gorras, Sombreros, Cinturones
+- `app/globals.css` — Enforced bg-white/text-gray-900, removed old color variables
+- *Multiple Components* — Replaced `bg-primary-*` and `text-primary-*` with default Tailwind classes via global find-and-replace scripts.
 
 ### DB Changes
 None
@@ -66,7 +68,8 @@ None
 | 9e-A | Visual Polish: Footer + Navbar mobile | ✅ DONE | 2026-02-27 | pending |
 | 10-AB | Polish Sprint: Global UI + Product Cards | ✅ DONE | 2026-02-27 | pending |
 | 10-C | Polish Sprint: PDP Redesign (Totto style) | ✅ DONE | 2026-02-27 | 65ef4b3 |
-| 10-D | Polish Sprint: Hero & Trust redesign | ✅ DONE | 2026-02-27 | pending |
+| 10-D | Polish Sprint: Hero & Trust redesign | ✅ DONE | 2026-02-27 | 184d5c0 |
+| 10-E.1 | Polish Sprint: Brand Foundation | ✅ DONE | 2026-02-27 | 8a75be2 |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
