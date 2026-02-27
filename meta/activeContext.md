@@ -1,15 +1,15 @@
 # activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-02-27T18:18-04:00
+**Last Updated:** 2026-02-27T18:34-04:00
 **Updated By:** Antigravity Agent
 
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** —
-- **Block Name:** —
-- **Status:** —
-- **Started:** —
-- **Completed:** —
+- **Block Number:** 10-H.1
+- **Block Name:** Fix Size Guide whitelist (belts/hats)
+- **Status:** ✅ DONE (fix was already present in local + pushed)
+- **Started:** 2026-02-27
+- **Completed:** 2026-02-27
 
 
 ---
@@ -73,6 +73,7 @@
 | 10-F | Cart discount fix + Size Guide Shorts/Billeteras | ✅ DONE | 2026-02-27 | 4899abb |
 | 10-G | Restructure Footer & Polish Size Guide | ✅ DONE | 2026-02-27 | f308958 |
 | 10-I | Radical UX/UI cleanup of Checkout stages | ✅ DONE | 2026-02-27 | a69df6c |
+| 10-H.1 | Fix Size Guide whitelist (belts/hats) | ✅ DONE | 2026-02-27 | a7ca5c4 |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
