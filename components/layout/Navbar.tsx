@@ -572,7 +572,7 @@ export default function Navbar() {
       {/* Botón carrito flotante SOLO MÓVIL */}
       <button
         onClick={() => setIsCartOpen(true)}
-        className="lg:hidden fixed bottom-6 right-6 z-40 w-16 h-16 bg-primary-600 text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-primary-700 transition-all active:scale-95"
+        className="lg:hidden fixed bottom-6 right-6 z-40 w-14 h-14 bg-accent-500 text-white rounded-full shadow-xl shadow-accent-500/30 flex items-center justify-center hover:bg-accent-600 transition-all active:scale-95"
         aria-label={`Ver carrito (${cartItemCount} productos)`}
       >
         <ShoppingCart className="w-7 h-7" />

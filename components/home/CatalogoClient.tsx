@@ -1,7 +1,7 @@
 'use client'
 import { useState, useMemo, useCallback, useEffect } from 'react'
 import Container from '@/components/ui/Container'
-import { ShoppingCart, ShoppingBag, Tag, MessageCircle, Plus, Filter, X, Palette, Ruler, Building2, SlidersHorizontal, Check, Sparkles, Percent, Leaf } from 'lucide-react'
+import { ShoppingBag, Tag, MessageCircle, Plus, Filter, X, Palette, Ruler, Building2, SlidersHorizontal, Check, Sparkles, Percent, Leaf } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import Image from 'next/image'
@@ -1042,17 +1042,17 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                   return (
                     <div
                       key={product.id}
-                      className="group bg-white rounded-2xl border border-secondary-100 hover:border-primary-300 overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/10 md:hover:-translate-y-1 cursor-pointer"
+                      className="group bg-white border border-gray-100 overflow-hidden transition-all duration-200 hover:shadow-sm cursor-pointer"
                     >
                       {/* Wrapper clickeable para toda la card */}
                       <Link href={`/producto/${product.id}`} className="block">
                         {/* Imagen */}
-                        <div className="relative aspect-[4/5] overflow-hidden bg-white p-4">
+                        <div className="relative aspect-[4/5] overflow-hidden bg-gray-50 p-3">
                           <Image
                             src={product.image_url || '/placeholder.png'}
                             alt={product.name}
                             fill
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                             className="object-contain transition-transform duration-300 group-hover:scale-105"
                             loading="lazy"
                           />
@@ -1063,7 +1063,6 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                             isNewUntil={product.is_new_until}
                             discount={getDiscount(product) || undefined}
                             discountExpiresAt={product.discount_expires_at}
-                            lowStock={isOutOfStock ? 0 : stock}
                             isBestSeller={product.is_best_seller}
                             collection={product.collection}
                           />
@@ -1076,135 +1075,58 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
 
                           {/* AGOTADO overlay */}
                           {isOutOfStock && (
-                            <div className="absolute inset-0 bg-black/40 flex items-center justify-center z-10 pointer-events-none">
-                              <span className="bg-red-600 text-white font-black text-sm px-4 py-2 rounded-full tracking-widest shadow-lg">
-                                AGOTADO
+                            <div className="absolute inset-0 bg-white/60 flex items-center justify-center z-10 pointer-events-none">
+                              <span className="text-gray-500 text-xs font-bold uppercase tracking-widest">
+                                Agotado
                               </span>
                             </div>
                           )}
                         </div>
 
-                        {/* Info */}
-                        <div className="p-4 sm:p-5">
-                          {/* Categoría + Marca */}
-                          <div className="flex items-center justify-between mb-1.5">
-                            <div className="flex items-center gap-1.5">
-                              <Tag className="w-3 h-3 text-primary-400" aria-hidden="true" />
-                              <span className="text-xs text-secondary-400 font-medium uppercase tracking-wide">
-                                {product.categories?.name || 'Sin categoría'}
-                              </span>
-                            </div>
-                            {product.brand && (
-                              <span className="text-[10px] bg-accent-500/20 text-accent-500 px-2 py-0.5 rounded-full font-semibold">
-                                {product.brand}
-                              </span>
-                            )}
-                          </div>
-
-                          {/* Nombre */}
-                          <h3 className="text-sm sm:text-base font-bold text-secondary-800 mb-1.5 leading-snug line-clamp-2 min-h-[2.5rem] group-hover:text-primary-600 transition-colors">
-                            {product.name}
-                          </h3>
-
-                          {/* Descripción */}
-                          {product.description && (
-                            <p className="text-xs text-secondary-400 mb-2 line-clamp-2">
-                              {product.description}
+                        {/* Info — Zara style */}
+                        <div className="px-3 pt-3 pb-2">
+                          {/* Brand */}
+                          {product.brand && (
+                            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider mb-0.5">
+                              {product.brand}
                             </p>
                           )}
 
-                          {/* Colores disponibles */}
-                          {product.colors && product.colors.length > 0 && (
-                            <div className="flex items-center gap-2 mb-2">
-                              <Palette className="w-3 h-3 text-secondary-400" />
-                              <div className="flex flex-wrap gap-1">
-                                {product.colors.slice(0, 3).map((color) => (
-                                  <span
-                                    key={color}
-                                    className="text-[10px] text-secondary-500 bg-secondary-100 rounded px-1.5 py-0.5"
-                                  >
-                                    {color}
-                                  </span>
-                                ))}
-                                {product.colors.length > 3 && (
-                                  <span className="text-[10px] text-secondary-400">
-                                    +{product.colors.length - 3}
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                          )}
+                          {/* Nombre */}
+                          <h3 className="text-sm text-gray-700 font-normal leading-snug line-clamp-1 mb-1.5 group-hover:text-black transition-colors">
+                            {product.name}
+                          </h3>
 
-                          {/* Tallas */}
-                          {product.sizes && product.sizes.length > 0 && (
-                            <div className="flex items-center gap-2 mb-3">
-                              <Ruler className="w-3 h-3 text-secondary-400" />
-                              <div className="flex flex-wrap gap-1">
-                                {product.sizes.slice(0, 4).map((size) => (
-                                  <span
-                                    key={size}
-                                    className="text-[10px] text-secondary-400 border border-secondary-200 rounded px-1.5 py-0.5"
-                                  >
-                                    {size}
-                                  </span>
-                                ))}
-                                {product.sizes.length > 4 && (
-                                  <span className="text-[10px] text-secondary-400 border border-secondary-200 rounded px-1.5 py-0.5">
-                                    +{product.sizes.length - 4}
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Precio + Stock */}
-                          <div className="flex items-end justify-between pt-2 border-t border-secondary-100">
-                            <div>
-                              {hasDiscount(product) ? (
-                                <div className="flex flex-col gap-0.5">
-                                  <div className="flex items-baseline gap-2">
-                                    <span className="text-2xl font-black text-red-600">
-                                      Bs {getPriceWithDiscount(product).toFixed(2)}
-                                    </span>
-                                  </div>
-                                  <span className="text-xs text-gray-400 line-through decoration-red-500 decoration-1">
-                                    Bs {product.price.toFixed(2)}
-                                  </span>
-                                </div>
-                              ) : (
-                                <div className="flex items-baseline">
-                                  <span className="text-2xl font-black text-primary-600">
-                                    Bs {product.price.toFixed(2)}
-                                  </span>
-                                </div>
-                              )}
-                            </div>
-                            <div className="text-right">
-                              {isOutOfStock ? (
-                                <span className="text-red-400 text-xs font-semibold">
-                                  Agotado · Consultar disponibilidad
+                          {/* Precio */}
+                          <div className="flex items-baseline gap-2">
+                            {hasDiscount(product) ? (
+                              <>
+                                <span className="text-sm font-bold text-red-600">
+                                  Bs {getPriceWithDiscount(product).toFixed(2)}
                                 </span>
-                              ) : stock <= 5 ? (
-                                <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-amber-500 text-white shadow-md">
-                                  ⚠️ Últimas unidades
+                                <span className="text-xs text-gray-400 line-through">
+                                  Bs {product.price.toFixed(2)}
                                 </span>
-                              ) : null}
-                            </div>
+                              </>
+                            ) : (
+                              <span className="text-sm font-bold text-gray-900">
+                                Bs {product.price.toFixed(2)}
+                              </span>
+                            )}
                           </div>
                         </div>
                       </Link>
 
-                      {/* Botones: Ver detalles + WhatsApp (una sola entrada WhatsApp por card) */}
-                      <div className="px-4 pb-4 sm:px-5 sm:pb-5 flex gap-2">
+                      {/* CTA buttons */}
+                      <div className="px-3 pb-3 flex gap-2">
                         <Link
                           href={`/producto/${product.id}`}
                           onClick={(e) => e.stopPropagation()}
-                          className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${isOutOfStock
-                            ? 'bg-gray-300 text-gray-500 cursor-not-allowed pointer-events-none opacity-50'
-                            : 'bg-primary-800 hover:bg-primary-900 text-white'
+                          className={`flex-1 flex items-center justify-center gap-1.5 py-2 text-xs font-semibold transition-all ${isOutOfStock
+                            ? 'bg-gray-100 text-gray-400 pointer-events-none'
+                            : 'bg-gray-900 hover:bg-black text-white'
                             }`}
                         >
-                          <ShoppingCart className="w-4 h-4" />
                           {isOutOfStock ? 'Agotado' : 'Ver detalles'}
                         </Link>
                         <button
@@ -1212,9 +1134,10 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                             e.stopPropagation()
                             handleWhatsAppConsult(product)
                           }}
-                          className="px-4 py-2.5 bg-whatsapp hover:bg-whatsapp-dark text-white rounded-full transition-all duration-300"
+                          className="px-3 py-2 bg-whatsapp hover:bg-whatsapp-dark text-white transition-all"
+                          aria-label={`Consultar ${product.name} por WhatsApp`}
                         >
-                          <MessageCircle className="w-4 h-4" />
+                          <MessageCircle className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     </div>

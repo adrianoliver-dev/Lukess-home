@@ -1,5 +1,5 @@
 # activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-02-26
+**Last Updated:** 2026-02-27
 **Updated By:** Antigravity Agent
 
 ---
@@ -14,51 +14,42 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 9d-B-V2
-- **Block Name:** Hero Section Rewrite — Deep Research Implementation
-- **Completed:** 2026-02-26
-- **Commit:** ce21b6a
+- **Block Number:** 10-AB
+- **Block Name:** Polish Sprint — Global UI + Product Card Redesign
+- **Completed:** 2026-02-27
+- **Commit:** pending
 
-### Files Changed (9d-B-V2)
-- `components/landing/HeroSection.tsx` — Complete rewrite with local copy
-- `components/landing/QuickLinksRow.tsx` — Sombreros → Gorras, object-position fixes
-- `components/landing/AnnouncementBar.tsx` — Trust message updates
-- `app/page.tsx` — Removed countdown timer
+### Files Changed
+- `components/cart/CheckoutModal.tsx` — Replaced 2x hardcoded `#D4AF37` with `accent-500`
+- `components/ui/Confetti.tsx` — Replaced 2x hardcoded `#D4AF37` with `#c89b6e`
+- `components/layout/Navbar.tsx` — FAB redesigned: `bg-accent-500`, smaller (w-14), Totto-inspired
+- `components/catalogo/ProductBadges.tsx` — Full rewrite: flat black/red pills, no animations
+- `components/home/CatalogoClient.tsx` — Product card: Zara-style (removed desc/colors/sizes/stock badge)
+- `components/home/CatalogoSection.tsx` — Product card: matched new style, cleaned imports
 
-### Key changes
-- Headline: "Ropa que aguanta el calor — marcas originales importadas"
-- WhatsApp-first CTA (#25D366 green)
-- Trust bar with 4 signals
-- All English jargon removed
-- "Entrega en Santa Cruz" (not toda Bolivia)
-- Mobile-first 70vh layout
-- Gorras category (not sombreros)
+### DB Changes
+None
 
-### Build Status
-✅ `npm run build` — 0 errors, 0 TypeScript errors.
-
-### Browser Verification
-✅ Visual confirmation via Browser Sub-Agent: mobile + desktop layouts correct, WhatsApp link works, All copy in Spanish, No broken images.
-
-
-### Build Status
-✅ `npm run build` — 0 errors, 0 TypeScript errors.
-
-### Browser Verification
-✅ Visual confirmation via Browser Sub-Agent: Layout is perfectly aligned. Navbar sits underneath AnnouncementBar (and adjusts when closed). Hero and Categories display actual product image fallbacks.
+### Build Verification
+✅ `npm run build` — 0 errors, exit code 0
 
 ---
 
 ## OPEN ISSUES
-None.
+1. `/cart` route returns 404 while cart drawer renders on top
+2. Checkout pre-fills with "admin" / "admin@lukesshome.com"
+3. Category card images are gray placeholders
+4. POS page stuck on loading skeleton
+5. "Fosiil" typo in Supabase product data
+6. Remaining hardcoded hex colors in CheckoutModal (mostly `#c89b6e` inline for non-Tailwind contexts)
 
 ---
 
 ## NEXT BLOCK
 - **Block:** 9e-B
 - **Name:** Mobile-first general + Checkout mobile
-- **Dependencies:** 9e-A
-- **Scope:** Optimize product cards, catalog layout, and checkout flow specifically for mobile viewports.
+- **Dependencies:** 10-AB
+- **Scope:** Checkout UX, mobile responsiveness pass
 
 ---
 
@@ -73,6 +64,7 @@ None.
 | 9d-A | Landing: Badges + Galería múltiple | ✅ DONE | 2026-02-26 | 7956e0f |
 | 9d-B | Landing: Banner + Códigos descuento | ✅ DONE | 2026-02-26 | 5b18fcc |
 | 9e-A | Visual Polish: Footer + Navbar mobile | ✅ DONE | 2026-02-27 | pending |
+| 10-AB | Polish Sprint: Global UI + Product Cards | ✅ DONE | 2026-02-27 | pending |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |

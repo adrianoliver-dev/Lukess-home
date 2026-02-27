@@ -899,7 +899,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             }}
                           >
                             <div className={`w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-colors ${notifyByEmail
-                              ? 'bg-[#D4AF37] border-[#D4AF37]'
+                              ? 'bg-accent-500 border-accent-500'
                               : 'bg-transparent border-gray-500 group-hover:border-gray-300'
                               }`}>
                               {notifyByEmail && (
@@ -921,7 +921,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             }}
                           >
                             <div className={`w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-colors ${notifyByWhatsapp
-                              ? 'bg-[#D4AF37] border-[#D4AF37]'
+                              ? 'bg-accent-500 border-accent-500'
                               : 'bg-transparent border-gray-500 group-hover:border-gray-300'
                               }`}>
                               {notifyByWhatsapp && (

@@ -20,7 +20,7 @@ interface Particle {
 
 const colors = [
   '#21808D', // primary
-  '#D4AF37', // accent gold
+  '#c89b6e', // accent gold
   '#10b981', // green
   '#3b82f6', // blue
   '#f59e0b', // amber
@@ -48,57 +48,57 @@ export function Confetti({ isActive, duration = 3000 }: ConfettiProps) {
     if (isActive) {
       setParticles(generateParticles(50))
       setShow(true)
-      
+
       // Reproducir sonido de celebración
       try {
         const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
-        
+
         // Sonido de "ding" de éxito
         const playSuccessSound = () => {
           const oscillator = audioContext.createOscillator()
           const gainNode = audioContext.createGain()
-          
+
           oscillator.connect(gainNode)
           gainNode.connect(audioContext.destination)
-          
+
           oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime) // C5
           oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1) // E5
           oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2) // G5
-          
+
           gainNode.gain.setValueAtTime(0.3, audioContext.currentTime)
           gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5)
-          
+
           oscillator.start(audioContext.currentTime)
           oscillator.stop(audioContext.currentTime + 0.5)
         }
-        
+
         playSuccessSound()
-        
+
         // Segundo sonido más agudo
         setTimeout(() => {
           const oscillator2 = audioContext.createOscillator()
           const gainNode2 = audioContext.createGain()
-          
+
           oscillator2.connect(gainNode2)
           gainNode2.connect(audioContext.destination)
-          
+
           oscillator2.frequency.setValueAtTime(1046.50, audioContext.currentTime) // C6
           gainNode2.gain.setValueAtTime(0.2, audioContext.currentTime)
           gainNode2.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3)
-          
+
           oscillator2.start(audioContext.currentTime)
           oscillator2.stop(audioContext.currentTime + 0.3)
         }, 200)
-        
+
       } catch (e) {
         // Audio no disponible, continuar sin sonido
         console.log('Audio not available')
       }
-      
+
       const timer = setTimeout(() => {
         setShow(false)
       }, duration)
-      
+
       return () => clearTimeout(timer)
     }
   }, [isActive, duration])
@@ -153,7 +153,7 @@ export function Confetti({ isActive, duration = 3000 }: ConfettiProps) {
               )}
             </motion.div>
           ))}
-          
+
           {/* Explosión central de luz */}
           <motion.div
             initial={{ scale: 0, opacity: 0 }}
@@ -191,7 +191,7 @@ export function SparkleEffect({ isActive }: { isActive: boolean }) {
         <motion.div
           key={sparkle.id}
           initial={{ scale: 0, opacity: 0 }}
-          animate={{ 
+          animate={{
             scale: [0, 1, 0],
             opacity: [0, 1, 0],
           }}
@@ -209,7 +209,7 @@ export function SparkleEffect({ isActive }: { isActive: boolean }) {
             height: sparkle.size,
           }}
         >
-          <svg viewBox="0 0 24 24" fill="#D4AF37" className="w-full h-full">
+          <svg viewBox="0 0 24 24" fill="#c89b6e" className="w-full h-full">
             <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
           </svg>
         </motion.div>
