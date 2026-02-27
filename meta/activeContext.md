@@ -14,20 +14,32 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 9d-B FIX
-- **Block Name:** Landing: Banner + Códigos descuento (FIX)
-- **Completed:** 2026-02-27
-- **Commit:** 036b5a3
+- **Block Number:** 9d-B-V2
+- **Block Name:** Hero Section Rewrite — Deep Research Implementation
+- **Completed:** 2026-02-26
+- **Commit:** ce21b6a
 
-### Files Changed (9d-B FIX)
-- `components/landing/QuickLinksRow.tsx` — Updated image paths (using `public/products/`) and category hrefs (`/?filter=X#catalogo`).
-- `components/landing/HeroSection.tsx` — Used fallback image (`polo-azul-texturizado.png`) and adjusted padding (`pt-16 md:pt-24`) to clear navbar.
-- `components/landing/AnnouncementBar.tsx` — Set `position: fixed`, added `--announcement-height` custom property, adjusted z-index to `60`.
-- `components/layout/Navbar.tsx` — Applied dynamic `top` style variable to prevent overlap with AnnouncementBar.
-- `app/page.tsx` — Removed nesting `<main>` tag wrapping replaced with fragment.
+### Files Changed (9d-B-V2)
+- `components/landing/HeroSection.tsx` — Complete rewrite with local copy
+- `components/landing/QuickLinksRow.tsx` — Sombreros → Gorras, object-position fixes
+- `components/landing/AnnouncementBar.tsx` — Trust message updates
+- `app/page.tsx` — Removed countdown timer
 
-### DB Changes
-None.
+### Key changes
+- Headline: "Ropa que aguanta el calor — marcas originales importadas"
+- WhatsApp-first CTA (#25D366 green)
+- Trust bar with 4 signals
+- All English jargon removed
+- "Entrega en Santa Cruz" (not toda Bolivia)
+- Mobile-first 70vh layout
+- Gorras category (not sombreros)
+
+### Build Status
+✅ `npm run build` — 0 errors, 0 TypeScript errors.
+
+### Browser Verification
+✅ Visual confirmation via Browser Sub-Agent: mobile + desktop layouts correct, WhatsApp link works, All copy in Spanish, No broken images.
+
 
 ### Build Status
 ✅ `npm run build` — 0 errors, 0 TypeScript errors.

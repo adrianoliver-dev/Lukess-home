@@ -70,7 +70,7 @@ export default async function HeroSection() {
                 </div>
             </div>
 
-            <div className="relative z-20 w-full px-5 max-w-7xl mx-auto min-h-[70vh] md:min-h-[85vh] flex flex-col justify-end pb-24 md:pb-32">
+            <div className="relative z-20 w-full px-5 max-w-7xl mx-auto min-h-[70vh] md:min-h-[85vh] flex flex-col justify-end pb-24 md:pb-32 pt-16 md:pt-24">
                 <div className="max-w-xl md:w-1/2 md:pr-8">
                     {/* Headline */}
                     <h1 className="text-3xl sm:text-4xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight drop-shadow-md">
