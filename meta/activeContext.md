@@ -17,7 +17,7 @@
 - **Block Number:** 10-D
 - **Block Name:** Polish Sprint: Hero & Trust Section Redesign
 - **Completed:** 2026-02-27
-- **Commit:** pending
+- **Commit:** 184d5c0
 
 ### Files Changed
 - `components/landing/HeroSection.tsx` — Rewrote Hero, added promo pill, red CTA, dark overlay.
