@@ -44,7 +44,7 @@ export default function ComoComprarPage() {
         <ol className="space-y-4">
           <li>
             <strong>1. Contáctanos</strong>
-            <p>Envía un mensaje a <a href={buildWhatsAppUrl("Hola, vengo desde la web de Lukess Home")} className="text-primary-600 font-semibold">{formatWhatsAppNumber()}</a></p>
+            <p>Envía un mensaje a <a href={buildWhatsAppUrl("Hola, vengo desde la web de Lukess Home")} className="text-gray-900 font-semibold">{formatWhatsAppNumber()}</a></p>
           </li>
           <li>
             <strong>2. Indica el producto</strong>
@@ -79,7 +79,7 @@ export default function ComoComprarPage() {
       </section>
 
       <section>
-        <div className="bg-primary-50 border-2 border-primary-200 rounded-lg p-6">
+        <div className="bg-gray-100 border-2 border-gray-200 rounded-lg p-6">
           <h3 className="font-bold text-lg text-gray-900 mb-2">
             ¿Tienes dudas?
           </h3>

@@ -36,7 +36,7 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
             className="fixed right-0 top-0 h-full w-full sm:w-96 bg-white shadow-2xl z-50 flex flex-col"
           >
             {/* Header */}
-            <div className="p-4 border-b-2 border-gray-100 flex items-center justify-between bg-primary-600 text-white">
+            <div className="p-4 border-b-2 border-gray-100 flex items-center justify-between bg-gray-900 text-white">
               <div className="flex items-center gap-2">
                 <ShoppingBag className="w-5 h-5" />
                 <h2 className="font-bold text-lg">Mi Carrito</h2>
@@ -83,7 +83,7 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
                           {item.size && <span className="bg-gray-200 px-2 py-0.5 rounded">Talla: {item.size}</span>}
                           {item.color && <span className="bg-gray-200 px-2 py-0.5 rounded">Color: {item.color}</span>}
                         </div>
-                        <p className="text-primary-600 font-bold mt-1">
+                        <p className="text-gray-900 font-bold mt-1">
                           Bs {item.product.price.toFixed(2)}
                         </p>
 
@@ -91,14 +91,14 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
                         <div className="flex items-center gap-2 mt-2">
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="w-7 h-7 flex items-center justify-center bg-white border-2 border-gray-300 rounded-lg hover:border-primary-500 transition-colors"
+                            className="w-7 h-7 flex items-center justify-center bg-white border-2 border-gray-300 rounded-lg hover:border-gray-500 transition-colors"
                           >
                             <Minus className="w-4 h-4" />
                           </button>
                           <span className="w-8 text-center font-bold">{item.quantity}</span>
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="w-7 h-7 flex items-center justify-center bg-white border-2 border-gray-300 rounded-lg hover:border-primary-500 transition-colors"
+                            className="w-7 h-7 flex items-center justify-center bg-white border-2 border-gray-300 rounded-lg hover:border-gray-500 transition-colors"
                           >
                             <Plus className="w-4 h-4" />
                           </button>
@@ -153,13 +153,13 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
 
                 <div className="flex items-center justify-between">
                   <span className="text-gray-700 font-semibold">Total:</span>
-                  <span className="text-2xl font-bold text-primary-600">
+                  <span className="text-2xl font-bold text-gray-900">
                     Bs {total.toFixed(2)}
                   </span>
                 </div>
                 <button
                   onClick={() => { onCheckout(); onClose(); }}
-                  className="w-full bg-gradient-to-r from-primary-600 to-primary-700 text-white py-4 rounded-xl font-bold text-lg hover:from-primary-700 hover:to-primary-800 transform hover:scale-105 transition-all shadow-lg"
+                  className="w-full bg-gradient-to-r from-gray-600 to-gray-700 text-white py-4 rounded-xl font-bold text-lg hover:from-gray-700 hover:to-gray-800 transform hover:scale-105 transition-all shadow-lg"
                 >
                   Proceder al Pago
                 </button>

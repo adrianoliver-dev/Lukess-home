@@ -106,7 +106,7 @@ export function FilterSidebar({ onFilterChange, brands, colors, categories }: Fi
                 onChange={() => updateFilters({ category: cat === filters.category ? null : cat })}
                 className="w-4 h-4 accent-primary-600"
               />
-              <span className="text-sm group-hover:text-primary-600 transition-colors">{cat}</span>
+              <span className="text-sm group-hover:text-gray-900 transition-colors">{cat}</span>
             </label>
           ))}
         </div>
@@ -125,7 +125,7 @@ export function FilterSidebar({ onFilterChange, brands, colors, categories }: Fi
               type="number"
               value={filters.priceRange[0]}
               onChange={(e) => updateFilters({ priceRange: [+e.target.value, filters.priceRange[1]] })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-primary-600 focus:outline-none"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-gray-600 focus:outline-none"
               placeholder="Mín"
               min="0"
             />
@@ -134,7 +134,7 @@ export function FilterSidebar({ onFilterChange, brands, colors, categories }: Fi
               type="number"
               value={filters.priceRange[1]}
               onChange={(e) => updateFilters({ priceRange: [filters.priceRange[0], +e.target.value] })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-primary-600 focus:outline-none"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-gray-600 focus:outline-none"
               placeholder="Máx"
               min="0"
             />
@@ -153,8 +153,8 @@ export function FilterSidebar({ onFilterChange, brands, colors, categories }: Fi
                 onClick={() => updateFilters({ priceRange: [min, max] })}
                 className={`px-3 py-1 text-xs rounded-full transition-all ${
                   filters.priceRange[0] === min && filters.priceRange[1] === max
-                    ? 'bg-primary-600 text-white'
-                    : 'border border-gray-300 hover:border-primary-600 hover:text-primary-600'
+                    ? 'bg-gray-900 text-white'
+                    : 'border border-gray-300 hover:border-gray-600 hover:text-gray-900'
                 }`}
               >
                 Bs {min}-{max}
@@ -185,7 +185,7 @@ export function FilterSidebar({ onFilterChange, brands, colors, categories }: Fi
                 }}
                 className="w-4 h-4 accent-primary-600"
               />
-              <span className="text-sm group-hover:text-primary-600 transition-colors">{brand}</span>
+              <span className="text-sm group-hover:text-gray-900 transition-colors">{brand}</span>
             </label>
           ))}
         </div>
@@ -210,7 +210,7 @@ export function FilterSidebar({ onFilterChange, brands, colors, categories }: Fi
               }}
               className={`px-3 py-1.5 text-xs rounded-full border-2 transition-all ${
                 filters.colors.includes(color)
-                  ? 'border-primary-600 bg-primary-50 text-primary-600 font-semibold'
+                  ? 'border-gray-600 bg-gray-100 text-gray-900 font-semibold'
                   : 'border-gray-300 hover:border-gray-400'
               }`}
             >
@@ -239,7 +239,7 @@ export function FilterSidebar({ onFilterChange, brands, colors, categories }: Fi
               }}
               className={`py-2 text-sm font-semibold rounded-lg border-2 transition-all ${
                 filters.sizes.includes(size)
-                  ? 'border-primary-600 bg-primary-600 text-white'
+                  ? 'border-gray-600 bg-gray-900 text-white'
                   : 'border-gray-300 hover:border-gray-400'
               }`}
             >
@@ -264,7 +264,7 @@ export function FilterSidebar({ onFilterChange, brands, colors, categories }: Fi
               onChange={(e) => updateFilters({ inStock: e.target.checked ? true : null })}
               className="w-4 h-4 accent-primary-600"
             />
-            <span className="text-sm group-hover:text-primary-600 transition-colors">Solo productos en stock</span>
+            <span className="text-sm group-hover:text-gray-900 transition-colors">Solo productos en stock</span>
           </label>
           <label className="flex items-center gap-2 cursor-pointer group">
             <input
@@ -298,8 +298,8 @@ function FilterSection({ title, icon, isOpen, onToggle, children }: FilterSectio
         className="flex items-center justify-between w-full mb-3 group"
       >
         <div className="flex items-center gap-2">
-          <span className="text-primary-600">{icon}</span>
-          <h4 className="font-semibold text-sm text-gray-900 group-hover:text-primary-600 transition-colors">{title}</h4>
+          <span className="text-gray-900">{icon}</span>
+          <h4 className="font-semibold text-sm text-gray-900 group-hover:text-gray-900 transition-colors">{title}</h4>
         </div>
         <ChevronDown
           className={`w-4 h-4 text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`}

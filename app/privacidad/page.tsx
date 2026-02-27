@@ -60,7 +60,7 @@ export default function PrivacidadPage() {
         </ul>
         <p className="mt-4">
           Para ejercer estos derechos, contáctanos por WhatsApp:
-          <a href={buildWhatsAppUrl("Hola, vengo desde la web de Lukess Home")} className="text-primary-600 font-semibold ml-1">
+          <a href={buildWhatsAppUrl("Hola, vengo desde la web de Lukess Home")} className="text-gray-900 font-semibold ml-1">
             {formatWhatsAppNumber()}
           </a>
         </p>

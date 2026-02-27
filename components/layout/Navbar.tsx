@@ -188,7 +188,7 @@ export default function Navbar() {
               href="/"
               className="flex items-center gap-1.5 shrink-0 hover:opacity-80 transition-opacity"
             >
-              <span className="text-xl sm:text-2xl md:text-[28px] font-extrabold tracking-tight text-primary-800">
+              <span className="text-xl sm:text-2xl md:text-[28px] font-extrabold tracking-tight text-gray-900">
                 LUKESS
               </span>
               <span className="text-[10px] sm:text-xs font-medium tracking-[0.25em] uppercase text-accent-500">
@@ -206,7 +206,7 @@ export default function Navbar() {
                   <Link
                     href={category.href}
                     onClick={(e) => handleNavClick(e, category.href)}
-                    className="flex items-center gap-1 text-sm font-semibold text-gray-800 hover:text-primary-800 transition-colors px-3 py-2"
+                    className="flex items-center gap-1 text-sm font-semibold text-gray-800 hover:text-gray-900 transition-colors px-3 py-2"
                   >
                     {category.name}
                   </Link>
@@ -219,7 +219,7 @@ export default function Navbar() {
                             key={sub.name}
                             href={`/?filter=${sub.filter}#catalogo`}
                             onClick={(e) => handleNavClick(e, `/?filter=${sub.filter}#catalogo`)}
-                            className="block py-2 text-sm text-gray-700 hover:text-primary-800 hover:translate-x-1 transition-all"
+                            className="block py-2 text-sm text-gray-700 hover:text-gray-900 hover:translate-x-1 transition-all"
                           >
                             {sub.name}
                           </Link>
@@ -237,7 +237,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className="text-sm font-medium text-gray-700 hover:text-primary-800 transition-colors px-3 py-2"
+                  className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors px-3 py-2"
                 >
                   {link.label}
                 </Link>
@@ -255,7 +255,7 @@ export default function Navbar() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Buscar..."
-                    className="w-48 pl-9 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-primary-600 focus:outline-none transition-colors"
+                    className="w-48 pl-9 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-gray-600 focus:outline-none transition-colors"
                   />
                 </div>
               </form>
@@ -273,7 +273,7 @@ export default function Navbar() {
                       onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                       className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold text-gray-800 hover:bg-gray-100 transition-colors"
                     >
-                      <User className="w-4 h-4 text-primary-600" />
+                      <User className="w-4 h-4 text-gray-900" />
                       <span className="max-w-[80px] truncate">{customerName}</span>
                       <ChevronDown className={`w-3 h-3 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
                     </button>
@@ -317,7 +317,7 @@ export default function Navbar() {
                 ) : (
                   <button
                     onClick={() => setIsAuthModalOpen(true)}
-                    className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold text-gray-700 border border-gray-300 hover:border-primary-400 hover:text-primary-700 transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold text-gray-700 border border-gray-300 hover:border-gray-400 hover:text-gray-800 transition-colors"
                   >
                     <User className="w-4 h-4" />
                     Entrar
@@ -393,7 +393,7 @@ export default function Navbar() {
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder="Buscar productos..."
-                        className="w-full pl-9 pr-3 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-600 focus:outline-none text-sm"
+                        className="w-full pl-9 pr-3 py-2 border-2 border-gray-200 rounded-lg focus:border-gray-600 focus:outline-none text-sm"
                       />
                     </div>
                   </form>
@@ -413,7 +413,7 @@ export default function Navbar() {
                     <Link
                       href={category.href}
                       onClick={(e) => handleNavClick(e, category.href)}
-                      className="flex items-center justify-between py-2 px-4 rounded-xl text-sm font-semibold text-gray-800 hover:text-primary-800 hover:bg-gray-50 transition-all duration-200"
+                      className="flex items-center justify-between py-2 px-4 rounded-xl text-sm font-semibold text-gray-800 hover:text-gray-900 hover:bg-gray-50 transition-all duration-200"
                     >
                       <span>{category.name}</span>
                     </Link>
@@ -425,7 +425,7 @@ export default function Navbar() {
                             key={sub.name}
                             href={`/?filter=${sub.filter}#catalogo`}
                             onClick={(e) => handleNavClick(e, `/?filter=${sub.filter}#catalogo`)}
-                            className="block py-1.5 px-4 text-xs text-gray-600 hover:text-primary-800 transition-colors"
+                            className="block py-1.5 px-4 text-xs text-gray-600 hover:text-gray-900 transition-colors"
                           >
                             {sub.name}
                           </Link>
@@ -453,7 +453,7 @@ export default function Navbar() {
                     <Link
                       href={link.href}
                       onClick={(e) => handleNavClick(e, link.href)}
-                      className="flex items-center gap-3 py-2 px-4 rounded-xl text-sm font-normal text-gray-700 hover:text-primary-800 hover:bg-gray-50 transition-all duration-200"
+                      className="flex items-center gap-3 py-2 px-4 rounded-xl text-sm font-normal text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-all duration-200"
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
                       {link.label}
@@ -492,7 +492,7 @@ export default function Navbar() {
                   ) : (
                     <button
                       onClick={() => { setIsAuthModalOpen(true); setIsOpen(false); }}
-                      className="w-full flex items-center justify-center gap-2 border-2 border-primary-600 text-primary-700 py-2.5 rounded-xl text-sm font-bold transition-all hover:bg-primary-50"
+                      className="w-full flex items-center justify-center gap-2 border-2 border-gray-600 text-gray-800 py-2.5 rounded-xl text-sm font-bold transition-all hover:bg-gray-100"
                     >
                       <User className="w-4 h-4" />
                       Iniciar sesión / Crear cuenta
@@ -523,7 +523,7 @@ export default function Navbar() {
                       setIsCartOpen(true);
                       setIsOpen(false);
                     }}
-                    className="flex-1 flex items-center justify-center gap-2 bg-primary-800 hover:bg-primary-900 text-white py-2.5 rounded-xl text-sm font-semibold transition-all shadow-lg"
+                    className="flex-1 flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-900 text-white py-2.5 rounded-xl text-sm font-semibold transition-all shadow-lg"
                   >
                     <ShoppingCart className="w-4 h-4" />
                     Carrito

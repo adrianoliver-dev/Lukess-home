@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { X, MessageCircle, ArrowRight } from 'lucide-react'
+import { buildWhatsAppUrl } from '@/lib/utils/whatsapp'
 
 interface AnnouncementMessage {
     id: string
@@ -16,14 +17,14 @@ const messages: AnnouncementMessage[] = [
         id: 'trust-1',
         text: '🏬 3 locales en Mercado Mutualista — Pasillos 2, 3 y 5',
         cta: 'Contactar',
-        ctaHref: 'https://wa.me/59172643753?text=Hola!%20Quiero%20visitar%20sus%20locales',
+        ctaHref: buildWhatsAppUrl('Hola! Quiero visitar sus locales'),
         ctaIcon: 'whatsapp',
     },
     {
         id: 'delivery',
         text: '📦 Entrega gratis zona norte SCZ — pedidos +200 Bs',
         cta: 'Pedir',
-        ctaHref: 'https://wa.me/59172643753?text=Hola!%20Quiero%20pedir%20con%20entrega',
+        ctaHref: buildWhatsAppUrl('Hola! Quiero pedir con entrega'),
         ctaIcon: 'whatsapp',
     },
     {

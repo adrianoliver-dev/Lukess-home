@@ -475,26 +475,26 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
             variants={headingVariants}
             className="text-center mb-10 md:mb-14"
           >
-            <span className="inline-flex items-center gap-2 bg-primary-50 text-primary-600 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase mb-4">
+            <span className="inline-flex items-center gap-2 bg-gray-100 text-gray-900 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase mb-4">
               <ShoppingBag className="w-3.5 h-3.5" />
               Catálogo
             </span>
 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-secondary-800 mb-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4">
               Nuestros{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-700">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-gray-700">
                 Productos
               </span>
             </h2>
 
-            <p className="text-secondary-500 text-base md:text-lg max-w-xl mx-auto">
+            <p className="text-gray-500 text-base md:text-lg max-w-xl mx-auto">
               Calidad y estilo para el hombre moderno
             </p>
 
             <div className="flex items-center justify-center gap-3 mt-6">
-              <span className="h-px w-10 bg-gradient-to-r from-transparent to-primary-300" />
-              <span className="w-1.5 h-1.5 rounded-full bg-primary-400" />
-              <span className="h-px w-10 bg-gradient-to-l from-transparent to-primary-300" />
+              <span className="h-px w-10 bg-gradient-to-r from-transparent to-gray-300" />
+              <span className="w-1.5 h-1.5 rounded-full bg-gray-500" />
+              <span className="h-px w-10 bg-gradient-to-l from-transparent to-gray-300" />
             </div>
           </motion.div>
 
@@ -516,7 +516,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                   transition-all duration-300 flex items-center gap-2
                   ${showNew
                     ? 'bg-gradient-to-r from-amber-400 to-orange-500 text-white shadow-lg shadow-amber-400/30 scale-105'
-                    : 'bg-secondary-100 text-secondary-600 hover:bg-secondary-200 hover:text-secondary-800'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-800'
                   }
                 `}
               >
@@ -535,7 +535,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                   transition-all duration-300 flex items-center gap-2
                   ${showDiscount
                     ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg shadow-red-500/30 scale-105'
-                    : 'bg-secondary-100 text-secondary-600 hover:bg-secondary-200 hover:text-secondary-800'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-800'
                   }
                 `}
               >
@@ -554,7 +554,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                   transition-all duration-300 flex items-center gap-2
                   ${showCollection === 'primavera'
                     ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white shadow-lg shadow-green-400/30 scale-105'
-                    : 'bg-secondary-100 text-secondary-600 hover:bg-secondary-200 hover:text-secondary-800'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-800'
                   }
                 `}
               >
@@ -568,14 +568,14 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
               <button
                 onClick={() => setShowFilters(!showFilters)}
                 className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-md ${showFilters
-                  ? 'bg-primary-800 text-white'
-                  : 'bg-primary-700 text-white hover:bg-primary-800'
+                  ? 'bg-gray-800 text-white'
+                  : 'bg-gray-700 text-white hover:bg-gray-800'
                   }`}
               >
                 <SlidersHorizontal className="w-4 h-4" />
                 Filtros
                 {activeFiltersCount > 0 && (
-                  <span className="bg-white text-primary-700 text-xs font-bold px-2 py-0.5 rounded-full">
+                  <span className="bg-white text-gray-800 text-xs font-bold px-2 py-0.5 rounded-full">
                     {activeFiltersCount}
                   </span>
                 )}
@@ -594,19 +594,19 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
 
             {/* Contador y ordenamiento */}
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-4">
-              <span className="text-sm font-semibold text-secondary-700">
+              <span className="text-sm font-semibold text-gray-700">
                 {filteredProducts.length} producto{filteredProducts.length !== 1 ? 's' : ''} encontrado{filteredProducts.length !== 1 ? 's' : ''}
               </span>
 
               <div className="flex items-center gap-2">
-                <label htmlFor="sort-order" className="text-sm text-secondary-600 font-medium">
+                <label htmlFor="sort-order" className="text-sm text-gray-600 font-medium">
                   Ordenar por:
                 </label>
                 <select
                   id="sort-order"
                   value={sortOrder}
                   onChange={(e) => setSortOrder(e.target.value as 'recent' | 'price-asc' | 'price-desc')}
-                  className="px-3 py-1.5 text-sm border-2 border-secondary-200 rounded-lg focus:border-primary-500 focus:outline-none bg-white cursor-pointer"
+                  className="px-3 py-1.5 text-sm border-2 border-gray-200 rounded-lg focus:border-gray-500 focus:outline-none bg-white cursor-pointer"
                 >
                   <option value="recent">Más recientes</option>
                   <option value="price-asc">Menor precio</option>
@@ -619,7 +619,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
             {activeFiltersCount > 0 && (
               <div className="px-4 mt-4">
                 <div className="flex flex-wrap gap-2 items-center">
-                  <span className="text-xs font-semibold text-secondary-600">Filtros activos:</span>
+                  <span className="text-xs font-semibold text-gray-600">Filtros activos:</span>
 
                   {searchQuery && (
                     <span className="inline-flex items-center gap-1 bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">
@@ -634,9 +634,9 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                   )}
 
                   {selectedCategories.map(cat => (
-                    <span key={cat} className="inline-flex items-center gap-1 bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-xs font-medium">
+                    <span key={cat} className="inline-flex items-center gap-1 bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-xs font-medium">
                       {cat}
-                      <button onClick={() => setSelectedCategories(selectedCategories.filter(c => c !== cat))} className="hover:text-primary-900">
+                      <button onClick={() => setSelectedCategories(selectedCategories.filter(c => c !== cat))} className="hover:text-gray-900">
                         <X className="w-3 h-3" />
                       </button>
                     </span>
@@ -717,14 +717,14 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                   exit={{ opacity: 0, height: 0 }}
                   className="overflow-hidden"
                 >
-                  <div className="mt-6 p-6 bg-secondary-50 rounded-2xl border border-secondary-200">
+                  <div className="mt-6 p-6 bg-gray-50 rounded-2xl border border-gray-200">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 
                       {/* Categoría - Multiselección con checkboxes */}
                       <div>
                         <div className="flex items-center justify-between mb-3">
-                          <label className="flex items-center gap-2 text-sm font-semibold text-secondary-700">
-                            <Tag className="w-4 h-4 text-primary-500" />
+                          <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                            <Tag className="w-4 h-4 text-gray-600" />
                             Categoría {selectedCategories.length > 0 && `(${selectedCategories.length})`}
                           </label>
                           {selectedCategories.length > 0 && (
@@ -756,7 +756,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                                 }}
                                 className="w-4 h-4 accent-primary-600 rounded"
                               />
-                              <span className="text-sm group-hover:text-primary-600 transition-colors">{cat}</span>
+                              <span className="text-sm group-hover:text-gray-900 transition-colors">{cat}</span>
                             </label>
                           ))}
                         </div>
@@ -766,8 +766,8 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                       {(selectedCategories.includes('Camisas') || selectedCategories.includes('Pantalones') || selectedCategories.includes('Accesorios')) && (
                         <div>
                           <div className="flex items-center justify-between mb-3">
-                            <label className="flex items-center gap-2 text-sm font-semibold text-secondary-700">
-                              <Filter className="w-4 h-4 text-primary-500" />
+                            <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                              <Filter className="w-4 h-4 text-gray-600" />
                               Subcategoría {selectedSubcategories.length > 0 && `(${selectedSubcategories.length})`}
                             </label>
                             {selectedSubcategories.length > 0 && (
@@ -801,7 +801,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                                       }}
                                       className="w-4 h-4 accent-primary-600 rounded"
                                     />
-                                    <span className="text-sm group-hover:text-primary-600 transition-colors">{sub.label}</span>
+                                    <span className="text-sm group-hover:text-gray-900 transition-colors">{sub.label}</span>
                                   </label>
                                 ))}
                               </>
@@ -827,7 +827,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                                       }}
                                       className="w-4 h-4 accent-primary-600 rounded"
                                     />
-                                    <span className="text-sm group-hover:text-primary-600 transition-colors">{sub.label}</span>
+                                    <span className="text-sm group-hover:text-gray-900 transition-colors">{sub.label}</span>
                                   </label>
                                 ))}
                               </>
@@ -854,7 +854,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                                       }}
                                       className="w-4 h-4 accent-primary-600 rounded"
                                     />
-                                    <span className="text-sm group-hover:text-primary-600 transition-colors">{sub.label}</span>
+                                    <span className="text-sm group-hover:text-gray-900 transition-colors">{sub.label}</span>
                                   </label>
                                 ))}
                               </>
@@ -866,8 +866,8 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                       {/* Filtro por Marca - Multiselección */}
                       <div>
                         <div className="flex items-center justify-between mb-3">
-                          <label className="flex items-center gap-2 text-sm font-semibold text-secondary-700">
-                            <Building2 className="w-4 h-4 text-primary-500" />
+                          <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                            <Building2 className="w-4 h-4 text-gray-600" />
                             Marca {selectedBrands.length > 0 && `(${selectedBrands.length})`}
                           </label>
                           {selectedBrands.length > 0 && (
@@ -894,7 +894,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                                 }}
                                 className="w-4 h-4 accent-primary-600 rounded"
                               />
-                              <span className="text-sm group-hover:text-primary-600 transition-colors">{brand}</span>
+                              <span className="text-sm group-hover:text-gray-900 transition-colors">{brand}</span>
                             </label>
                           ))}
                         </div>
@@ -903,8 +903,8 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                       {/* Filtro por Color - Multiselección */}
                       <div>
                         <div className="flex items-center justify-between mb-3">
-                          <label className="flex items-center gap-2 text-sm font-semibold text-secondary-700">
-                            <Palette className="w-4 h-4 text-primary-500" />
+                          <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                            <Palette className="w-4 h-4 text-gray-600" />
                             Color {selectedColors.length > 0 && `(${selectedColors.length})`}
                           </label>
                           {selectedColors.length > 0 && (
@@ -931,7 +931,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                                 }}
                                 className="w-4 h-4 accent-primary-600 rounded"
                               />
-                              <span className="text-sm group-hover:text-primary-600 transition-colors">{color}</span>
+                              <span className="text-sm group-hover:text-gray-900 transition-colors">{color}</span>
                             </label>
                           ))}
                         </div>
@@ -939,8 +939,8 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
 
                       {/* Filtro por Talla - Solo las tallas especificadas */}
                       <div>
-                        <label className="flex items-center gap-2 text-sm font-semibold text-secondary-700 mb-3">
-                          <Ruler className="w-4 h-4 text-primary-500" />
+                        <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3">
+                          <Ruler className="w-4 h-4 text-gray-600" />
                           Talla
                         </label>
                         <div className="flex flex-wrap gap-2">
@@ -954,8 +954,8 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                                 setSidebarFilters({ ...sidebarFilters, sizes: newSizes })
                               }}
                               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all min-w-[40px] ${sidebarFilters.sizes.includes(size)
-                                ? 'bg-primary-500 text-white'
-                                : 'bg-white text-secondary-600 border border-secondary-200 hover:border-primary-300'
+                                ? 'bg-gray-900 text-white'
+                                : 'bg-white text-gray-600 border border-gray-200 hover:border-gray-300'
                                 }`}
                             >
                               {size}
@@ -966,16 +966,16 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
 
                       {/* Filtro por Disponibilidad */}
                       <div>
-                        <label className="flex items-center gap-2 text-sm font-semibold text-secondary-700 mb-3">
-                          <Ruler className="w-4 h-4 text-primary-500" />
+                        <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3">
+                          <Ruler className="w-4 h-4 text-gray-600" />
                           Disponibilidad
                         </label>
                         <div className="flex flex-wrap gap-2">
                           <button
                             onClick={() => setStockFilter('all')}
                             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${stockFilter === 'all'
-                              ? 'bg-primary-500 text-white'
-                              : 'bg-white text-secondary-600 border border-secondary-200 hover:border-primary-300'
+                              ? 'bg-gray-900 text-white'
+                              : 'bg-white text-gray-600 border border-gray-200 hover:border-gray-300'
                               }`}
                           >
                             Todos
@@ -984,7 +984,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                             onClick={() => setStockFilter('inStock')}
                             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${stockFilter === 'inStock'
                               ? 'bg-green-500 text-white'
-                              : 'bg-white text-secondary-600 border border-secondary-200 hover:border-green-300'
+                              : 'bg-white text-gray-600 border border-gray-200 hover:border-green-300'
                               }`}
                           >
                             En Stock
@@ -993,7 +993,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                             onClick={() => setStockFilter('lowStock')}
                             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${stockFilter === 'lowStock'
                               ? 'bg-amber-500 text-white'
-                              : 'bg-white text-secondary-600 border border-secondary-200 hover:border-amber-300'
+                              : 'bg-white text-gray-600 border border-gray-200 hover:border-amber-300'
                               }`}
                           >
                             Últimas unidades
@@ -1016,18 +1016,18 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                 animate={{ opacity: 1, y: 0 }}
                 className="flex flex-col items-center justify-center py-20 px-4"
               >
-                <div className="w-24 h-24 bg-secondary-100 rounded-full flex items-center justify-center mb-6">
-                  <ShoppingBag className="w-12 h-12 text-secondary-400" />
+                <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+                  <ShoppingBag className="w-12 h-12 text-gray-400" />
                 </div>
-                <h3 className="text-2xl font-bold text-secondary-800 mb-2">
+                <h3 className="text-2xl font-bold text-gray-800 mb-2">
                   No se encontraron productos
                 </h3>
-                <p className="text-secondary-500 text-center mb-6 max-w-md">
+                <p className="text-gray-500 text-center mb-6 max-w-md">
                   No hay productos que coincidan con los filtros seleccionados. Intenta ajustar tus criterios de búsqueda.
                 </p>
                 <button
                   onClick={clearAllFilters}
-                  className="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+                  className="inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
                 >
                   <X className="w-4 h-4" />
                   Limpiar todos los filtros
@@ -1151,7 +1151,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
               <div className="text-center mt-8">
                 <button
                   onClick={() => setDisplayLimit(prev => prev + 12)}
-                  className="inline-flex items-center gap-2 bg-primary-800 hover:bg-primary-900 text-white px-8 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+                  className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-900 text-white px-8 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
                 >
                   <Plus className="w-4 h-4" />
                   Cargar más productos ({filteredProducts.length - displayLimit} restantes)
@@ -1164,14 +1164,14 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
               variants={headingVariants}
               className="text-center mt-12 md:mt-16"
             >
-              <p className="text-secondary-400 text-sm mb-4">
+              <p className="text-gray-400 text-sm mb-4">
                 ¿No encontraste lo que buscas? Tenemos mucho más en tienda
               </p>
               <a
                 href={buildWhatsAppUrl("Hola Lukess Home, quiero consultar sobre otros productos")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-secondary-800 hover:bg-secondary-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg shadow-secondary-800/25"
+                className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg shadow-secondary-800/25"
               >
                 <Plus className="w-4 h-4" />
                 Pregunta por más productos

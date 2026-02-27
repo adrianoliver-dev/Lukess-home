@@ -90,7 +90,7 @@ function StarRating({ count }: { count: number }) {
           key={i}
           className={`w-4 h-4 ${i < count
             ? "text-accent-500 fill-accent-500"
-            : "text-secondary-200"
+            : "text-gray-200"
             }`}
         />
       ))}
@@ -102,14 +102,14 @@ function StarRating({ count }: { count: number }) {
 
 function TestimonioCard({ testimonio }: { testimonio: Testimonio }) {
   return (
-    <div className="bg-white rounded-2xl border border-secondary-100 p-6 lg:p-8 shadow-sm hover:shadow-lg hover:border-primary-200 transition-all duration-300 h-full flex flex-col">
+    <div className="bg-white rounded-2xl border border-gray-100 p-6 lg:p-8 shadow-sm hover:shadow-lg hover:border-gray-200 transition-all duration-300 h-full flex flex-col">
       {/* Comillas decorativas */}
       <div className="mb-4">
-        <Quote className="w-8 h-8 text-primary-200" />
+        <Quote className="w-8 h-8 text-gray-300" />
       </div>
 
       {/* Texto */}
-      <p className="text-secondary-600 text-sm sm:text-base italic leading-relaxed flex-1 mb-6">
+      <p className="text-gray-600 text-sm sm:text-base italic leading-relaxed flex-1 mb-6">
         &ldquo;{testimonio.texto}&rdquo;
       </p>
 
@@ -119,19 +119,19 @@ function TestimonioCard({ testimonio }: { testimonio: Testimonio }) {
       </div>
 
       {/* Autor */}
-      <div className="flex items-center gap-3 pt-4 border-t border-secondary-100">
+      <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
         {/* Avatar con iniciales */}
-        <div className="w-11 h-11 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center shrink-0">
+        <div className="w-11 h-11 bg-gradient-to-br from-gray-400 to-gray-600 rounded-full flex items-center justify-center shrink-0">
           <span className="text-sm font-bold text-white">
             {testimonio.iniciales}
           </span>
         </div>
 
         <div>
-          <p className="text-sm font-bold text-secondary-800">
+          <p className="text-sm font-bold text-gray-800">
             {testimonio.nombre}
           </p>
-          <p className="text-xs text-secondary-400">{testimonio.ciudad}</p>
+          <p className="text-xs text-gray-400">{testimonio.ciudad}</p>
         </div>
       </div>
     </div>
@@ -225,14 +225,14 @@ export default function TestimoniosSection() {
               Testimonios
             </span>
 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-secondary-800 mb-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4">
               Lo Que Dicen Nuestros{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-700">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-gray-700">
                 Clientes
               </span>
             </h2>
 
-            <p className="text-secondary-500 text-base md:text-lg max-w-xl mx-auto">
+            <p className="text-gray-500 text-base md:text-lg max-w-xl mx-auto">
               La satisfacción de nuestros clientes es nuestra prioridad
             </p>
 
@@ -284,8 +284,8 @@ export default function TestimoniosSection() {
                   className={`
                     rounded-full transition-all duration-300
                     ${activeIndex === i
-                      ? "w-8 h-2.5 bg-primary-500"
-                      : "w-2.5 h-2.5 bg-secondary-300 hover:bg-primary-300"
+                      ? "w-8 h-2.5 bg-gray-900"
+                      : "w-2.5 h-2.5 bg-gray-300 hover:bg-gray-400"
                     }
                   `}
                 />

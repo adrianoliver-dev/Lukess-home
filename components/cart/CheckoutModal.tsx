@@ -417,7 +417,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
     const phoneRegex = /^\d{7,8}$/
     if (!phoneRegex.test(customerData.phone.replace(/\s/g, ''))) {
-      toast.error('Número de teléfono inválido (ej: 76020369)', { position: 'bottom-center' })
+      toast.error('Número de teléfono inválido (ej: 75516136)', { position: 'bottom-center' })
       return
     }
 
@@ -734,7 +734,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                 <div
                   className={`p-6 border-b-2 border-gray-100 flex items-center justify-between rounded-t-2xl transition-colors ${step === 'success'
                     ? 'bg-gradient-to-r from-green-500 to-green-600 text-white'
-                    : 'bg-primary-600 text-white'
+                    : 'bg-gray-900 text-white'
                     }`}
                 >
                   <div className="flex items-center gap-3">
@@ -837,7 +837,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             onChange={(e) =>
                               setCustomerData({ ...customerData, name: e.target.value })
                             }
-                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:outline-none"
+                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-gray-500 focus:outline-none"
                             placeholder="Juan Pérez"
                           />
                         </div>
@@ -853,8 +853,8 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             onChange={(e) =>
                               setCustomerData({ ...customerData, phone: e.target.value })
                             }
-                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:outline-none"
-                            placeholder="76020369"
+                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-gray-500 focus:outline-none"
+                            placeholder="75516136"
                           />
                         </div>
 
@@ -875,7 +875,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             }}
                             className={`w-full px-4 py-3 border-2 rounded-lg focus:outline-none transition-colors ${emailError
                               ? 'border-red-400 focus:border-red-500'
-                              : 'border-gray-200 focus:border-primary-500'
+                              : 'border-gray-200 focus:border-gray-500'
                               }`}
                             placeholder="tucorreo@gmail.com"
                           />
@@ -1472,7 +1472,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                               setDiscountCode(e.target.value)
                               if (discountValidation) setDiscountValidation(null)
                             }}
-                            className="flex-1 px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:bg-white focus:border-primary-500 focus:outline-none transition-colors uppercase"
+                            className="flex-1 px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:bg-white focus:border-gray-500 focus:outline-none transition-colors uppercase"
                             placeholder="Ej: VERANO20"
                             disabled={isValidatingCode}
                           />
@@ -1501,7 +1501,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                       </div>
 
                       {/* ── Order Summary ── */}
-                      <div className="bg-primary-50 p-4 rounded-lg border-2 border-primary-200 space-y-2">
+                      <div className="bg-gray-100 p-4 rounded-lg border-2 border-gray-200 space-y-2">
                         <div className="flex items-center justify-between text-sm text-gray-600">
                           <span>Subtotal:</span>
                           <span>Bs {total.toFixed(2)}</span>
@@ -1550,9 +1550,9 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                           )}
                         </div>
 
-                        <div className="border-t border-primary-200 pt-2 flex items-center justify-between">
+                        <div className="border-t border-gray-200 pt-2 flex items-center justify-between">
                           <span className="text-gray-700 font-semibold">Total a Pagar:</span>
-                          <span className="text-3xl font-bold text-primary-600">
+                          <span className="text-3xl font-bold text-gray-900">
                             Bs {orderTotal.toFixed(2)}
                           </span>
                         </div>
@@ -1575,7 +1575,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                       <button
                         type="submit"
                         disabled={isContinueDisabled}
-                        className="w-full bg-gradient-to-r from-primary-600 to-primary-700 text-white py-4 rounded-xl font-bold text-lg hover:from-primary-700 hover:to-primary-800 transform hover:scale-105 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                        className="w-full bg-gradient-to-r from-gray-600 to-gray-700 text-white py-4 rounded-xl font-bold text-lg hover:from-gray-700 hover:to-gray-800 transform hover:scale-105 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                       >
                         {continueLabel}
                       </button>
@@ -1585,9 +1585,9 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                   {/* ── STEP 2: PAGO QR ── */}
                   {step === 'qr' && (
                     <div className="text-center space-y-6">
-                      <div className="bg-primary-50 p-4 rounded-lg border-2 border-primary-200">
+                      <div className="bg-gray-100 p-4 rounded-lg border-2 border-gray-200">
                         <p className="text-sm text-gray-700 mb-2">Orden #</p>
-                        <p className="text-lg font-mono font-bold text-primary-600">
+                        <p className="text-lg font-mono font-bold text-gray-900">
                           {orderId.slice(0, 8).toUpperCase()}
                         </p>
                       </div>
@@ -1640,7 +1640,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         <p className="text-gray-700 mb-4 font-semibold">
                           Escanea este QR con tu app de pagos
                         </p>
-                        <div className="bg-white p-4 rounded-xl border-4 border-primary-200 inline-block max-w-full overflow-hidden">
+                        <div className="bg-white p-4 rounded-xl border-4 border-gray-200 inline-block max-w-full overflow-hidden">
                           <Image
                             src="/qr-yolo-pago.png"
                             alt="QR Yolo Pago"
@@ -1651,7 +1651,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         </div>
                       </div>
 
-                      <div className="bg-gradient-to-r from-primary-600 to-primary-700 text-white p-6 rounded-xl">
+                      <div className="bg-gradient-to-r from-gray-600 to-gray-700 text-white p-6 rounded-xl">
                         <p className="text-sm mb-2">Total a Pagar</p>
                         <p className="text-4xl font-bold">Bs {orderTotal.toFixed(2)}</p>
                         {shippingCost > 0 && (
@@ -1830,7 +1830,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                       >
                         <div className="flex items-center justify-center gap-2 mb-2">
                           <PartyPopper className="w-6 h-6 text-accent-500" />
-                          <h3 className="text-3xl font-black bg-gradient-to-r from-green-600 to-primary-600 bg-clip-text text-transparent">
+                          <h3 className="text-3xl font-black bg-gradient-to-r from-green-600 to-gray-600 bg-clip-text text-transparent">
                             ¡Felicidades!
                           </h3>
                           <PartyPopper className="w-6 h-6 text-accent-500 scale-x-[-1]" />
@@ -1844,10 +1844,10 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.5 }}
-                        className="bg-gradient-to-r from-primary-50 to-accent-500/10 p-4 rounded-xl border-2 border-primary-200"
+                        className="bg-gradient-to-r from-gray-50 to-accent-500/10 p-4 rounded-xl border-2 border-gray-200"
                       >
                         <p className="text-sm text-gray-600 mb-1">Número de Orden</p>
-                        <p className="text-2xl font-mono font-black text-primary-600 tracking-wider">
+                        <p className="text-2xl font-mono font-black text-gray-900 tracking-wider">
                           #{orderId.slice(0, 8).toUpperCase()}
                         </p>
                       </motion.div>
@@ -2005,7 +2005,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             ¿Ya realizaste el pago QR?
                           </p>
                           <a
-                            href={`https://wa.me/591${WHATSAPP_NUMBER}?text=${whatsappMessage}${receiptUploadState === 'success' ? encodeURIComponent('\n📎 Ya subí mi comprobante de pago en el sistema.') : ''}`}
+                            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}${receiptUploadState === 'success' ? encodeURIComponent('\n📎 Ya subí mi comprobante de pago en el sistema.') : ''}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center justify-center gap-2 w-full bg-[#25d366] hover:bg-[#1fb855] text-white font-semibold py-3 rounded-xl transition-all shadow-md hover:shadow-lg text-sm"
@@ -2026,7 +2026,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                       >
                         <button
                           onClick={handleContinueShopping}
-                          className="w-full border-2 border-primary-300 text-primary-700 hover:bg-primary-50 font-semibold py-3 rounded-xl transition-all text-sm"
+                          className="w-full border-2 border-gray-300 text-gray-800 hover:bg-gray-100 font-semibold py-3 rounded-xl transition-all text-sm"
                         >
                           Seguir comprando
                         </button>

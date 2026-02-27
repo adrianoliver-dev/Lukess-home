@@ -15,7 +15,7 @@ export function LegalPageTemplate({ title, lastUpdated, children }: LegalPageTem
         {/* Breadcrumb */}
         <Link 
           href="/"
-          className="inline-flex items-center gap-2 text-gray-600 hover:text-primary-800 transition-colors mb-6"
+          className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors mb-6"
         >
           <ChevronLeft className="w-4 h-4" />
           Volver al inicio

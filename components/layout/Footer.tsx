@@ -38,7 +38,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-primary-800 text-white mt-20">
+    <footer className="bg-gray-800 text-white mt-20">
       {/* Newsletter section */}
       <div className="bg-accent-500 py-12">
         <Container>
@@ -60,7 +60,7 @@ export default function Footer() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full sm:w-auto bg-primary-800 px-6 py-3 rounded-lg font-bold hover:bg-primary-900 transition-colors flex items-center justify-center gap-2 shadow-lg whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full sm:w-auto bg-gray-800 px-6 py-3 rounded-lg font-bold hover:bg-gray-900 transition-colors flex items-center justify-center gap-2 shadow-lg whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
                   <Loader2 className="w-5 h-5 animate-spin" />

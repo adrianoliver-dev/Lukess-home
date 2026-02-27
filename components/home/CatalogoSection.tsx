@@ -108,26 +108,26 @@ export function CatalogoSection() {
             variants={headingVariants}
             className="text-center mb-10 md:mb-14"
           >
-            <span className="inline-flex items-center gap-2 bg-primary-50 text-primary-600 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase mb-4">
+            <span className="inline-flex items-center gap-2 bg-gray-100 text-gray-900 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase mb-4">
               <ShoppingBag className="w-3.5 h-3.5" />
               Catálogo
             </span>
 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-secondary-800 mb-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4">
               Nuestros{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-700">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-gray-700">
                 Productos
               </span>
             </h2>
 
-            <p className="text-secondary-500 text-base md:text-lg max-w-xl mx-auto">
+            <p className="text-gray-500 text-base md:text-lg max-w-xl mx-auto">
               Calidad y estilo para el hombre moderno
             </p>
 
             <div className="flex items-center justify-center gap-3 mt-6">
-              <span className="h-px w-10 bg-gradient-to-r from-transparent to-primary-300" />
-              <span className="w-1.5 h-1.5 rounded-full bg-primary-400" />
-              <span className="h-px w-10 bg-gradient-to-l from-transparent to-primary-300" />
+              <span className="h-px w-10 bg-gradient-to-r from-transparent to-gray-300" />
+              <span className="w-1.5 h-1.5 rounded-full bg-gray-500" />
+              <span className="h-px w-10 bg-gradient-to-l from-transparent to-gray-300" />
             </div>
           </motion.div>
 
@@ -149,8 +149,8 @@ export function CatalogoSection() {
                   px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold
                   transition-all duration-300
                   ${activeFilter === cat
-                    ? "bg-primary-500 text-white shadow-lg shadow-primary-500/25 scale-105"
-                    : "bg-secondary-100 text-secondary-600 hover:bg-secondary-200 hover:text-secondary-800"
+                    ? "bg-gray-900 text-white shadow-lg shadow-gray-500/25 scale-105"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-800"
                   }
                 `}
               >
@@ -268,14 +268,14 @@ export function CatalogoSection() {
             variants={headingVariants}
             className="text-center mt-12 md:mt-16"
           >
-            <p className="text-secondary-400 text-sm mb-4">
+            <p className="text-gray-400 text-sm mb-4">
               ¿No encontraste lo que buscas? Tenemos mucho más en tienda
             </p>
             <a
               href={buildWhatsAppUrl("Hola Lukess Home, quiero consultar sobre otros productos")}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-secondary-800 hover:bg-secondary-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg shadow-secondary-800/25"
+              className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg shadow-secondary-800/25"
             >
               <MessageCircle className="w-4 h-4" />
               Pregunta por más productos

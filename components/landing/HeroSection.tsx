@@ -3,11 +3,11 @@ import Link from 'next/link'
 import QuickLinksRow from './QuickLinksRow'
 import { createClient } from '@/lib/supabase/server'
 import { MessageCircle } from 'lucide-react'
+import { buildWhatsAppUrl } from '@/lib/utils/whatsapp'
 
 /* ───────── Content ───────── */
 
-const WHATSAPP_URL =
-    'https://wa.me/59172643753?text=Hola%2C%20vi%20Lukess%20Home%20y%20quiero%20consultar%20sobre%20sus%20productos'
+const WHATSAPP_URL = buildWhatsAppUrl('Hola, vi Lukess Home y quiero consultar sobre sus productos')
 
 /* ───────── Component ───────── */
 

@@ -85,7 +85,7 @@ export default function PoliticasEnvioPage() {
         </h2>
         <p className="text-gray-700 leading-relaxed">
           Para consultas sobre envíos, contáctanos por WhatsApp:
-          <a href={buildWhatsAppUrl("Hola, consulta sobre envíos")} className="text-primary-600 font-semibold ml-1">
+          <a href={buildWhatsAppUrl("Hola, consulta sobre envíos")} className="text-gray-900 font-semibold ml-1">
             {formatWhatsAppNumber()}
           </a>
         </p>

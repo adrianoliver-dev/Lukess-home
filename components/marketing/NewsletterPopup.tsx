@@ -108,7 +108,7 @@ export function NewsletterPopup() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="tucorreo@ejemplo.com"
-                      className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg focus:border-primary-600 focus:outline-none"
+                      className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg focus:border-gray-600 focus:outline-none"
                       required
                       disabled={isSubmitting}
                     />
@@ -117,7 +117,7 @@ export function NewsletterPopup() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-primary-800 text-white py-3 rounded-lg font-bold hover:bg-primary-900 transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full bg-gray-800 text-white py-3 rounded-lg font-bold hover:bg-gray-900 transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {isSubmitting ? (
                       <Loader2 className="w-5 h-5 animate-spin" />

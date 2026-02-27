@@ -80,8 +80,8 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
             <button
               key={i}
               onClick={() => setCurrentIndex(i)}
-              className={`relative aspect-square rounded-md overflow-hidden border-2 transition-all hover:border-primary-600 ${
-                i === currentIndex ? 'border-primary-800' : 'border-gray-200'
+              className={`relative aspect-square rounded-md overflow-hidden border-2 transition-all hover:border-gray-600 ${
+                i === currentIndex ? 'border-gray-800' : 'border-gray-200'
               }`}
               aria-label={`Ver imagen ${i + 1}`}
             >

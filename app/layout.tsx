@@ -107,7 +107,7 @@ export default function RootLayout({
             <CartProvider>
               <a
                 href="#inicio"
-                className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary-500 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg"
+                className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-gray-900 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg"
               >
                 Saltar al contenido principal
               </a>

@@ -201,7 +201,7 @@ export function QuickViewModal({
                               key={i}
                               onClick={() => setCurrentImageIndex(i)}
                               className={`h-1.5 rounded-full transition-all ${i === currentImageIndex
-                                  ? 'bg-primary-600 w-6'
+                                  ? 'bg-gray-900 w-6'
                                   : 'bg-gray-300 w-1.5 hover:bg-gray-400'
                                 }`}
                               aria-label={`Ver imagen ${i + 1}`}
@@ -234,7 +234,7 @@ export function QuickViewModal({
                           key={i}
                           onClick={() => setCurrentImageIndex(i)}
                           className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${i === currentImageIndex
-                              ? 'border-primary-600 scale-105'
+                              ? 'border-gray-600 scale-105'
                               : 'border-gray-200 hover:border-gray-300'
                             }`}
                         >
@@ -255,7 +255,7 @@ export function QuickViewModal({
                 <div className="flex flex-col">
                   {/* Categoría + Marca */}
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs text-primary-600 font-semibold uppercase tracking-wide">
+                    <span className="text-xs text-gray-900 font-semibold uppercase tracking-wide">
                       {product.categories?.name || 'Sin categoría'}
                     </span>
                     {product.brand && (
@@ -292,7 +292,7 @@ export function QuickViewModal({
                         </span>
                       </div>
                     ) : (
-                      <span className="text-3xl md:text-4xl font-black text-primary-600">
+                      <span className="text-3xl md:text-4xl font-black text-gray-900">
                         Bs {product.price.toFixed(2)}
                       </span>
                     )}
@@ -322,7 +322,7 @@ export function QuickViewModal({
                   {product.colors && product.colors.length > 0 && (
                     <div className="mb-6">
                       <label className="flex items-center gap-2 text-sm font-bold text-gray-900 mb-3">
-                        <Palette className="w-4 h-4 text-primary-600" />
+                        <Palette className="w-4 h-4 text-gray-900" />
                         Color {product.colors.length > 0 && <span className="text-red-500">*</span>}
                       </label>
                       <div className="flex flex-wrap gap-2">
@@ -332,10 +332,10 @@ export function QuickViewModal({
                             onClick={() => setSelectedColor(color)}
                             disabled={isOutOfStock}
                             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all border-2 ${selectedColor === color
-                                ? 'border-primary-600 bg-primary-600 text-white shadow-md scale-105'
+                                ? 'border-gray-600 bg-gray-900 text-white shadow-md scale-105'
                                 : isOutOfStock
                                   ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed'
-                                  : 'border-gray-300 bg-white text-gray-700 hover:border-primary-400 hover:bg-primary-50'
+                                  : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400 hover:bg-gray-100'
                               }`}
                           >
                             {color}
@@ -352,7 +352,7 @@ export function QuickViewModal({
                   {product.sizes && product.sizes.length > 0 && (
                     <div className="mb-6">
                       <label className="flex items-center gap-2 text-sm font-bold text-gray-900 mb-3">
-                        <Ruler className="w-4 h-4 text-primary-600" />
+                        <Ruler className="w-4 h-4 text-gray-900" />
                         Talla {product.sizes.length > 0 && <span className="text-red-500">*</span>}
                       </label>
                       {isOutOfStock && (
@@ -367,10 +367,10 @@ export function QuickViewModal({
                             onClick={() => !isOutOfStock && setSelectedSize(size)}
                             disabled={isOutOfStock}
                             className={`px-4 py-2 rounded-lg text-sm font-bold transition-all border-2 min-w-[60px] ${selectedSize === size
-                                ? 'border-primary-600 bg-primary-600 text-white shadow-md scale-105'
+                                ? 'border-gray-600 bg-gray-900 text-white shadow-md scale-105'
                                 : isOutOfStock
                                   ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed opacity-40 line-through'
-                                  : 'border-gray-300 bg-white text-gray-700 hover:border-primary-400 hover:bg-primary-50'
+                                  : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400 hover:bg-gray-100'
                               }`}
                           >
                             {size}
@@ -400,7 +400,7 @@ export function QuickViewModal({
                       disabled={addToCartDisabled}
                       className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl text-base font-bold transition-all duration-300 ${addToCartDisabled
                           ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                          : 'bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]'
+                          : 'bg-gradient-to-r from-gray-600 to-gray-700 text-white hover:from-gray-700 hover:to-gray-800 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]'
                         }`}
                     >
                       <ShoppingCart className="w-5 h-5" />
@@ -411,7 +411,7 @@ export function QuickViewModal({
                     <Link
                       href={`/producto/${product.id}`}
                       onClick={onClose}
-                      className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold text-primary-700 border-2 border-primary-200 hover:bg-primary-50 hover:border-primary-400 transition-all"
+                      className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold text-gray-800 border-2 border-gray-200 hover:bg-gray-100 hover:border-gray-400 transition-all"
                     >
                       <ExternalLink className="w-4 h-4" />
                       Ver detalles completos

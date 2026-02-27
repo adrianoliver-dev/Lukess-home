@@ -8,49 +8,15 @@
 
 
 
-/* ===== Colores de marca Lukess Home - Premium Masculine ===== */
 @theme {
-  --color-primary-50: #f5f5f5;
-  --color-primary-100: #e5e5e5;
-  --color-primary-200: #cccccc;
-  --color-primary-300: #b3b3b3;
-  --color-primary-400: #666666;
-  --color-primary-500: #333333;
-  --color-primary-600: #1a1a1a;
-  --color-primary-700: #0d0d0d;
-  --color-primary-800: #000000;
-  --color-primary-900: #000000;
-
-  --color-secondary-50: #f2f2f2;
-  --color-secondary-100: #d9d9d9;
-  --color-secondary-200: #bfbfbf;
-  --color-secondary-300: #a6a6a6;
-  --color-secondary-400: #8c8c8c;
-  --color-secondary-500: #4a4a4a;
-  --color-secondary-600: #383838;
-  --color-secondary-700: #2b2b2b;
-  --color-secondary-800: #1f1f1f;
-  --color-secondary-900: #141414;
-
-  --color-accent-50: #faf7f3;
-  --color-accent-100: #f0e8dc;
-  --color-accent-200: #e6d9c5;
-  --color-accent-300: #dccaae;
-  --color-accent-400: #d4a574;
   --color-accent-500: #c89b6e;
-  --color-accent-600: #8b7355;
-  --color-accent-700: #6e5c44;
-  --color-accent-800: #524533;
-  --color-accent-900: #352e22;
-
-  --color-success-600: #2e7d32;
-  --color-success-700: #1b5e20;
 
   --color-whatsapp: #25d366;
   --color-whatsapp-dark: #1da851;
 
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
+
 
 /* ===== Estilos base ===== */
 @layer base {
@@ -61,7 +27,7 @@
   }
 
   body {
-    @apply bg-white text-secondary-800 antialiased;
+    @apply bg-white text-gray-900 antialiased;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -81,7 +47,7 @@
 
   /* Selección de texto */
   ::selection {
-    @apply bg-primary-500/20 text-primary-900;
+    @apply bg-gray-500/20 text-gray-900;
   }
 
   /* Scrollbar personalizada */
@@ -90,20 +56,20 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-secondary-50;
+    @apply bg-gray-50;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-primary-400 rounded-full;
+    @apply bg-gray-400 rounded-full;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-primary-600;
+    @apply bg-gray-600;
   }
 
   /* Focus visible para accesibilidad */
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-primary-500;
+    @apply outline-2 outline-offset-2 outline-gray-500;
   }
 
   /* Imágenes responsive por defecto */

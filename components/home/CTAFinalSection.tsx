@@ -38,13 +38,13 @@ export default function CTAFinalSection() {
         className="relative max-w-5xl mx-auto rounded-3xl overflow-hidden"
       >
         {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-600 via-primary-500 to-primary-700" />
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-600 via-gray-500 to-gray-700" />
 
         {/* Decoraciones */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute -top-20 -right-20 w-72 h-72 bg-white/5 rounded-full blur-2xl" />
           <div className="absolute -bottom-16 -left-16 w-64 h-64 bg-accent-500/10 rounded-full blur-2xl" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary-400/20 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gray-500/20 rounded-full blur-3xl" />
         </div>
 
         {/* Patrón sutil */}
@@ -79,7 +79,7 @@ export default function CTAFinalSection() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-3 bg-white hover:bg-secondary-50 text-primary-600 px-8 py-4 md:px-10 md:py-5 rounded-full text-base md:text-lg font-bold transition-all duration-300 hover:scale-105 shadow-2xl shadow-black/20"
+            className="group inline-flex items-center gap-3 bg-white hover:bg-gray-50 text-gray-900 px-8 py-4 md:px-10 md:py-5 rounded-full text-base md:text-lg font-bold transition-all duration-300 hover:scale-105 shadow-2xl shadow-black/20"
           >
             <MessageCircle className="w-5 h-5 md:w-6 md:h-6" />
             Contactar Ahora

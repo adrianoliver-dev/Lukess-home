@@ -77,7 +77,7 @@ export function SearchBar() {
     <div ref={searchRef} className="relative w-full max-w-md">
       {/* Input */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-primary-300 w-5 h-5" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
         <input
           type="text"
           placeholder="Buscar productos..."
@@ -134,7 +134,7 @@ export function SearchBar() {
                       {product.name}
                     </p>
                     <div className="flex items-center gap-2 mt-0.5">
-                      <span className="text-sm text-primary-600 font-bold">
+                      <span className="text-sm text-gray-900 font-bold">
                         Bs {product.price.toFixed(2)}
                       </span>
                       <span className="text-xs text-gray-500">

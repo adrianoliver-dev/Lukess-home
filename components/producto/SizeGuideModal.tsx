@@ -10,7 +10,7 @@ interface SizeGuideModalProps {
   category?: string // 'Camisas', 'Pantalones', etc.
 }
 
-type TabType = 'camisas' | 'pantalones' | 'como-medir'
+type TabType = 'camisas' | 'pantalones' | 'cinturones' | 'sombreros' | 'como-medir'
 
 const camisasData = [
   { talla: 'S', pecho: '88-92', cintura: '72-76', hombros: '42-44', largo: '68-70' },
@@ -26,15 +26,37 @@ const pantalonesData = [
   { talla: '44', cintura: '88-94', cadera: '100-106', largo: '106-108', entrepierna: '82-84' },
 ]
 
+const cinturonesData = [
+  { talla: 'S (28-30)', cintura: '71-76' },
+  { talla: 'M (32-34)', cintura: '81-86' },
+  { talla: 'L (36-38)', cintura: '91-96' },
+  { talla: 'XL (40-42)', cintura: '101-106' },
+]
+
+const sombrerosData = [
+  { talla: 'M', cabeza: '57-58' },
+  { talla: 'L', cabeza: '59-60' },
+]
+
+const gorrasData = [
+  { talla: 'Universal', cabeza: 'Ajustable' },
+]
+
 export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProps) {
   const [activeTab, setActiveTab] = useState<TabType>('camisas')
 
   // Establecer tab inicial según categoría
   useEffect(() => {
-    if (category?.toLowerCase().includes('camisa') || category?.toLowerCase().includes('polo')) {
+    if (!category) return;
+    const cat = category.toLowerCase()
+    if (cat.includes('camisa') || cat.includes('polo')) {
       setActiveTab('camisas')
-    } else if (category?.toLowerCase().includes('pantalon')) {
+    } else if (cat.includes('pantalon') || cat.includes('jeans')) {
       setActiveTab('pantalones')
+    } else if (cat.includes('cinturon')) {
+      setActiveTab('cinturones')
+    } else if (cat.includes('sombrero') || cat.includes('gorra')) {
+      setActiveTab('sombreros')
     }
   }, [category, isOpen])
 
@@ -88,8 +110,8 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-200">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center">
-                    <Ruler className="w-5 h-5 text-primary-600" />
+                  <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                    <Ruler className="w-5 h-5 text-gray-900" />
                   </div>
                   <h2 className="text-2xl font-bold text-gray-900">Guía de Tallas</h2>
                 </div>
@@ -108,15 +130,15 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                   <button
                     onClick={() => setActiveTab('camisas')}
                     className={`px-6 py-3 text-sm font-semibold transition-all relative ${activeTab === 'camisas'
-                        ? 'text-primary-600'
-                        : 'text-gray-600 hover:text-gray-900'
+                      ? 'text-gray-900'
+                      : 'text-gray-600 hover:text-gray-900'
                       }`}
                   >
                     Camisas / Polos
                     {activeTab === 'camisas' && (
                       <motion.div
                         layoutId="activeTab"
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600"
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-900"
                         transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                       />
                     )}
@@ -124,15 +146,47 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                   <button
                     onClick={() => setActiveTab('pantalones')}
                     className={`px-6 py-3 text-sm font-semibold transition-all relative ${activeTab === 'pantalones'
-                        ? 'text-primary-600'
-                        : 'text-gray-600 hover:text-gray-900'
+                      ? 'text-gray-900'
+                      : 'text-gray-600 hover:text-gray-900'
                       }`}
                   >
                     Pantalones
                     {activeTab === 'pantalones' && (
                       <motion.div
                         layoutId="activeTab"
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600"
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-900"
+                        transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                      />
+                    )}
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('cinturones')}
+                    className={`px-6 py-3 text-sm font-semibold transition-all relative ${activeTab === 'cinturones'
+                      ? 'text-gray-900'
+                      : 'text-gray-600 hover:text-gray-900'
+                      }`}
+                  >
+                    Cinturones
+                    {activeTab === 'cinturones' && (
+                      <motion.div
+                        layoutId="activeTab"
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-900"
+                        transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                      />
+                    )}
+                  </button>
+                  <button
+                    onClick={() => setActiveTab('sombreros')}
+                    className={`px-6 py-3 text-sm font-semibold transition-all relative ${activeTab === 'sombreros'
+                      ? 'text-gray-900'
+                      : 'text-gray-600 hover:text-gray-900'
+                      }`}
+                  >
+                    Sombreros y Gorras
+                    {activeTab === 'sombreros' && (
+                      <motion.div
+                        layoutId="activeTab"
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-900"
                         transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                       />
                     )}
@@ -140,15 +194,15 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                   <button
                     onClick={() => setActiveTab('como-medir')}
                     className={`px-6 py-3 text-sm font-semibold transition-all relative ${activeTab === 'como-medir'
-                        ? 'text-primary-600'
-                        : 'text-gray-600 hover:text-gray-900'
+                      ? 'text-gray-900'
+                      : 'text-gray-600 hover:text-gray-900'
                       }`}
                   >
                     Cómo Medir
                     {activeTab === 'como-medir' && (
                       <motion.div
                         layoutId="activeTab"
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600"
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-900"
                         transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                       />
                     )}
@@ -179,20 +233,20 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                       <div className="overflow-x-auto">
                         <table className="w-full border-collapse">
                           <thead>
-                            <tr className="bg-primary-50">
-                              <th className="px-4 py-3 text-left text-sm font-bold text-primary-900 border border-gray-200">
+                            <tr className="bg-gray-100">
+                              <th className="px-4 py-3 text-left text-sm font-bold text-gray-900 border border-gray-200">
                                 Talla
                               </th>
-                              <th className="px-4 py-3 text-left text-sm font-bold text-primary-900 border border-gray-200">
+                              <th className="px-4 py-3 text-left text-sm font-bold text-gray-900 border border-gray-200">
                                 Pecho (cm)
                               </th>
-                              <th className="px-4 py-3 text-left text-sm font-bold text-primary-900 border border-gray-200">
+                              <th className="px-4 py-3 text-left text-sm font-bold text-gray-900 border border-gray-200">
                                 Cintura (cm)
                               </th>
-                              <th className="px-4 py-3 text-left text-sm font-bold text-primary-900 border border-gray-200">
+                              <th className="px-4 py-3 text-left text-sm font-bold text-gray-900 border border-gray-200">
                                 Hombros (cm)
                               </th>
-                              <th className="px-4 py-3 text-left text-sm font-bold text-primary-900 border border-gray-200">
+                              <th className="px-4 py-3 text-left text-sm font-bold text-gray-900 border border-gray-200">
                                 Largo (cm)
                               </th>
                             </tr>
@@ -253,20 +307,20 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                       <div className="overflow-x-auto">
                         <table className="w-full border-collapse">
                           <thead>
-                            <tr className="bg-primary-50">
-                              <th className="px-4 py-3 text-left text-sm font-bold text-primary-900 border border-gray-200">
+                            <tr className="bg-gray-100">
+                              <th className="px-4 py-3 text-left text-sm font-bold text-gray-900 border border-gray-200">
                                 Talla
                               </th>
-                              <th className="px-4 py-3 text-left text-sm font-bold text-primary-900 border border-gray-200">
+                              <th className="px-4 py-3 text-left text-sm font-bold text-gray-900 border border-gray-200">
                                 Cintura (cm)
                               </th>
-                              <th className="px-4 py-3 text-left text-sm font-bold text-primary-900 border border-gray-200">
+                              <th className="px-4 py-3 text-left text-sm font-bold text-gray-900 border border-gray-200">
                                 Cadera (cm)
                               </th>
-                              <th className="px-4 py-3 text-left text-sm font-bold text-primary-900 border border-gray-200">
+                              <th className="px-4 py-3 text-left text-sm font-bold text-gray-900 border border-gray-200">
                                 Largo (cm)
                               </th>
-                              <th className="px-4 py-3 text-left text-sm font-bold text-primary-900 border border-gray-200">
+                              <th className="px-4 py-3 text-left text-sm font-bold text-gray-900 border border-gray-200">
                                 Entrepierna (cm)
                               </th>
                             </tr>
@@ -307,6 +361,124 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                     </motion.div>
                   )}
 
+                  {activeTab === 'cinturones' && (
+                    <motion.div
+                      key="cinturones"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 20 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <h3 className="text-lg font-bold text-gray-900 mb-4">
+                        Medidas para Cinturones
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-6">
+                        Para elegir tu talla correcta, puedes usar la medida de pantalón que
+                        normalmente usas.
+                      </p>
+                      <div className="overflow-x-auto">
+                        <table className="w-full border-collapse">
+                          <thead>
+                            <tr className="bg-gray-100">
+                              <th className="px-4 py-3 text-left text-sm font-bold text-gray-900 border border-gray-200">
+                                Talla
+                              </th>
+                              <th className="px-4 py-3 text-left text-sm font-bold text-gray-900 border border-gray-200">
+                                Cintura (cm)
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {cinturonesData.map((row, i) => (
+                              <tr key={row.talla} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                                <td className="px-4 py-3 text-sm font-bold text-gray-900 border border-gray-200">
+                                  {row.talla}
+                                </td>
+                                <td className="px-4 py-3 text-sm text-gray-700 border border-gray-200">
+                                  {row.cintura}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {activeTab === 'sombreros' && (
+                    <motion.div
+                      key="sombreros"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 20 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <h3 className="text-lg font-bold text-gray-900 mb-4">
+                        Medidas para Sombreros y Gorras
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-4">
+                        Para medir tu cabeza, usa una cinta métrica y colócala alrededor,
+                        justo por encima de las orejas y cejas.
+                      </p>
+
+                      <h4 className="font-semibold text-gray-900 mt-2 mb-2">Sombreros</h4>
+                      <div className="overflow-x-auto mb-6">
+                        <table className="w-full border-collapse">
+                          <thead>
+                            <tr className="bg-gray-100">
+                              <th className="px-4 py-3 text-left text-sm font-bold text-gray-900 border border-gray-200">
+                                Talla
+                              </th>
+                              <th className="px-4 py-3 text-left text-sm font-bold text-gray-900 border border-gray-200">
+                                Circunferencia (cm)
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {sombrerosData.map((row, i) => (
+                              <tr key={row.talla} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                                <td className="px-4 py-3 text-sm font-bold text-gray-900 border border-gray-200">
+                                  {row.talla}
+                                </td>
+                                <td className="px-4 py-3 text-sm text-gray-700 border border-gray-200">
+                                  {row.cabeza}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <h4 className="font-semibold text-gray-900 mt-2 mb-2">Gorras</h4>
+                      <div className="overflow-x-auto">
+                        <table className="w-full border-collapse">
+                          <thead>
+                            <tr className="bg-gray-100">
+                              <th className="px-4 py-3 text-left text-sm font-bold text-gray-900 border border-gray-200">
+                                Talla
+                              </th>
+                              <th className="px-4 py-3 text-left text-sm font-bold text-gray-900 border border-gray-200">
+                                Circunferencia
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {gorrasData.map((row, i) => (
+                              <tr key={row.talla} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                                <td className="px-4 py-3 text-sm font-bold text-gray-900 border border-gray-200">
+                                  {row.talla}
+                                </td>
+                                <td className="px-4 py-3 text-sm text-gray-700 border border-gray-200">
+                                  {row.cabeza}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </motion.div>
+                  )}
+
                   {activeTab === 'como-medir' && (
                     <motion.div
                       key="como-medir"
@@ -322,13 +494,13 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                       <div className="space-y-6">
                         {/* Camisas */}
                         <div>
-                          <h4 className="text-base font-bold text-primary-600 mb-3">
+                          <h4 className="text-base font-bold text-gray-900 mb-3">
                             📐 Para Camisas y Polos:
                           </h4>
                           <div className="space-y-3">
                             <div className="flex gap-3">
-                              <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span className="text-sm font-bold text-primary-600">1</span>
+                              <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span className="text-sm font-bold text-gray-900">1</span>
                               </div>
                               <div>
                                 <p className="font-semibold text-gray-900">Pecho</p>
@@ -340,8 +512,8 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                             </div>
 
                             <div className="flex gap-3">
-                              <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span className="text-sm font-bold text-primary-600">2</span>
+                              <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span className="text-sm font-bold text-gray-900">2</span>
                               </div>
                               <div>
                                 <p className="font-semibold text-gray-900">Cintura</p>
@@ -353,8 +525,8 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                             </div>
 
                             <div className="flex gap-3">
-                              <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span className="text-sm font-bold text-primary-600">3</span>
+                              <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span className="text-sm font-bold text-gray-900">3</span>
                               </div>
                               <div>
                                 <p className="font-semibold text-gray-900">Hombros</p>
@@ -366,8 +538,8 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                             </div>
 
                             <div className="flex gap-3">
-                              <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span className="text-sm font-bold text-primary-600">4</span>
+                              <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span className="text-sm font-bold text-gray-900">4</span>
                               </div>
                               <div>
                                 <p className="font-semibold text-gray-900">Largo</p>
@@ -382,13 +554,13 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
 
                         {/* Pantalones */}
                         <div className="pt-4 border-t border-gray-200">
-                          <h4 className="text-base font-bold text-primary-600 mb-3">
+                          <h4 className="text-base font-bold text-gray-900 mb-3">
                             📐 Para Pantalones:
                           </h4>
                           <div className="space-y-3">
                             <div className="flex gap-3">
-                              <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span className="text-sm font-bold text-primary-600">1</span>
+                              <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span className="text-sm font-bold text-gray-900">1</span>
                               </div>
                               <div>
                                 <p className="font-semibold text-gray-900">Cintura</p>
@@ -400,8 +572,8 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                             </div>
 
                             <div className="flex gap-3">
-                              <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span className="text-sm font-bold text-primary-600">2</span>
+                              <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span className="text-sm font-bold text-gray-900">2</span>
                               </div>
                               <div>
                                 <p className="font-semibold text-gray-900">Cadera</p>
@@ -412,8 +584,8 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                             </div>
 
                             <div className="flex gap-3">
-                              <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <span className="text-sm font-bold text-primary-600">3</span>
+                              <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span className="text-sm font-bold text-gray-900">3</span>
                               </div>
                               <div>
                                 <p className="font-semibold text-gray-900">Entrepierna</p>

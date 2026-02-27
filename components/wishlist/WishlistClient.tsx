@@ -187,7 +187,7 @@ export function WishlistClient({ allProducts }: WishlistClientProps) {
               <div className="flex gap-3">
                 <button
                   onClick={handleShareWishlist}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-full text-sm font-semibold transition-all hover:scale-105 shadow-md"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-900 hover:bg-gray-700 text-white rounded-full text-sm font-semibold transition-all hover:scale-105 shadow-md"
                 >
                   <Share2 className="w-4 h-4" />
                   Compartir lista
@@ -223,7 +223,7 @@ export function WishlistClient({ allProducts }: WishlistClientProps) {
             </p>
             <Link
               href="/#catalogo"
-              className="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+              className="inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
             >
               <ExternalLink className="w-4 h-4" />
               Explorar productos
@@ -242,7 +242,7 @@ export function WishlistClient({ allProducts }: WishlistClientProps) {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  className="group bg-white rounded-2xl border border-gray-200 hover:border-primary-300 overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/10 relative"
+                  className="group bg-white rounded-2xl border border-gray-200 hover:border-gray-300 overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-gray-500/10 relative"
                 >
                   {/* Botón eliminar */}
                   <button
@@ -284,7 +284,7 @@ export function WishlistClient({ allProducts }: WishlistClientProps) {
                     <div className="p-4 sm:p-5">
                       {/* Categoría + Marca */}
                       <div className="flex items-center justify-between mb-1.5">
-                        <span className="text-xs text-primary-600 font-medium uppercase tracking-wide">
+                        <span className="text-xs text-gray-900 font-medium uppercase tracking-wide">
                           {product.categories?.name || 'Sin categoría'}
                         </span>
                         {product.brand && (
@@ -312,7 +312,7 @@ export function WishlistClient({ allProducts }: WishlistClientProps) {
                               </span>
                             </div>
                           ) : (
-                            <span className="text-2xl font-black text-primary-600">
+                            <span className="text-2xl font-black text-gray-900">
                               Bs {product.price.toFixed(2)}
                             </span>
                           )}
@@ -337,7 +337,7 @@ export function WishlistClient({ allProducts }: WishlistClientProps) {
                       disabled={isOutOfStock}
                       className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-full text-sm font-semibold transition-all ${isOutOfStock
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                        : 'bg-primary-600 hover:bg-primary-700 text-white hover:scale-105'
+                        : 'bg-gray-900 hover:bg-gray-700 text-white hover:scale-105'
                         }`}
                     >
                       <ShoppingCart className="w-4 h-4" />

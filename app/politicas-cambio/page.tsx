@@ -90,7 +90,7 @@ export default function PoliticasCambioPage() {
           Para solicitar un cambio o consultar sobre nuestras políticas:
         </p>
         <div className="mt-4 space-y-2 text-gray-700">
-          <p>📱 WhatsApp: <a href={buildWhatsAppUrl("Hola, tengo una consulta sobre cambios")} className="text-primary-600 font-semibold">{formatWhatsAppNumber()}</a></p>
+          <p>📱 WhatsApp: <a href={buildWhatsAppUrl("Hola, tengo una consulta sobre cambios")} className="text-gray-900 font-semibold">{formatWhatsAppNumber()}</a></p>
           <p>📍 Mercado Mutualista - 3 puestos (Pasillos -2, -3 y -5)</p>
           <p>🕐 Lun-Sáb: 8:00 AM - 10:00 PM | Dom: 9:00 AM - 9:00 PM</p>
         </div>

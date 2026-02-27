@@ -96,7 +96,7 @@ export default function PuestosSection() {
   });
 
   return (
-    <section id="ubicacion" className="py-20 md:py-28 bg-secondary-50/50">
+    <section id="ubicacion" className="py-20 md:py-28 bg-gray-50/50">
       <Container>
         <motion.div
           ref={ref}
@@ -107,27 +107,27 @@ export default function PuestosSection() {
           {/* ── Encabezado ── */}
           <motion.div variants={headingVariants} className="text-center mb-14 md:mb-16">
             {/* Badge */}
-            <span className="inline-flex items-center gap-2 bg-primary-50 text-primary-600 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase mb-4">
+            <span className="inline-flex items-center gap-2 bg-gray-100 text-gray-900 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase mb-4">
               <MapPin className="w-3.5 h-3.5" />
               Nuestras ubicaciones
             </span>
 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-secondary-800 mb-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4">
               Visítanos en Nuestros{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-700">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-gray-700">
                 3 Puestos
               </span>
             </h2>
 
-            <p className="text-secondary-500 text-base md:text-lg max-w-xl mx-auto">
+            <p className="text-gray-500 text-base md:text-lg max-w-xl mx-auto">
               Ubicados estratégicamente en el Mercado Mutualista para tu comodidad
             </p>
 
             {/* Separador */}
             <div className="flex items-center justify-center gap-3 mt-6">
-              <span className="h-px w-10 bg-gradient-to-r from-transparent to-primary-300" />
-              <span className="w-1.5 h-1.5 rounded-full bg-primary-400" />
-              <span className="h-px w-10 bg-gradient-to-l from-transparent to-primary-300" />
+              <span className="h-px w-10 bg-gradient-to-r from-transparent to-gray-300" />
+              <span className="w-1.5 h-1.5 rounded-full bg-gray-500" />
+              <span className="h-px w-10 bg-gradient-to-l from-transparent to-gray-300" />
             </div>
           </motion.div>
 
@@ -137,37 +137,37 @@ export default function PuestosSection() {
               <motion.div
                 key={puesto.id}
                 variants={cardVariants}
-                className="group relative bg-white rounded-2xl border-2 border-secondary-100 hover:border-primary-400 p-6 lg:p-8 transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/10 hover:-translate-y-1"
+                className="group relative bg-white rounded-2xl border-2 border-gray-100 hover:border-gray-400 p-6 lg:p-8 transition-all duration-300 hover:shadow-xl hover:shadow-gray-500/10 hover:-translate-y-1"
               >
                 {/* Número decorativo */}
-                <span className="absolute top-4 right-4 text-7xl font-black text-secondary-100 group-hover:text-primary-100 transition-colors duration-300 leading-none select-none">
+                <span className="absolute top-4 right-4 text-7xl font-black text-gray-100 group-hover:text-gray-200 transition-colors duration-300 leading-none select-none">
                   {puesto.id}
                 </span>
 
                 {/* Icono */}
-                <div className="relative z-10 w-12 h-12 bg-primary-50 group-hover:bg-primary-500 rounded-xl flex items-center justify-center mb-5 transition-colors duration-300">
-                  <MapPin className="w-6 h-6 text-primary-500 group-hover:text-white transition-colors duration-300" />
+                <div className="relative z-10 w-12 h-12 bg-gray-100 group-hover:bg-gray-900 rounded-xl flex items-center justify-center mb-5 transition-colors duration-300">
+                  <MapPin className="w-6 h-6 text-gray-600 group-hover:text-white transition-colors duration-300" />
                 </div>
 
                 {/* Info */}
                 <div className="relative z-10">
-                  <h3 className="text-xl font-bold text-secondary-800 mb-1">
+                  <h3 className="text-xl font-bold text-gray-800 mb-1">
                     {puesto.nombre}
                   </h3>
 
                   <div className="space-y-1 mb-5">
-                    <p className="text-primary-600 font-semibold text-sm">
+                    <p className="text-gray-900 font-semibold text-sm">
                       {puesto.pasillo}
                     </p>
-                    <p className="text-secondary-500 text-sm">
+                    <p className="text-gray-500 text-sm">
                       {puesto.caseta}
                     </p>
                   </div>
 
                   {/* Horario */}
-                  <div className="flex items-start gap-2 mb-6 p-3 bg-secondary-50 rounded-xl">
-                    <Clock className="w-4 h-4 text-primary-500 mt-0.5 shrink-0" />
-                    <div className="text-xs text-secondary-600 leading-relaxed">
+                  <div className="flex items-start gap-2 mb-6 p-3 bg-gray-50 rounded-xl">
+                    <Clock className="w-4 h-4 text-gray-600 mt-0.5 shrink-0" />
+                    <div className="text-xs text-gray-600 leading-relaxed">
                       <p>{puesto.horario.semana}</p>
                       <p>{puesto.horario.domingo}</p>
                     </div>
@@ -178,7 +178,7 @@ export default function PuestosSection() {
                     href={GOOGLE_MAPS_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-primary-500 hover:text-primary-700 group/link transition-colors"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-gray-800 group/link transition-colors"
                   >
                     <Navigation className="w-4 h-4" />
                     <span>Ver en Google Maps</span>
@@ -200,16 +200,16 @@ export default function PuestosSection() {
               href={GOOGLE_MAPS_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 bg-white border border-secondary-200 hover:border-primary-300 rounded-full px-6 py-3 shadow-sm hover:shadow-md transition-all duration-300 group"
+              className="inline-flex items-center gap-3 bg-white border border-gray-200 hover:border-gray-300 rounded-full px-6 py-3 shadow-sm hover:shadow-md transition-all duration-300 group"
             >
-              <div className="w-8 h-8 bg-primary-50 group-hover:bg-primary-500 rounded-full flex items-center justify-center transition-colors duration-300">
-                <Navigation className="w-4 h-4 text-primary-500 group-hover:text-white transition-colors duration-300" />
+              <div className="w-8 h-8 bg-gray-100 group-hover:bg-gray-900 rounded-full flex items-center justify-center transition-colors duration-300">
+                <Navigation className="w-4 h-4 text-gray-600 group-hover:text-white transition-colors duration-300" />
               </div>
               <div className="text-left">
-                <p className="text-xs text-secondary-400 font-medium">
+                <p className="text-xs text-gray-400 font-medium">
                   Mercado Mutualista
                 </p>
-                <p className="text-sm text-secondary-700 font-semibold">
+                <p className="text-sm text-gray-700 font-semibold">
                   Av. Mutualista y Tercer Anillo Externo
                 </p>
               </div>

@@ -47,7 +47,7 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
     <div className="border-b border-gray-200 last:border-b-0">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full py-4 flex items-center justify-between text-left hover:text-primary-600 transition-colors"
+        className="w-full py-4 flex items-center justify-between text-left hover:text-gray-900 transition-colors"
       >
         <span className="font-semibold text-gray-900">{question}</span>
         <ChevronDown
