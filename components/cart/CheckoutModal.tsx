@@ -1915,18 +1915,52 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         transition={{ delay: 0.6 }}
                         className="space-y-3"
                       >
-                        <p className="text-sm text-gray-600 text-center">
-                          Revisaremos tu pago y te contactaremos por WhatsApp.
-                        </p>
-                        <a
-                          href={`https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}${receiptUploadState === 'success' ? encodeURIComponent('\n📎 Ya subí mi comprobante de pago en el sistema.') : ''}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-center gap-2 w-full bg-green-600 hover:bg-green-700 text-white font-bold uppercase py-4 rounded-lg transition-all shadow-sm"
-                        >
-                          <MessageCircle className="w-5 h-5" />
-                          CONFIRMAR POR WHATSAPP
-                        </a>
+                        {deliveryMethod === 'pickup' ? (
+                          <>
+                            <p className="text-sm text-gray-600 text-center mb-4">
+                              ¿Cómo prefieres pagar tu pedido?
+                            </p>
+
+                            {/* Option 1: Already paid online */}
+                            <a
+                              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}${receiptUploadState === 'success' ? encodeURIComponent('\n📎 Ya subí mi comprobante de pago en el sistema.') : ''}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center gap-2 w-full bg-green-600 hover:bg-green-700 text-white font-bold uppercase py-4 rounded-lg transition-all shadow-sm"
+                            >
+                              ✅ Ya Pagué Online (con QR)
+                            </a>
+
+                            {/* Option 2: Will pay in store */}
+                            <a
+                              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage.replace(encodeURIComponent('Ya realicé el pago por QR. ¿Pueden confirmar? 🙏'), encodeURIComponent('💵 Pagaré al recoger en el puesto. Mi reserva dura 48 horas. 🙏'))}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center gap-2 w-full bg-gray-900 hover:bg-black text-white font-bold uppercase py-4 rounded-lg transition-all shadow-sm"
+                            >
+                              💵 Pagaré en el Puesto
+                            </a>
+
+                            <p className="text-xs text-gray-500 text-center mt-2 leading-relaxed">
+                              ⏱️ Recuerda: Tu reserva dura <strong>48 horas</strong>. Pasado ese tiempo, se cancelará automáticamente.
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <p className="text-sm text-gray-600 text-center">
+                              Revisaremos tu pago y te contactaremos por WhatsApp.
+                            </p>
+                            <a
+                              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}${receiptUploadState === 'success' ? encodeURIComponent('\n📎 Ya subí mi comprobante de pago en el sistema.') : ''}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center gap-2 w-full bg-green-600 hover:bg-green-700 text-white font-bold uppercase py-4 rounded-lg transition-all shadow-sm"
+                            >
+                              <MessageCircle className="w-5 h-5" />
+                              CONFIRMAR POR WHATSAPP
+                            </a>
+                          </>
+                        )}
                       </motion.div>
 
                       <motion.div

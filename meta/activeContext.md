@@ -5,23 +5,23 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 10-H.1
-- **Block Name:** Fix Size Guide whitelist (belts/hats)
-- **Status:** ✅ DONE (fix was already present in local + pushed)
+- **Block Number:** 10-H.2
+- **Block Name:** Fix Size Guide whitelist & Checkout dual buttons
+- **Status:** ✅ DONE
 - **Started:** 2026-02-27
 - **Completed:** 2026-02-27
-
 
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 10-I
-- **Block Name:** Radical UX/UI cleanup of Checkout stages
+- **Block Number:** 10-H.2
+- **Block Name:** Fix Size Guide whitelist & Checkout dual buttons
 - **Completed:** 2026-02-27
-- **Commit:** a69df6c
+- **Commit:** pending
 
 ### Files Changed
-- `components/cart/CheckoutModal.tsx` — Removed dummy texts (notification helpers, "Rápido y preciso", "Mueve el pin al lugar exacto"). Cleaned discount code UI to inline input+button. Added 48h reservation note to pickup. Removed Libélula payment option entirely. Removed QR payment selector (show QR directly). Removed amber "Una vez realizado el pago…" text. Cleaned receipt upload borders. Added total-to-pay display before receipt. Made WhatsApp CTA primary (green, uppercase, full-width). Changed "Seguir comprando" to subtle text link.
+- `components/producto/ProductDetail.tsx` — Normalized category name text to remove accents and correctly map size guides for categories like cinturón. Added 'belt'.
+- `components/cart/CheckoutModal.tsx` — Render dual WhatsApp buttons for store_pickup on the success step.
 
 ### Database Changes
 - None
@@ -74,6 +74,7 @@
 | 10-G | Restructure Footer & Polish Size Guide | ✅ DONE | 2026-02-27 | f308958 |
 | 10-I | Radical UX/UI cleanup of Checkout stages | ✅ DONE | 2026-02-27 | a69df6c |
 | 10-H.1 | Fix Size Guide whitelist (belts/hats) | ✅ DONE | 2026-02-27 | a7ca5c4 |
+| 10-H.2 | Fix Size Guide whitelist & Checkout dual buttons | ✅ DONE | 2026-02-27 | pending |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |

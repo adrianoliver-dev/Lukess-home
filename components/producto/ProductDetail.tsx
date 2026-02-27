@@ -68,9 +68,16 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
     return p.price * (1 - discount / 100)
   }
 
-  const categoryName = product.categories?.name?.toLowerCase() || ''
-  const SIZE_GUIDE_CATEGORIES = ['camisa', 'polo', 'pantalon', 'jeans', 'short', 'cinturon', 'sombrero', 'gorra']
-  const shouldShowSizeGuide = SIZE_GUIDE_CATEGORIES.some(cat => categoryName.includes(cat))
+  const categoryName = product.categories?.name || ''
+  const normalizeText = (text: string) =>
+    text.toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // Remove accents
+      .trim()
+
+  const normalizedCategory = normalizeText(categoryName)
+  const SIZE_GUIDE_CATEGORIES = ['camisa', 'polo', 'pantalon', 'jeans', 'short', 'cinturon', 'sombrero', 'gorra', 'belt']
+  const shouldShowSizeGuide = SIZE_GUIDE_CATEGORIES.some(cat => normalizedCategory.includes(cat))
 
   const stock = getTotalStock(product)
   const stockBySize = getStockBySize(product)
