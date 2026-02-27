@@ -13,16 +13,22 @@ interface AnnouncementMessage {
 
 const messages: AnnouncementMessage[] = [
     {
-        id: 'trust',
-        text: '3 puestos en Mercado Mutualista · Atendemos por WhatsApp · Entrega en SCZ',
+        id: 'trust-1',
+        text: '🏬 3 locales en Mercado Mutualista — Local B12, B15, B22',
         cta: 'Contactar',
-        ctaHref: 'https://wa.me/59172643753?text=Hola!%20Vi%20la%20página%20de%20Lukess%20Home',
+        ctaHref: 'https://wa.me/59172643753?text=Hola!%20Quiero%20visitar%20sus%20locales',
         ctaIcon: 'whatsapp',
     },
     {
-        id: 'promo',
-        text: 'Camisas Columbia disponibles — ',
-        highlight: 'Stock limitado',
+        id: 'delivery',
+        text: '📦 Entrega gratis zona norte SCZ — pedidos +200 Bs',
+        cta: 'Pedir',
+        ctaHref: 'https://wa.me/59172643753?text=Hola!%20Quiero%20pedir%20con%20entrega',
+        ctaIcon: 'whatsapp',
+    },
+    {
+        id: 'original',
+        text: '💯 Ropa 100% original — marcas importadas con factura',
         cta: 'Ver productos',
         ctaHref: '#productos',
         ctaIcon: 'arrow',

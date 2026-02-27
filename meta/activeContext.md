@@ -14,19 +14,17 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 9d-B
-- **Block Name:** Landing: Banner + Códigos descuento (REVISION)
-- **Completed:** 2026-02-26
-- **Commit:** 5b18fcc
+- **Block Number:** 9d-B FIX
+- **Block Name:** Landing: Banner + Códigos descuento (FIX)
+- **Completed:** 2026-02-27
+- **Commit:** 036b5a3
 
-### Files Changed (9d-B REVISION)
-- `components/landing/AnnouncementBar.tsx` [NEW] — sticky top announcement bar with 2 messages and localStorage dismiss.
-- `components/landing/HeroSection.tsx` [NEW] — static 80vh hero replacing auto-rotation, includes pulse-animated WhatsApp CTA.
-- `components/landing/QuickLinksRow.tsx` [NEW] — horizontal scrolling category cards at bottom of hero.
-- `components/home/PromoBanner.tsx` [DELETED] — old 3-slide auto-rotating banner removed to improve CTR.
-- `app/page.tsx` — replaced old HeroSection and PromoBanner imports/usage with new components.
-- `app/globals.css` — added marquee, pulse-subtle keyframes and hide-scrollbar utilities.
-- `meta/activeContext.md` — memory context update.
+### Files Changed (9d-B FIX)
+- `components/landing/QuickLinksRow.tsx` — Updated image paths (using `public/products/`) and category hrefs (`/?filter=X#catalogo`).
+- `components/landing/HeroSection.tsx` — Used fallback image (`polo-azul-texturizado.png`) and adjusted padding (`pt-16 md:pt-24`) to clear navbar.
+- `components/landing/AnnouncementBar.tsx` — Set `position: fixed`, added `--announcement-height` custom property, adjusted z-index to `60`.
+- `components/layout/Navbar.tsx` — Applied dynamic `top` style variable to prevent overlap with AnnouncementBar.
+- `app/page.tsx` — Removed nesting `<main>` tag wrapping replaced with fragment.
 
 ### DB Changes
 None.
@@ -35,7 +33,7 @@ None.
 ✅ `npm run build` — 0 errors, 0 TypeScript errors.
 
 ### Browser Verification
-✅ Visual confirmation via Browser Sub-Agent: AnnouncementBar renders correctly with localStorage logic, HeroSection is static with proper height and CTA pulse, QuickLinksRow exhibits horizontal scrolling, old carousel removed natively. Everything works correctly across viewports.
+✅ Visual confirmation via Browser Sub-Agent: Layout is perfectly aligned. Navbar sits underneath AnnouncementBar (and adjusts when closed). Hero and Categories display actual product image fallbacks.
 
 ---
 

@@ -7,7 +7,6 @@ import { CatalogoClient } from "@/components/home/CatalogoClient";
 import TestimoniosSection from "@/components/home/TestimoniosSection";
 import UbicacionSection from "@/components/home/UbicacionSection";
 import CTAFinalSection from "@/components/home/CTAFinalSection";
-import { CountdownTimer } from "@/components/marketing/CountdownTimer";
 import { NewsletterPopup } from "@/components/marketing/NewsletterPopup";
 
 export default async function Home() {
@@ -43,23 +42,10 @@ export default async function Home() {
     // Error handled silently in production
   }
 
-  // Fixed promo end date
-  const PROMO_END_DATE = new Date('2026-03-28T23:59:59-04:00')
-
   return (
     <>
       <AnnouncementBar />
       <HeroSection />
-
-      {/* Countdown timer */}
-      <section className="py-6">
-        <Container>
-          <CountdownTimer
-            targetDate={PROMO_END_DATE}
-            message="Cyber Week termina en"
-          />
-        </Container>
-      </section>
 
       <PuestosSection />
       <CatalogoClient initialProducts={products} />

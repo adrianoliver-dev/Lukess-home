@@ -2,10 +2,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 const CATEGORIES = [
-    { id: 'camisas', name: 'Camisas', href: '/?filter=camisas#catalogo', image: '/products/camisa-columbia-verde.png' },
-    { id: 'pantalones', name: 'Pantalones', href: '/?filter=pantalones#catalogo', image: '/products/pantalon-jean-indigo-oscuro.png' },
-    { id: 'cinturones', name: 'Cinturones', href: '/?filter=accesorios-cinturones#catalogo', image: '/products/cinturon-cuero-cafe.png' },
-    { id: 'sombreros', name: 'Sombreros', href: '/?filter=accesorios-sombreros#catalogo', image: '/products/gorra-azul-minimalista.png' },
+    { id: 'camisas', name: 'Camisas', href: '/?filter=camisas#catalogo', image: '/products/camisa-columbia-verde.png', objectPosition: 'center top' },
+    { id: 'pantalones', name: 'Pantalones', href: '/?filter=pantalones#catalogo', image: '/products/pantalon-jean-indigo-oscuro.png', objectPosition: 'center center' },
+    { id: 'cinturones', name: 'Cinturones', href: '/?filter=accesorios-cinturones#catalogo', image: '/products/cinturon-cuero-cafe.png', objectPosition: 'center center' },
+    { id: 'gorras', name: 'Gorras', href: '/?filter=gorras#catalogo', image: '/products/gorra-azul-minimalista.png', objectPosition: 'center center' },
 ]
 
 export default function QuickLinksRow() {
@@ -29,6 +29,7 @@ export default function QuickLinksRow() {
                                     fill
                                     sizes="(max-width: 768px) 144px, 208px"
                                     className="object-cover transition-transform duration-500 group-hover:scale-110 active:scale-105"
+                                    style={{ objectPosition: cat.objectPosition }}
                                 />
 
                                 {/* Dark Overlay (lightens on hover) */}
