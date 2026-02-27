@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import Container from "@/components/ui/Container";
-import HeroSection from "@/components/home/HeroSection";
-import { PromoBanner } from "@/components/home/PromoBanner";
+import HeroSection from "@/components/landing/HeroSection";
+import AnnouncementBar from "@/components/landing/AnnouncementBar";
 import PuestosSection from "@/components/home/PuestosSection";
 import { CatalogoClient } from "@/components/home/CatalogoClient";
 import TestimoniosSection from "@/components/home/TestimoniosSection";
@@ -47,15 +47,9 @@ export default async function Home() {
   const PROMO_END_DATE = new Date('2026-03-28T23:59:59-04:00')
 
   return (
-    <>
+    <main>
+      <AnnouncementBar />
       <HeroSection />
-
-      {/* Banner rotativo promocional */}
-      <section className="py-8 bg-gray-50">
-        <Container>
-          <PromoBanner />
-        </Container>
-      </section>
 
       {/* Countdown timer */}
       <section className="py-6">
@@ -75,6 +69,6 @@ export default async function Home() {
 
       {/* Popup newsletter */}
       <NewsletterPopup />
-    </>
+    </main>
   );
 }

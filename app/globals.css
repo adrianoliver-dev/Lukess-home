@@ -123,6 +123,11 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  .animate-marquee,
+  .animate-pulse-subtle {
+    animation: none;
+  }
 }
 
 /* ===== GPU Acceleration para animaciones ===== */
@@ -139,6 +144,15 @@
   }
 
   .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
 
@@ -171,6 +185,30 @@
     }
   }
 
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes pulse-subtle {
+
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 0.9;
+      transform: scale(0.98);
+    }
+  }
+
   .banner-slide-enter {
     animation: slideInFromRight 0.4s ease-out forwards;
   }
@@ -184,5 +222,13 @@
         rgba(255, 255, 255, 0.18) 50%,
         transparent 60%);
     animation: shimmerSweep 1.4s ease-out 0.8s forwards;
+  }
+
+  .animate-marquee {
+    animation: marquee 25s linear infinite;
+  }
+
+  .animate-pulse-subtle {
+    animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 }

@@ -14,16 +14,18 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 9e-A
-- **Block Name:** Visual Polish: Footer + Navbar mobile
-- **Completed:** 2026-02-27
-- **Commit:** pending
+- **Block Number:** 9d-B
+- **Block Name:** Landing: Banner + Códigos descuento (REVISION)
+- **Completed:** 2026-02-26
+- **Commit:** b597c45
 
-### Files Changed (9e-A)
-- `components/layout/Footer.tsx` — updated WhatsApp to 72643753, email to contacto@lukesshome.com, integrated custom TikTok SVG icon, updated newsletter background to `bg-accent-500`.
-- `components/layout/Navbar.tsx`, `components/layout/MobileNav.tsx` — compacted mobile drawer nav styling, reduced paddings, font sizes, heights to fit 390px height screen without overflow.
-- `components/home/UbicacionSection.tsx`, `TestimoniosSection.tsx`, `PromoBanner.tsx`, `CatalogoClient.tsx` — global replacement of diverse gold accents (`accent-50`, `100`, `600`, `700`, etc.) with standardized `accent-500` and its opacity variants.
-- `components/catalogo/QuickViewModal.tsx`, `components/cart/CheckoutModal.tsx`, `components/ui/Button.tsx`, `app/preguntas-frecuentes/page.tsx`, `app/guia-tallas/page.tsx`, `components/wishlist/WishlistClient.tsx` — same gold accent standardization applied.
+### Files Changed (9d-B REVISION)
+- `components/landing/AnnouncementBar.tsx` [NEW] — sticky top announcement bar with 2 messages and localStorage dismiss.
+- `components/landing/HeroSection.tsx` [NEW] — static 80vh hero replacing auto-rotation, includes pulse-animated WhatsApp CTA.
+- `components/landing/QuickLinksRow.tsx` [NEW] — horizontal scrolling category cards at bottom of hero.
+- `components/home/PromoBanner.tsx` [DELETED] — old 3-slide auto-rotating banner removed to improve CTR.
+- `app/page.tsx` — replaced old HeroSection and PromoBanner imports/usage with new components.
+- `app/globals.css` — added marquee, pulse-subtle keyframes and hide-scrollbar utilities.
 - `meta/activeContext.md` — memory context update.
 
 ### DB Changes
@@ -33,7 +35,7 @@ None.
 ✅ `npm run build` — 0 errors, 0 TypeScript errors.
 
 ### Browser Verification
-✅ Visual confirmation via Browser Sub-Agent: mobile navbar fits perfectly at 390px height, footer details (WhatsApp + TikTok + Email + Gold Background) match spec, unified gold color consistently visible across all checked sections.
+✅ Visual confirmation via Browser Sub-Agent: AnnouncementBar renders correctly with localStorage logic, HeroSection is static with proper height and CTA pulse, QuickLinksRow exhibits horizontal scrolling, old carousel removed natively. Everything works correctly across viewports.
 
 ---
 
@@ -59,7 +61,7 @@ None.
 | 9c-A | Inventario: BD + formulario descuentos/is_new | ✅ DONE | — | — |
 | 9c-B | Inventario: Upload múltiples imágenes | ✅ DONE | — | — |
 | 9d-A | Landing: Badges + Galería múltiple | ✅ DONE | 2026-02-26 | 7956e0f |
-| 9d-B | Landing: Banner + Códigos descuento | ✅ DONE | 2026-02-26 | d09eb31 |
+| 9d-B | Landing: Banner + Códigos descuento | ✅ DONE | 2026-02-26 | b597c45 |
 | 9e-A | Visual Polish: Footer + Navbar mobile | ✅ DONE | 2026-02-27 | pending |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
