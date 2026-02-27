@@ -10,11 +10,11 @@ export function WishlistIcon() {
   return (
     <Link
       href="/wishlist"
-      className="relative p-2.5 hover:bg-gray-100 rounded-full transition-all duration-300 group"
+      className="relative p-2 hover:bg-gray-50 rounded-lg transition-colors"
       aria-label={`Lista de deseos (${wishlistCount} productos)`}
     >
-      <Heart className="w-5 h-5 text-gray-700 group-hover:text-red-500 transition-colors" />
-      
+      <Heart className="w-5 h-5 text-gray-900" />
+
       {/* Badge contador */}
       <AnimatePresence>
         {wishlistCount > 0 && (
@@ -23,7 +23,7 @@ export function WishlistIcon() {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 500, damping: 25 }}
-            className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-lg"
+            className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center"
           >
             {wishlistCount > 9 ? '9+' : wishlistCount}
           </motion.span>

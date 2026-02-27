@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Menu, X, MessageCircle, Search, Heart, ShoppingCart, User, ChevronDown, Package, LogOut } from "lucide-react";
+import { Menu, X, Search, Heart, ShoppingCart, User, ChevronDown, Package, LogOut } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -12,11 +12,7 @@ import { CheckoutModal } from "@/components/cart/CheckoutModal";
 import { WishlistIcon } from "@/components/wishlist/WishlistIcon";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { useCart } from "@/lib/context/CartContext";
-import { useWishlist } from "@/lib/context/WishlistContext";
 import { useAuth } from "@/lib/context/AuthContext";
-import { buildWhatsAppUrl } from "@/lib/utils/whatsapp";
-
-const WHATSAPP_URL = buildWhatsAppUrl("Hola Lukess Home, me interesa conocer sus productos");
 
 const categories = [
   {
@@ -70,7 +66,6 @@ const quickLinks = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -79,15 +74,14 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const { cart } = useCart();
-  const { wishlistCount } = useWishlist();
   const { isLoggedIn, customerName, signOut } = useAuth();
   const userMenuRef = useRef<HTMLDivElement>(null);
 
   const cartItemCount = cart?.reduce((sum, item) => sum + item.quantity, 0) || 0;
 
-  // Cerrar menú usuario al hacer click fuera
+  // Close user menu on outside click
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
+    const handleClickOutside = (e: MouseEvent): void => {
       if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
         setIsUserMenuOpen(false);
       }
@@ -97,32 +91,22 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [isOpen]);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string): void => {
     e.preventDefault();
 
-    // Extraer el hash base y los parámetros
     const [hashBase, queryString] = href.split('?');
     const id = hashBase.replace('/#', '');
 
     if (pathname !== '/') {
-      // Si no estamos en la home, navegar primero
       setIsOpen(false);
       router.push(href);
     } else {
-      // Si ya estamos en la home, hacer scroll y aplicar filtro
-      // Cerrar menú primero y esperar un poco para el scroll
       setIsOpen(false);
 
       setTimeout(() => {
@@ -132,33 +116,27 @@ export default function Navbar() {
           const top = element.getBoundingClientRect().top + window.scrollY - navbarHeight;
           window.scrollTo({ top, behavior: 'smooth' });
 
-          // Actualizar el hash con el filtro para que el catálogo lo detecte
           if (queryString) {
             window.history.pushState(null, '', href);
-            // Disparar evento hashchange manualmente
             window.dispatchEvent(new HashChangeEvent('hashchange'));
           }
         }
-      }, 100); // Pequeño delay para que el menú se cierre primero
+      }, 100);
     }
   };
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = (e: React.FormEvent): void => {
     e.preventDefault();
     if (searchQuery.trim()) {
       const searchUrl = `/?busqueda=${encodeURIComponent(searchQuery)}#catalogo`;
 
-      // Cerrar menú móvil si está abierto
       setIsOpen(false);
 
       if (pathname !== '/') {
-        // Si no estamos en la home, navegar
         router.push(searchUrl);
       } else {
-        // Si ya estamos en la home, usamos router.push para que Next.js actualice useSearchParams
         router.push(searchUrl);
 
-        // Hacemos scroll manual para asegurar la posición
         setTimeout(() => {
           const element = document.getElementById('catalogo');
           if (element) {
@@ -175,51 +153,45 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed left-0 right-0 z-50 transition-all duration-300 ${scrolled || isOpen
-          ? "bg-white shadow-lg"
-          : "bg-white/95 backdrop-blur-md"
-          }`}
+        className="fixed left-0 right-0 z-50 bg-white border-b border-gray-100"
         style={{ top: 'var(--announcement-height, 0px)' }}
       >
         <Container>
-          <div className="flex items-center justify-between h-14 md:h-20 gap-4">
-            {/* Logo - ARREGLADO */}
+          <div className="flex items-center justify-between h-14 md:h-16 gap-4">
+            {/* Logo */}
             <Link
               href="/"
               className="flex items-center gap-1.5 shrink-0 hover:opacity-80 transition-opacity"
             >
-              <span className="text-xl sm:text-2xl md:text-[28px] font-extrabold tracking-tight text-gray-900">
+              <span className="text-xl sm:text-2xl font-extrabold tracking-tight text-gray-900">
                 LUKESS
               </span>
-              <span className="text-[10px] sm:text-xs font-medium tracking-[0.25em] uppercase text-accent-500">
+              <span className="text-[10px] sm:text-xs font-medium tracking-[0.25em] uppercase text-gray-400">
                 HOME
-              </span>
-              <span className="hidden sm:inline-block text-[9px] ml-1.5 px-1.5 py-0.5 rounded border text-gray-600 border-gray-300">
-                Desde 2014
               </span>
             </Link>
 
-            {/* Desktop Mega Menu */}
+            {/* Desktop Category Links */}
             <div className="hidden lg:flex items-center gap-1 flex-1 justify-center">
               {categories.map((category) => (
                 <div key={category.name} className="relative group">
                   <Link
                     href={category.href}
                     onClick={(e) => handleNavClick(e, category.href)}
-                    className="flex items-center gap-1 text-sm font-semibold text-gray-800 hover:text-gray-900 transition-colors px-3 py-2"
+                    className="flex items-center gap-1 text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors px-3 py-2 uppercase tracking-widest"
                   >
                     {category.name}
                   </Link>
 
                   {category.subcategories && (
-                    <div className="absolute left-0 top-full mt-2 w-48 bg-white shadow-xl rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border border-gray-100">
-                      <div className="py-3 px-4">
+                    <div className="absolute left-0 top-full mt-1 w-48 bg-white shadow-sm rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-gray-100">
+                      <div className="py-2 px-3">
                         {category.subcategories.map((sub) => (
                           <Link
                             key={sub.name}
                             href={`/?filter=${sub.filter}#catalogo`}
                             onClick={(e) => handleNavClick(e, `/?filter=${sub.filter}#catalogo`)}
-                            className="block py-2 text-sm text-gray-700 hover:text-gray-900 hover:translate-x-1 transition-all"
+                            className="block py-2 text-sm text-gray-500 hover:text-gray-900 transition-colors"
                           >
                             {sub.name}
                           </Link>
@@ -230,23 +202,23 @@ export default function Navbar() {
                 </div>
               ))}
 
-              {/* Quick Links */}
-              <div className="h-5 w-px bg-gray-200 mx-2"></div>
+              {/* Divider + Quick Links */}
+              <div className="h-4 w-px bg-gray-200 mx-2"></div>
               {quickLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors px-3 py-2"
+                  className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors px-3 py-2 uppercase tracking-widest"
                 >
                   {link.label}
                 </Link>
               ))}
             </div>
 
-            {/* Acciones derecha */}
-            <div className="flex items-center gap-3">
-              {/* Buscador Desktop - ARREGLADO */}
+            {/* Right actions */}
+            <div className="flex items-center gap-1">
+              {/* Desktop Search */}
               <form onSubmit={handleSearch} className="hidden lg:block">
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -255,7 +227,7 @@ export default function Navbar() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Buscar..."
-                    className="w-48 pl-9 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:border-gray-600 focus:outline-none transition-colors"
+                    className="w-44 pl-9 pr-3 py-2 border border-gray-200 rounded-lg text-sm focus:border-gray-400 focus:outline-none transition-colors"
                   />
                 </div>
               </form>
@@ -271,9 +243,9 @@ export default function Navbar() {
                   <div className="relative">
                     <button
                       onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                      className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold text-gray-800 hover:bg-gray-100 transition-colors"
+                      className="flex items-center gap-1.5 px-2 py-2 rounded-lg text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors"
                     >
-                      <User className="w-4 h-4 text-gray-900" />
+                      <User className="w-5 h-5 text-gray-900" />
                       <span className="max-w-[80px] truncate">{customerName}</span>
                       <ChevronDown className={`w-3 h-3 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
                     </button>
@@ -284,22 +256,22 @@ export default function Navbar() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -8 }}
                           transition={{ duration: 0.15 }}
-                          className="absolute right-0 top-full mt-2 w-44 bg-white rounded-xl shadow-xl border border-gray-100 z-50 overflow-hidden"
+                          className="absolute right-0 top-full mt-1 w-44 bg-white rounded-md shadow-sm border border-gray-100 z-50 overflow-hidden"
                         >
                           <Link
                             href="/mis-pedidos"
                             onClick={() => setIsUserMenuOpen(false)}
-                            className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                            className="flex items-center gap-2 px-4 py-3 text-sm text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-colors"
                           >
-                            <Package className="w-4 h-4 text-gray-500" />
+                            <Package className="w-4 h-4" />
                             Mis Pedidos
                           </Link>
                           <Link
                             href="/wishlist"
                             onClick={() => setIsUserMenuOpen(false)}
-                            className="flex items-center gap-2 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                            className="flex items-center gap-2 px-4 py-3 text-sm text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-colors"
                           >
-                            <Heart className="w-4 h-4 text-gray-500" />
+                            <Heart className="w-4 h-4" />
                             Mis Favoritos
                           </Link>
                           <div className="h-px bg-gray-100" />
@@ -317,10 +289,10 @@ export default function Navbar() {
                 ) : (
                   <button
                     onClick={() => setIsAuthModalOpen(true)}
-                    className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold text-gray-700 border border-gray-300 hover:border-gray-400 hover:text-gray-800 transition-colors"
+                    className="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                    aria-label="Iniciar sesión"
                   >
-                    <User className="w-4 h-4" />
-                    Entrar
+                    <User className="w-5 h-5" />
                   </button>
                 )}
               </div>
@@ -330,21 +302,10 @@ export default function Navbar() {
                 <CartButton onClick={() => setIsCartOpen(true)} />
               </div>
 
-              {/* WhatsApp */}
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-whatsapp hover:bg-whatsapp-dark text-white px-4 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg shadow-whatsapp/20 flex-shrink-0"
-              >
-                <MessageCircle className="w-4 h-4 flex-shrink-0" />
-                <span className="hidden md:inline">WhatsApp</span>
-              </a>
-
               {/* Hamburger */}
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="lg:hidden p-2 rounded-xl transition-all duration-200 text-gray-800 hover:bg-gray-100"
+                className="lg:hidden p-2 rounded-lg transition-colors text-gray-900 hover:bg-gray-50"
                 aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
               >
                 <AnimatePresence mode="wait" initial={false}>
@@ -356,9 +317,9 @@ export default function Navbar() {
                     transition={{ duration: 0.15 }}
                   >
                     {isOpen ? (
-                      <X className="w-6 h-6" />
+                      <X className="w-5 h-5" />
                     ) : (
-                      <Menu className="w-6 h-6" />
+                      <Menu className="w-5 h-5" />
                     )}
                   </motion.div>
                 </AnimatePresence>
@@ -367,7 +328,7 @@ export default function Navbar() {
           </div>
         </Container>
 
-        {/* Drawer mobile */}
+        {/* Mobile Drawer */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
@@ -377,14 +338,9 @@ export default function Navbar() {
               transition={{ duration: 0.25, ease: "easeInOut" }}
               className="lg:hidden bg-white border-t border-gray-100 max-h-[calc(100vh-80px)] overflow-y-auto"
             >
-              <div className="px-6 py-3 space-y-0.5">
-                {/* Mobile search - PRIMERO */}
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25 }}
-                  className="mb-4"
-                >
+              <div className="px-6 py-4 space-y-1">
+                {/* Mobile search */}
+                <div className="mb-4">
                   <form onSubmit={handleSearch}>
                     <div className="relative">
                       <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -393,97 +349,72 @@ export default function Navbar() {
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder="Buscar productos..."
-                        className="w-full pl-9 pr-3 py-2 border-2 border-gray-200 rounded-lg focus:border-gray-600 focus:outline-none text-sm"
+                        className="w-full pl-9 pr-3 py-2.5 border border-gray-200 rounded-lg focus:border-gray-400 focus:outline-none text-sm"
                       />
                     </div>
                   </form>
-                </motion.div>
+                </div>
 
-                {categories.map((category, i) => (
-                  <motion.div
-                    key={category.name}
-                    initial={{ opacity: 0, x: -16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{
-                      delay: i * 0.05,
-                      duration: 0.25,
-                      ease: "easeOut" as const,
-                    }}
-                  >
+                {categories.map((category) => (
+                  <div key={category.name}>
                     <Link
                       href={category.href}
                       onClick={(e) => handleNavClick(e, category.href)}
-                      className="flex items-center justify-between py-2 px-4 rounded-xl text-sm font-semibold text-gray-800 hover:text-gray-900 hover:bg-gray-50 transition-all duration-200"
+                      className="flex items-center justify-between py-2.5 px-3 rounded-lg text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors uppercase tracking-widest"
                     >
                       <span>{category.name}</span>
                     </Link>
 
                     {category.subcategories && (
-                      <div className="ml-4 mt-0.5 space-y-0.5">
+                      <div className="ml-4 space-y-0.5">
                         {category.subcategories.map((sub) => (
                           <Link
                             key={sub.name}
                             href={`/?filter=${sub.filter}#catalogo`}
                             onClick={(e) => handleNavClick(e, `/?filter=${sub.filter}#catalogo`)}
-                            className="block py-1.5 px-4 text-xs text-gray-600 hover:text-gray-900 transition-colors"
+                            className="block py-1.5 px-3 text-sm text-gray-500 hover:text-gray-900 transition-colors"
                           >
                             {sub.name}
                           </Link>
                         ))}
                       </div>
                     )}
-                  </motion.div>
+                  </div>
                 ))}
 
                 {/* Divider */}
-                <div className="h-px bg-gray-200 my-2"></div>
+                <div className="h-px bg-gray-100 my-3"></div>
 
                 {/* Quick Links */}
-                {quickLinks.map((link, i) => (
-                  <motion.div
+                {quickLinks.map((link) => (
+                  <Link
                     key={link.href}
-                    initial={{ opacity: 0, x: -16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{
-                      delay: (categories.length + i) * 0.05,
-                      duration: 0.25,
-                      ease: "easeOut" as const,
-                    }}
+                    href={link.href}
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className="flex items-center py-2.5 px-3 rounded-lg text-sm text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-colors"
                   >
-                    <Link
-                      href={link.href}
-                      onClick={(e) => handleNavClick(e, link.href)}
-                      className="flex items-center gap-3 py-2 px-4 rounded-xl text-sm font-normal text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-all duration-200"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
-                      {link.label}
-                    </Link>
-                  </motion.div>
+                    {link.label}
+                  </Link>
                 ))}
 
+                {/* Divider */}
+                <div className="h-px bg-gray-100 my-3"></div>
+
                 {/* Auth button mobile */}
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    delay: (categories.length + quickLinks.length) * 0.05 + 0.02,
-                    duration: 0.25,
-                  }}
-                  className="pt-1"
-                >
+                <div>
                   {isLoggedIn ? (
                     <div className="flex gap-2">
                       <Link
                         href="/mis-pedidos"
                         onClick={() => setIsOpen(false)}
-                        className="flex-1 flex items-center justify-center gap-2 border border-gray-200 text-gray-700 py-2.5 rounded-xl text-sm font-semibold transition-all hover:bg-gray-50"
+                        className="flex-1 flex items-center justify-center gap-2 border border-gray-200 text-gray-600 py-2.5 rounded-lg text-sm font-semibold transition-colors hover:bg-gray-50"
                       >
                         <Package className="w-4 h-4" />
                         Pedidos
                       </Link>
                       <button
                         onClick={() => { signOut(); setIsOpen(false); }}
-                        className="flex-1 flex items-center justify-center gap-2 border border-red-200 text-red-500 py-2.5 rounded-xl text-sm font-semibold transition-all hover:bg-red-50"
+                        className="flex-1 flex items-center justify-center gap-2 border border-gray-200 text-red-500 py-2.5 rounded-lg text-sm font-semibold transition-colors hover:bg-red-50"
                       >
                         <LogOut className="w-4 h-4" />
                         Salir
@@ -492,28 +423,20 @@ export default function Navbar() {
                   ) : (
                     <button
                       onClick={() => { setIsAuthModalOpen(true); setIsOpen(false); }}
-                      className="w-full flex items-center justify-center gap-2 border-2 border-gray-600 text-gray-800 py-2.5 rounded-xl text-sm font-bold transition-all hover:bg-gray-100"
+                      className="w-full flex items-center justify-center gap-2 border border-gray-200 text-gray-600 py-2.5 rounded-lg text-sm font-semibold transition-colors hover:bg-gray-50"
                     >
                       <User className="w-4 h-4" />
                       Iniciar sesión / Crear cuenta
                     </button>
                   )}
-                </motion.div>
+                </div>
 
                 {/* Wishlist + Cart buttons mobile */}
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    delay: (categories.length + quickLinks.length) * 0.05 + 0.05,
-                    duration: 0.25,
-                  }}
-                  className="pt-1 flex gap-2"
-                >
+                <div className="flex gap-2 pt-1">
                   <Link
                     href="/wishlist"
                     onClick={() => setIsOpen(false)}
-                    className="flex-1 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-xl text-sm font-semibold transition-all shadow-lg"
+                    className="flex-1 flex items-center justify-center gap-2 bg-gray-900 text-white py-2.5 rounded-lg text-sm font-semibold transition-colors hover:bg-gray-800"
                   >
                     <Heart className="w-4 h-4" />
                     Favoritos
@@ -523,39 +446,19 @@ export default function Navbar() {
                       setIsCartOpen(true);
                       setIsOpen(false);
                     }}
-                    className="flex-1 flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-900 text-white py-2.5 rounded-xl text-sm font-semibold transition-all shadow-lg"
+                    className="flex-1 flex items-center justify-center gap-2 bg-gray-900 text-white py-2.5 rounded-lg text-sm font-semibold transition-colors hover:bg-gray-800"
                   >
                     <ShoppingCart className="w-4 h-4" />
                     Carrito
                   </button>
-                </motion.div>
-
-                {/* WhatsApp CTA mobile */}
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    delay: (categories.length + quickLinks.length) * 0.05 + 0.1,
-                    duration: 0.25,
-                  }}
-                >
-                  <a
-                    href={WHATSAPP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 bg-whatsapp hover:bg-whatsapp-dark text-white w-full py-2.5 rounded-xl text-sm font-semibold transition-all shadow-lg shadow-whatsapp/20"
-                  >
-                    <MessageCircle className="w-4 h-4" />
-                    Escríbenos por WhatsApp
-                  </a>
-                </motion.div>
+                </div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </nav>
 
-      {/* Overlay cuando el drawer está abierto */}
+      {/* Overlay when drawer is open */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -569,15 +472,15 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      {/* Botón carrito flotante SOLO MÓVIL */}
+      {/* Floating cart button - MOBILE ONLY */}
       <button
         onClick={() => setIsCartOpen(true)}
-        className="lg:hidden fixed bottom-6 right-6 z-40 w-14 h-14 bg-accent-500 text-white rounded-full shadow-xl shadow-accent-500/30 flex items-center justify-center hover:bg-accent-600 transition-all active:scale-95"
+        className="lg:hidden fixed bottom-6 right-6 z-40 w-14 h-14 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-800 transition-colors active:scale-95"
         aria-label={`Ver carrito (${cartItemCount} productos)`}
       >
-        <ShoppingCart className="w-7 h-7" />
+        <ShoppingCart className="w-6 h-6" />
         {cartItemCount > 0 && (
-          <span className="absolute -top-1 -right-1 w-6 h-6 bg-red-600 text-white text-xs font-bold rounded-full flex items-center justify-center shadow-lg">
+          <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
             {cartItemCount > 9 ? '9+' : cartItemCount}
           </span>
         )}
