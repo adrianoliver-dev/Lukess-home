@@ -1,18 +1,20 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import Link from 'next/link'
 
 interface BannerSlide {
   id: number
   text: string
   bg: string
   textColor: string
+  href?: string
 }
 
 const BANNER_SLIDES: BannerSlide[] = [
-  { id: 1, text: '🚚 Envío gratis en compras mayores a Bs. 400', bg: 'bg-accent-600', textColor: 'text-white' },
-  { id: 2, text: '⭐ Camisas Columbia originales — Mercado Mutualista', bg: 'bg-primary-800', textColor: 'text-white' },
-  { id: 3, text: '💳 Paga con QR Yolo Pago — rápido y seguro', bg: 'bg-accent-700', textColor: 'text-white' },
+  { id: 1, text: '🚚 Envío gratis en compras mayores a Bs. 400', bg: 'bg-accent-600', textColor: 'text-white', href: '/como-comprar' },
+  { id: 2, text: '⭐ Camisas Columbia originales — Mercado Mutualista', bg: 'bg-primary-800', textColor: 'text-white', href: '/catalogo' },
+  { id: 3, text: '💳 Paga con QR Yolo Pago — rápido y seguro', bg: 'bg-accent-700', textColor: 'text-white', href: '/metodos-pago' },
 ]
 
 export function PromoBanner() {
@@ -34,46 +36,59 @@ export function PromoBanner() {
 
   return (
     <div
-      className="relative h-12 md:h-14 w-full overflow-hidden flex items-center justify-center bg-gray-900 group"
+      className="relative h-11 md:h-12 w-full overflow-hidden flex items-center justify-center bg-gray-900 group"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
       {BANNER_SLIDES.map((slide, index) => (
-        <div
+        <Link
           key={slide.id}
-          className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ease-in-out px-10 ${slide.bg} ${slide.textColor} ${index === current ? 'opacity-100 z-10' : 'opacity-0 z-0'
+          href={slide.href || '#'}
+          className={`absolute inset-0 flex items-center justify-center px-10 ${slide.bg} ${slide.textColor} transition-opacity duration-0 ${index === current ? 'opacity-100 z-10 hover:brightness-110 cursor-pointer' : 'opacity-0 z-0 pointer-events-none'
             }`}
           aria-hidden={index !== current}
         >
-          <p className="text-xs md:text-sm font-medium text-center truncate w-full max-w-7xl">
-            {slide.text}
-          </p>
-        </div>
+          {index === current && (
+            <>
+              {/* Shimmer effect */}
+              <div className="banner-shimmer absolute inset-0 w-full h-full pointer-events-none" />
+
+              {/* Text with slide-in animation */}
+              <p
+                key={`text-${slide.id}-${current}`}
+                className="banner-slide-enter text-xs md:text-sm font-medium text-center truncate max-w-7xl flex items-center justify-center gap-1.5"
+              >
+                {slide.text}
+                <ChevronRight className="w-3 h-3 flex-shrink-0" />
+              </p>
+            </>
+          )}
+        </Link>
       ))}
 
       {/* Navegación manual */}
       <button
-        onClick={goToPrev}
-        className="absolute left-2 top-1/2 -translate-y-1/2 p-1 md:p-1.5 text-white/70 hover:text-white z-20 rounded-full hover:bg-black/20 transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
+        onClick={(e) => { e.preventDefault(); e.stopPropagation(); goToPrev(); }}
+        className="absolute left-2 top-1/2 -translate-y-1/2 p-1 md:p-1.5 text-white opacity-60 hover:opacity-100 z-20 rounded-full transition-all focus:outline-none"
         aria-label="Banner anterior"
       >
         <ChevronLeft className="w-4 h-4 md:w-5 md:w-5" />
       </button>
       <button
-        onClick={goToNext}
-        className="absolute right-2 top-1/2 -translate-y-1/2 p-1 md:p-1.5 text-white/70 hover:text-white z-20 rounded-full hover:bg-black/20 transition-colors focus:outline-none focus:ring-2 focus:ring-white/50"
+        onClick={(e) => { e.preventDefault(); e.stopPropagation(); goToNext(); }}
+        className="absolute right-2 top-1/2 -translate-y-1/2 p-1 md:p-1.5 text-white opacity-60 hover:opacity-100 z-20 rounded-full transition-all focus:outline-none"
         aria-label="Banner siguiente"
       >
         <ChevronRight className="w-4 h-4 md:w-5 md:w-5" />
       </button>
 
       {/* Indicadores */}
-      <div className="absolute bottom-1 md:bottom-1.5 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
+      <div className="absolute bottom-1 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20">
         {BANNER_SLIDES.map((_, i) => (
           <button
             key={i}
-            onClick={() => setCurrent(i)}
-            className={`h-1 flex-shrink-0 rounded-full transition-all duration-300 focus:outline-none ${i === current ? 'bg-white w-3 md:w-4' : 'bg-white/40 w-1 md:w-1.5 hover:bg-white/60'
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setCurrent(i); }}
+            className={`flex-shrink-0 rounded-full transition-all duration-300 focus:outline-none ${i === current ? 'bg-white w-2 h-2' : 'bg-white/40 w-1.5 h-1.5 hover:bg-white/60'
               }`}
             aria-label={`Ir a banner ${i + 1}`}
           />

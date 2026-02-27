@@ -141,4 +141,48 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  /* ===== Banner Animations ===== */
+  @keyframes slideInFromRight {
+    from {
+      transform: translateX(30px);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  .banner-slide-enter {
+    animation: slideInFromRight 0.4s ease-out forwards;
+  }
+
+  @keyframes shimmerSweep {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+
+    20% {
+      opacity: 0.15;
+    }
+
+    80% {
+      opacity: 0.15;
+    }
+
+    100% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+
+  .banner-shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 1), transparent);
+    animation: shimmerSweep 1.2s ease-in-out forwards;
+    animation-delay: 1s;
+    opacity: 0;
+  }
 }
