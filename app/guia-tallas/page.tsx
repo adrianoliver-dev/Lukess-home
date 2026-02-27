@@ -106,6 +106,80 @@ export default function GuiaTallasPage() {
       </section>
 
       <section className="mb-8">
+        <h2>Cinturones</h2>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="bg-gray-50">
+                <th className="border border-gray-300 px-4 py-2">Talla</th>
+                <th className="border border-gray-300 px-4 py-2">Cintura (cm)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="bg-white border-b border-gray-100">
+                <td className="border border-gray-300 px-4 py-2 font-semibold">S (28-30)</td>
+                <td className="border border-gray-300 px-4 py-2 text-center">71-76</td>
+              </tr>
+              <tr className="bg-white border-b border-gray-100">
+                <td className="border border-gray-300 px-4 py-2 font-semibold">M (32-34)</td>
+                <td className="border border-gray-300 px-4 py-2 text-center">81-86</td>
+              </tr>
+              <tr className="bg-white border-b border-gray-100">
+                <td className="border border-gray-300 px-4 py-2 font-semibold">L (36-38)</td>
+                <td className="border border-gray-300 px-4 py-2 text-center">91-96</td>
+              </tr>
+              <tr className="bg-white border-b border-gray-100">
+                <td className="border border-gray-300 px-4 py-2 font-semibold">XL (40-42)</td>
+                <td className="border border-gray-300 px-4 py-2 text-center">101-106</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className="mb-8">
+        <h2>Sombreros y Gorras</h2>
+        <div className="overflow-x-auto mb-4">
+          <h3 className="font-semibold mb-2">Sombreros</h3>
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="bg-gray-50">
+                <th className="border border-gray-300 px-4 py-2">Talla</th>
+                <th className="border border-gray-300 px-4 py-2">Circunferencia (cm)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="bg-white border-b border-gray-100">
+                <td className="border border-gray-300 px-4 py-2 font-semibold">M</td>
+                <td className="border border-gray-300 px-4 py-2 text-center">57-58</td>
+              </tr>
+              <tr className="bg-white border-b border-gray-100">
+                <td className="border border-gray-300 px-4 py-2 font-semibold">L</td>
+                <td className="border border-gray-300 px-4 py-2 text-center">59-60</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="overflow-x-auto">
+          <h3 className="font-semibold mb-2">Gorras</h3>
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="bg-gray-50">
+                <th className="border border-gray-300 px-4 py-2">Talla</th>
+                <th className="border border-gray-300 px-4 py-2">Circunferencia</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="bg-white border-b border-gray-100">
+                <td className="border border-gray-300 px-4 py-2 font-semibold">Universal</td>
+                <td className="border border-gray-300 px-4 py-2 text-center">Ajustable</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className="mb-8">
         <h2>Consejos para Elegir tu Talla</h2>
         <ul className="space-y-3 text-gray-700">
           <li>📏 <strong>Mide con cinta métrica</strong> sobre ropa ajustada</li>

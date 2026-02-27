@@ -69,7 +69,8 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
   }
 
   const categoryName = product.categories?.name?.toLowerCase() || ''
-  const shouldShowSizeGuide = !categoryName.includes('billetera')
+  const SIZE_GUIDE_CATEGORIES = ['camisa', 'polo', 'pantalon', 'jeans', 'short', 'cinturon', 'sombrero', 'gorra']
+  const shouldShowSizeGuide = SIZE_GUIDE_CATEGORIES.some(cat => categoryName.includes(cat))
 
   const stock = getTotalStock(product)
   const stockBySize = getStockBySize(product)
@@ -374,9 +375,9 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                   <span className="text-base">🏬</span>
                   <span>Retiro gratis en Mercado Mutualista</span>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-gray-600">
-                  <span className="text-base">🔒</span>
-                  <span>Paga en línea o al recibir</span>
+                <div className="flex items-start gap-3 text-sm text-gray-600">
+                  <span className="text-base mt-0.5">⏱️</span>
+                  <span>Los pedidos con &ldquo;Recojo en tienda&rdquo; se reservan por un máximo de <strong>48 horas</strong>. Pasado ese tiempo, la reserva se cancela automáticamente.</span>
                 </div>
               </div>
             </div>
