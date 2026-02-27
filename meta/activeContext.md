@@ -17,7 +17,7 @@
 - **Block Number:** 10-E.4
 - **Block Name:** Polish Sprint: Navbar & Footer Functional Fixes
 - **Completed:** 2026-02-27
-- **Commit:** 3045d36
+- **Commit:** f05ebd8
 
 ### Files Changed
 - `components/cart/CartButton.tsx` — Wrapper standardized to `relative w-10 h-10 flex items-center justify-center`
@@ -66,7 +66,7 @@ None
 | 10-D | Polish Sprint: Hero & Trust redesign | ✅ DONE | 2026-02-27 | 184d5c0 |
 | 10-E.1 | Polish Sprint: Brand Foundation | ✅ DONE | 2026-02-27 | 8a75be2 |
 | 10-E.2 | Polish Sprint: Navbar & Footer Redesign | ✅ DONE | 2026-02-27 | 13eecc3 |
-| 10-E.4 | Polish Sprint: Navbar & Footer Functional Fixes | ✅ DONE | 2026-02-27 | 3045d36 |
+| 10-E.4 | Polish Sprint: Navbar & Footer Functional Fixes | ✅ DONE | 2026-02-27 | f05ebd8 |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |

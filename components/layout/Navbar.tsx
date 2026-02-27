@@ -14,49 +14,13 @@ import { AuthModal } from "@/components/auth/AuthModal";
 import { useCart } from "@/lib/context/CartContext";
 import { useAuth } from "@/lib/context/AuthContext";
 
-const categories = [
-  {
-    name: 'NUEVO',
-    href: '/?filter=nuevo#catalogo',
-    filter: 'nuevo',
-  },
-  {
-    name: 'CAMISAS',
-    href: '/?filter=camisas#catalogo',
-    filter: 'camisas',
-    subcategories: [
-      { name: 'Columbia', filter: 'camisas-columbia' },
-      { name: 'Manga larga', filter: 'camisas-manga-larga' },
-      { name: 'Manga corta', filter: 'camisas-manga-corta' },
-      { name: 'Elegantes', filter: 'camisas-elegantes' },
-    ]
-  },
-  {
-    name: 'PANTALONES',
-    href: '/?filter=pantalones#catalogo',
-    filter: 'pantalones',
-    subcategories: [
-      { name: 'Oversize', filter: 'pantalones-oversize' },
-      { name: 'Jeans', filter: 'pantalones-jeans' },
-      { name: 'Elegantes', filter: 'pantalones-elegantes' },
-    ]
-  },
-  {
-    name: 'BLAZERS',
-    href: '/?filter=blazers#catalogo',
-    filter: 'blazers',
-  },
-  {
-    name: 'ACCESORIOS',
-    href: '/?filter=accesorios#catalogo',
-    filter: 'accesorios',
-    subcategories: [
-      { name: 'Sombreros', filter: 'accesorios-sombreros' },
-      { name: 'Gorras', filter: 'accesorios-gorras' },
-      { name: 'Cinturones', filter: 'accesorios-cinturones' },
-      { name: 'Billeteras', filter: 'accesorios-billeteras' },
-    ]
-  },
+const categoryLinks = [
+  { name: 'Camisas', href: '/catalogo?categoria=Camisas' },
+  { name: 'Pantalones', href: '/catalogo?categoria=Pantalones' },
+  { name: 'Blazers', href: '/catalogo?categoria=Blazers' },
+  { name: 'Accesorios', href: '/catalogo?categoria=Accesorios' },
+  { name: 'Gorras', href: '/catalogo?categoria=Gorras' },
+  { name: 'Cinturones', href: '/catalogo?categoria=Cinturones' },
 ];
 
 const quickLinks = [
@@ -173,34 +137,26 @@ export default function Navbar() {
 
             {/* Desktop Category Links */}
             <div className="hidden lg:flex items-center gap-1 flex-1 justify-center">
-              {categories.map((category) => (
-                <div key={category.name} className="relative group">
-                  <Link
-                    href={category.href}
-                    onClick={(e) => handleNavClick(e, category.href)}
-                    className="flex items-center gap-1 text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors px-3 py-2 uppercase tracking-widest"
-                  >
-                    {category.name}
-                  </Link>
-
-                  {category.subcategories && (
-                    <div className="absolute left-0 top-full mt-1 w-48 bg-white shadow-sm rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-gray-200">
-                      <div className="py-2 px-3">
-                        {category.subcategories.map((sub) => (
-                          <Link
-                            key={sub.name}
-                            href={`/?filter=${sub.filter}#catalogo`}
-                            onClick={(e) => handleNavClick(e, `/?filter=${sub.filter}#catalogo`)}
-                            className="block py-2 text-sm text-gray-500 hover:text-gray-900 transition-colors"
-                          >
-                            {sub.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+              {/* Categorías Dropdown */}
+              <div className="relative group">
+                <button
+                  className="flex items-center gap-1 text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors px-3 py-2 uppercase tracking-widest"
+                >
+                  Categorías
+                  <ChevronDown className="w-3 h-3 transition-transform group-hover:rotate-180" />
+                </button>
+                <div className="absolute top-full left-0 bg-white border border-gray-200 shadow-sm py-2 min-w-[200px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  {categoryLinks.map((cat) => (
+                    <Link
+                      key={cat.name}
+                      href={cat.href}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                    >
+                      {cat.name}
+                    </Link>
+                  ))}
                 </div>
-              ))}
+              </div>
 
               {/* Divider + Quick Links */}
               <div className="h-4 w-px bg-gray-200 mx-2"></div>
@@ -355,31 +311,15 @@ export default function Navbar() {
                   </form>
                 </div>
 
-                {categories.map((category) => (
-                  <div key={category.name}>
-                    <Link
-                      href={category.href}
-                      onClick={(e) => handleNavClick(e, category.href)}
-                      className="flex items-center justify-between py-2.5 px-3 rounded-lg text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors uppercase tracking-widest"
-                    >
-                      <span>{category.name}</span>
-                    </Link>
-
-                    {category.subcategories && (
-                      <div className="ml-4 space-y-0.5">
-                        {category.subcategories.map((sub) => (
-                          <Link
-                            key={sub.name}
-                            href={`/?filter=${sub.filter}#catalogo`}
-                            onClick={(e) => handleNavClick(e, `/?filter=${sub.filter}#catalogo`)}
-                            className="block py-1.5 px-3 text-sm text-gray-500 hover:text-gray-900 transition-colors"
-                          >
-                            {sub.name}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                {categoryLinks.map((cat) => (
+                  <Link
+                    key={cat.name}
+                    href={cat.href}
+                    onClick={() => setIsOpen(false)}
+                    className="block py-2.5 px-3 rounded-lg text-sm font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                  >
+                    {cat.name}
+                  </Link>
                 ))}
 
                 {/* Divider */}
