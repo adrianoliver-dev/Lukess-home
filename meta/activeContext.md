@@ -5,33 +5,33 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 9e-B
-- **Block Name:** Mobile-first general + Checkout mobile
-- **Status:** PENDING
+- **Block Number:** —
+- **Block Name:** —
+- **Status:** —
 - **Started:** —
 - **Completed:** —
 
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 10-AB
-- **Block Name:** Polish Sprint — Global UI + Product Card Redesign
+- **Block Number:** 10-D
+- **Block Name:** Polish Sprint: Hero & Trust Section Redesign
 - **Completed:** 2026-02-27
 - **Commit:** pending
 
 ### Files Changed
-- `components/cart/CheckoutModal.tsx` — Replaced 2x hardcoded `#D4AF37` with `accent-500`
-- `components/ui/Confetti.tsx` — Replaced 2x hardcoded `#D4AF37` with `#c89b6e`
-- `components/layout/Navbar.tsx` — FAB redesigned: `bg-accent-500`, smaller (w-14), Totto-inspired
-- `components/catalogo/ProductBadges.tsx` — Full rewrite: flat black/red pills, no animations
-- `components/home/CatalogoClient.tsx` — Product card: Zara-style (removed desc/colors/sizes/stock badge)
-- `components/home/CatalogoSection.tsx` — Product card: matched new style, cleaned imports
+- `components/landing/HeroSection.tsx` — Rewrote Hero, added promo pill, red CTA, dark overlay.
+- `components/landing/TrustBanner.tsx` — [NEW] Added horizontal sliding trust banner with 3 pillars.
+- `app/page.tsx` — Integrated TrustBanner.
+- `app/globals.css` — Added `heroPromoEnter` keyframes for animation.
+- `components/home/HeroSection.tsx` — [DELETED] Old unused variant.
 
 ### DB Changes
 None
 
 ### Build Verification
 ✅ `npm run build` — 0 errors, exit code 0
+✅ Browser Verification — Desktop & mobile layouts checked
 
 ---
 
@@ -48,7 +48,7 @@ None
 ## NEXT BLOCK
 - **Block:** 9e-B
 - **Name:** Mobile-first general + Checkout mobile
-- **Dependencies:** 10-AB
+- **Dependencies:** 10-D
 - **Scope:** Checkout UX, mobile responsiveness pass
 
 ---
@@ -65,6 +65,8 @@ None
 | 9d-B | Landing: Banner + Códigos descuento | ✅ DONE | 2026-02-26 | 5b18fcc |
 | 9e-A | Visual Polish: Footer + Navbar mobile | ✅ DONE | 2026-02-27 | pending |
 | 10-AB | Polish Sprint: Global UI + Product Cards | ✅ DONE | 2026-02-27 | pending |
+| 10-C | Polish Sprint: PDP Redesign (Totto style) | ✅ DONE | 2026-02-27 | 65ef4b3 |
+| 10-D | Polish Sprint: Hero & Trust redesign | ✅ DONE | 2026-02-27 | pending |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
