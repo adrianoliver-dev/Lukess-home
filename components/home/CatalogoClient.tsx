@@ -148,12 +148,16 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
         newCategories = ['Pantalones']
       } else if (filter === 'blazers') {
         newCategories = ['Blazers']
-      } else if (filter === 'accesorios') {
-        newCategories = ['Accesorios']
-      } else if (filter === 'chaquetas') {
-        newCategories = ['Chaquetas']
       } else if (filter === 'polos') {
         newCategories = ['Polos']
+      } else if (filter === 'shorts') {
+        newCategories = ['Shorts']
+      } else if (filter === 'gorras') {
+        newCategories = ['Gorras']
+      } else if (filter === 'cinturones') {
+        newCategories = ['Cinturones']
+      } else if (filter === 'billeteras') {
+        newCategories = ['Billeteras']
       } else if (filter === 'camisas-columbia') {
         newCategories = ['Camisas']
         newBrands = ['Columbia']
@@ -175,18 +179,6 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
       } else if (filter === 'pantalones-elegantes') {
         newCategories = ['Pantalones']
         newSubcategories = ['elegante']
-      } else if (filter === 'accesorios-sombreros') {
-        newCategories = ['Accesorios']
-        newSubcategories = ['sombreros']
-      } else if (filter === 'accesorios-gorras') {
-        newCategories = ['Accesorios']
-        newSubcategories = ['gorras']
-      } else if (filter === 'accesorios-cinturones') {
-        newCategories = ['Accesorios']
-        newSubcategories = ['cinturones']
-      } else if (filter === 'accesorios-billeteras') {
-        newCategories = ['Accesorios']
-        newSubcategories = ['billeteras']
       }
 
       // Reiniciar filtros completamente basados en el parametro
@@ -763,7 +755,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                       </div>
 
                       {/* Subcategorías - Multiselección */}
-                      {(selectedCategories.includes('Camisas') || selectedCategories.includes('Pantalones') || selectedCategories.includes('Accesorios')) && (
+                      {(selectedCategories.includes('Camisas') || selectedCategories.includes('Pantalones')) && (
                         <div>
                           <div className="flex items-center justify-between mb-3">
                             <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
@@ -813,33 +805,6 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                                   { label: 'Oversize', value: 'oversize' },
                                   { label: 'Jeans', value: 'jeans' },
                                   { label: 'Elegantes', value: 'elegante' },
-                                ].map((sub) => (
-                                  <label key={sub.value} className="flex items-center gap-2 cursor-pointer group ml-2">
-                                    <input
-                                      type="checkbox"
-                                      checked={selectedSubcategories.includes(sub.value)}
-                                      onChange={(e) => {
-                                        if (e.target.checked) {
-                                          setSelectedSubcategories([...selectedSubcategories, sub.value])
-                                        } else {
-                                          setSelectedSubcategories(selectedSubcategories.filter(s => s !== sub.value))
-                                        }
-                                      }}
-                                      className="w-4 h-4 accent-primary-600 rounded"
-                                    />
-                                    <span className="text-sm group-hover:text-gray-900 transition-colors">{sub.label}</span>
-                                  </label>
-                                ))}
-                              </>
-                            )}
-                            {selectedCategories.includes('Accesorios') && (
-                              <>
-                                <p className="text-xs text-gray-500 font-semibold mb-1 mt-2">Accesorios:</p>
-                                {[
-                                  { label: 'Sombreros', value: 'sombreros' },
-                                  { label: 'Gorras', value: 'gorras' },
-                                  { label: 'Cinturones', value: 'cinturones' },
-                                  { label: 'Billeteras', value: 'billeteras' },
                                 ].map((sub) => (
                                   <label key={sub.value} className="flex items-center gap-2 cursor-pointer group ml-2">
                                     <input
@@ -1179,8 +1144,8 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
             </motion.div>
           </div>
         </motion.div>
-      </Container>
+      </Container >
 
-    </section>
+    </section >
   )
 }

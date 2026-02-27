@@ -14,21 +14,25 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 10-E.4
-- **Block Name:** Polish Sprint: Navbar & Footer Functional Fixes
+- **Block Number:** 10-E.6-B
+- **Block Name:** Category Restructure
 - **Completed:** 2026-02-27
-- **Commit:** f05ebd8
+- **Commit:** pending
 
 ### Files Changed
-- `components/cart/CartButton.tsx` — Wrapper standardized to `relative w-10 h-10 flex items-center justify-center`
-- `components/wishlist/WishlistIcon.tsx` — Wrapper standardized to match CartButton; `framer-motion` → `motion/react`
-- `components/layout/Footer.tsx` — Brand description updated to "Vistiendo a Santa Cruz con estilo y calidad."; Ubicación replaced with 3 individual map links (Puesto 1, 2, 3)
+- `components/home/CatalogoClient.tsx` — Updated category filtering parameter array mapping to the final 8 root categories. Removed Accesorios subcategory checkboxes.
+- `components/layout/Navbar.tsx` — Updated `categoryLinks` mapped to exactly the 8 categories.
+- `components/layout/Footer.tsx` — Updated `shopLinks` to mirror the 8 categories.
+- `scripts/migrateCategories.ts` — (NEW) Data migration script using `@supabase/supabase-js` since MCP was inaccessible. 
 
 ### DB Changes
-None
+- `categories`: Inserted `Polos`, `Shorts`, `Billeteras`.
+- `products`: Reassigned `Accesorios` products to `Cinturones`, `Billeteras`, `Gorras` by regex match.
+- `products`: Reassigned `Camisas` (polos) to `Polos`, `Pantalones` (shorts) to `Shorts`.
+- `categories`: Deleted the `Accesorios` category row.
 
 ### Build Verification
-✅ `npm run build` — 0 errors, exit code 0
+✅ `npm run build` executed successfully without errors.
 
 ---
 
@@ -38,7 +42,6 @@ None
 3. Category card images are gray placeholders
 4. POS page stuck on loading skeleton
 5. "Fosiil" typo in Supabase product data
-6. Remaining hardcoded hex colors in CheckoutModal (mostly `#c89b6e` inline for non-Tailwind contexts)
 
 ---
 
@@ -67,6 +70,10 @@ None
 | 10-E.1 | Polish Sprint: Brand Foundation | ✅ DONE | 2026-02-27 | 8a75be2 |
 | 10-E.2 | Polish Sprint: Navbar & Footer Redesign | ✅ DONE | 2026-02-27 | 13eecc3 |
 | 10-E.4 | Polish Sprint: Navbar & Footer Functional Fixes | ✅ DONE | 2026-02-27 | f05ebd8 |
+| 10-E.5 | Extreme Polish: Navbar Dropdown & Side Cart | ✅ DONE | 2026-02-27 | 6470845 |
+| 10-E.5b | Fix Pickup Locations & Catalog Routing | ✅ DONE | 2026-02-27 | c2fc2d0 |
+| 10-E.6-A | Fix All Store Maps Links | ✅ DONE | 2026-02-27 | c221afb |
+| 10-E.6-B | Category Restructure | ✅ DONE | 2026-02-27 | pending |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |

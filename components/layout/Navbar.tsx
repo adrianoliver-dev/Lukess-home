@@ -18,9 +18,11 @@ const categoryLinks = [
   { name: 'Camisas', href: '/?filter=camisas#catalogo' },
   { name: 'Pantalones', href: '/?filter=pantalones#catalogo' },
   { name: 'Blazers', href: '/?filter=blazers#catalogo' },
-  { name: 'Accesorios', href: '/?filter=accesorios#catalogo' },
-  { name: 'Gorras', href: '/?filter=accesorios-gorras#catalogo' },
-  { name: 'Cinturones', href: '/?filter=accesorios-cinturones#catalogo' },
+  { name: 'Polos', href: '/?filter=polos#catalogo' },
+  { name: 'Shorts', href: '/?filter=shorts#catalogo' },
+  { name: 'Gorras', href: '/?filter=gorras#catalogo' },
+  { name: 'Cinturones', href: '/?filter=cinturones#catalogo' },
+  { name: 'Billeteras', href: '/?filter=billeteras#catalogo' },
 ];
 
 const quickLinks = [

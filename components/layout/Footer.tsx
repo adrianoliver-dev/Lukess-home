@@ -8,11 +8,14 @@ import { buildWhatsAppUrl, formatWhatsAppNumber } from '@/lib/utils/whatsapp'
 import { createClient } from '@/lib/supabase/client'
 
 const shopLinks = [
-  { href: '/?filter=nuevo#catalogo', label: 'Nuevo' },
   { href: '/?filter=camisas#catalogo', label: 'Camisas' },
   { href: '/?filter=pantalones#catalogo', label: 'Pantalones' },
   { href: '/?filter=blazers#catalogo', label: 'Blazers' },
-  { href: '/?filter=accesorios#catalogo', label: 'Accesorios' },
+  { href: '/?filter=polos#catalogo', label: 'Polos' },
+  { href: '/?filter=shorts#catalogo', label: 'Shorts' },
+  { href: '/?filter=gorras#catalogo', label: 'Gorras' },
+  { href: '/?filter=cinturones#catalogo', label: 'Cinturones' },
+  { href: '/?filter=billeteras#catalogo', label: 'Billeteras' },
 ]
 
 const serviceLinks = [
