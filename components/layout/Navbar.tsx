@@ -184,7 +184,7 @@ export default function Navbar() {
                   </Link>
 
                   {category.subcategories && (
-                    <div className="absolute left-0 top-full mt-1 w-48 bg-white shadow-sm rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-gray-100">
+                    <div className="absolute left-0 top-full mt-1 w-48 bg-white shadow-sm rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-gray-200">
                       <div className="py-2 px-3">
                         {category.subcategories.map((sub) => (
                           <Link
@@ -243,7 +243,7 @@ export default function Navbar() {
                   <div className="relative">
                     <button
                       onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                      className="flex items-center gap-1.5 px-2 py-2 rounded-lg text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                      className="flex items-center gap-1.5 px-2 py-2 rounded-lg text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors"
                     >
                       <User className="w-5 h-5 text-gray-900" />
                       <span className="max-w-[80px] truncate">{customerName}</span>
@@ -256,12 +256,12 @@ export default function Navbar() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -8 }}
                           transition={{ duration: 0.15 }}
-                          className="absolute right-0 top-full mt-1 w-44 bg-white rounded-md shadow-sm border border-gray-100 z-50 overflow-hidden"
+                          className="absolute right-0 top-full mt-1 w-44 bg-white rounded-md shadow-sm border border-gray-200 z-50 overflow-hidden"
                         >
                           <Link
                             href="/mis-pedidos"
                             onClick={() => setIsUserMenuOpen(false)}
-                            className="flex items-center gap-2 px-4 py-3 text-sm text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                            className="flex items-center gap-2 px-4 py-3 text-sm text-gray-500 hover:text-gray-900 transition-colors"
                           >
                             <Package className="w-4 h-4" />
                             Mis Pedidos
@@ -269,7 +269,7 @@ export default function Navbar() {
                           <Link
                             href="/wishlist"
                             onClick={() => setIsUserMenuOpen(false)}
-                            className="flex items-center gap-2 px-4 py-3 text-sm text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                            className="flex items-center gap-2 px-4 py-3 text-sm text-gray-500 hover:text-gray-900 transition-colors"
                           >
                             <Heart className="w-4 h-4" />
                             Mis Favoritos
@@ -360,7 +360,7 @@ export default function Navbar() {
                     <Link
                       href={category.href}
                       onClick={(e) => handleNavClick(e, category.href)}
-                      className="flex items-center justify-between py-2.5 px-3 rounded-lg text-sm font-semibold text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors uppercase tracking-widest"
+                      className="flex items-center justify-between py-2.5 px-3 rounded-lg text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors uppercase tracking-widest"
                     >
                       <span>{category.name}</span>
                     </Link>

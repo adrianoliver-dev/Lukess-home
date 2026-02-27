@@ -14,17 +14,15 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 10-E.2
-- **Block Name:** Polish Sprint: Navbar & Footer Redesign
+- **Block Number:** 10-E.4
+- **Block Name:** Polish Sprint: Navbar & Footer Functional Fixes
 - **Completed:** 2026-02-27
-- **Commit:** 13eecc3
+- **Commit:** 3045d36
 
 ### Files Changed
-- `components/landing/AnnouncementBar.tsx` — Simplified to static `bg-gray-900` strip with free shipping text
-- `components/layout/Navbar.tsx` — Removed `shadow-lg`, WhatsApp pill, scroll shadow. Applied `border-b border-gray-100`, `uppercase tracking-widest` links
-- `components/layout/Footer.tsx` — Changed from dark `bg-gray-800` to light `bg-gray-50 border-t border-gray-200`. Restructured to 4 columns (Brand, Tienda, Atención, Contacto). Newsletter restyled
-- `components/cart/CartButton.tsx` — Standardized to `w-5 h-5` icon, `bg-red-600` badge (no bounce/shadow)
-- `components/wishlist/WishlistIcon.tsx` — Standardized to `w-5 h-5 text-gray-900` icon, `bg-red-600` badge
+- `components/cart/CartButton.tsx` — Wrapper standardized to `relative w-10 h-10 flex items-center justify-center`
+- `components/wishlist/WishlistIcon.tsx` — Wrapper standardized to match CartButton; `framer-motion` → `motion/react`
+- `components/layout/Footer.tsx` — Brand description updated to "Vistiendo a Santa Cruz con estilo y calidad."; Ubicación replaced with 3 individual map links (Puesto 1, 2, 3)
 
 ### DB Changes
 None
@@ -68,6 +66,7 @@ None
 | 10-D | Polish Sprint: Hero & Trust redesign | ✅ DONE | 2026-02-27 | 184d5c0 |
 | 10-E.1 | Polish Sprint: Brand Foundation | ✅ DONE | 2026-02-27 | 8a75be2 |
 | 10-E.2 | Polish Sprint: Navbar & Footer Redesign | ✅ DONE | 2026-02-27 | 13eecc3 |
+| 10-E.4 | Polish Sprint: Navbar & Footer Functional Fixes | ✅ DONE | 2026-02-27 | 3045d36 |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
