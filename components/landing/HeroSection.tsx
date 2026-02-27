@@ -12,7 +12,7 @@ const heroContent = {
     },
     ctaSecondary: {
         text: "Ver catálogo →",
-        href: "#productos"
+        href: "#catalogo"
     }
 }
 
@@ -66,12 +66,12 @@ export default async function HeroSection() {
                     />
                     {/* Dark overlay for text readability */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10" />
-                    <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-neutral-950 via-neutral-950/80 to-transparent z-10" />
+                    <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-neutral-950 via-neutral-950/50 to-transparent z-10" />
                 </div>
             </div>
 
-            <div className="relative z-20 w-full px-5 max-w-7xl mx-auto min-h-[70vh] md:min-h-[85vh] flex flex-col justify-end pb-24 md:pb-32 pt-16 md:pt-24">
-                <div className="max-w-xl md:w-1/2 md:pr-8">
+            <div className="relative z-20 w-full px-5 max-w-7xl mx-auto min-h-[70vh] md:min-h-[85vh] flex flex-col justify-end pb-36 md:pb-48 pt-16 md:pt-24">
+                <div className="w-full md:w-[50%] lg:w-[45%] md:pr-8 z-20">
                     {/* Headline */}
                     <h1 className="text-3xl sm:text-4xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight drop-shadow-md">
                         {heroContent.headline}

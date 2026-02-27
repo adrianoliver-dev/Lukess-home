@@ -14,7 +14,7 @@ interface AnnouncementMessage {
 const messages: AnnouncementMessage[] = [
     {
         id: 'trust-1',
-        text: '🏬 3 locales en Mercado Mutualista — Local B12, B15, B22',
+        text: '🏬 3 locales en Mercado Mutualista — Pasillos 2, 3 y 5',
         cta: 'Contactar',
         ctaHref: 'https://wa.me/59172643753?text=Hola!%20Quiero%20visitar%20sus%20locales',
         ctaIcon: 'whatsapp',
