@@ -223,6 +223,7 @@ export function WishlistClient({ allProducts }: WishlistClientProps) {
             </p>
             <Link
               href="/#catalogo"
+              scroll={false}
               className="inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
             >
               <ExternalLink className="w-4 h-4" />

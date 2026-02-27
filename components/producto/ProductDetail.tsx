@@ -161,7 +161,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
               <Home className="w-4 h-4" />
             </Link>
             <ChevronRight className="w-3.5 h-3.5 text-gray-300" />
-            <Link href="/#catalogo" className="text-gray-500 hover:text-gray-900 transition-colors">
+            <Link href="/#catalogo" scroll={false} className="text-gray-500 hover:text-gray-900 transition-colors">
               Catálogo
             </Link>
             <ChevronRight className="w-3.5 h-3.5 text-gray-300" />

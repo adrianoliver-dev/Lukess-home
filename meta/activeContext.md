@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 10-H.2
-- **Block Name:** Fix Size Guide whitelist & Checkout dual buttons
+- **Block Number:** 10-H.3
+- **Block Name:** Hash anchor navigation cross-route
 - **Status:** ✅ DONE
 - **Started:** 2026-02-27
 - **Completed:** 2026-02-27
@@ -14,14 +14,18 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 10-H.2
-- **Block Name:** Fix Size Guide whitelist & Checkout dual buttons
+- **Block Number:** 10-H.3
+- **Block Name:** Hash anchor navigation cross-route
 - **Completed:** 2026-02-27
 - **Commit:** pending
 
 ### Files Changed
-- `components/producto/ProductDetail.tsx` — Normalized category name text to remove accents and correctly map size guides for categories like cinturón. Added 'belt'.
-- `components/cart/CheckoutModal.tsx` — Render dual WhatsApp buttons for store_pickup on the success step.
+- `lib/hooks/useHashScroll.ts` — Created custom hook to manage hash scrolling logic.
+- `components/layout/HashScrollHandler.tsx` — Client component wrapper for the scroll hook.
+- `app/layout.tsx` — Included the HashScrollHandler inside the root layout body.
+- `components/layout/Navbar.tsx` — Added `scroll={false}` to all navigation links pointing to category hashes.
+- `components/wishlist/WishlistClient.tsx` — Added `scroll={false}` to the empty state catalog link.
+- `components/producto/ProductDetail.tsx` — Added `scroll={false}` to the catalog breadcrumb.
 
 ### Database Changes
 - None
@@ -74,7 +78,8 @@
 | 10-G | Restructure Footer & Polish Size Guide | ✅ DONE | 2026-02-27 | f308958 |
 | 10-I | Radical UX/UI cleanup of Checkout stages | ✅ DONE | 2026-02-27 | a69df6c |
 | 10-H.1 | Fix Size Guide whitelist (belts/hats) | ✅ DONE | 2026-02-27 | a7ca5c4 |
-| 10-H.2 | Fix Size Guide whitelist & Checkout dual buttons | ✅ DONE | 2026-02-27 | pending |
+| 10-H.2 | Fix Size Guide whitelist & Checkout dual buttons | ✅ DONE | 2026-02-27 | a80630c |
+| 10-H.3 | Hash anchor navigation cross-route | ✅ DONE | 2026-02-27 | pending |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |

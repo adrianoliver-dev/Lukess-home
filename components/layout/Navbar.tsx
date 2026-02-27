@@ -152,6 +152,7 @@ export default function Navbar() {
                     <Link
                       key={cat.name}
                       href={cat.href}
+                      scroll={false}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
                     >
                       {cat.name}
@@ -317,6 +318,7 @@ export default function Navbar() {
                   <Link
                     key={cat.name}
                     href={cat.href}
+                    scroll={false}
                     onClick={() => setIsOpen(false)}
                     className="block py-2.5 px-3 rounded-lg text-sm font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors"
                   >

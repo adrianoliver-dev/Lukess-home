@@ -8,6 +8,7 @@ import { CartProvider } from "@/lib/context/CartContext";
 import { WishlistProvider } from "@/lib/context/WishlistContext";
 import { AuthProvider } from "@/lib/context/AuthContext";
 import { Toaster } from "react-hot-toast";
+import { HashScrollHandler } from "@/components/layout/HashScrollHandler";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -102,6 +103,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/favicon.svg" />
       </head>
       <body className="font-sans">
+        <HashScrollHandler />
         <AuthProvider>
           <WishlistProvider>
             <CartProvider>
