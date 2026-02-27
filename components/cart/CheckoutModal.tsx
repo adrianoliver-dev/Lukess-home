@@ -23,7 +23,7 @@ import {
 import { useCart } from '@/lib/context/CartContext'
 import { useAuth } from '@/lib/context/AuthContext'
 import { trackBeginCheckout, trackPurchase } from '@/lib/analytics'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'motion/react'
 import Image from 'next/image'
 import toast from 'react-hot-toast'
 import { Confetti, SparkleEffect } from '@/components/ui/Confetti'
@@ -778,9 +778,9 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
                       {/* ── Banner Google One Tap (solo si no está logueado y no lo cerró) ── */}
                       {!isLoggedIn && showGoogleBanner && (
-                        <div className="flex items-center justify-between gap-3 bg-[#fdf8f3] border-2 border-[#c89b6e]/50 rounded-xl px-4 py-3">
+                        <div className="flex items-center justify-between gap-3 bg-gray-50 border-2 border-gray-200 rounded-xl px-4 py-3">
                           <div className="flex items-center gap-3 min-w-0">
-                            <Lock className="w-4 h-4 text-[#c89b6e] flex-shrink-0" />
+                            <Lock className="w-4 h-4 text-gray-500 flex-shrink-0" />
                             <p className="text-sm font-medium text-gray-700 leading-snug">
                               Guarda tu pedido y rastréalo fácil
                             </p>
@@ -885,7 +885,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         </div>
 
                         {/* ── Preferencias de notificación ── */}
-                        <div className="bg-[#111] border border-[#333] rounded-xl p-4 space-y-3">
+                        <div className="bg-gray-900 border border-gray-700 rounded-xl p-4 space-y-3">
                           <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">
                             ¿Cómo querés recibir actualizaciones de tu pedido?
                           </p>
@@ -959,12 +959,12 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             type="button"
                             onClick={() => setDeliveryMethod('delivery')}
                             className={`p-4 rounded-xl border-2 text-left transition-all ${deliveryMethod === 'delivery'
-                              ? 'border-[#c89b6e] bg-[#fdf8f3] shadow-md'
+                              ? 'border-gray-900 bg-gray-50 shadow-sm'
                               : 'border-gray-200 hover:border-gray-300'
                               }`}
                           >
                             <Truck
-                              className={`w-6 h-6 mb-2 ${deliveryMethod === 'delivery' ? 'text-[#c89b6e]' : 'text-gray-400'}`}
+                              className={`w-6 h-6 mb-2 ${deliveryMethod === 'delivery' ? 'text-gray-900' : 'text-gray-400'}`}
                             />
                             <p className="font-bold text-sm text-gray-800">Envío a domicilio</p>
                             <p className="text-xs text-gray-500 mt-0.5">Santa Cruz</p>
@@ -988,12 +988,12 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             type="button"
                             onClick={() => setDeliveryMethod('pickup')}
                             className={`p-4 rounded-xl border-2 text-left transition-all ${deliveryMethod === 'pickup'
-                              ? 'border-[#c89b6e] bg-[#fdf8f3] shadow-md'
+                              ? 'border-gray-900 bg-gray-50 shadow-sm'
                               : 'border-gray-200 hover:border-gray-300'
                               }`}
                           >
                             <Store
-                              className={`w-6 h-6 mb-2 ${deliveryMethod === 'pickup' ? 'text-[#c89b6e]' : 'text-gray-400'}`}
+                              className={`w-6 h-6 mb-2 ${deliveryMethod === 'pickup' ? 'text-gray-900' : 'text-gray-400'}`}
                             />
                             <p className="font-bold text-sm text-gray-800">Recoger en tienda</p>
                             <p className="text-xs text-gray-500 mt-0.5">Mercado Mutualista</p>
@@ -1008,7 +1008,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                           <>
                             <div className="bg-gray-50 border-2 border-gray-200 rounded-xl p-4 space-y-4">
                               <div className="flex items-center gap-2">
-                                <MapPin className="w-4 h-4 text-[#c89b6e]" />
+                                <MapPin className="w-4 h-4 text-gray-500" />
                                 <p className="text-sm font-semibold text-gray-700">
                                   ¿Dónde entregamos tu pedido?
                                 </p>
@@ -1020,9 +1020,9 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                   <button
                                     type="button"
                                     onClick={handleGps}
-                                    className="flex items-center gap-3 w-full p-3 rounded-xl border-2 border-[#c89b6e] bg-[#fdf8f3] hover:bg-[#f5ede0] transition-all text-left"
+                                    className="flex items-center gap-3 w-full p-3 rounded-xl border-2 border-gray-900 bg-gray-50 hover:bg-gray-100 transition-all text-left"
                                   >
-                                    <Navigation className="w-5 h-5 text-[#c89b6e] flex-shrink-0" />
+                                    <Navigation className="w-5 h-5 text-gray-700 flex-shrink-0" />
                                     <div>
                                       <p className="text-sm font-bold text-gray-800">
                                         Usar mi ubicación actual
@@ -1058,7 +1058,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                               {/* GPS Loading */}
                               {locationState === 'gps_loading' && (
                                 <div className="flex items-center justify-center gap-3 py-6">
-                                  <Loader2 className="w-6 h-6 animate-spin text-[#c89b6e]" />
+                                  <Loader2 className="w-6 h-6 animate-spin text-gray-500" />
                                   <p className="text-sm text-gray-600 font-medium">
                                     Obteniendo tu ubicación...
                                   </p>
@@ -1110,9 +1110,9 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                   <button
                                     type="button"
                                     onClick={handleOpenMap}
-                                    className="flex items-center gap-3 w-full p-3 rounded-xl border-2 border-[#c89b6e] bg-[#fdf8f3] hover:bg-[#f5ede0] transition-all text-left"
+                                    className="flex items-center gap-3 w-full p-3 rounded-xl border-2 border-gray-900 bg-gray-50 hover:bg-gray-100 transition-all text-left"
                                   >
-                                    <Map className="w-5 h-5 text-[#c89b6e] flex-shrink-0" />
+                                    <Map className="w-5 h-5 text-gray-700 flex-shrink-0" />
                                     <div>
                                       <p className="text-sm font-bold text-gray-800">
                                         Elegir ubicación en el mapa
@@ -1187,7 +1187,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                           href={outOfRangeWaUrl}
                                           target="_blank"
                                           rel="noopener noreferrer"
-                                          className="flex items-center justify-center gap-2 w-full bg-[#25d366] hover:bg-[#1fb855] text-white text-xs font-semibold py-2 rounded-lg transition-all"
+                                          className="flex items-center justify-center gap-2 w-full bg-[#25d366] hover:bg-[#1fb855] text-white text-xs font-semibold py-2 rounded-lg shadow-sm transition-all"
                                         >
                                           <MessageCircle className="w-3.5 h-3.5" />
                                           Cotizar envío por WhatsApp
@@ -1200,7 +1200,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                         <button
                                           type="button"
                                           onClick={() => setDeliveryMethod('pickup')}
-                                          className="text-xs text-[#c89b6e] font-semibold underline hover:no-underline w-full text-center"
+                                          className="text-xs text-accent-500 font-semibold underline hover:no-underline w-full text-center"
                                         >
                                           🏪 Ver opciones de recojo →
                                         </button>
@@ -1212,7 +1212,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                       <button
                                         type="button"
                                         onClick={handleConfirmLocation}
-                                        className="w-full bg-[#c89b6e] hover:bg-[#b8895e] text-white font-bold py-2.5 rounded-xl text-sm transition-all"
+                                        className="w-full bg-gray-900 hover:bg-black text-white font-bold py-2.5 rounded-xl text-sm transition-all"
                                       >
                                         ✓ Confirmar esta ubicación
                                       </button>
@@ -1267,7 +1267,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                           href={mapsLink}
                                           target="_blank"
                                           rel="noopener noreferrer"
-                                          className="inline-block text-xs text-[#c89b6e] hover:underline"
+                                          className="inline-block text-xs text-accent-500 hover:underline"
                                         >
                                           Ver en Maps →
                                         </a>
@@ -1292,7 +1292,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                       }}
                                       className={`w-full px-3 py-2.5 border-2 rounded-lg text-sm focus:outline-none transition-colors ${shippingAddressError
                                         ? 'border-red-400 focus:border-red-500'
-                                        : 'border-gray-200 focus:border-[#c89b6e]'
+                                        : 'border-gray-200 focus:border-gray-500'
                                         }`}
                                       placeholder="Calle, número, zona/barrio"
                                     />
@@ -1311,7 +1311,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                       type="text"
                                       value={shippingReference}
                                       onChange={(e) => setShippingReference(e.target.value)}
-                                      className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg text-sm focus:border-[#c89b6e] focus:outline-none"
+                                      className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg text-sm focus:border-gray-500 focus:outline-none"
                                       placeholder="Ej: Frente al parque, edificio azul"
                                     />
                                   </div>
@@ -1333,7 +1333,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                           hasManuallyEditedRecipient.current = true
                                           setRecipientName(e.target.value)
                                         }}
-                                        className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg text-sm focus:border-[#c89b6e] focus:outline-none"
+                                        className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg text-sm focus:border-gray-500 focus:outline-none"
                                         placeholder="Puede ser diferente al tuyo"
                                       />
                                     </div>
@@ -1351,7 +1351,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                         }}
                                         className={`w-full px-3 py-2.5 border-2 rounded-lg text-sm focus:outline-none transition-colors ${recipientPhoneError
                                           ? 'border-red-400 focus:border-red-500'
-                                          : 'border-gray-200 focus:border-[#c89b6e]'
+                                          : 'border-gray-200 focus:border-gray-500'
                                           }`}
                                         placeholder="Para coordinar la entrega"
                                       />
@@ -1380,7 +1380,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                           setDeliveryInstructions(e.target.value)
                                       }}
                                       rows={3}
-                                      className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg text-sm focus:border-[#c89b6e] focus:outline-none resize-none"
+                                      className="w-full px-3 py-2.5 border-2 border-gray-200 rounded-lg text-sm focus:border-gray-500 focus:outline-none resize-none"
                                       placeholder='Ej: "Tocar el timbre", "Llamar al llegar", "Casa azul con reja negra"'
                                     />
                                   </div>
@@ -1409,7 +1409,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         {deliveryMethod === 'pickup' && (
                           <div className="space-y-2">
                             <div className="flex items-center gap-2 mb-1">
-                              <Store className="w-4 h-4 text-[#c89b6e]" />
+                              <Store className="w-4 h-4 text-gray-500" />
                               <p className="text-sm font-semibold text-gray-700">
                                 Elige el puesto de recogida
                               </p>
@@ -1428,7 +1428,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                   if (pickupLocationError) setPickupLocationError('')
                                 }}
                                 className={`w-full p-3 rounded-xl border-2 text-left transition-all ${pickupLocation === loc.id
-                                  ? 'border-[#c89b6e] bg-[#fdf8f3]'
+                                  ? 'border-gray-900 bg-gray-50'
                                   : 'border-gray-200 hover:border-gray-300'
                                   }`}
                               >
@@ -1444,7 +1444,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     onClick={(e) => e.stopPropagation()}
-                                    className="text-xs text-[#c89b6e] hover:underline whitespace-nowrap flex-shrink-0 mt-0.5"
+                                    className="text-xs text-accent-500 hover:underline whitespace-nowrap flex-shrink-0 mt-0.5"
                                   >
                                     {loc.mapsLabel}
                                   </a>
@@ -1575,7 +1575,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                       <button
                         type="submit"
                         disabled={isContinueDisabled}
-                        className="w-full bg-gradient-to-r from-gray-600 to-gray-700 text-white py-4 rounded-xl font-bold text-lg hover:from-gray-700 hover:to-gray-800 transform hover:scale-105 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                        className="w-full bg-gray-900 hover:bg-black text-white py-4 rounded-xl font-bold text-lg transform hover:scale-105 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                       >
                         {continueLabel}
                       </button>
@@ -1601,7 +1601,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             type="button"
                             onClick={() => setSelectedPayment('qr')}
                             className={`p-4 rounded-xl border-2 text-left transition-all ${selectedPayment === 'qr'
-                              ? 'border-[#c89b6e] bg-[#fdf8f3] shadow-md'
+                              ? 'border-gray-900 bg-gray-50 shadow-sm'
                               : 'border-gray-200 hover:border-gray-300'
                               }`}
                           >
@@ -1609,7 +1609,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             <p className="font-semibold text-sm text-gray-800">Pago con QR</p>
                             <p className="text-xs text-gray-500 mt-0.5">Yolo Pago</p>
                             {selectedPayment === 'qr' && (
-                              <span className="inline-block mt-2 text-xs font-bold text-[#c89b6e] bg-[#c89b6e]/10 px-2 py-0.5 rounded-full">
+                              <span className="inline-block mt-2 text-xs font-bold text-gray-900 bg-gray-100 px-2 py-0.5 rounded-full">
                                 SELECCIONADO
                               </span>
                             )}
@@ -1627,7 +1627,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                 Próximamente
                               </span>
                             </div>
-                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 bg-gray-900 text-white text-xs rounded-lg p-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 text-center shadow-lg">
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 bg-gray-900 text-white text-xs rounded-lg p-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 text-center shadow-sm">
                               Integración con Libélula próximamente. Acepta Visa, Mastercard, QR
                               Bolivia y más.
                               <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900" />
@@ -1675,7 +1675,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                       {/* ── Subir comprobante (opcional) ── */}
                       <div className="border-2 border-dashed border-gray-200 rounded-xl p-4 text-left space-y-3">
                         <div className="flex items-center gap-2">
-                          <Paperclip className="w-4 h-4 text-[#c89b6e]" />
+                          <Paperclip className="w-4 h-4 text-gray-500" />
                           <p className="text-sm font-semibold text-gray-700">
                             Subí tu comprobante de pago
                           </p>
@@ -1688,7 +1688,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                               Subí la captura de tu comprobante para acelerar la verificación
                               de tu pago
                             </p>
-                            <label className="flex items-center justify-center gap-2 w-full border-2 border-[#c89b6e] text-[#c89b6e] hover:bg-[#fdf8f3] font-semibold text-sm py-2.5 rounded-xl cursor-pointer transition-all">
+                            <label className="flex items-center justify-center gap-2 w-full border-2 border-gray-900 text-gray-900 hover:bg-gray-50 font-semibold text-sm py-2.5 rounded-xl cursor-pointer transition-all">
                               <Paperclip className="w-4 h-4" />
                               Elegir imagen
                               <input
@@ -1709,7 +1709,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
                         {receiptUploadState === 'uploading' && (
                           <div className="flex items-center justify-center gap-3 py-3">
-                            <Loader2 className="w-5 h-5 animate-spin text-[#c89b6e]" />
+                            <Loader2 className="w-5 h-5 animate-spin text-gray-500" />
                             <p className="text-sm text-gray-600 font-medium">
                               Subiendo comprobante...
                             </p>
@@ -1728,7 +1728,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                 <img
                                   src={receiptPreviewUrl}
                                   alt="Comprobante"
-                                  className="w-[120px] h-[120px] object-cover rounded-xl border-2 border-gray-200 cursor-pointer hover:border-[#c89b6e] transition-colors shadow-sm"
+                                  className="w-[120px] h-[120px] object-cover rounded-xl border-2 border-gray-200 cursor-pointer hover:border-gray-500 transition-colors shadow-sm"
                                 />
                               </button>
                             )}
@@ -1743,7 +1743,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                 </p>
                               )}
                             </div>
-                            <label className="text-xs text-[#c89b6e] hover:underline cursor-pointer flex-shrink-0">
+                            <label className="text-xs text-accent-500 hover:underline cursor-pointer flex-shrink-0">
                               Cambiar imagen
                               <input
                                 type="file"
@@ -1788,7 +1788,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
                       <button
                         onClick={handlePaymentConfirmed}
-                        className="w-full bg-green-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-green-700 transform hover:scale-105 transition-all shadow-lg"
+                        className="w-full bg-green-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-green-700 transform hover:scale-105 transition-all shadow-sm"
                       >
                         ✓ Ya Pagué
                       </button>
@@ -1862,7 +1862,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         {deliveryMethod === 'delivery' ? (
                           <div className="space-y-1.5">
                             <div className="flex items-center gap-2 mb-2">
-                              <Truck className="w-4 h-4 text-[#c89b6e]" />
+                              <Truck className="w-4 h-4 text-gray-500" />
                               <p className="text-sm font-bold text-gray-700">
                                 Entrega a domicilio
                               </p>
@@ -1900,7 +1900,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                 href={mapsLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-block text-xs text-[#c89b6e] hover:underline"
+                                className="inline-block text-xs text-accent-500 hover:underline"
                               >
                                 Ver mi ubicación en Maps →
                               </a>
@@ -1909,7 +1909,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         ) : selectedPickup ? (
                           <div className="space-y-1.5">
                             <div className="flex items-center gap-2 mb-2">
-                              <Store className="w-4 h-4 text-[#c89b6e]" />
+                              <Store className="w-4 h-4 text-gray-500" />
                               <p className="text-sm font-bold text-gray-700">Retiro en tienda</p>
                             </div>
                             <p className="text-sm font-semibold text-gray-800">
@@ -1921,7 +1921,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                               href={selectedPickup.mapsUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-block text-xs text-[#c89b6e] hover:underline"
+                              className="inline-block text-xs text-accent-500 hover:underline"
                             >
                               {selectedPickup.mapsLabel}
                             </a>
@@ -2008,7 +2008,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             href={`https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}${receiptUploadState === 'success' ? encodeURIComponent('\n📎 Ya subí mi comprobante de pago en el sistema.') : ''}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-2 w-full bg-[#25d366] hover:bg-[#1fb855] text-white font-semibold py-3 rounded-xl transition-all shadow-md hover:shadow-lg text-sm"
+                            className="flex items-center justify-center gap-2 w-full bg-[#25d366] hover:bg-[#1fb855] text-white font-semibold py-3 rounded-xl transition-all shadow-sm text-sm"
                           >
                             <MessageCircle className="w-5 h-5" />
                             Avisar por WhatsApp que ya pagué
@@ -2037,7 +2037,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.9 }}
-                          className="border-2 border-[#c89b6e]/40 bg-[#fdf8f3] rounded-xl p-5 text-left relative"
+                          className="border-2 border-gray-200 bg-gray-50 rounded-xl p-5 text-left relative"
                         >
                           <button
                             onClick={() => setShowAccountCard(false)}
@@ -2048,7 +2048,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                           </button>
 
                           <div className="flex items-center gap-2 mb-3 pr-6">
-                            <User className="w-5 h-5 text-[#c89b6e]" />
+                            <User className="w-5 h-5 text-gray-500" />
                             <p className="font-bold text-gray-800 text-base">
                               Guarda tu historial de pedidos
                             </p>
@@ -2068,7 +2068,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                 key={benefit}
                                 className="flex items-center gap-2 text-sm text-gray-600"
                               >
-                                <span className="text-[#c89b6e] font-bold">✓</span>
+                                <span className="text-accent-500 font-bold">✓</span>
                                 {benefit}
                               </li>
                             ))}
@@ -2077,7 +2077,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                           <div className="flex gap-2">
                             <button
                               onClick={() => setIsAuthModalOpen(true)}
-                              className="flex-1 bg-[#c89b6e] hover:bg-[#b8895e] text-white font-semibold py-2.5 rounded-lg text-sm transition-all"
+                              className="flex-1 bg-gray-900 hover:bg-black text-white font-semibold py-2.5 rounded-lg text-sm transition-all"
                             >
                               Crear cuenta gratis
                             </button>
@@ -2119,7 +2119,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
           >
             <button
               onClick={() => setShowReceiptLightbox(false)}
-              className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors z-10"
+              className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors z-10"
               aria-label="Cerrar"
             >
               <X className="w-6 h-6" />

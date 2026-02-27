@@ -33,7 +33,7 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-            className="fixed right-0 top-0 h-full w-full sm:w-96 bg-white shadow-2xl z-50 flex flex-col"
+            className="fixed right-0 top-[var(--announcement-height,0px)] h-[calc(100vh-var(--announcement-height,0px))] w-full sm:w-96 bg-white shadow-2xl z-50 flex flex-col"
           >
             {/* Header */}
             <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-white">
@@ -119,10 +119,22 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
             {/* Footer */}
             {cart.length > 0 && (
               <div className="bg-gray-50 border-t border-gray-200 p-4 space-y-3">
-                {/* Shipping note */}
-                <p className="text-xs text-gray-500">
-                  🚚 Envío gratis en pedidos &gt; Bs {FREE_SHIPPING_THRESHOLD}
-                </p>
+                {/* Shipping progress bar */}
+                {total >= FREE_SHIPPING_THRESHOLD ? (
+                  <p className="text-xs font-semibold text-green-600">🎉 ¡Envío gratis desbloqueado!</p>
+                ) : (
+                  <div>
+                    <div className="w-full bg-gray-200 rounded-full h-1.5 mb-1.5">
+                      <div
+                        className="bg-gray-900 h-1.5 rounded-full transition-all"
+                        style={{ width: `${Math.min((total / FREE_SHIPPING_THRESHOLD) * 100, 100)}%` }}
+                      />
+                    </div>
+                    <p className="text-xs text-gray-500">
+                      Te faltan Bs {(FREE_SHIPPING_THRESHOLD - total).toFixed(2)} para envío gratis
+                    </p>
+                  </div>
+                )}
 
                 <div className="flex items-center justify-between">
                   <span className="text-gray-700 font-semibold">Total:</span>
