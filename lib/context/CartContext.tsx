@@ -71,18 +71,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
 
     if (existingItem) {
-      setCart(cart.map(item => 
-        item.id === itemId 
+      setCart(cart.map(item =>
+        item.id === itemId
           ? { ...item, quantity: item.quantity + quantity }
           : item
       ))
     } else {
-      setCart([...cart, { 
+      setCart([...cart, {
         id: itemId,
-        product, 
-        quantity, 
-        size, 
-        color 
+        product,
+        quantity,
+        size,
+        color
       }])
     }
 
@@ -112,7 +112,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (quantity <= 0) {
       removeFromCart(itemId)
     } else {
-      setCart(cart.map(item => 
+      setCart(cart.map(item =>
         item.id === itemId ? { ...item, quantity } : item
       ))
     }
@@ -122,18 +122,23 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setCart([])
   }
 
-  const total = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0)
+  const getPriceWithDiscount = (product: Product): number => {
+    const discount = product.discount || product.discount_percentage || 0
+    return product.price * (1 - discount / 100)
+  }
+
+  const total = cart.reduce((sum, item) => sum + (getPriceWithDiscount(item.product) * item.quantity), 0)
   const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0)
 
   return (
-    <CartContext.Provider value={{ 
-      cart, 
-      addToCart, 
-      removeFromCart, 
-      updateQuantity, 
-      clearCart, 
-      total, 
-      itemCount 
+    <CartContext.Provider value={{
+      cart,
+      addToCart,
+      removeFromCart,
+      updateQuantity,
+      clearCart,
+      total,
+      itemCount
     }}>
       {children}
     </CartContext.Provider>

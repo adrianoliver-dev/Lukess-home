@@ -83,9 +83,20 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
                           {item.size && <span className="bg-gray-200 px-2 py-0.5 rounded">Talla: {item.size}</span>}
                           {item.color && <span className="bg-gray-200 px-2 py-0.5 rounded">Color: {item.color}</span>}
                         </div>
-                        <p className="text-gray-900 font-bold mt-1">
-                          Bs {item.product.price.toFixed(2)}
-                        </p>
+                        {(item.product.discount || item.product.discount_percentage) ? (
+                          <div className="flex items-baseline gap-2 mt-1">
+                            <p className="text-gray-900 font-bold">
+                              Bs {(item.product.price * (1 - (item.product.discount || item.product.discount_percentage || 0) / 100)).toFixed(2)}
+                            </p>
+                            <p className="text-gray-400 text-xs line-through">
+                              Bs {item.product.price.toFixed(2)}
+                            </p>
+                          </div>
+                        ) : (
+                          <p className="text-gray-900 font-bold mt-1">
+                            Bs {item.product.price.toFixed(2)}
+                          </p>
+                        )}
 
                         {/* Quantity Controls */}
                         <div className="flex items-center gap-2 mt-2">

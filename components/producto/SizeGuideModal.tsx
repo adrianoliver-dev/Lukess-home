@@ -51,7 +51,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
     const cat = category.toLowerCase()
     if (cat.includes('camisa') || cat.includes('polo')) {
       setActiveTab('camisas')
-    } else if (cat.includes('pantalon') || cat.includes('jeans')) {
+    } else if (cat.includes('pantalon') || cat.includes('jeans') || cat.includes('short')) {
       setActiveTab('pantalones')
     } else if (cat.includes('cinturon')) {
       setActiveTab('cinturones')

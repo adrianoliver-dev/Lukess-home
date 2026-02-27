@@ -14,25 +14,17 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 10-E.6-B
-- **Block Name:** Category Restructure
+- **Block Number:** 10-E.3
+- **Block Name:** CartDrawer & CheckoutModal Branding Polish
 - **Completed:** 2026-02-27
-- **Commit:** 98b2024
+- **Commit:** 26fac30
 
 ### Files Changed
-- `components/home/CatalogoClient.tsx` — Updated category filtering parameter array mapping to the final 8 root categories. Removed Accesorios subcategory checkboxes.
-- `components/layout/Navbar.tsx` — Updated `categoryLinks` mapped to exactly the 8 categories.
-- `components/layout/Footer.tsx` — Updated `shopLinks` to mirror the 8 categories.
-- `scripts/migrateCategories.ts` — (NEW) Data migration script using `@supabase/supabase-js` since MCP was inaccessible. 
-
-### DB Changes
-- `categories`: Inserted `Polos`, `Shorts`, `Billeteras`.
-- `products`: Reassigned `Accesorios` products to `Cinturones`, `Billeteras`, `Gorras` by regex match.
-- `products`: Reassigned `Camisas` (polos) to `Polos`, `Pantalones` (shorts) to `Shorts`.
-- `categories`: Deleted the `Accesorios` category row.
+- `components/cart/CartDrawer.tsx` — Fixed announcement bar overlap (top-0 → top-[var(--announcement-height,0px)], h-full → h-[calc(100vh-var(--announcement-height,0px))]). Replaced plain shipping text with visual progress bar.
+- `components/cart/CheckoutModal.tsx` — Replaced `framer-motion` → `motion/react`. Replaced all ~30 `#c89b6e`/`#fdf8f3` hex colors with Tailwind semantic tokens. Replaced `shadow-lg`/`shadow-xl` → `shadow-sm`. Changed `rounded-full` lightbox close button → `rounded-lg`. WhatsApp #25d366 preserved.
 
 ### Build Verification
-✅ `npm run build` executed successfully without errors.
+✅ `npm run build` exit code 0 — 22 pages, no errors.
 
 ---
 
@@ -74,6 +66,7 @@
 | 10-E.5b | Fix Pickup Locations & Catalog Routing | ✅ DONE | 2026-02-27 | c2fc2d0 |
 | 10-E.6-A | Fix All Store Maps Links | ✅ DONE | 2026-02-27 | c221afb |
 | 10-E.6-B | Category Restructure | ✅ DONE | 2026-02-27 | 98b2024 |
+| 10-E.3 | CartDrawer & CheckoutModal Branding Polish | ✅ DONE | 2026-02-27 | 26fac30 |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |

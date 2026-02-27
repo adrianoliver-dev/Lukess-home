@@ -68,6 +68,9 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
     return p.price * (1 - discount / 100)
   }
 
+  const categoryName = product.categories?.name?.toLowerCase() || ''
+  const shouldShowSizeGuide = !categoryName.includes('billetera')
+
   const stock = getTotalStock(product)
   const stockBySize = getStockBySize(product)
   const isOutOfStock = stock === 0
@@ -248,13 +251,15 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                     <label className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
                       Talla
                     </label>
-                    <button
-                      onClick={() => setIsSizeGuideOpen(true)}
-                      className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-gray-900 underline underline-offset-2 transition-colors"
-                    >
-                      <Ruler className="w-3.5 h-3.5" />
-                      Guía de tallas
-                    </button>
+                    {shouldShowSizeGuide && (
+                      <button
+                        onClick={() => setIsSizeGuideOpen(true)}
+                        className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-gray-900 underline underline-offset-2 transition-colors"
+                      >
+                        <Ruler className="w-3.5 h-3.5" />
+                        Guía de tallas
+                      </button>
+                    )}
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {validSizes.map((size: string) => {
@@ -272,10 +277,10 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                           }}
                           disabled={sizeAgotada}
                           className={`min-w-[48px] h-12 px-4 text-sm font-semibold border transition-all ${sizeAgotada
-                              ? 'opacity-30 cursor-not-allowed line-through border-gray-200 text-gray-400 bg-gray-50'
-                              : isSelected
-                                ? 'bg-gray-900 text-white border-gray-900'
-                                : 'bg-white text-gray-700 border-gray-300 hover:border-gray-900'
+                            ? 'opacity-30 cursor-not-allowed line-through border-gray-200 text-gray-400 bg-gray-50'
+                            : isSelected
+                              ? 'bg-gray-900 text-white border-gray-900'
+                              : 'bg-white text-gray-700 border-gray-300 hover:border-gray-900'
                             }`}
                         >
                           {size}
@@ -298,8 +303,8 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                         key={color}
                         onClick={() => setSelectedColor(color)}
                         className={`min-w-[48px] h-12 px-4 text-sm font-semibold border transition-all ${selectedColor === color
-                            ? 'bg-gray-900 text-white border-gray-900'
-                            : 'bg-white text-gray-700 border-gray-300 hover:border-gray-900'
+                          ? 'bg-gray-900 text-white border-gray-900'
+                          : 'bg-white text-gray-700 border-gray-300 hover:border-gray-900'
                           }`}
                       >
                         {color}
@@ -343,8 +348,8 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                   onClick={handleAddToCart}
                   disabled={addToCartDisabled}
                   className={`w-full py-4 font-bold text-sm uppercase tracking-wider transition-colors flex items-center justify-center gap-2 ${addToCartDisabled
-                      ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                      : 'bg-gray-900 hover:bg-black text-white'
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'bg-gray-900 hover:bg-black text-white'
                     }`}
                 >
                   <ShoppingCart className="w-5 h-5" />
