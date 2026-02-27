@@ -4,12 +4,11 @@ import Container from '@/components/ui/Container'
 import { Product } from '@/lib/types'
 import { useCart } from '@/lib/context/CartContext'
 import { trackViewItem } from '@/lib/analytics'
-import { ShoppingCart, MessageCircle, Package, TrendingUp, ChevronRight, Home, Percent, Ruler, Truck, Store } from 'lucide-react'
+import { ShoppingCart, MessageCircle, Package, TrendingUp, ChevronRight, Home, Ruler, Minus, Plus } from 'lucide-react'
 import { FREE_SHIPPING_THRESHOLD } from '@/lib/utils/shipping'
 import Image from 'next/image'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
-import { motion } from 'framer-motion'
 import { ProductGallery } from './ProductGallery'
 import { SizeGuideModal } from './SizeGuideModal'
 import { buildWhatsAppUrl } from '@/lib/utils/whatsapp'
@@ -69,16 +68,10 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
     return p.price * (1 - discount / 100)
   }
 
-  const getSavings = (p: Product): number => {
-    const discount = getDiscount(p)
-    return p.price * (discount / 100)
-  }
-
   const stock = getTotalStock(product)
   const stockBySize = getStockBySize(product)
   const isOutOfStock = stock === 0
   const discount = getDiscount(product)
-  const LOW_STOCK_THRESHOLD = 3
   // Tallas reales: excluir vacíos y 'Unitalla' (accesorio sin talla real)
   const INTERNAL_SIZES = ['Unitalla', 'Única', 'Unico']
   const validSizes = (product.sizes ?? []).filter(
@@ -89,12 +82,12 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
   const selectedSizeAgotada = needsSize && !!selectedSize && selectedSizeStock === 0
   const addToCartDisabled = isOutOfStock || (needsSize && !selectedSize) || selectedSizeAgotada
   const addToCartLabel = isOutOfStock
-    ? 'Sin Stock'
+    ? 'SIN STOCK'
     : needsSize && !selectedSize
-      ? 'Selecciona una talla'
+      ? 'SELECCIONA UNA TALLA'
       : selectedSizeAgotada
-        ? 'Talla agotada'
-        : 'Agregar al Carrito'
+        ? 'TALLA AGOTADA'
+        : 'AGREGAR AL CARRITO'
 
   const handleAddToCart = () => {
     if (isOutOfStock) {
@@ -152,29 +145,26 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
       {/* Breadcrumbs */}
       <div className="bg-gray-50 border-b border-gray-200">
         <Container>
-          <div className="py-4 flex items-center gap-2 text-sm">
-            <Link href="/" className="text-gray-600 hover:text-primary-600 transition-colors">
+          <div className="py-3 flex items-center gap-2 text-sm">
+            <Link href="/" className="text-gray-500 hover:text-gray-900 transition-colors">
               <Home className="w-4 h-4" />
             </Link>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
-            <Link href="/#catalogo" className="text-gray-600 hover:text-primary-600 transition-colors">
+            <ChevronRight className="w-3.5 h-3.5 text-gray-300" />
+            <Link href="/#catalogo" className="text-gray-500 hover:text-gray-900 transition-colors">
               Catálogo
             </Link>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
-            <span className="text-gray-900 font-semibold truncate">{product.name}</span>
+            <ChevronRight className="w-3.5 h-3.5 text-gray-300" />
+            <span className="text-gray-900 font-medium truncate">{product.name}</span>
           </div>
         </Container>
       </div>
 
       {/* Product Detail */}
-      <section className="py-12 bg-white">
+      <section className="py-8 md:py-12 bg-white">
         <Container>
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Gallery */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-            >
+            <div>
               <ProductGallery
                 images={product.images && product.images.length > 0
                   ? product.images
@@ -183,167 +173,133 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                 productName={product.name}
               />
               {isOutOfStock && (
-                <div className="mt-4 bg-red-50 border-2 border-red-200 rounded-lg p-4 text-center">
-                  <span className="text-red-600 font-bold text-lg">
-                    Sin Stock
+                <div className="mt-4 bg-gray-100 rounded-lg p-3 text-center">
+                  <span className="text-gray-500 font-semibold text-sm uppercase tracking-wider">
+                    Agotado
                   </span>
                 </div>
               )}
-            </motion.div>
+            </div>
 
             {/* Info */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="space-y-6"
-            >
+            <div className="space-y-5">
               {/* Category */}
-              <div>
-                <span className="inline-block bg-primary-100 text-primary-700 px-4 py-1 rounded-full text-sm font-semibold">
-                  {product.categories?.name || 'Sin categoría'}
-                </span>
-              </div>
+              <span className="text-xs font-semibold uppercase tracking-widest text-gray-500">
+                {product.categories?.name || 'Sin categoría'}
+              </span>
 
               {/* Title */}
-              <h1 className="text-4xl font-bold text-gray-900">
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 leading-tight">
                 {product.name}
               </h1>
 
-              {/* Price */}
-              <div className="space-y-2">
+              {/* Brand */}
+              {product.brand && (
+                <p className="text-sm text-gray-500">
+                  Marca: <span className="font-semibold text-gray-700">{product.brand}</span>
+                </p>
+              )}
+
+              {/* Price — SCOPE 1 */}
+              <div className="flex items-baseline gap-3">
                 {hasDiscount(product) ? (
                   <>
-                    <div className="flex items-center gap-3">
-                      <span className="text-5xl font-bold text-red-600">
-                        Bs {getPriceWithDiscount(product).toFixed(2)}
-                      </span>
-                      <span className="inline-flex items-center gap-1 bg-red-600 text-white px-3 py-1.5 rounded-full text-sm font-bold">
-                        <Percent className="w-4 h-4" />
-                        -{discount}%
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span className="text-xl text-gray-400 line-through decoration-red-500 decoration-2">
-                        Bs {product.price.toFixed(2)}
-                      </span>
-                      <span className="text-green-600 font-semibold text-lg">
-                        Ahorras: Bs {getSavings(product).toFixed(2)}
-                      </span>
-                    </div>
+                    <span className="text-3xl font-black text-gray-900">
+                      Bs {getPriceWithDiscount(product).toFixed(2)}
+                    </span>
+                    <span className="text-lg text-gray-400 line-through ml-0">
+                      Bs {product.price.toFixed(2)}
+                    </span>
+                    <span className="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+                      -{discount}%
+                    </span>
                   </>
                 ) : (
-                  <span className="text-5xl font-bold text-primary-600">
+                  <span className="text-3xl font-black text-gray-900">
                     Bs {product.price.toFixed(2)}
                   </span>
                 )}
               </div>
 
-              {/* Stock — solo visible si agotado o quedan ≤ 5 unidades */}
-              {(stock === 0 || stock <= 5) && (
+              {/* Stock — solo visible si agotado */}
+              {stock === 0 && (
                 <div className="flex items-center gap-2">
-                  <Package className="w-5 h-5 text-gray-600" />
-                  <span className={`px-3 py-1.5 rounded-full text-sm font-semibold ${stock === 0
-                    ? 'bg-gray-100 text-gray-600'
-                    : 'bg-amber-100 text-amber-700'
-                    }`}>
-                    {stock === 0 ? 'Sin stock' : '⚠️ Últimas unidades disponibles'}
+                  <Package className="w-4 h-4 text-gray-400" />
+                  <span className="text-sm text-gray-500">
+                    Sin stock actualmente
                   </span>
                 </div>
               )}
 
               {/* Description */}
               {product.description && (
-                <p className="text-gray-700 text-lg leading-relaxed">
+                <p className="text-gray-600 text-sm leading-relaxed">
                   {product.description}
                 </p>
               )}
 
-              {/* Brand */}
-              {product.brand && (
-                <div className="flex items-center gap-2">
-                  <TrendingUp className="w-5 h-5 text-gray-600" />
-                  <span className="text-gray-700">
-                    Marca: <span className="font-semibold">{product.brand}</span>
-                  </span>
-                </div>
-              )}
+              {/* Divider */}
+              <hr className="border-gray-200" />
 
-              {/* Sizes — solo si el producto tiene tallas válidas (no vacías) */}
+              {/* Sizes — SCOPE 2 */}
               {needsSize && (
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <label className="block text-sm font-semibold text-gray-700">
-                      Selecciona una talla:
+                    <label className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
+                      Talla
                     </label>
                     <button
                       onClick={() => setIsSizeGuideOpen(true)}
-                      className="inline-flex items-center gap-1 text-sm text-primary-600 hover:text-primary-700 font-medium transition-colors"
+                      className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-gray-900 underline underline-offset-2 transition-colors"
                     >
-                      <Ruler className="w-4 h-4" />
+                      <Ruler className="w-3.5 h-3.5" />
                       Guía de tallas
                     </button>
                   </div>
-                  {isOutOfStock && (
-                    <span className="inline-block mb-2 text-red-400 text-xs font-bold uppercase tracking-wider">
-                      ❌ Sin stock actualmente
-                    </span>
-                  )}
                   <div className="flex flex-wrap gap-2">
                     {validSizes.map((size: string) => {
                       const sizeStock = stockBySize[size] ?? 0
                       const sizeAgotada = sizeStock === 0
-                      const sizeBaja = !sizeAgotada && sizeStock <= LOW_STOCK_THRESHOLD
                       const isSelected = selectedSize === size
                       return (
-                        <div key={size} className="flex flex-col items-center gap-1">
-                          <button
-                            onClick={() => {
-                              if (!sizeAgotada) {
-                                setSelectedSize(size)
-                                setQuantity(1)
-                              }
-                            }}
-                            disabled={sizeAgotada}
-                            className={`px-5 py-2 rounded-lg font-semibold transition-all ${sizeAgotada
-                              ? 'opacity-40 cursor-not-allowed line-through bg-gray-100 text-gray-400'
+                        <button
+                          key={size}
+                          onClick={() => {
+                            if (!sizeAgotada) {
+                              setSelectedSize(size)
+                              setQuantity(1)
+                            }
+                          }}
+                          disabled={sizeAgotada}
+                          className={`min-w-[48px] h-12 px-4 text-sm font-semibold border transition-all ${sizeAgotada
+                              ? 'opacity-30 cursor-not-allowed line-through border-gray-200 text-gray-400 bg-gray-50'
                               : isSelected
-                                ? 'bg-primary-600 text-white ring-2 ring-primary-300'
-                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                              }`}
-                          >
-                            {size}
-                          </button>
-                          {sizeBaja && (
-                            <span className="text-xs font-medium text-amber-600">
-                              ⚠️ Últimas {sizeStock}
-                            </span>
-                          )}
-                        </div>
+                                ? 'bg-gray-900 text-white border-gray-900'
+                                : 'bg-white text-gray-700 border-gray-300 hover:border-gray-900'
+                            }`}
+                        >
+                          {size}
+                        </button>
                       )
                     })}
                   </div>
-                  {isOutOfStock && (
-                    <p className="text-red-400 text-xs mt-1">
-                      ❌ Sin stock — puedes consultar por WhatsApp cuándo vuelve
-                    </p>
-                  )}
                 </div>
               )}
 
               {/* Colors */}
               {product.colors && product.colors.length > 0 && (
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">
-                    Selecciona un color:
+                  <label className="block text-sm font-semibold text-gray-900 uppercase tracking-wider mb-3">
+                    Color
                   </label>
                   <div className="flex flex-wrap gap-2">
                     {product.colors.map((color) => (
                       <button
                         key={color}
                         onClick={() => setSelectedColor(color)}
-                        className={`px-5 py-2 rounded-lg font-semibold transition-all ${selectedColor === color
-                          ? 'bg-primary-600 text-white ring-2 ring-primary-300'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        className={`min-w-[48px] h-12 px-4 text-sm font-semibold border transition-all ${selectedColor === color
+                            ? 'bg-gray-900 text-white border-gray-900'
+                            : 'bg-white text-gray-700 border-gray-300 hover:border-gray-900'
                           }`}
                       >
                         {color}
@@ -353,40 +309,42 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                 </div>
               )}
 
-              {/* Quantity */}
+              {/* Quantity — SCOPE 2 */}
               {!isOutOfStock && !selectedSizeAgotada && (
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">
-                    Cantidad:
+                  <label className="block text-sm font-semibold text-gray-900 uppercase tracking-wider mb-3">
+                    Cantidad
                   </label>
-                  <div className="flex items-center gap-4">
+                  <div className="inline-flex items-center border border-gray-300">
                     <button
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
                       disabled={needsSize && !selectedSize}
-                      className="w-12 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-lg font-bold text-xl transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                      className="w-12 h-12 flex items-center justify-center text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                     >
-                      −
+                      <Minus className="w-4 h-4" />
                     </button>
-                    <span className="text-2xl font-bold w-12 text-center">{quantity}</span>
+                    <span className="w-12 h-12 flex items-center justify-center text-sm font-semibold border-x border-gray-300">
+                      {quantity}
+                    </span>
                     <button
                       onClick={() => setQuantity(Math.min(selectedSizeStock, quantity + 1))}
                       disabled={needsSize && !selectedSize}
-                      className="w-12 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-lg font-bold text-xl transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                      className="w-12 h-12 flex items-center justify-center text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                     >
-                      +
+                      <Plus className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
               )}
 
-              {/* Actions */}
-              <div className="flex gap-4">
+              {/* Action Buttons — SCOPE 3 */}
+              <div className="flex flex-col gap-3 pt-2">
                 <button
                   onClick={handleAddToCart}
                   disabled={addToCartDisabled}
-                  className={`flex-1 py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 ${addToCartDisabled
-                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                    : 'bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 transform hover:scale-105 shadow-lg'
+                  className={`w-full py-4 font-bold text-sm uppercase tracking-wider transition-colors flex items-center justify-center gap-2 ${addToCartDisabled
+                      ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                      : 'bg-gray-900 hover:bg-black text-white'
                     }`}
                 >
                   <ShoppingCart className="w-5 h-5" />
@@ -394,93 +352,85 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                 </button>
                 <button
                   onClick={handleWhatsApp}
-                  className="px-6 py-4 bg-whatsapp hover:bg-whatsapp-dark text-white rounded-xl font-bold transition-all transform hover:scale-105 shadow-lg flex items-center gap-2"
+                  className="w-full py-4 border border-whatsapp text-whatsapp hover:bg-whatsapp/5 font-bold text-sm uppercase tracking-wider transition-colors flex items-center justify-center gap-2"
                 >
                   <MessageCircle className="w-5 h-5" />
-                  Consultar
+                  Consultar por WhatsApp
                 </button>
               </div>
 
-              {/* Shipping info banner */}
-              <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 space-y-1.5">
-                <div className="flex items-center gap-2">
-                  <Truck className="w-4 h-4 text-[#c89b6e] flex-shrink-0" />
-                  <span className="text-sm font-semibold text-gray-700">Envíos en Santa Cruz</span>
+              {/* Trust Badges — SCOPE 4 */}
+              <div className="space-y-3 pt-2">
+                <div className="flex items-center gap-3 text-sm text-gray-600">
+                  <span className="text-base">🚚</span>
+                  <span>Envío gratis en Santa Cruz (pedidos &gt; Bs {FREE_SHIPPING_THRESHOLD})</span>
                 </div>
-                <p className="text-xs text-gray-500 ml-6">
-                  · Gratis en pedidos mayores a Bs {FREE_SHIPPING_THRESHOLD}
-                </p>
-                <p className="text-xs text-gray-500 ml-6">
-                  · Desde Bs 5 según distancia GPS
-                </p>
-                <p className="text-xs text-gray-500 ml-6">
-                  · Envío nacional próximamente
-                </p>
-                <div className="flex items-center gap-2 mt-0.5">
-                  <Store className="w-4 h-4 text-[#c89b6e] flex-shrink-0" />
-                  <p className="text-xs text-gray-500">
-                    <span className="font-semibold text-gray-700">Retiro en tienda gratis</span>{' '}
-                    · Mercado Mutualista
-                  </p>
+                <div className="flex items-center gap-3 text-sm text-gray-600">
+                  <span className="text-base">🏬</span>
+                  <span>Retiro gratis en Mercado Mutualista</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm text-gray-600">
+                  <span className="text-base">🔒</span>
+                  <span>Paga en línea o al recibir</span>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
 
           {/* Related Products */}
           {relatedProducts.length > 0 && (
             <div className="mt-20">
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-8">
                 Productos Relacionados
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 {relatedProducts.map((p) => {
                   const relatedStock = getTotalStock(p)
                   return (
                     <Link
                       key={p.id}
                       href={`/producto/${p.id}`}
-                      className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-primary-300"
+                      className="group"
                     >
-                      <div className="relative aspect-square bg-gray-100">
+                      <div className="relative aspect-[3/4] bg-gray-100 overflow-hidden mb-3">
                         <Image
                           src={p.image_url || '/placeholder.png'}
                           alt={p.name}
                           fill
-                          className="object-cover group-hover:scale-110 transition-transform duration-500"
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                         {relatedStock === 0 && (
-                          <div className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded-full text-xs font-bold">
-                            Sin Stock
+                          <div className="absolute top-2 left-2 bg-gray-900 text-white px-2 py-1 text-xs font-semibold">
+                            AGOTADO
+                          </div>
+                        )}
+                        {hasDiscount(p) && relatedStock > 0 && (
+                          <div className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 text-xs font-bold">
+                            -{getDiscount(p)}%
                           </div>
                         )}
                       </div>
-                      <div className="p-4">
-                        <p className="text-primary-600 text-sm font-semibold mb-1">
+                      <div>
+                        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">
                           {p.categories?.name}
                         </p>
-                        <h3 className="font-bold text-gray-900 mb-2 line-clamp-1">
+                        <h3 className="font-medium text-gray-900 text-sm mb-1 line-clamp-1">
                           {p.name}
                         </h3>
-                        <div className="flex flex-col gap-1">
+                        <div className="flex items-baseline gap-2">
                           {hasDiscount(p) ? (
                             <>
-                              <div className="flex items-center gap-2">
-                                <p className="text-xl font-bold text-red-600">
-                                  Bs {getPriceWithDiscount(p).toFixed(2)}
-                                </p>
-                                <span className="bg-red-600 text-white px-2 py-0.5 rounded-full text-xs font-bold">
-                                  -{getDiscount(p)}%
-                                </span>
-                              </div>
-                              <p className="text-sm text-gray-400 line-through">
+                              <span className="text-sm font-bold text-gray-900">
+                                Bs {getPriceWithDiscount(p).toFixed(2)}
+                              </span>
+                              <span className="text-xs text-gray-400 line-through">
                                 Bs {p.price.toFixed(2)}
-                              </p>
+                              </span>
                             </>
                           ) : (
-                            <p className="text-xl font-bold text-primary-600">
+                            <span className="text-sm font-bold text-gray-900">
                               Bs {p.price.toFixed(2)}
-                            </p>
+                            </span>
                           )}
                         </div>
                       </div>
