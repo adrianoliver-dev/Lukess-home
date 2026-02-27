@@ -935,16 +935,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             </span>
                           </label>
 
-                          {!notifyByEmail && notifyByWhatsapp && (
-                            <p className="text-xs text-gray-500 pl-8">
-                              Usaremos el teléfono que ingresaste arriba
-                            </p>
-                          )}
-                          {notifyByEmail && !notifyByWhatsapp && (
-                            <p className="text-xs text-gray-500 pl-8">
-                              Usaremos el correo que ingresaste arriba
-                            </p>
-                          )}
+
                         </div>
                       </div>
 
@@ -1000,6 +991,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             <p className="text-xs text-green-600 font-semibold mt-2">
                               Siempre gratis
                             </p>
+                            <p className="text-xs text-gray-400 mt-1">(Las reservas duran 48 horas máximo)</p>
                           </button>
                         </div>
 
@@ -1027,7 +1019,6 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                       <p className="text-sm font-bold text-gray-800">
                                         Usar mi ubicación actual
                                       </p>
-                                      <p className="text-xs text-gray-500">Rápido y preciso</p>
                                     </div>
                                   </button>
 
@@ -1046,9 +1037,6 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                     <div>
                                       <p className="text-sm font-bold text-gray-800">
                                         Elegir en el mapa
-                                      </p>
-                                      <p className="text-xs text-gray-500">
-                                        Mueve el pin al lugar exacto
                                       </p>
                                     </div>
                                   </button>
@@ -1460,11 +1448,11 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                       </div>
 
                       {/* ── Código de Descuento ── */}
-                      <div className="space-y-4 mb-6">
+                      <div className="space-y-2">
                         <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                          CÓDIGO DE DESCUENTO
+                          Código de descuento
                         </h3>
-                        <div className="flex gap-2">
+                        <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
                           <input
                             type="text"
                             value={discountCode}
@@ -1472,7 +1460,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                               setDiscountCode(e.target.value)
                               if (discountValidation) setDiscountValidation(null)
                             }}
-                            className="flex-1 px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:bg-white focus:border-gray-500 focus:outline-none transition-colors uppercase"
+                            className="flex-1 px-3 py-2.5 text-sm bg-white focus:outline-none uppercase placeholder:normal-case"
                             placeholder="Ej: VERANO20"
                             disabled={isValidatingCode}
                           />
@@ -1480,24 +1468,17 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             type="button"
                             onClick={handleValidateDiscountCode}
                             disabled={isValidatingCode || !discountCode.trim()}
-                            className="px-6 py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-black transition-colors disabled:opacity-50 flex items-center gap-2"
+                            className="px-4 py-2.5 bg-gray-900 text-white text-sm font-semibold hover:bg-black transition-colors disabled:opacity-50 flex items-center gap-1.5"
                           >
-                            {isValidatingCode ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Aplicar'}
+                            {isValidatingCode ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Aplicar'}
                           </button>
                         </div>
-                        <AnimatePresence>
-                          {discountValidation && (
-                            <motion.div
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: 'auto' }}
-                              exit={{ opacity: 0, height: 0 }}
-                              className={`flex items-center gap-2 text-sm ${discountValidation.valid ? 'text-green-600' : 'text-red-500'}`}
-                            >
-                              {discountValidation.valid ? <CheckCircle className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
-                              <span>{discountValidation.message}</span>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
+                        {discountValidation && (
+                          <div className={`flex items-center gap-1.5 text-sm ${discountValidation.valid ? 'text-green-600' : 'text-red-500'}`}>
+                            {discountValidation.valid ? <CheckCircle className="w-3.5 h-3.5" /> : <AlertCircle className="w-3.5 h-3.5" />}
+                            <span>{discountValidation.message}</span>
+                          </div>
+                        )}
                       </div>
 
                       {/* ── Order Summary ── */}
@@ -1592,55 +1573,11 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         </p>
                       </div>
 
-                      <div className="text-left">
-                        <p className="text-sm font-semibold text-gray-700 mb-3">
-                          Elige cómo pagar:
-                        </p>
-                        <div className="grid grid-cols-2 gap-3">
-                          <button
-                            type="button"
-                            onClick={() => setSelectedPayment('qr')}
-                            className={`p-4 rounded-xl border-2 text-left transition-all ${selectedPayment === 'qr'
-                              ? 'border-gray-900 bg-gray-50 shadow-sm'
-                              : 'border-gray-200 hover:border-gray-300'
-                              }`}
-                          >
-                            <div className="text-xl mb-1">📱</div>
-                            <p className="font-semibold text-sm text-gray-800">Pago con QR</p>
-                            <p className="text-xs text-gray-500 mt-0.5">Yolo Pago</p>
-                            {selectedPayment === 'qr' && (
-                              <span className="inline-block mt-2 text-xs font-bold text-gray-900 bg-gray-100 px-2 py-0.5 rounded-full">
-                                SELECCIONADO
-                              </span>
-                            )}
-                          </button>
-
-                          <div className="relative group">
-                            <div className="p-4 rounded-xl border-2 border-gray-200 text-left pointer-events-none opacity-50 bg-gray-50">
-                              <div className="flex items-center gap-1.5 mb-1">
-                                <Lock className="w-3.5 h-3.5 text-gray-400" />
-                                <span className="text-xl">💳</span>
-                              </div>
-                              <p className="font-semibold text-sm text-gray-600">Libélula</p>
-                              <p className="text-xs text-gray-400 mt-0.5">Tarjeta / QR</p>
-                              <span className="inline-block mt-2 text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">
-                                Próximamente
-                              </span>
-                            </div>
-                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-56 bg-gray-900 text-white text-xs rounded-lg p-3 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 text-center shadow-sm">
-                              Integración con Libélula próximamente. Acepta Visa, Mastercard, QR
-                              Bolivia y más.
-                              <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
                       <div>
-                        <p className="text-gray-700 mb-4 font-semibold">
-                          Escanea este QR con tu app de pagos
+                        <p className="text-base font-bold text-gray-800 mb-4">
+                          Escanea el QR para pagar
                         </p>
-                        <div className="bg-white p-4 rounded-xl border-4 border-gray-200 inline-block max-w-full overflow-hidden">
+                        <div className="bg-white p-4 rounded-xl border border-gray-200 inline-block max-w-full overflow-hidden">
                           <Image
                             src="/qr-yolo-pago.png"
                             alt="QR Yolo Pago"
@@ -1651,29 +1588,8 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         </div>
                       </div>
 
-                      <div className="bg-gradient-to-r from-gray-600 to-gray-700 text-white p-6 rounded-xl">
-                        <p className="text-sm mb-2">Total a Pagar</p>
-                        <p className="text-4xl font-bold">Bs {orderTotal.toFixed(2)}</p>
-                        {shippingCost > 0 && (
-                          <p className="text-xs mt-1.5 text-white/70">
-                            Incluye Bs {shippingCost.toFixed(2)} de envío
-                            {gpsDistanceKm !== null && ` · ${gpsDistanceKm.toFixed(1)} km`}
-                          </p>
-                        )}
-                      </div>
-
-                      <div className="bg-amber-50 border-2 border-amber-200 p-4 rounded-lg">
-                        <div className="flex items-start gap-3">
-                          <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                          <p className="text-sm text-amber-800 text-left">
-                            Una vez realizado el pago, presiona &quot;Ya Pagué&quot; y te
-                            contactaremos por WhatsApp para coordinar la entrega.
-                          </p>
-                        </div>
-                      </div>
-
                       {/* ── Subir comprobante (opcional) ── */}
-                      <div className="border-2 border-dashed border-gray-200 rounded-xl p-4 text-left space-y-3">
+                      <div className="border border-gray-200 rounded-lg p-4 text-left space-y-3">
                         <div className="flex items-center gap-2">
                           <Paperclip className="w-4 h-4 text-gray-500" />
                           <p className="text-sm font-semibold text-gray-700">
@@ -1688,7 +1604,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                               Subí la captura de tu comprobante para acelerar la verificación
                               de tu pago
                             </p>
-                            <label className="flex items-center justify-center gap-2 w-full border-2 border-gray-900 text-gray-900 hover:bg-gray-50 font-semibold text-sm py-2.5 rounded-xl cursor-pointer transition-all">
+                            <label className="flex items-center justify-center gap-2 w-full border border-gray-300 text-gray-700 hover:bg-gray-50 font-medium text-sm py-2.5 rounded-lg cursor-pointer transition-all">
                               <Paperclip className="w-4 h-4" />
                               Elegir imagen
                               <input
@@ -1783,6 +1699,17 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                               />
                             </label>
                           </div>
+                        )}
+                      </div>
+
+                      {/* Total a pagar */}
+                      <div className="bg-gray-900 text-white p-4 rounded-lg text-center">
+                        <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Total a Pagar</p>
+                        <p className="text-3xl font-bold">Bs {orderTotal.toFixed(2)}</p>
+                        {shippingCost > 0 && (
+                          <p className="text-xs mt-1 text-gray-400">
+                            Incluye Bs {shippingCost.toFixed(2)} de envío
+                          </p>
                         )}
                       </div>
 
@@ -1981,52 +1908,36 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         </motion.div>
                       )}
 
-                      {/* WhatsApp */}
+                      {/* WhatsApp — Primary CTA */}
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6 }}
-                        className="bg-green-50 border-2 border-green-200 p-5 rounded-xl text-left space-y-4"
+                        className="space-y-3"
                       >
-                        <div>
-                          <div className="flex items-center gap-2 mb-1">
-                            <Sparkles className="w-5 h-5 text-green-600" />
-                            <p className="text-green-800 font-bold text-base">
-                              ¡Gracias por tu compra!
-                            </p>
-                          </div>
-                          <p className="text-sm text-green-700">
-                            Revisaremos tu pago y te contactaremos a la brevedad por WhatsApp.
-                          </p>
-                        </div>
-
-                        <div className="border-t border-green-200 pt-4">
-                          <p className="text-sm text-gray-600 mb-3 font-medium">
-                            ¿Ya realizaste el pago QR?
-                          </p>
-                          <a
-                            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}${receiptUploadState === 'success' ? encodeURIComponent('\n📎 Ya subí mi comprobante de pago en el sistema.') : ''}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-2 w-full bg-[#25d366] hover:bg-[#1fb855] text-white font-semibold py-3 rounded-xl transition-all shadow-sm text-sm"
-                          >
-                            <MessageCircle className="w-5 h-5" />
-                            Avisar por WhatsApp que ya pagué
-                          </a>
-                          <p className="text-xs text-gray-400 text-center mt-2">
-                            — o espera que te contactemos —
-                          </p>
-                        </div>
+                        <p className="text-sm text-gray-600 text-center">
+                          Revisaremos tu pago y te contactaremos por WhatsApp.
+                        </p>
+                        <a
+                          href={`https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}${receiptUploadState === 'success' ? encodeURIComponent('\n📎 Ya subí mi comprobante de pago en el sistema.') : ''}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center gap-2 w-full bg-green-600 hover:bg-green-700 text-white font-bold uppercase py-4 rounded-lg transition-all shadow-sm"
+                        >
+                          <MessageCircle className="w-5 h-5" />
+                          CONFIRMAR POR WHATSAPP
+                        </a>
                       </motion.div>
 
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.75 }}
+                        className="text-center"
                       >
                         <button
                           onClick={handleContinueShopping}
-                          className="w-full border-2 border-gray-300 text-gray-800 hover:bg-gray-100 font-semibold py-3 rounded-xl transition-all text-sm"
+                          className="text-gray-500 underline hover:text-gray-700 text-sm transition-colors"
                         >
                           Seguir comprando
                         </button>
