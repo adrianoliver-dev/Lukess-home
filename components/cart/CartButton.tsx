@@ -12,7 +12,7 @@ export function CartButton({ onClick }: CartButtonProps) {
   return (
     <button
       onClick={onClick}
-      className="relative p-2 text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+      className="relative w-10 h-10 flex items-center justify-center text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
       aria-label="Carrito de compras"
     >
       <ShoppingCart className="w-5 h-5" />

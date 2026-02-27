@@ -14,26 +14,23 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 10-E.1
-- **Block Name:** Polish Sprint: Brand Foundation & Global Constants
+- **Block Number:** 10-E.2
+- **Block Name:** Polish Sprint: Navbar & Footer Redesign
 - **Completed:** 2026-02-27
-- **Commit:** 8a75be2
+- **Commit:** 13eecc3
 
 ### Files Changed
-- `lib/utils/whatsapp.ts` — Defined global `WHATSAPP_NUMBER` and updated `buildWhatsAppUrl`
-- `components/landing/HeroSection.tsx` — Replaced hardcoded WhatsApp links
-- `components/landing/AnnouncementBar.tsx` — Replaced hardcoded WhatsApp links
-- `components/cart/CheckoutModal.tsx` — Replaced hardcoded numbers (76020369) and URLs
-- `components/producto/SizeGuideModal.tsx` — Added size guides for Gorras, Sombreros, Cinturones
-- `app/globals.css` — Enforced bg-white/text-gray-900, removed old color variables
-- *Multiple Components* — Replaced `bg-primary-*` and `text-primary-*` with default Tailwind classes via global find-and-replace scripts.
+- `components/landing/AnnouncementBar.tsx` — Simplified to static `bg-gray-900` strip with free shipping text
+- `components/layout/Navbar.tsx` — Removed `shadow-lg`, WhatsApp pill, scroll shadow. Applied `border-b border-gray-100`, `uppercase tracking-widest` links
+- `components/layout/Footer.tsx` — Changed from dark `bg-gray-800` to light `bg-gray-50 border-t border-gray-200`. Restructured to 4 columns (Brand, Tienda, Atención, Contacto). Newsletter restyled
+- `components/cart/CartButton.tsx` — Standardized to `w-5 h-5` icon, `bg-red-600` badge (no bounce/shadow)
+- `components/wishlist/WishlistIcon.tsx` — Standardized to `w-5 h-5 text-gray-900` icon, `bg-red-600` badge
 
 ### DB Changes
 None
 
 ### Build Verification
 ✅ `npm run build` — 0 errors, exit code 0
-✅ Browser Verification — Desktop & mobile layouts checked
 
 ---
 
@@ -70,6 +67,7 @@ None
 | 10-C | Polish Sprint: PDP Redesign (Totto style) | ✅ DONE | 2026-02-27 | 65ef4b3 |
 | 10-D | Polish Sprint: Hero & Trust redesign | ✅ DONE | 2026-02-27 | 184d5c0 |
 | 10-E.1 | Polish Sprint: Brand Foundation | ✅ DONE | 2026-02-27 | 8a75be2 |
+| 10-E.2 | Polish Sprint: Navbar & Footer Redesign | ✅ DONE | 2026-02-27 | 13eecc3 |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |

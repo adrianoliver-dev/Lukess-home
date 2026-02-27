@@ -2,7 +2,7 @@
 import { Heart } from 'lucide-react'
 import Link from 'next/link'
 import { useWishlist } from '@/lib/context/WishlistContext'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'motion/react'
 
 export function WishlistIcon() {
   const { wishlistCount } = useWishlist()
@@ -10,7 +10,7 @@ export function WishlistIcon() {
   return (
     <Link
       href="/wishlist"
-      className="relative p-2 hover:bg-gray-50 rounded-lg transition-colors"
+      className="relative w-10 h-10 flex items-center justify-center hover:bg-gray-50 rounded-lg transition-colors"
       aria-label={`Lista de deseos (${wishlistCount} productos)`}
     >
       <Heart className="w-5 h-5 text-gray-900" />

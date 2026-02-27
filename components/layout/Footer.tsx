@@ -107,7 +107,7 @@ export default function Footer() {
                 </span>
               </div>
               <p className="text-sm text-gray-500 leading-relaxed mb-6">
-                Ropa y accesorios 100% originales de marcas importadas. Desde 2014 vistiendo a Santa Cruz con estilo.
+                Vistiendo a Santa Cruz con estilo y calidad.
               </p>
 
               {/* Social icons */}
@@ -214,13 +214,32 @@ export default function Footer() {
                 </li>
                 <li className="flex items-start gap-3">
                   <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5 text-gray-400" />
-                  <div>
+                  <div className="space-y-1.5">
                     <p className="text-sm font-semibold text-gray-900">Ubicación</p>
-                    <p className="text-sm text-gray-500">
-                      Mercado Mutualista<br />
-                      Pasillos 2, 3 y 5<br />
-                      Santa Cruz, Bolivia
-                    </p>
+                    <a
+                      href="https://maps.app.goo.gl/hjBRWHtFGePRphPB9"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-sm text-gray-500 hover:text-gray-900 transition-colors"
+                    >
+                      Puesto 1 (Central)
+                    </a>
+                    <a
+                      href="https://maps.app.goo.gl/C7HLiz6cWNjvMFh1A"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-sm text-gray-500 hover:text-gray-900 transition-colors"
+                    >
+                      Puesto 2
+                    </a>
+                    <a
+                      href="https://maps.app.goo.gl/7nxUX1ofcJhmfWKC6"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-sm text-gray-500 hover:text-gray-900 transition-colors"
+                    >
+                      Puesto 3
+                    </a>
                   </div>
                 </li>
               </ul>
