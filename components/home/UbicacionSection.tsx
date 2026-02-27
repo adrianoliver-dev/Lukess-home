@@ -11,7 +11,7 @@ import { buildWhatsAppUrl, formatWhatsAppNumber } from "@/lib/utils/whatsapp";
 const WHATSAPP_URL = buildWhatsAppUrl("Hola Lukess Home, quiero consultar sobre sus productos");
 
 const MAPS_EMBED_SRC =
-  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3798.537!2d-63.161667!3d-17.762778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTfCsDQ1JzQ2LjAiUyA2M8KwMDknNDIuMCJX!5e0!3m2!1ses!2sbo!4v1234567890";
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d500!2d-63.160756!3d-17.763809!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTfCsDQ1JzQ5LjciUyA2M8KwMDknNDIuNyJX!5e0!3m2!1ses!2sbo!4v1234567890";
 
 const comoLlegar = [
   {
@@ -228,7 +228,7 @@ export default function UbicacionSection() {
                     </span>
                   </div>
                   <a
-                    href="https://www.google.com/maps?q=-17.762778,-63.161667"
+                    href="https://maps.app.goo.gl/hjBRWHtFGePRphPB9"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-xs text-gray-600 hover:text-gray-800 font-semibold transition-colors"

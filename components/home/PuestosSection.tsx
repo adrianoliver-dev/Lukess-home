@@ -16,12 +16,10 @@ interface Puesto {
     semana: string;
     domingo: string;
   };
+  mapsUrl: string;
 }
 
 /* ───────── Datos ───────── */
-
-const GOOGLE_MAPS_URL =
-  "https://www.google.com/maps?q=-17.762778,-63.161667";
 
 const puestos: Puesto[] = [
   {
@@ -33,6 +31,7 @@ const puestos: Puesto[] = [
       semana: "Lun-Sáb: 8:00 AM - 10:00 PM",
       domingo: "Dom: 9:00 AM - 9:00 PM",
     },
+    mapsUrl: "https://maps.app.goo.gl/hjBRWHtFGePRphPB9",
   },
   {
     id: 2,
@@ -43,6 +42,7 @@ const puestos: Puesto[] = [
       semana: "Lun-Sáb: 8:00 AM - 10:00 PM",
       domingo: "Dom: 9:00 AM - 9:00 PM",
     },
+    mapsUrl: "https://maps.app.goo.gl/C7HLiz6cWNjvMFh1A",
   },
   {
     id: 3,
@@ -53,6 +53,7 @@ const puestos: Puesto[] = [
       semana: "Lun-Sáb: 8:00 AM - 10:00 PM",
       domingo: "Dom: 9:00 AM - 9:00 PM",
     },
+    mapsUrl: "https://maps.app.goo.gl/7nxUX1ofcJhmfWKC6",
   },
 ];
 
@@ -175,7 +176,7 @@ export default function PuestosSection() {
 
                   {/* Botón Google Maps */}
                   <a
-                    href={GOOGLE_MAPS_URL}
+                    href={puesto.mapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-gray-800 group/link transition-colors"
@@ -197,7 +198,7 @@ export default function PuestosSection() {
             className="mt-12 md:mt-16 text-center"
           >
             <a
-              href={GOOGLE_MAPS_URL}
+              href="https://maps.app.goo.gl/hjBRWHtFGePRphPB9"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 bg-white border border-gray-200 hover:border-gray-300 rounded-full px-6 py-3 shadow-sm hover:shadow-md transition-all duration-300 group"
