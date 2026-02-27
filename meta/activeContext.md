@@ -17,7 +17,7 @@
 - **Block Number:** 10-E.6-B
 - **Block Name:** Category Restructure
 - **Completed:** 2026-02-27
-- **Commit:** pending
+- **Commit:** 98b2024
 
 ### Files Changed
 - `components/home/CatalogoClient.tsx` — Updated category filtering parameter array mapping to the final 8 root categories. Removed Accesorios subcategory checkboxes.
@@ -73,7 +73,7 @@
 | 10-E.5 | Extreme Polish: Navbar Dropdown & Side Cart | ✅ DONE | 2026-02-27 | 6470845 |
 | 10-E.5b | Fix Pickup Locations & Catalog Routing | ✅ DONE | 2026-02-27 | c2fc2d0 |
 | 10-E.6-A | Fix All Store Maps Links | ✅ DONE | 2026-02-27 | c221afb |
-| 10-E.6-B | Category Restructure | ✅ DONE | 2026-02-27 | pending |
+| 10-E.6-B | Category Restructure | ✅ DONE | 2026-02-27 | 98b2024 |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
