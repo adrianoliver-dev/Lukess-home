@@ -20,8 +20,9 @@
 - **Commit:** 7956e0f
 
 ### Files Changed (9d-B)
-- `components/home/PromoBanner.tsx` — redesigned to mobile-first announcement bar, auto-rotation, native CSS transitions, correct threshold Bs 400.
+- `components/home/PromoBanner.tsx` — redesigned to mobile-first announcement bar, auto-rotation, native CSS transitions, correct threshold Bs 400. Added links, shimmer, and CSS keyframe animations.
 - `components/cart/CheckoutModal.tsx` — integrated discount code UI and Supabase validation (`discount_codes`), dynamically updating order total and WhatsApp output message.
+- `app/globals.css` — added animation classes (slideInFromRight, shimmerSweep) and global overrides.
 - `meta/activeContext.md` — memory context update.
 
 ### DB Changes
@@ -57,7 +58,7 @@ None (`orders` table does not store discount info, validated gracefully on clien
 | 9c-A | Inventario: BD + formulario descuentos/is_new | ✅ DONE | — | — |
 | 9c-B | Inventario: Upload múltiples imágenes | ✅ DONE | — | — |
 | 9d-A | Landing: Badges + Galería múltiple | ✅ DONE | 2026-02-26 | 7956e0f |
-| 9d-B | Landing: Banner + Códigos descuento | ✅ DONE | 2026-02-26 | 381aea6 |
+| 9d-B | Landing: Banner + Códigos descuento | ✅ DONE | 2026-02-26 | f403dc8 |
 | 9e-A | Visual Polish: Footer + Navbar mobile | ⬜ PENDING | — | — |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
