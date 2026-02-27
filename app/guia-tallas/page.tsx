@@ -14,7 +14,7 @@ export default function GuiaTallasPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm border-collapse">
             <thead>
-              <tr className="bg-gray-100">
+              <tr className="bg-gray-50">
                 <th className="border border-gray-300 px-4 py-2">Talla</th>
                 <th className="border border-gray-300 px-4 py-2">Pecho (cm)</th>
                 <th className="border border-gray-300 px-4 py-2">Largo (cm)</th>
@@ -22,31 +22,31 @@ export default function GuiaTallasPage() {
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr className="bg-white border-b border-gray-100">
                 <td className="border border-gray-300 px-4 py-2 font-semibold">S</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">90-95</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">68-70</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">42-44</td>
               </tr>
-              <tr className="bg-gray-50">
+              <tr className="bg-white border-b border-gray-100">
                 <td className="border border-gray-300 px-4 py-2 font-semibold">M</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">96-101</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">71-73</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">45-47</td>
               </tr>
-              <tr>
+              <tr className="bg-white border-b border-gray-100">
                 <td className="border border-gray-300 px-4 py-2 font-semibold">L</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">102-107</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">74-76</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">48-50</td>
               </tr>
-              <tr className="bg-gray-50">
+              <tr className="bg-white border-b border-gray-100">
                 <td className="border border-gray-300 px-4 py-2 font-semibold">XL</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">108-113</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">77-79</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">51-53</td>
               </tr>
-              <tr>
+              <tr className="bg-white border-b border-gray-100">
                 <td className="border border-gray-300 px-4 py-2 font-semibold">XXL</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">114-120</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">80-82</td>
@@ -58,11 +58,11 @@ export default function GuiaTallasPage() {
       </section>
 
       <section className="mb-8">
-        <h2>Pantalones y Jeans</h2>
+        <h2>Pantalones, Jeans y Shorts</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-sm border-collapse">
             <thead>
-              <tr className="bg-gray-100">
+              <tr className="bg-gray-50">
                 <th className="border border-gray-300 px-4 py-2">Talla</th>
                 <th className="border border-gray-300 px-4 py-2">Cintura (cm)</th>
                 <th className="border border-gray-300 px-4 py-2">Cadera (cm)</th>
@@ -70,31 +70,31 @@ export default function GuiaTallasPage() {
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr className="bg-white border-b border-gray-100">
                 <td className="border border-gray-300 px-4 py-2 font-semibold">28</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">71-74</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">88-91</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">102</td>
               </tr>
-              <tr className="bg-gray-50">
+              <tr className="bg-white border-b border-gray-100">
                 <td className="border border-gray-300 px-4 py-2 font-semibold">30</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">76-79</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">93-96</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">104</td>
               </tr>
-              <tr>
+              <tr className="bg-white border-b border-gray-100">
                 <td className="border border-gray-300 px-4 py-2 font-semibold">32</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">81-84</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">98-101</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">106</td>
               </tr>
-              <tr className="bg-gray-50">
+              <tr className="bg-white border-b border-gray-100">
                 <td className="border border-gray-300 px-4 py-2 font-semibold">34</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">86-89</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">103-106</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">108</td>
               </tr>
-              <tr>
+              <tr className="bg-white border-b border-gray-100">
                 <td className="border border-gray-300 px-4 py-2 font-semibold">36</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">91-94</td>
                 <td className="border border-gray-300 px-4 py-2 text-center">108-111</td>
@@ -116,7 +116,7 @@ export default function GuiaTallasPage() {
       </section>
 
       <section>
-        <div className="bg-accent-500/10 border-2 border-accent-500/30 rounded-lg p-6">
+        <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
           <h3 className="font-bold text-lg text-gray-900 mb-2">
             ¿Necesitas ayuda con tu talla?
           </h3>
@@ -127,7 +127,7 @@ export default function GuiaTallasPage() {
             href={buildWhatsAppUrl("Hola, necesito ayuda con las tallas")}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-whatsapp text-white px-6 py-3 rounded-lg font-semibold hover:bg-whatsapp-dark transition-colors"
+            className="inline-block bg-gray-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-colors"
           >
             Consultar por WhatsApp
           </a>

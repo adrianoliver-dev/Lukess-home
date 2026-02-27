@@ -98,7 +98,7 @@ export default function Footer() {
       {/* Main footer grid */}
       <div className="pt-16 pb-8">
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
             {/* Column 1: Brand / About */}
             <div>
               <div className="mb-4">
@@ -185,6 +185,47 @@ export default function Footer() {
               </ul>
             </div>
 
+            {/* Legal y Políticas */}
+            <div>
+              <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4">
+                Legal y Políticas
+              </h3>
+              <ul className="space-y-2.5">
+                <li>
+                  <Link
+                    href="/terminos"
+                    className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                  >
+                    Términos y Condiciones
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/privacidad"
+                    className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                  >
+                    Políticas de Privacidad
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/politicas-envio"
+                    className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                  >
+                    Políticas de Envío
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/politicas-cambio"
+                    className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                  >
+                    Cambios y Devoluciones
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
             {/* Column 4: Contacto */}
             <div>
               <h4 className="text-sm font-bold text-gray-900 uppercase tracking-widest mb-4">
@@ -254,19 +295,8 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-gray-200 py-6">
         <Container>
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-400">
+          <div className="text-center text-sm text-gray-400">
             <p>© 2026 Lukess Home. Todos los derechos reservados.</p>
-            <div className="flex items-center gap-4">
-              <Link href="/terminos" className="hover:text-gray-900 transition-colors">
-                Términos
-              </Link>
-              <Link href="/privacidad" className="hover:text-gray-900 transition-colors">
-                Privacidad
-              </Link>
-              <Link href="/politicas-envio" className="hover:text-gray-900 transition-colors">
-                Envíos
-              </Link>
-            </div>
           </div>
         </Container>
       </div>

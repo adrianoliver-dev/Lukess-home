@@ -1,5 +1,5 @@
 # activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-02-27
+**Last Updated:** 2026-02-27T17:43-04:00
 **Updated By:** Antigravity Agent
 
 ---
@@ -11,17 +11,21 @@
 - **Started:** —
 - **Completed:** —
 
+
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 10-E.3
-- **Block Name:** CartDrawer & CheckoutModal Branding Polish
+- **Block Number:** 10-G
+- **Block Name:** Restructure Footer with legal column & polish Size Guide
 - **Completed:** 2026-02-27
-- **Commit:** 26fac30
+- **Commit:** pending
 
 ### Files Changed
-- `components/cart/CartDrawer.tsx` — Fixed announcement bar overlap (top-0 → top-[var(--announcement-height,0px)], h-full → h-[calc(100vh-var(--announcement-height,0px))]). Replaced plain shipping text with visual progress bar.
-- `components/cart/CheckoutModal.tsx` — Replaced `framer-motion` → `motion/react`. Replaced all ~30 `#c89b6e`/`#fdf8f3` hex colors with Tailwind semantic tokens. Replaced `shadow-lg`/`shadow-xl` → `shadow-sm`. Changed `rounded-full` lightbox close button → `rounded-lg`. WhatsApp #25d366 preserved.
+- `components/layout/Footer.tsx` — Added "Legal y Políticas" column (lg:grid-cols-5). Removed individual legal links from bottom bar, leaving only copyright.
+- `app/guia-tallas/page.tsx` — Added "Shorts" to Pants section title. Updated tables with bg-gray-50 headers and all-white body rows. Updated WhatsApp CTA background and button color.
+
+### Database Changes
+- None
 
 ### Build Verification
 ✅ `npm run build` exit code 0 — 22 pages, no errors.
@@ -67,6 +71,8 @@
 | 10-E.6-A | Fix All Store Maps Links | ✅ DONE | 2026-02-27 | c221afb |
 | 10-E.6-B | Category Restructure | ✅ DONE | 2026-02-27 | 98b2024 |
 | 10-E.3 | CartDrawer & CheckoutModal Branding Polish | ✅ DONE | 2026-02-27 | 26fac30 |
+| 10-F | Cart discount fix + Size Guide Shorts/Billeteras | ✅ DONE | 2026-02-27 | 4899abb |
+| 10-G | Restructure Footer & Polish Size Guide | ✅ DONE | 2026-02-27 | pending |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
