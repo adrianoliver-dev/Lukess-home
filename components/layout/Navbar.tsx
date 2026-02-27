@@ -15,12 +15,12 @@ import { useCart } from "@/lib/context/CartContext";
 import { useAuth } from "@/lib/context/AuthContext";
 
 const categoryLinks = [
-  { name: 'Camisas', href: '/catalogo?categoria=Camisas' },
-  { name: 'Pantalones', href: '/catalogo?categoria=Pantalones' },
-  { name: 'Blazers', href: '/catalogo?categoria=Blazers' },
-  { name: 'Accesorios', href: '/catalogo?categoria=Accesorios' },
-  { name: 'Gorras', href: '/catalogo?categoria=Gorras' },
-  { name: 'Cinturones', href: '/catalogo?categoria=Cinturones' },
+  { name: 'Camisas', href: '/?filter=camisas#catalogo' },
+  { name: 'Pantalones', href: '/?filter=pantalones#catalogo' },
+  { name: 'Blazers', href: '/?filter=blazers#catalogo' },
+  { name: 'Accesorios', href: '/?filter=accesorios#catalogo' },
+  { name: 'Gorras', href: '/?filter=accesorios-gorras#catalogo' },
+  { name: 'Cinturones', href: '/?filter=accesorios-cinturones#catalogo' },
 ];
 
 const quickLinks = [

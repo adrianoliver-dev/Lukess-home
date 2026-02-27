@@ -11,8 +11,8 @@ export function calculateDistance(
   const a =
     Math.sin(dLat / 2) ** 2 +
     Math.cos(lat1 * (Math.PI / 180)) *
-      Math.cos(lat2 * (Math.PI / 180)) *
-      Math.sin(dLng / 2) ** 2
+    Math.cos(lat2 * (Math.PI / 180)) *
+    Math.sin(dLng / 2) ** 2
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 }
 
@@ -51,7 +51,7 @@ export const PICKUP_LOCATIONS = [
     aisle: 'Pasillo -2',
     stall: 'Caseta 47-48',
     hours: 'Lun-Sáb: 8:00 AM - 10:00 PM · Dom: 9:00 AM - 9:00 PM',
-    mapsUrl: 'https://www.google.com/maps?q=-17.762778,-63.161667',
+    mapsUrl: 'https://maps.app.goo.gl/hjBRWHtFGePRphPB9',
     mapsLabel: 'Ver en Google Maps →',
   },
   {
@@ -60,7 +60,7 @@ export const PICKUP_LOCATIONS = [
     aisle: 'Pasillo -3',
     stall: 'Caseta 123',
     hours: 'Lun-Sáb: 8:00 AM - 10:00 PM · Dom: 9:00 AM - 9:00 PM',
-    mapsUrl: 'https://www.google.com/maps?q=-17.762778,-63.161667',
+    mapsUrl: 'https://maps.app.goo.gl/C7HLiz6cWNjvMFh1A',
     mapsLabel: 'Ver en Google Maps →',
   },
   {
@@ -69,7 +69,7 @@ export const PICKUP_LOCATIONS = [
     aisle: 'Pasillo -5',
     stall: 'Caseta 228-229',
     hours: 'Lun-Sáb: 8:00 AM - 10:00 PM · Dom: 9:00 AM - 9:00 PM',
-    mapsUrl: 'https://www.google.com/maps?q=-17.762778,-63.161667',
+    mapsUrl: 'https://maps.app.goo.gl/7nxUX1ofcJhmfWKC6',
     mapsLabel: 'Ver en Google Maps →',
   },
 ] as const
