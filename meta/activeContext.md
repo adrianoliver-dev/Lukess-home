@@ -5,47 +5,48 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 9d-B
-- **Block Name:** Landing: Banner + Códigos descuento
-- **Status:** DONE
-- **Started:** 2026-02-26
-- **Completed:** 2026-02-26
+- **Block Number:** 9e-B
+- **Block Name:** Mobile-first general + Checkout mobile
+- **Status:** PENDING
+- **Started:** —
+- **Completed:** —
 
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 9d-A
-- **Block Name:** Landing: Badges + is_featured sort + images[] gallery
-- **Completed:** 2026-02-26
-- **Commit:** 7956e0f
+- **Block Number:** 9e-A
+- **Block Name:** Visual Polish: Footer + Navbar mobile
+- **Completed:** 2026-02-27
+- **Commit:** pending
 
-### Files Changed (9d-B)
-- `components/home/PromoBanner.tsx` — redesigned to mobile-first announcement bar, auto-rotation, native CSS transitions, correct threshold Bs 400. Added links, shimmer, and CSS keyframe animations.
-- `components/cart/CheckoutModal.tsx` — integrated discount code UI and Supabase validation (`discount_codes`), dynamically updating order total and WhatsApp output message.
-- `app/globals.css` — added animation classes (slideInFromRight, shimmerSweep) and global overrides.
+### Files Changed (9e-A)
+- `components/layout/Footer.tsx` — updated WhatsApp to 72643753, email to contacto@lukesshome.com, integrated custom TikTok SVG icon, updated newsletter background to `bg-accent-500`.
+- `components/layout/Navbar.tsx`, `components/layout/MobileNav.tsx` — compacted mobile drawer nav styling, reduced paddings, font sizes, heights to fit 390px height screen without overflow.
+- `components/home/UbicacionSection.tsx`, `TestimoniosSection.tsx`, `PromoBanner.tsx`, `CatalogoClient.tsx` — global replacement of diverse gold accents (`accent-50`, `100`, `600`, `700`, etc.) with standardized `accent-500` and its opacity variants.
+- `components/catalogo/QuickViewModal.tsx`, `components/cart/CheckoutModal.tsx`, `components/ui/Button.tsx`, `app/preguntas-frecuentes/page.tsx`, `app/guia-tallas/page.tsx`, `components/wishlist/WishlistClient.tsx` — same gold accent standardization applied.
 - `meta/activeContext.md` — memory context update.
 
 ### DB Changes
-None (`orders` table does not store discount info, validated gracefully on client side).
+None.
 
 ### Build Status
 ✅ `npm run build` — 0 errors, 0 TypeScript errors.
 
 ### Browser Verification
-✅ PromoBanner rotates correctly, manual controls work, height fits specification. Discount codes validate correctly against Supabase and total updates seamlessly.
+✅ Visual confirmation via Browser Sub-Agent: mobile navbar fits perfectly at 390px height, footer details (WhatsApp + TikTok + Email + Gold Background) match spec, unified gold color consistently visible across all checked sections.
 
 ---
 
 ## OPEN ISSUES
-- [ ] TODO: TikTok icon in Footer uses `<Send />` lucide icon (incorrect) — needs SVG replacement
+None.
 
 ---
 
 ## NEXT BLOCK
-- **Block:** 9e-A
-- **Name:** Visual Polish: Footer + Navbar mobile
-- **Dependencies:** 9d-B
-- **Scope:** Enhance Footer and Navbar visual experience for mobile interfaces.
+- **Block:** 9e-B
+- **Name:** Mobile-first general + Checkout mobile
+- **Dependencies:** 9e-A
+- **Scope:** Optimize product cards, catalog layout, and checkout flow specifically for mobile viewports.
 
 ---
 
@@ -58,8 +59,8 @@ None (`orders` table does not store discount info, validated gracefully on clien
 | 9c-A | Inventario: BD + formulario descuentos/is_new | ✅ DONE | — | — |
 | 9c-B | Inventario: Upload múltiples imágenes | ✅ DONE | — | — |
 | 9d-A | Landing: Badges + Galería múltiple | ✅ DONE | 2026-02-26 | 7956e0f |
-| 9d-B | Landing: Banner + Códigos descuento | ✅ DONE | 2026-02-26 | f403dc8 |
-| 9e-A | Visual Polish: Footer + Navbar mobile | ⬜ PENDING | — | — |
+| 9d-B | Landing: Banner + Códigos descuento | ✅ DONE | 2026-02-26 | d09eb31 |
+| 9e-A | Visual Polish: Footer + Navbar mobile | ✅ DONE | 2026-02-27 | pending |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |

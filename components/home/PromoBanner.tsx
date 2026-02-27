@@ -12,9 +12,9 @@ interface BannerSlide {
 }
 
 const BANNER_SLIDES: BannerSlide[] = [
-  { id: 1, text: '🚚 Envío gratis en compras mayores a Bs. 400', bg: 'bg-accent-600', textColor: 'text-white', href: '/como-comprar' },
-  { id: 2, text: '⭐ Camisas Columbia originales — Mercado Mutualista', bg: 'bg-primary-800', textColor: 'text-white', href: '/catalogo' },
-  { id: 3, text: '💳 Paga con QR Yolo Pago — rápido y seguro', bg: 'bg-accent-700', textColor: 'text-white', href: '/metodos-pago' },
+  { id: 1, text: '🚚 Envío gratis en compras mayores a Bs. 400', bg: 'bg-accent-500', textColor: 'text-white', href: '/como-comprar' },
+  { id: 2, text: '✨ Colección Premium 2026', bg: 'bg-primary-900', textColor: 'text-white' },
+  { id: 3, text: '💳 Paga con QR Yolo Pago — rápido y seguro', bg: 'bg-accent-500/80', textColor: 'text-white', href: '/metodos-pago' },
 ]
 
 export function PromoBanner() {

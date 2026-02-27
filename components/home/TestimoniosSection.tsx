@@ -89,8 +89,8 @@ function StarRating({ count }: { count: number }) {
         <Star
           key={i}
           className={`w-4 h-4 ${i < count
-              ? "text-accent-500 fill-accent-500"
-              : "text-secondary-200"
+            ? "text-accent-500 fill-accent-500"
+            : "text-secondary-200"
             }`}
         />
       ))}
@@ -220,7 +220,7 @@ export default function TestimoniosSection() {
         >
           {/* ── Encabezado ── */}
           <motion.div variants={fadeInUp} className="text-center mb-12 md:mb-16">
-            <span className="inline-flex items-center gap-2 bg-accent-50 text-accent-700 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase mb-4">
+            <span className="inline-flex items-center gap-2 bg-accent-500/10 text-accent-500 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase mb-4">
               <Star className="w-3.5 h-3.5 fill-accent-500 text-accent-500" />
               Testimonios
             </span>
@@ -237,9 +237,9 @@ export default function TestimoniosSection() {
             </p>
 
             <div className="flex items-center justify-center gap-3 mt-6">
-              <span className="h-px w-10 bg-gradient-to-r from-transparent to-accent-300" />
-              <span className="w-1.5 h-1.5 rounded-full bg-accent-400" />
-              <span className="h-px w-10 bg-gradient-to-l from-transparent to-accent-300" />
+              <span className="h-px w-10 bg-gradient-to-r from-transparent to-accent-500/40" />
+              <Star className="w-5 h-5 text-accent-500 fill-accent-500" />
+              <span className="h-px w-10 bg-gradient-to-l from-transparent to-accent-500/40" />
             </div>
           </motion.div>
 

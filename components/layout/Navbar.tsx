@@ -181,7 +181,7 @@ export default function Navbar() {
           }`}
       >
         <Container>
-          <div className="flex items-center justify-between h-[72px] md:h-20 gap-4">
+          <div className="flex items-center justify-between h-14 md:h-20 gap-4">
             {/* Logo - ARREGLADO */}
             <Link
               href="/"
@@ -376,7 +376,7 @@ export default function Navbar() {
               transition={{ duration: 0.25, ease: "easeInOut" }}
               className="lg:hidden bg-white border-t border-gray-100 max-h-[calc(100vh-80px)] overflow-y-auto"
             >
-              <div className="px-6 py-5 space-y-1">
+              <div className="px-6 py-3 space-y-0.5">
                 {/* Mobile search - PRIMERO */}
                 <motion.div
                   initial={{ opacity: 0, y: 8 }}
@@ -392,7 +392,7 @@ export default function Navbar() {
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder="Buscar productos..."
-                        className="w-full pl-9 pr-3 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary-600 focus:outline-none"
+                        className="w-full pl-9 pr-3 py-2 border-2 border-gray-200 rounded-lg focus:border-primary-600 focus:outline-none text-sm"
                       />
                     </div>
                   </form>
@@ -412,19 +412,19 @@ export default function Navbar() {
                     <Link
                       href={category.href}
                       onClick={(e) => handleNavClick(e, category.href)}
-                      className="flex items-center justify-between py-3 px-4 rounded-xl text-base font-semibold text-gray-800 hover:text-primary-800 hover:bg-gray-50 transition-all duration-200"
+                      className="flex items-center justify-between py-2 px-4 rounded-xl text-sm font-semibold text-gray-800 hover:text-primary-800 hover:bg-gray-50 transition-all duration-200"
                     >
                       <span>{category.name}</span>
                     </Link>
 
                     {category.subcategories && (
-                      <div className="ml-4 mt-1 space-y-1">
+                      <div className="ml-4 mt-0.5 space-y-0.5">
                         {category.subcategories.map((sub) => (
                           <Link
                             key={sub.name}
                             href={`/?filter=${sub.filter}#catalogo`}
                             onClick={(e) => handleNavClick(e, `/?filter=${sub.filter}#catalogo`)}
-                            className="block py-2 px-4 text-sm text-gray-600 hover:text-primary-800 transition-colors"
+                            className="block py-1.5 px-4 text-xs text-gray-600 hover:text-primary-800 transition-colors"
                           >
                             {sub.name}
                           </Link>
@@ -435,7 +435,7 @@ export default function Navbar() {
                 ))}
 
                 {/* Divider */}
-                <div className="h-px bg-gray-200 my-4"></div>
+                <div className="h-px bg-gray-200 my-2"></div>
 
                 {/* Quick Links */}
                 {quickLinks.map((link, i) => (
@@ -452,7 +452,7 @@ export default function Navbar() {
                     <Link
                       href={link.href}
                       onClick={(e) => handleNavClick(e, link.href)}
-                      className="flex items-center gap-3 py-3 px-4 rounded-xl text-base font-medium text-gray-700 hover:text-primary-800 hover:bg-gray-50 transition-all duration-200"
+                      className="flex items-center gap-3 py-2 px-4 rounded-xl text-sm font-normal text-gray-700 hover:text-primary-800 hover:bg-gray-50 transition-all duration-200"
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
                       {link.label}
@@ -475,14 +475,14 @@ export default function Navbar() {
                       <Link
                         href="/mis-pedidos"
                         onClick={() => setIsOpen(false)}
-                        className="flex-1 flex items-center justify-center gap-2 border border-gray-200 text-gray-700 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-gray-50"
+                        className="flex-1 flex items-center justify-center gap-2 border border-gray-200 text-gray-700 py-2.5 rounded-xl text-sm font-semibold transition-all hover:bg-gray-50"
                       >
                         <Package className="w-4 h-4" />
                         Pedidos
                       </Link>
                       <button
                         onClick={() => { signOut(); setIsOpen(false); }}
-                        className="flex-1 flex items-center justify-center gap-2 border border-red-200 text-red-500 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-red-50"
+                        className="flex-1 flex items-center justify-center gap-2 border border-red-200 text-red-500 py-2.5 rounded-xl text-sm font-semibold transition-all hover:bg-red-50"
                       >
                         <LogOut className="w-4 h-4" />
                         Salir
@@ -491,7 +491,7 @@ export default function Navbar() {
                   ) : (
                     <button
                       onClick={() => { setIsAuthModalOpen(true); setIsOpen(false); }}
-                      className="w-full flex items-center justify-center gap-2 border-2 border-primary-600 text-primary-700 py-3 rounded-xl text-sm font-bold transition-all hover:bg-primary-50"
+                      className="w-full flex items-center justify-center gap-2 border-2 border-primary-600 text-primary-700 py-2.5 rounded-xl text-sm font-bold transition-all hover:bg-primary-50"
                     >
                       <User className="w-4 h-4" />
                       Iniciar sesión / Crear cuenta
@@ -512,7 +512,7 @@ export default function Navbar() {
                   <Link
                     href="/wishlist"
                     onClick={() => setIsOpen(false)}
-                    className="flex-1 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white py-3.5 rounded-xl text-sm font-semibold transition-all shadow-lg"
+                    className="flex-1 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-xl text-sm font-semibold transition-all shadow-lg"
                   >
                     <Heart className="w-4 h-4" />
                     Favoritos
@@ -522,7 +522,7 @@ export default function Navbar() {
                       setIsCartOpen(true);
                       setIsOpen(false);
                     }}
-                    className="flex-1 flex items-center justify-center gap-2 bg-primary-800 hover:bg-primary-900 text-white py-3.5 rounded-xl text-sm font-semibold transition-all shadow-lg"
+                    className="flex-1 flex items-center justify-center gap-2 bg-primary-800 hover:bg-primary-900 text-white py-2.5 rounded-xl text-sm font-semibold transition-all shadow-lg"
                   >
                     <ShoppingCart className="w-4 h-4" />
                     Carrito
@@ -542,7 +542,7 @@ export default function Navbar() {
                     href={WHATSAPP_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 bg-whatsapp hover:bg-whatsapp-dark text-white w-full py-3.5 rounded-xl text-sm font-semibold transition-all shadow-lg shadow-whatsapp/20"
+                    className="flex items-center justify-center gap-2 bg-whatsapp hover:bg-whatsapp-dark text-white w-full py-2.5 rounded-xl text-sm font-semibold transition-all shadow-lg shadow-whatsapp/20"
                   >
                     <MessageCircle className="w-4 h-4" />
                     Escríbenos por WhatsApp

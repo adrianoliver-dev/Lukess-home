@@ -116,7 +116,7 @@ export default function GuiaTallasPage() {
       </section>
 
       <section>
-        <div className="bg-accent-50 border-2 border-accent-200 rounded-lg p-6">
+        <div className="bg-accent-500/10 border-2 border-accent-500/30 rounded-lg p-6">
           <h3 className="font-bold text-lg text-gray-900 mb-2">
             ¿Necesitas ayuda con tu talla?
           </h3>

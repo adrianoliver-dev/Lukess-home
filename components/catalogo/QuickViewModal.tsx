@@ -18,14 +18,14 @@ interface QuickViewModalProps {
   hasDiscount: (product: Product) => boolean
 }
 
-export function QuickViewModal({ 
-  product, 
-  isOpen, 
-  onClose, 
-  getTotalStock, 
-  getDiscount, 
+export function QuickViewModal({
+  product,
+  isOpen,
+  onClose,
+  getTotalStock,
+  getDiscount,
   getPriceWithDiscount,
-  hasDiscount 
+  hasDiscount
 }: QuickViewModalProps) {
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
   const [selectedColor, setSelectedColor] = useState<string | null>(null)
@@ -70,12 +70,12 @@ export function QuickViewModal({
     : needsSize && !selectedSize
       ? 'Selecciona una talla'
       : 'Agregar al Carrito'
-  
+
   // Obtener imágenes (máximo 3)
-  const images = product.images && product.images.length > 0 
-    ? product.images.slice(0, 3) 
-    : product.image_url 
-      ? [product.image_url] 
+  const images = product.images && product.images.length > 0
+    ? product.images.slice(0, 3)
+    : product.image_url
+      ? [product.image_url]
       : ['/placeholder.png']
 
   const handleAddToCart = () => {
@@ -97,7 +97,7 @@ export function QuickViewModal({
 
     // Agregar al carrito
     addToCart(product, 1, selectedSize || undefined, selectedColor || undefined)
-    
+
     toast.custom((t) => (
       <motion.div
         initial={{ opacity: 0, y: -20, scale: 0.9 }}
@@ -200,11 +200,10 @@ export function QuickViewModal({
                             <button
                               key={i}
                               onClick={() => setCurrentImageIndex(i)}
-                              className={`h-1.5 rounded-full transition-all ${
-                                i === currentImageIndex 
-                                  ? 'bg-primary-600 w-6' 
+                              className={`h-1.5 rounded-full transition-all ${i === currentImageIndex
+                                  ? 'bg-primary-600 w-6'
                                   : 'bg-gray-300 w-1.5 hover:bg-gray-400'
-                              }`}
+                                }`}
                               aria-label={`Ver imagen ${i + 1}`}
                             />
                           ))}
@@ -234,11 +233,10 @@ export function QuickViewModal({
                         <button
                           key={i}
                           onClick={() => setCurrentImageIndex(i)}
-                          className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
-                            i === currentImageIndex 
-                              ? 'border-primary-600 scale-105' 
+                          className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${i === currentImageIndex
+                              ? 'border-primary-600 scale-105'
                               : 'border-gray-200 hover:border-gray-300'
-                          }`}
+                            }`}
                         >
                           <Image
                             src={img}
@@ -263,7 +261,7 @@ export function QuickViewModal({
                     {product.brand && (
                       <>
                         <span className="text-gray-300">•</span>
-                        <span className="text-xs bg-accent-100 text-accent-700 px-2 py-0.5 rounded-full font-semibold">
+                        <span className="text-xs bg-accent-500/20 text-accent-500 px-2 py-0.5 rounded-full font-semibold">
                           {product.brand}
                         </span>
                       </>
@@ -309,13 +307,12 @@ export function QuickViewModal({
                   <div className="mb-6">
                     <div className="flex items-center gap-2">
                       <Package className="w-4 h-4 text-gray-400" />
-                      <span className={`text-sm font-bold ${
-                        stock === 0 
-                          ? 'text-red-600' 
-                          : stock < 10 
-                            ? 'text-amber-600' 
+                      <span className={`text-sm font-bold ${stock === 0
+                          ? 'text-red-600'
+                          : stock < 10
+                            ? 'text-amber-600'
                             : 'text-green-600'
-                      }`}>
+                        }`}>
                         {stock === 0 ? '🚫 Sin stock' : stock < 10 ? `⚠️ Solo ${stock} unidades` : '✓ Disponible'}
                       </span>
                     </div>
@@ -334,13 +331,12 @@ export function QuickViewModal({
                             key={color}
                             onClick={() => setSelectedColor(color)}
                             disabled={isOutOfStock}
-                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all border-2 ${
-                              selectedColor === color
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all border-2 ${selectedColor === color
                                 ? 'border-primary-600 bg-primary-600 text-white shadow-md scale-105'
                                 : isOutOfStock
                                   ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed'
                                   : 'border-gray-300 bg-white text-gray-700 hover:border-primary-400 hover:bg-primary-50'
-                            }`}
+                              }`}
                           >
                             {color}
                             {selectedColor === color && (
@@ -370,13 +366,12 @@ export function QuickViewModal({
                             key={size}
                             onClick={() => !isOutOfStock && setSelectedSize(size)}
                             disabled={isOutOfStock}
-                            className={`px-4 py-2 rounded-lg text-sm font-bold transition-all border-2 min-w-[60px] ${
-                              selectedSize === size
+                            className={`px-4 py-2 rounded-lg text-sm font-bold transition-all border-2 min-w-[60px] ${selectedSize === size
                                 ? 'border-primary-600 bg-primary-600 text-white shadow-md scale-105'
                                 : isOutOfStock
                                   ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed opacity-40 line-through'
                                   : 'border-gray-300 bg-white text-gray-700 hover:border-primary-400 hover:bg-primary-50'
-                            }`}
+                              }`}
                           >
                             {size}
                             {selectedSize === size && (
@@ -403,11 +398,10 @@ export function QuickViewModal({
                     <button
                       onClick={handleAddToCart}
                       disabled={addToCartDisabled}
-                      className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl text-base font-bold transition-all duration-300 ${
-                        addToCartDisabled
+                      className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl text-base font-bold transition-all duration-300 ${addToCartDisabled
                           ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                           : 'bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]'
-                      }`}
+                        }`}
                     >
                       <ShoppingCart className="w-5 h-5" />
                       {addToCartLabel}

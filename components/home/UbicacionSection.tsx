@@ -204,7 +204,7 @@ export default function UbicacionSection() {
             {/* ── Columna derecha – Mapa ── */}
             <motion.div variants={slideRight} className="relative">
               {/* Marco decorativo */}
-              <div className="absolute -inset-2 bg-gradient-to-br from-primary-200 via-primary-100 to-accent-100 rounded-[20px] opacity-60 blur-sm" />
+              <div className="absolute -inset-2 bg-gradient-to-br from-primary-200 via-primary-100 to-accent-500/20 rounded-[20px] opacity-60 blur-sm" />
 
               <div className="relative bg-white rounded-2xl border-2 border-primary-300 overflow-hidden shadow-xl shadow-primary-500/10">
                 <iframe

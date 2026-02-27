@@ -87,8 +87,8 @@ export function NewsletterPopup() {
 
               {/* Contenido */}
               <div className="text-center space-y-6">
-                <div className="inline-flex p-4 bg-accent-100 rounded-full">
-                  <Gift className="w-12 h-12 text-accent-600" />
+                <div className="inline-flex p-4 bg-accent-500/20 rounded-full">
+                  <Gift className="w-12 h-12 text-accent-500" />
                 </div>
 
                 <div>

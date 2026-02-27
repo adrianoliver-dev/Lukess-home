@@ -1844,7 +1844,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.5 }}
-                        className="bg-gradient-to-r from-primary-50 to-accent-50 p-4 rounded-xl border-2 border-primary-200"
+                        className="bg-gradient-to-r from-primary-50 to-accent-500/10 p-4 rounded-xl border-2 border-primary-200"
                       >
                         <p className="text-sm text-gray-600 mb-1">Número de Orden</p>
                         <p className="text-2xl font-mono font-black text-primary-600 tracking-wider">

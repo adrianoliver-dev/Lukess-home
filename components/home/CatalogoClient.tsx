@@ -1095,7 +1095,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                               </span>
                             </div>
                             {product.brand && (
-                              <span className="text-[10px] bg-accent-100 text-accent-700 px-2 py-0.5 rounded-full font-semibold">
+                              <span className="text-[10px] bg-accent-500/20 text-accent-500 px-2 py-0.5 rounded-full font-semibold">
                                 {product.brand}
                               </span>
                             )}
