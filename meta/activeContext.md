@@ -1,5 +1,5 @@
 # activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-02-27T17:43-04:00
+**Last Updated:** 2026-02-27T18:10-04:00
 **Updated By:** Antigravity Agent
 
 ---
@@ -15,14 +15,14 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 10-G
-- **Block Name:** Restructure Footer with legal column & polish Size Guide
+- **Block Number:** 10-H
+- **Block Name:** Fix trust badges, size guide mapping & tables
 - **Completed:** 2026-02-27
-- **Commit:** f308958
+- **Commit:** cbe6974
 
 ### Files Changed
-- `components/layout/Footer.tsx` — Added "Legal y Políticas" column (lg:grid-cols-5). Removed individual legal links from bottom bar, leaving only copyright.
-- `app/guia-tallas/page.tsx` — Added "Shorts" to Pants section title. Updated tables with bg-gray-50 headers and all-white body rows. Updated WhatsApp CTA background and button color.
+- `components/producto/ProductDetail.tsx` — Changed `shouldShowSizeGuide` from blacklist to whitelist of 8 categories. Replaced false "Paga en línea o al recibir" badge with 48h store-pickup reservation rule.
+- `app/guia-tallas/page.tsx` — Added Cinturones and Sombreros/Gorras size guide table sections.
 
 ### Database Changes
 - None
@@ -73,6 +73,7 @@
 | 10-E.3 | CartDrawer & CheckoutModal Branding Polish | ✅ DONE | 2026-02-27 | 26fac30 |
 | 10-F | Cart discount fix + Size Guide Shorts/Billeteras | ✅ DONE | 2026-02-27 | 4899abb |
 | 10-G | Restructure Footer & Polish Size Guide | ✅ DONE | 2026-02-27 | f308958 |
+| 10-H | Fix trust badges, size guide mapping & tables | ✅ DONE | 2026-02-27 | cbe6974 |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
