@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 10-H.3
-- **Block Name:** Hash anchor navigation cross-route
+- **Block Number:** 10-H.4
+- **Block Name:** Fix Size Guide visibility (Unitalla)
 - **Status:** ✅ DONE
 - **Started:** 2026-02-27
 - **Completed:** 2026-02-27
@@ -14,18 +14,13 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 10-H.3
-- **Block Name:** Hash anchor navigation cross-route
+- **Block Number:** 10-H.4
+- **Block Name:** Fix Size Guide visibility (Unitalla)
 - **Completed:** 2026-02-27
 - **Commit:** pending
 
 ### Files Changed
-- `lib/hooks/useHashScroll.ts` — Created custom hook to manage hash scrolling logic.
-- `components/layout/HashScrollHandler.tsx` — Client component wrapper for the scroll hook.
-- `app/layout.tsx` — Included the HashScrollHandler inside the root layout body.
-- `components/layout/Navbar.tsx` — Added `scroll={false}` to all navigation links pointing to category hashes.
-- `components/wishlist/WishlistClient.tsx` — Added `scroll={false}` to the empty state catalog link.
-- `components/producto/ProductDetail.tsx` — Added `scroll={false}` to the catalog breadcrumb.
+- `components/producto/ProductDetail.tsx` — Refactored size selector to show "Guía de Tallas" even when `needsSize` is false (e.g., Gorras/Cinturones). Added "Talla Única" fallback display to maintain UI consistency.
 
 ### Database Changes
 - None
@@ -79,7 +74,8 @@
 | 10-I | Radical UX/UI cleanup of Checkout stages | ✅ DONE | 2026-02-27 | a69df6c |
 | 10-H.1 | Fix Size Guide whitelist (belts/hats) | ✅ DONE | 2026-02-27 | a7ca5c4 |
 | 10-H.2 | Fix Size Guide whitelist & Checkout dual buttons | ✅ DONE | 2026-02-27 | a80630c |
-| 10-H.3 | Hash anchor navigation cross-route | ✅ DONE | 2026-02-27 | pending |
+| 10-H.3 | Hash anchor navigation cross-route | ✅ DONE | 2026-02-27 | b4bb562 |
+| 10-H.4 | Fix Size Guide visibility (Unitalla) | ✅ DONE | 2026-02-27 | pending |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |

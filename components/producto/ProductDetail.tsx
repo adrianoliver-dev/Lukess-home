@@ -253,7 +253,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
               <hr className="border-gray-200" />
 
               {/* Sizes — SCOPE 2 */}
-              {needsSize && (
+              {(needsSize || shouldShowSizeGuide) && (
                 <div>
                   <div className="flex items-center justify-between mb-3">
                     <label className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
@@ -269,33 +269,44 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                       </button>
                     )}
                   </div>
-                  <div className="flex flex-wrap gap-2">
-                    {validSizes.map((size: string) => {
-                      const sizeStock = stockBySize[size] ?? 0
-                      const sizeAgotada = sizeStock === 0
-                      const isSelected = selectedSize === size
-                      return (
-                        <button
-                          key={size}
-                          onClick={() => {
-                            if (!sizeAgotada) {
-                              setSelectedSize(size)
-                              setQuantity(1)
-                            }
-                          }}
-                          disabled={sizeAgotada}
-                          className={`min-w-[48px] h-12 px-4 text-sm font-semibold border transition-all ${sizeAgotada
-                            ? 'opacity-30 cursor-not-allowed line-through border-gray-200 text-gray-400 bg-gray-50'
-                            : isSelected
-                              ? 'bg-gray-900 text-white border-gray-900'
-                              : 'bg-white text-gray-700 border-gray-300 hover:border-gray-900'
-                            }`}
-                        >
-                          {size}
-                        </button>
-                      )
-                    })}
-                  </div>
+
+                  {needsSize ? (
+                    <div className="flex flex-wrap gap-2">
+                      {validSizes.map((size: string) => {
+                        const sizeStock = stockBySize[size] ?? 0
+                        const sizeAgotada = sizeStock === 0
+                        const isSelected = selectedSize === size
+                        return (
+                          <button
+                            key={size}
+                            onClick={() => {
+                              if (!sizeAgotada) {
+                                setSelectedSize(size)
+                                setQuantity(1)
+                              }
+                            }}
+                            disabled={sizeAgotada}
+                            className={`min-w-[48px] h-12 px-4 text-sm font-semibold border transition-all ${sizeAgotada
+                              ? 'opacity-30 cursor-not-allowed line-through border-gray-200 text-gray-400 bg-gray-50'
+                              : isSelected
+                                ? 'bg-gray-900 text-white border-gray-900'
+                                : 'bg-white text-gray-700 border-gray-300 hover:border-gray-900'
+                              }`}
+                          >
+                            {size}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  ) : (
+                    <div className="h-12 flex items-center px-4 bg-gray-50 rounded-lg border border-gray-200 w-fit">
+                      <span className="text-sm font-medium text-gray-600">
+                        {normalizedCategory.includes('gorra') || normalizedCategory.includes('sombrero')
+                          ? 'Talla Única / Ajustable'
+                          : 'Talla Única'}
+                      </span>
+                    </div>
+                  )}
                 </div>
               )}
 
