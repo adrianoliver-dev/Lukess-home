@@ -23,6 +23,7 @@ interface BannerCarouselProps {
 export default function BannerCarousel({ banners }: BannerCarouselProps): React.JSX.Element {
     const [current, setCurrent] = useState<number>(0)
     const [paused, setPaused] = useState<boolean>(false)
+    const [touchStart, setTouchStart] = useState<number | null>(null)
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
     const total = banners.length
@@ -39,6 +40,20 @@ export default function BannerCarousel({ banners }: BannerCarouselProps): React.
         setCurrent(index)
     }, [])
 
+    /* ── Touch swipe handlers ── */
+    const handleTouchStart = (e: React.TouchEvent): void => {
+        setTouchStart(e.touches[0].clientX)
+    }
+
+    const handleTouchEnd = (e: React.TouchEvent): void => {
+        if (touchStart === null) return
+        const touchEnd = e.changedTouches[0].clientX
+        const distance = touchStart - touchEnd
+        if (distance > 50) next()
+        if (distance < -50) prev()
+        setTouchStart(null)
+    }
+
     /* Auto-rotation */
     useEffect(() => {
         if (paused || total <= 1) return
@@ -53,12 +68,19 @@ export default function BannerCarousel({ banners }: BannerCarouselProps): React.
         <section
             role="region"
             aria-label="Banner carousel"
-            className="relative w-full h-[400px] md:h-[600px] bg-zinc-900 overflow-hidden max-w-[1920px] mx-auto"
+            /*
+             * aspect-[21/9] keeps 1920×800 banners pixel-perfect on any screen width.
+             * Falls back to aspect-[16/9] on mobile for a taller, more balanced crop.
+             * `relative` is required so that absolute-positioned children size correctly.
+             */
+            className="relative w-full aspect-[16/9] md:aspect-[21/9] bg-zinc-100 overflow-hidden max-w-[1920px] mx-auto"
             onMouseEnter={(): void => setPaused(true)}
             onMouseLeave={(): void => setPaused(false)}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
         >
             {/* ── Slides ── */}
-            <div className="relative w-full h-full" aria-live="polite" aria-atomic="true">
+            <div className="absolute inset-0" aria-live="polite" aria-atomic="true">
                 {banners.map((banner, index) => {
                     const isActive = index === current
                     const slideContent = (

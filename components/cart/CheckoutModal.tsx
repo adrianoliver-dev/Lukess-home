@@ -94,7 +94,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
     email: '',
     website: '',
   })
-  const [marketingConsent, setMarketingConsent] = useState(true)
+  const [marketingConsent, setMarketingConsent] = useState(false)
   const [notifyByEmail, setNotifyByEmail] = useState(true)
   const [notifyByWhatsapp, setNotifyByWhatsapp] = useState(false)
   const [emailError, setEmailError] = useState('')
@@ -372,7 +372,8 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
       setDiscountValidation({
         valid: true,
         discount_type: data.discount_type as 'percentage' | 'fixed',
-        discount_amount: data.discount_amount,
+        // The DB column is `discount_percentage` — guard with Number() to prevent NaN
+        discount_amount: Number(data.discount_percentage ?? data.discount_amount ?? 0),
         message: 'Código aplicado con éxito',
       })
     } catch {
