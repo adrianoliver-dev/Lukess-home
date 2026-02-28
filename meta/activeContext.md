@@ -17,7 +17,7 @@
 - **Block Number:** 10-J
 - **Block Name:** Wishlist & Orders Redesign
 - **Completed:** 2026-02-27
-- **Commit:** pending
+- **Commit:** b2675d6
 
 ### Files Changed
 - `components/wishlist/WishlistClient.tsx` — Complete UI redesign with CRO CTAs, Add All To Cart button.
@@ -78,7 +78,7 @@
 | 10-H.3 | Hash anchor navigation cross-route | ✅ DONE | 2026-02-27 | b4bb562 |
 | 10-H.4 | Fix Size Guide visibility (Unitalla) | ✅ DONE | 2026-02-27 | 964e1cb |
 | 10-H.5 | Fix hash navigation completely | ✅ DONE | 2026-02-27 | 80a827f |
-| 10-J | Wishlist & Orders Redesign | ✅ DONE | 2026-02-27 | pending |
+| 10-J | Wishlist & Orders Redesign | ✅ DONE | 2026-02-27 | b2675d6 |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
