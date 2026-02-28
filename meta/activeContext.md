@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 10-H.4
-- **Block Name:** Fix Size Guide visibility (Unitalla)
+- **Block Number:** 10-H.5
+- **Block Name:** Fix hash navigation completely
 - **Status:** ✅ DONE
 - **Started:** 2026-02-27
 - **Completed:** 2026-02-27
@@ -14,13 +14,14 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 10-H.4
-- **Block Name:** Fix Size Guide visibility (Unitalla)
+- **Block Number:** 10-H.5
+- **Block Name:** Fix hash navigation completely
 - **Completed:** 2026-02-27
-- **Commit:** 964e1cb
+- **Commit:** 80a827f
 
 ### Files Changed
-- `components/producto/ProductDetail.tsx` — Refactored size selector to show "Guía de Tallas" even when `needsSize` is false (e.g., Gorras/Cinturones). Added "Talla Única" fallback display to maintain UI consistency.
+- `lib/hooks/useHashScroll.ts` — Replaced with robust retry mechanism up to 4.5s.
+- `components/layout/Navbar.tsx` — Applied handleNavClick correctly for category links so hash scrolling occurs across routes.
 
 ### Database Changes
 - None
@@ -76,6 +77,7 @@
 | 10-H.2 | Fix Size Guide whitelist & Checkout dual buttons | ✅ DONE | 2026-02-27 | a80630c |
 | 10-H.3 | Hash anchor navigation cross-route | ✅ DONE | 2026-02-27 | b4bb562 |
 | 10-H.4 | Fix Size Guide visibility (Unitalla) | ✅ DONE | 2026-02-27 | 964e1cb |
+| 10-H.5 | Fix hash navigation completely | ✅ DONE | 2026-02-27 | 80a827f |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
