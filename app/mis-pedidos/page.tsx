@@ -168,9 +168,9 @@ function OrderCard({ order }: { order: Order }) {
 
   return (
     <div className={`border-2 rounded-lg p-6 mb-6 bg-white ${order.status === 'pending' ? 'border-yellow-200 bg-yellow-50/30' :
-        order.status === 'completed' ? 'border-green-200 bg-green-50/30' :
-          order.status === 'cancelled' ? 'border-red-200 bg-red-50/30' :
-            'border-gray-200'
+      order.status === 'completed' ? 'border-green-200 bg-green-50/30' :
+        order.status === 'cancelled' ? 'border-red-200 bg-red-50/30' :
+          'border-gray-200'
       }`}>
       {/* Header: Order # + Date + Status */}
       <div className="flex items-start justify-between mb-4 pb-4 border-b border-gray-200 flex-wrap gap-4">
@@ -188,9 +188,9 @@ function OrderCard({ order }: { order: Order }) {
 
         {/* Status Badge */}
         <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${order.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
-            order.status === 'completed' ? 'bg-green-100 text-green-700' :
-              order.status === 'cancelled' ? 'bg-red-100 text-red-700' :
-                'bg-gray-100 text-gray-600'
+          order.status === 'completed' ? 'bg-green-100 text-green-700' :
+            order.status === 'cancelled' ? 'bg-red-100 text-red-700' :
+              'bg-gray-100 text-gray-600'
           }`}>
           {status.icon}
           {status.label}
@@ -205,14 +205,18 @@ function OrderCard({ order }: { order: Order }) {
             const product = resolveProduct(item)
             const imgSrc = resolveImage(item)
             return (
-              <div key={item.id} className="flex items-center gap-3">
+              <Link
+                key={item.id}
+                href={`/producto/${item.product_id}`}
+                className="flex items-center gap-3 group hover:bg-gray-50 p-2 -ml-2 rounded transition-colors"
+              >
                 <div className="relative w-16 h-16 bg-gray-100 rounded overflow-hidden shrink-0 border border-gray-200">
                   {imgSrc ? (
                     <Image
                       src={imgSrc}
                       alt={product?.name ?? 'Producto'}
                       fill
-                      className="object-cover"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
@@ -221,7 +225,7 @@ function OrderCard({ order }: { order: Order }) {
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-gray-900 text-sm truncate">
+                  <p className="font-medium text-gray-900 text-sm truncate group-hover:underline underline-offset-2">
                     {product?.name ?? 'Producto'}
                   </p>
                   <p className="text-xs text-gray-500">
@@ -232,7 +236,7 @@ function OrderCard({ order }: { order: Order }) {
                 <span className="text-sm font-bold text-gray-900">
                   Bs {(item.unit_price * item.quantity).toFixed(2)}
                 </span>
-              </div>
+              </Link>
             )
           })}
         </div>
@@ -250,12 +254,6 @@ function OrderCard({ order }: { order: Order }) {
 
       {/* Actions */}
       <div className="flex flex-col sm:flex-row items-center gap-2 pt-4 border-t border-gray-200">
-        <Link
-          href={`/pedido/${order.id}`}
-          className="w-full sm:flex-1 px-4 py-2.5 border border-gray-300 text-gray-700 text-sm font-bold uppercase tracking-wider hover:border-gray-900 hover:text-gray-900 transition-colors text-center rounded focus:outline-none focus:ring-2 focus:ring-gray-900"
-        >
-          Ver Detalles
-        </Link>
         <button
           onClick={handleReorder}
           disabled={isReordering}
