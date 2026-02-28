@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import Container from "@/components/ui/Container";
 import HeroBanner from "@/components/landing/HeroBanner";
 import TrustBanner from "@/components/landing/TrustBanner";
-import AnnouncementBar from "@/components/landing/AnnouncementBar";
+
 import PuestosSection from "@/components/home/PuestosSection";
 import { CatalogoClient } from "@/components/home/CatalogoClient";
 import TestimoniosSection from "@/components/home/TestimoniosSection";
@@ -46,7 +46,6 @@ export default async function Home() {
   return (
     <>
       <HeroBanner />
-      <AnnouncementBar />
       <TrustBanner />
 
       <PuestosSection />

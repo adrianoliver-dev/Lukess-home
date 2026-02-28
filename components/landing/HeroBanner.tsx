@@ -7,7 +7,7 @@ import Link from 'next/link';
 export default function HeroBanner(): React.JSX.Element {
     return (
         <section
-            className="relative w-full h-[75vh] min-h-[550px] md:h-[650px] max-h-[800px] @container bg-zinc-900 overflow-hidden"
+            className="relative w-full aspect-[3/4] md:aspect-video @container bg-zinc-900 overflow-hidden mx-auto max-w-[1920px]"
             aria-label="Promoción Principal"
         >
             {/* Background Images with Art Direction */}
@@ -20,7 +20,7 @@ export default function HeroBanner(): React.JSX.Element {
                     priority
                     className="object-cover object-top sm:hidden"
                     sizes="100vw"
-                    quality={85}
+                    quality={100}
                 />
                 {/* Desktop Asset (Horizontal 16:9) */}
                 <Image
@@ -30,10 +30,10 @@ export default function HeroBanner(): React.JSX.Element {
                     priority
                     className="hidden sm:block object-cover object-center"
                     sizes="100vw"
-                    quality={85}
+                    quality={100}
                 />
                 {/* WCAG Contrast Overlay: Bottom gradient for mobile, Right-to-Left gradient for Desktop */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent sm:bg-gradient-to-r sm:from-black/90 sm:via-black/50 sm:to-transparent z-10" aria-hidden="true" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent sm:bg-gradient-to-r sm:from-black/90 sm:via-black/50 sm:to-transparent z-10" aria-hidden="true" />
             </div>
 
             {/* Content Container */}
@@ -77,7 +77,7 @@ export default function HeroBanner(): React.JSX.Element {
                         <svg className="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                         </svg>
-                        <span>Envío Gratis en Santa Cruz</span>
+                        <span>Envío gratis por compras mayores a Bs 400</span>
                     </div>
                 </motion.div>
             </div>
