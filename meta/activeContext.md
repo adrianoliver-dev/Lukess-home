@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 10-J.1
-- **Block Name:** Fix Orders Page UX (broken link + clickable products)
+- **Block Number:** 10-J.2
+- **Block Name:** Fix Checkout shipping cost display (always numeric)
 - **Status:** ✅ DONE
 - **Started:** 2026-02-27
 - **Completed:** 2026-02-27
@@ -14,13 +14,13 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 10-J.1
-- **Block Name:** Fix Orders Page UX (broken link + clickable products)
+- **Block Number:** 10-J.2
+- **Block Name:** Fix Checkout shipping cost display (always numeric)
 - **Completed:** 2026-02-27
-- **Commit:** e771a97
+- **Commit:** a9d8f51
 
 ### Files Changed
-- `app/mis-pedidos/page.tsx` — Removed broken `/pedido/[id]` Ver Detalles link; wrapped order product rows in `Link` to `/producto/[id]` with hover zoom effect.
+- `components/cart/CheckoutModal.tsx` — Replaced verbose shipping ternary in Order Summary with clean always-numeric display (`Bs 0.00 (Envío gratis)`, `Bs 10.00`, `Bs 0.00 (Retiro en tienda)`).
 
 ### Database Changes
 - None
@@ -79,6 +79,7 @@
 | 10-H.5 | Fix hash navigation completely | ✅ DONE | 2026-02-27 | 80a827f |
 | 10-J | Wishlist & Orders Redesign | ✅ DONE | 2026-02-27 | b2675d6 |
 | 10-J.1 | Fix Orders Page UX (broken link + clickable products) | ✅ DONE | 2026-02-27 | e771a97 |
+| 10-J.2 | Fix Checkout shipping cost display (always numeric) | ✅ DONE | 2026-02-27 | a9d8f51 |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
