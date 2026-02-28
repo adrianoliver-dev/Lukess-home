@@ -99,6 +99,29 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   const [notifyByWhatsapp, setNotifyByWhatsapp] = useState(false)
   const [emailError, setEmailError] = useState('')
 
+  const [formData, setFormData] = useState<{
+    customerData: typeof customerData
+    deliveryMethod: DeliveryMethod
+    shippingAddress: string
+    shippingReference: string
+    pickupLocation: string
+    gpsLat: number | null
+    gpsLng: number | null
+    gpsDistanceKm: number | null
+    mapsLink: string
+    recipientName: string
+    recipientPhone: string
+    deliveryInstructions: string
+    discountCode: string
+    discountValidation: typeof discountValidation
+    shippingCost: number
+    orderTotal: number
+    appliedDiscountAmount: number
+    notifyByEmail: boolean
+    notifyByWhatsapp: boolean
+    marketingConsent: boolean
+  } | null>(null)
+
   // Delivery state
   const [deliveryMethod, setDeliveryMethod] = useState<DeliveryMethod>('delivery')
   const [shippingAddress, setShippingAddress] = useState('')
@@ -465,38 +488,74 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
       setPickupLocationError('')
     }
 
+    // Generate temporary order ID for QR display
+    const tempOrderId = crypto.randomUUID()
+    setOrderId(tempOrderId)
+
+    // Store form data for later
+    setFormData({
+      customerData: { ...customerData },
+      deliveryMethod,
+      shippingAddress,
+      shippingReference,
+      pickupLocation,
+      gpsLat,
+      gpsLng,
+      gpsDistanceKm,
+      mapsLink,
+      recipientName,
+      recipientPhone,
+      deliveryInstructions,
+      discountCode,
+      discountValidation: discountValidation ? { ...discountValidation } : null,
+      shippingCost,
+      orderTotal,
+      appliedDiscountAmount,
+      notifyByEmail,
+      notifyByWhatsapp,
+      marketingConsent,
+    })
+
+    setStep('qr')
+    scrollModalToTop()
+  }
+
+  const handlePaymentConfirmed = async () => {
+    if (!formData) {
+      toast.error('Error: datos del pedido no encontrados')
+      return
+    }
+
     setIsProcessing(true)
 
     try {
+      // NOW create the order in the database
       const response = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          website: customerData.website,
+          website: formData.customerData.website,
           user_id: user?.id ?? undefined,
-          customer_name: customerData.name,
-          customer_phone: customerData.phone.replace(/\s/g, ''),
-          customer_email: customerData.email,
-          marketing_consent: marketingConsent,
-          notify_email: notifyByEmail,
-          notify_whatsapp: notifyByWhatsapp,
+          customer_name: formData.customerData.name,
+          customer_phone: formData.customerData.phone.replace(/\s/g, ''),
+          customer_email: formData.customerData.email,
+          marketing_consent: formData.marketingConsent,
+          notify_email: formData.notifyByEmail,
+          notify_whatsapp: formData.notifyByWhatsapp,
           subtotal: total,
-          shipping_cost: shippingCost,
-          total: orderTotal,
-          delivery_method: deliveryMethod,
-          shipping_address: deliveryMethod === 'delivery' ? shippingAddress.trim() : null,
-          shipping_reference:
-            deliveryMethod === 'delivery' ? shippingReference.trim() || null : null,
-          pickup_location: deliveryMethod === 'pickup' ? pickupLocation : null,
-          gps_lat: gpsLat,
-          gps_lng: gpsLng,
-          gps_distance_km: gpsDistanceKm,
-          maps_link: mapsLink || null,
-          recipient_name: deliveryMethod === 'delivery' ? recipientName.trim() : null,
-          recipient_phone:
-            deliveryMethod === 'delivery' ? recipientPhone.replace(/\s/g, '') : null,
-          delivery_instructions:
-            deliveryMethod === 'delivery' ? deliveryInstructions.trim() || null : null,
+          shipping_cost: formData.shippingCost,
+          total: formData.orderTotal,
+          delivery_method: formData.deliveryMethod,
+          shipping_address: formData.deliveryMethod === 'delivery' ? formData.shippingAddress.trim() : null,
+          shipping_reference: formData.deliveryMethod === 'delivery' ? formData.shippingReference.trim() || null : null,
+          pickup_location: formData.deliveryMethod === 'pickup' ? formData.pickupLocation : null,
+          gps_lat: formData.gpsLat,
+          gps_lng: formData.gpsLng,
+          gps_distance_km: formData.gpsDistanceKm,
+          maps_link: formData.mapsLink || null,
+          recipient_name: formData.deliveryMethod === 'delivery' ? formData.recipientName.trim() : null,
+          recipient_phone: formData.deliveryMethod === 'delivery' ? formData.recipientPhone.replace(/\s/g, '') : null,
+          delivery_instructions: formData.deliveryMethod === 'delivery' ? formData.deliveryInstructions.trim() || null : null,
           items: cart.map((item) => ({
             product_id: item.product.id,
             quantity: item.quantity,
@@ -511,20 +570,16 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
       const data = await response.json()
 
       if (!response.ok) {
-        if (response.status === 429) {
-          toast.error(data.error || 'Demasiados pedidos. Intenta de nuevo en una hora.', {
-            position: 'bottom-center',
-          })
-        } else {
-          toast.error(data.error || 'Error al crear la orden', { position: 'bottom-center' })
-        }
+        toast.error(data.error || 'Error al crear la orden', { position: 'bottom-center' })
+        setIsProcessing(false)
         return
       }
 
-      const { orderId: newOrderId } = data
-      const shortId = newOrderId.slice(0, 8).toUpperCase()
-      setOrderId(newOrderId)
+      const { orderId: realOrderId } = data
+      const shortId = realOrderId.slice(0, 8).toUpperCase()
+      setOrderId(realOrderId) // Replace temp ID with real one
 
+      // Build WhatsApp message
       const productList = cart
         .map(
           (item) =>
@@ -533,134 +588,127 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
         .join('\n')
 
       const deliveryInfo =
-        deliveryMethod === 'delivery'
-          ? `\n\n📍 *Dirección:* ${shippingAddress}${shippingReference ? `\nRef: ${shippingReference}` : ''}\n👤 *Recibe:* ${recipientName} · ${recipientPhone}${deliveryInstructions.trim() ? `\n📝 Instrucciones: ${deliveryInstructions.trim()}` : ''}${mapsLink ? `\n📍 Ubicación exacta: ${mapsLink}` : ''}`
-          : `\n\n🏪 *Recojo en tienda:* ${PICKUP_LOCATIONS.find((p) => p.id === pickupLocation)?.name ?? pickupLocation}`
+        formData.deliveryMethod === 'delivery'
+          ? `\n\n📍 *Dirección:* ${formData.shippingAddress}${formData.shippingReference ? `\nRef: ${formData.shippingReference}` : ''}\n👤 *Recibe:* ${formData.recipientName} · ${formData.recipientPhone}${formData.deliveryInstructions.trim() ? `\n📝 Instrucciones: ${formData.deliveryInstructions.trim()}` : ''}${formData.mapsLink ? `\n📍 Ubicación exacta: ${formData.mapsLink}` : ''}`
+          : `\n\n🏪 *Recojo en tienda:* ${PICKUP_LOCATIONS.find((p) => p.id === formData.pickupLocation)?.name ?? formData.pickupLocation}`
 
-      const discountText = discountValidation?.valid
-        ? `\n💰 *Descuento:* -Bs ${appliedDiscountAmount.toFixed(2)} (${discountCode.toUpperCase()})`
+      const discountText = formData.discountValidation?.valid
+        ? `\n💰 *Descuento:* -Bs ${formData.appliedDiscountAmount.toFixed(2)} (${formData.discountCode.toUpperCase()})`
         : ''
 
       setWhatsappMessage(
         encodeURIComponent(
-          `Hola! Realicé el pedido #${shortId} por Bs ${orderTotal.toFixed(2)}.\n\n` +
+          `Hola! Realicé el pedido #${shortId} por Bs ${formData.orderTotal.toFixed(2)}.\n\n` +
           `🛍️ *Productos:*\n${productList}${discountText}${deliveryInfo}\n\n` +
           `Ya realicé el pago por QR. ¿Pueden confirmar? 🙏`,
         ),
       )
 
-      setStep('qr')
+      // NOW move to success step
+      setStep('success')
       scrollModalToTop()
-      toast.success('¡Orden creada! Procede al pago', { position: 'bottom-center', icon: '🎉' })
+      setShowConfetti(true)
+
+      // GA4 purchase event
+      trackPurchase({
+        orderId: realOrderId,
+        total: formData.orderTotal,
+        items: cart.map((item) => ({
+          id: item.product.id,
+          name: item.product.name,
+          price: item.product.price,
+          quantity: item.quantity,
+          category: item.product.categories?.name,
+        })),
+      })
+
+      // Fire-and-forget: confirmation email
+      if (formData.notifyByEmail && formData.customerData.email.trim()) {
+        fetch('/api/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'order_confirmation',
+            orderData: {
+              orderId: realOrderId,
+              customerName: formData.customerData.name,
+              customerEmail: formData.customerData.email,
+              customerPhone: formData.customerData.phone,
+              items: cart,
+              subtotal: total,
+              shippingCost: formData.shippingCost,
+              shippingDistance: formData.gpsDistanceKm,
+              deliveryAddress: formData.deliveryMethod === 'delivery' && formData.shippingAddress.trim() ? formData.shippingAddress.trim() : null,
+              locationUrl: formData.deliveryMethod === 'delivery' && formData.mapsLink ? formData.mapsLink : null,
+              discountAmount: formData.discountValidation?.valid ? formData.appliedDiscountAmount : 0,
+              discountCode: formData.discountValidation?.valid ? formData.discountCode.toUpperCase() : null,
+              total: formData.orderTotal,
+              notifyByEmail: true,
+              notifyByWhatsapp: formData.notifyByWhatsapp,
+            },
+          }),
+        }).catch((err) => console.error('[send-email] fetch error:', err))
+      }
+
+      // Reserve stock
+      fetch('/api/reserve-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId: realOrderId }),
+      }).catch((err) => console.error('[reserve-order] fetch error:', err))
+
+      // Admin notification
+      fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'admin_new_order',
+          orderData: {
+            orderId: realOrderId,
+            customerName: formData.customerData.name,
+            customerEmail: formData.customerData.email,
+            customerPhone: formData.customerData.phone,
+            items: cart,
+            subtotal: total,
+            shippingCost: formData.shippingCost,
+            shippingDistance: formData.gpsDistanceKm,
+            deliveryAddress: formData.deliveryMethod === 'delivery' && formData.shippingAddress.trim() ? formData.shippingAddress.trim() : null,
+            locationUrl: formData.deliveryMethod === 'delivery' && formData.mapsLink ? formData.mapsLink : null,
+            deliveryInstructions: formData.deliveryInstructions ?? null,
+            discountAmount: formData.discountValidation?.valid ? formData.appliedDiscountAmount : 0,
+            discountCode: formData.discountValidation?.valid ? formData.discountCode.toUpperCase() : null,
+            total: formData.orderTotal,
+            deliveryMethod: formData.deliveryMethod,
+            hasReceipt: receiptUploadState === 'success',
+          },
+        }),
+      }).catch((err) => console.error('[admin-email] fetch error:', err))
+
+      // WhatsApp notification
+      if (formData.notifyByWhatsapp && formData.customerData.phone.trim()) {
+        const rawPhone = formData.customerData.phone.trim().replace(/\D/g, '')
+        const formattedPhone = rawPhone.startsWith('591') ? rawPhone : `591${rawPhone}`
+
+        fetch('/api/send-whatsapp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            to: formattedPhone,
+            templateName: 'pedido_recibido',
+            variables: [
+              formData.customerData.name,
+              realOrderId.substring(0, 8).toUpperCase(),
+              formData.orderTotal.toFixed(2),
+            ],
+          }),
+        }).catch((err) => console.error('[whatsapp] fetch error:', err))
+      }
     } catch (error: unknown) {
       const msg = error instanceof Error ? error.message : 'Intenta de nuevo'
       console.error('Error creating order:', error)
       toast.error('Error al crear la orden: ' + msg, { position: 'bottom-center' })
     } finally {
       setIsProcessing(false)
-    }
-  }
-
-  const handlePaymentConfirmed = () => {
-    setStep('success')
-    scrollModalToTop()
-    setShowConfetti(true)
-
-    trackPurchase({
-      orderId,
-      total: orderTotal,
-      items: cart.map((item) => ({
-        id: item.product.id,
-        name: item.product.name,
-        price: item.product.price,
-        quantity: item.quantity,
-        category: item.product.categories?.name,
-      })),
-    })
-
-    // Fire-and-forget: email de confirmación al hacer click en "Ya Pagué"
-    if (notifyByEmail && customerData.email.trim()) {
-      fetch('/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          type: 'order_confirmation',
-          orderData: {
-            orderId,
-            customerName: customerData.name,
-            customerEmail: customerData.email,
-            customerPhone: customerData.phone,
-            items: cart,
-            subtotal: total,
-            shippingCost,
-            shippingDistance: gpsDistanceKm,
-            deliveryAddress: deliveryMethod === 'delivery' && shippingAddress.trim() ? shippingAddress.trim() : null,
-            locationUrl: deliveryMethod === 'delivery' && mapsLink ? mapsLink : null,
-            discountAmount: discountValidation?.valid ? appliedDiscountAmount : 0,
-            discountCode: discountValidation?.valid ? discountCode.toUpperCase() : null,
-            total: orderTotal,
-            notifyByEmail: true,
-            notifyByWhatsapp,
-          },
-        }),
-      }).catch((err) => console.error('[send-email] fetch error:', err))
-    }
-
-    // Fire-and-forget: reservar stock solo cuando el cliente confirma el pago
-    fetch('/api/reserve-order', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ orderId }),
-    }).catch((err) => console.error('[reserve-order] fetch error:', err))
-
-    // Fire-and-forget: notificar al admin del nuevo pedido
-    fetch('/api/send-email', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        type: 'admin_new_order',
-        orderData: {
-          orderId,
-          customerName: customerData.name,
-          customerEmail: customerData.email,
-          customerPhone: customerData.phone,
-          items: cart,
-          subtotal: total,
-          shippingCost,
-          shippingDistance: gpsDistanceKm,
-          deliveryAddress:
-            deliveryMethod === 'delivery' && shippingAddress.trim()
-              ? shippingAddress.trim()
-              : null,
-          locationUrl: deliveryMethod === 'delivery' && mapsLink ? mapsLink : null,
-          deliveryInstructions: deliveryInstructions ?? null,
-          discountAmount: discountValidation?.valid ? appliedDiscountAmount : 0,
-          discountCode: discountValidation?.valid ? discountCode.toUpperCase() : null,
-          total: orderTotal,
-          deliveryMethod,
-          hasReceipt: receiptUploadState === 'success',
-        },
-      }),
-    }).catch((err) => console.error('[admin-email] fetch error:', err))
-
-    // Fire-and-forget: mensaje WhatsApp al cliente si eligió esa notificación
-    if (notifyByWhatsapp && customerData.phone.trim()) {
-      const rawPhone = customerData.phone.trim().replace(/\D/g, '')
-      const formattedPhone = rawPhone.startsWith('591') ? rawPhone : `591${rawPhone}`
-
-      fetch('/api/send-whatsapp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          to: formattedPhone,
-          templateName: 'pedido_recibido',
-          variables: [
-            customerData.name,
-            orderId.substring(0, 8).toUpperCase(),
-            orderTotal.toFixed(2),
-          ],
-        }),
-      }).catch((err) => console.error('[whatsapp] fetch error:', err))
     }
   }
 

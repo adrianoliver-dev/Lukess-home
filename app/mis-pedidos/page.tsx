@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { Package, Search, Loader2, Shirt, ChevronRight, Clock, CheckCircle, RefreshCw, MessageCircle } from 'lucide-react'
+import { Package, Search, Loader2, Shirt, ChevronRight, Clock, CheckCircle, RefreshCw, MessageCircle, MapPin, Store, Truck } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/lib/context/AuthContext'
 import { useCart } from '@/lib/context/CartContext'
@@ -11,6 +11,42 @@ import Container from '@/components/ui/Container'
 import toast from 'react-hot-toast'
 import { Product } from '@/lib/types'
 import { buildWhatsAppUrl } from '@/lib/utils/whatsapp'
+import { PICKUP_LOCATIONS } from '@/lib/utils/shipping'
+
+function Countdown48h({ createdAt }: { createdAt: string }) {
+  const [timeLeft, setTimeLeft] = useState<string>('')
+
+  useEffect(() => {
+    const updateTimer = () => {
+      const created = new Date(createdAt).getTime()
+      const expiresAt = created + (48 * 60 * 60 * 1000) // 48 hours
+      const now = Date.now()
+      const diff = expiresAt - now
+
+      if (diff <= 0) {
+        setTimeLeft('Expirado')
+        return
+      }
+
+      const hours = Math.floor(diff / (1000 * 60 * 60))
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+
+      setTimeLeft(`${hours}h ${minutes}m restantes`)
+    }
+
+    updateTimer()
+    const interval = setInterval(updateTimer, 60000) // Update every minute
+
+    return () => clearInterval(interval)
+  }, [createdAt])
+
+  return (
+    <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-700 border border-amber-200">
+      <Clock className="w-3 h-3" />
+      {timeLeft}
+    </div>
+  )
+}
 
 type OrderStatus = 'pending' | 'confirmed' | 'shipped' | 'completed' | 'cancelled'
 
@@ -37,6 +73,11 @@ interface Order {
   created_at: string
   status: OrderStatus
   total: number
+  shipping_cost: number | null
+  delivery_method: 'delivery' | 'pickup' | null
+  shipping_address: string | null
+  maps_link: string | null
+  pickup_location: string | null
   order_items?: OrderItem[]
 }
 
@@ -45,6 +86,11 @@ const ORDER_SELECT = `
   created_at,
   status,
   total,
+  shipping_cost,
+  delivery_method,
+  shipping_address,
+  maps_link,
+  pickup_location,
   order_items (
     id,
     product_id,
@@ -187,13 +233,18 @@ function OrderCard({ order }: { order: Order }) {
         </div>
 
         {/* Status Badge */}
-        <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${order.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
-          order.status === 'completed' ? 'bg-green-100 text-green-700' :
-            order.status === 'cancelled' ? 'bg-red-100 text-red-700' :
-              'bg-gray-100 text-gray-600'
-          }`}>
-          {status.icon}
-          {status.label}
+        <div className="flex gap-2 items-center flex-wrap">
+          <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${order.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
+            order.status === 'completed' ? 'bg-green-100 text-green-700' :
+              order.status === 'cancelled' ? 'bg-red-100 text-red-700' :
+                'bg-gray-100 text-gray-600'
+            }`}>
+            {status.icon}
+            {status.label}
+          </div>
+          {order.delivery_method === 'pickup' && order.status === 'pending' && (
+            <Countdown48h createdAt={order.created_at} />
+          )}
         </div>
       </div>
 
@@ -241,14 +292,79 @@ function OrderCard({ order }: { order: Order }) {
           })}
         </div>
 
-        {/* Total */}
+        {/* Total with shipping breakdown */}
         <div className="flex flex-col items-start md:items-end justify-center pt-4 md:pt-0 md:pl-6 md:border-l border-gray-200">
-          <span className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-1">
-            Total
-          </span>
-          <span className="text-2xl font-black text-gray-900">
-            Bs {order.total.toFixed(2)}
-          </span>
+          <div className="space-y-1 text-right w-full">
+            <div className="text-xs text-gray-500">
+              Subtotal: Bs {(order.total - (order.shipping_cost || 0)).toFixed(2)}
+            </div>
+            <div className="text-xs text-gray-500">
+              Envío: {order.shipping_cost === 0 || !order.shipping_cost ? (
+                <span className="text-green-600 font-semibold">Gratis</span>
+              ) : (
+                `Bs ${order.shipping_cost.toFixed(2)}`
+              )}
+            </div>
+            <div className="border-t border-gray-200 pt-1">
+              <span className="text-xs font-bold uppercase tracking-wider text-gray-500 block mb-0.5">
+                Total
+              </span>
+              <span className="text-2xl font-black text-gray-900">
+                Bs {order.total.toFixed(2)}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Delivery/Pickup Info */}
+        <div className="col-span-full border-t border-gray-200 pt-3 mt-3 text-sm space-y-2">
+          {order.delivery_method === 'delivery' && order.shipping_address && (
+            <div className="flex items-start gap-2">
+              <Truck className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-0.5">
+                  Entrega a domicilio
+                </p>
+                <p className="text-sm text-gray-700">{order.shipping_address}</p>
+                {order.maps_link && (
+                  <a
+                    href={order.maps_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-accent-500 hover:underline inline-flex items-center gap-1 mt-1"
+                  >
+                    <MapPin className="w-3 h-3" />
+                    Ver ubicación en Maps
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
+
+          {order.delivery_method === 'pickup' && order.pickup_location && (
+            <div className="flex items-start gap-2">
+              <Store className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-0.5">
+                  Retiro en tienda
+                </p>
+                <p className="text-sm text-gray-700">
+                  {PICKUP_LOCATIONS.find(p => p.id === order.pickup_location)?.name || order.pickup_location}
+                </p>
+                {PICKUP_LOCATIONS.find(p => p.id === order.pickup_location) && (
+                  <a
+                    href={PICKUP_LOCATIONS.find(p => p.id === order.pickup_location)!.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-accent-500 hover:underline inline-flex items-center gap-1 mt-1"
+                  >
+                    <MapPin className="w-3 h-3" />
+                    Ver ubicación del puesto
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
