@@ -1,26 +1,28 @@
 # activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-02-27T18:34-04:00
+**Last Updated:** 2026-02-28T11:35-04:00
 **Updated By:** Antigravity Agent
 
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 10-J.2
-- **Block Name:** Fix Checkout shipping cost display (always numeric)
+- **Block Number:** 11-B
+- **Block Name:** Banner aspect ratio, swipe, hero removal, discount NaN fix
 - **Status:** ✅ DONE
-- **Started:** 2026-02-27
-- **Completed:** 2026-02-27
+- **Started:** 2026-02-28
+- **Completed:** 2026-02-28
 
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 10-J.2
-- **Block Name:** Fix Checkout shipping cost display (always numeric)
-- **Completed:** 2026-02-27
-- **Commit:** a9d8f51
+- **Block Number:** 11-B
+- **Block Name:** Banner aspect ratio, swipe, hero removal, discount NaN fix
+- **Completed:** 2026-02-28
+- **Commit:** f8bb2ed
 
 ### Files Changed
-- `components/cart/CheckoutModal.tsx` — Replaced verbose shipping ternary in Order Summary with clean always-numeric display (`Bs 0.00 (Envío gratis)`, `Bs 10.00`, `Bs 0.00 (Retiro en tienda)`).
+- `components/landing/BannerCarousel.tsx` — Replaced `h-[400px]/h-[600px]` with `aspect-[16/9] md:aspect-[21/9]`; added touch swipe handlers.
+- `app/page.tsx` — Removed `HeroSection` import and JSX usage.
+- `components/cart/CheckoutModal.tsx` — Fixed discount NaN (read `discount_percentage` with `Number()` guard). Changed `marketingConsent` default to `false`.
 
 ### Database Changes
 - None
@@ -80,6 +82,9 @@
 | 10-J | Wishlist & Orders Redesign | ✅ DONE | 2026-02-27 | b2675d6 |
 | 10-J.1 | Fix Orders Page UX (broken link + clickable products) | ✅ DONE | 2026-02-27 | e771a97 |
 | 10-J.2 | Fix Checkout shipping cost display (always numeric) | ✅ DONE | 2026-02-27 | a9d8f51 |
+| 10-K | Critical fixes for order flow and order history display | ✅ DONE | 2026-02-27 | f7ea6c2 |
+| 11-A | Dynamic Banner Carousel from Marketing CMS | ✅ DONE | 2026-02-28 | 35af00c |
+| 11-B | Banner aspect ratio, swipe, hero removal, discount NaN fix | ✅ DONE | 2026-02-28 | f8bb2ed |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |

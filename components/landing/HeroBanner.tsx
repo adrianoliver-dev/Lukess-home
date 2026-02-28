@@ -1,63 +1,86 @@
-import { createClient } from '@/lib/supabase/server'
-import BannerCarousel from './BannerCarousel'
-import Link from 'next/link'
+'use client';
 
-/* ─── Types ─── */
-interface Banner {
-    id: string
-    image_url: string
-    title: string | null
-    link: string | null
-    is_active: boolean
-    display_order: number
-    created_at: string
-}
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 
-/* ─── Fallback static hero shown when no banners exist ─── */
-function FallbackHero(): React.JSX.Element {
+export default function HeroBanner(): React.JSX.Element {
     return (
         <section
-            aria-label="Lukess Home — Bienvenida"
-            className="w-full h-[400px] md:h-[600px] bg-zinc-900 flex flex-col items-center justify-center text-center px-6"
+            className="relative w-full h-[75vh] min-h-[550px] md:h-[650px] max-h-[800px] @container bg-zinc-900 overflow-hidden"
+            aria-label="Promoción Principal"
         >
-            <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
-                Lukess <span className="text-amber-400">Home</span>
-            </h2>
-            <p className="text-zinc-400 text-base md:text-lg max-w-md mb-8">
-                Ropa masculina de marca al mejor precio de Santa Cruz
-            </p>
-            <Link
-                href="#catalogo"
-                className="inline-flex items-center justify-center bg-amber-400 hover:bg-amber-300 text-zinc-900 font-bold text-sm uppercase tracking-widest py-3 px-8 rounded-full transition-colors duration-200"
-            >
-                Ver Catálogo
-            </Link>
+            {/* Background Images with Art Direction */}
+            <div className="absolute inset-0 z-0 pointer-events-none">
+                {/* Mobile Asset (Vertical 3:4) */}
+                <Image
+                    src="/images/hero-mobile.webp"
+                    alt="Hombre vistiendo ropa casual premium frente a mall moderno en Santa Cruz"
+                    fill
+                    priority
+                    className="object-cover object-top sm:hidden"
+                    sizes="100vw"
+                    quality={85}
+                />
+                {/* Desktop Asset (Horizontal 16:9) */}
+                <Image
+                    src="/images/hero-desktop.webp"
+                    alt="Hombre vistiendo ropa casual premium frente a mall moderno en Santa Cruz"
+                    fill
+                    priority
+                    className="hidden sm:block object-cover object-center"
+                    sizes="100vw"
+                    quality={85}
+                />
+                {/* WCAG Contrast Overlay: Bottom gradient for mobile, Right-to-Left gradient for Desktop */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent sm:bg-gradient-to-r sm:from-black/90 sm:via-black/50 sm:to-transparent z-10" aria-hidden="true" />
+            </div>
+
+            {/* Content Container */}
+            <div className="relative z-20 flex flex-col justify-end h-full px-6 pb-12 mx-auto max-w-[1920px] w-full sm:px-12 md:px-16 md:justify-center">
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    className="max-w-xl"
+                >
+                    <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white lg:text-7xl drop-shadow-lg text-balance">
+                        Ropa Premium para el <span className="text-amber-400">Hombre Moderno</span>.
+                    </h1>
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+                    className="mt-4 max-w-lg"
+                >
+                    <p className="text-lg font-medium text-zinc-200 md:text-xl drop-shadow-md text-pretty">
+                        Eleva tu estilo con marcas globales auténticas. Seleccionado exclusivamente para Santa Cruz.
+                    </p>
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+                    className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-6"
+                >
+                    <Link
+                        href="#catalogo"
+                        className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-zinc-900 transition-all bg-white rounded-xl hover:scale-[1.03] hover:bg-zinc-100 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-zinc-300 active:scale-95"
+                    >
+                        Explorar la Colección
+                    </Link>
+                    <div className="flex items-center gap-2 text-sm font-bold text-zinc-300 drop-shadow-sm">
+                        <svg className="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Envío Gratis en Santa Cruz</span>
+                    </div>
+                </motion.div>
+            </div>
         </section>
-    )
-}
-
-/* ─── Server Component ─── */
-export default async function HeroBanner(): Promise<React.JSX.Element> {
-    let banners: Banner[] = []
-
-    try {
-        const supabase = await createClient()
-        const { data, error } = await supabase
-            .from('banners')
-            .select('id, image_url, title, link, is_active, display_order, created_at')
-            .eq('is_active', true)
-            .order('display_order', { ascending: true })
-
-        if (!error && data) {
-            banners = data
-        }
-    } catch {
-        // Silently fall back to static hero
-    }
-
-    if (banners.length === 0) {
-        return <FallbackHero />
-    }
-
-    return <BannerCarousel banners={banners} />
+    );
 }
