@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 10-H.5
-- **Block Name:** Fix hash navigation completely
+- **Block Number:** 10-J
+- **Block Name:** Wishlist & Orders Redesign
 - **Status:** ✅ DONE
 - **Started:** 2026-02-27
 - **Completed:** 2026-02-27
@@ -14,14 +14,14 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 10-H.5
-- **Block Name:** Fix hash navigation completely
+- **Block Number:** 10-J
+- **Block Name:** Wishlist & Orders Redesign
 - **Completed:** 2026-02-27
-- **Commit:** 78926ce
+- **Commit:** pending
 
 ### Files Changed
-- `lib/hooks/useHashScroll.ts` — Replaced with robust retry mechanism up to 4.5s.
-- `components/layout/Navbar.tsx` — Applied handleNavClick correctly for category links so hash scrolling occurs across routes.
+- `components/wishlist/WishlistClient.tsx` — Complete UI redesign with CRO CTAs, Add All To Cart button.
+- `app/mis-pedidos/page.tsx` — 6xl layout, modern order card state-based borders, new typography.
 
 ### Database Changes
 - None
@@ -78,6 +78,7 @@
 | 10-H.3 | Hash anchor navigation cross-route | ✅ DONE | 2026-02-27 | b4bb562 |
 | 10-H.4 | Fix Size Guide visibility (Unitalla) | ✅ DONE | 2026-02-27 | 964e1cb |
 | 10-H.5 | Fix hash navigation completely | ✅ DONE | 2026-02-27 | 80a827f |
+| 10-J | Wishlist & Orders Redesign | ✅ DONE | 2026-02-27 | pending |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
