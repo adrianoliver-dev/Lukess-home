@@ -1498,35 +1498,24 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         <div className="flex items-center justify-between text-sm">
                           <span className="text-gray-600">Envío:</span>
                           {deliveryMethod === 'pickup' ? (
-                            <span className="text-green-600 font-semibold">
-                              🏪 Retiro gratis en tienda
+                            <span className="text-gray-700 font-semibold">
+                              Bs 0.00 <span className="text-green-600 text-xs">(Retiro en tienda)</span>
                             </span>
                           ) : isOutOfRange ? (
                             <span className="text-red-600 font-medium text-xs">
-                              ⚠️ Fuera de zona · cotizar por WhatsApp
+                              Fuera de zona · cotizar por WhatsApp
                             </span>
-                          ) : gpsDistanceKm !== null ? (
-                            shippingCost === 0 ? (
-                              <span className="text-green-600 font-semibold">
-                                🎉 Envío gratis · pedido mayor a Bs {FREE_SHIPPING_THRESHOLD}
-                              </span>
-                            ) : (
-                              <span className="text-gray-700 font-medium">
-                                🛵 Bs {shippingCost.toFixed(2)} ·{' '}
-                                {shippingCost === 5
-                                  ? 'menos de 1 km'
-                                  : shippingCost === 10
-                                    ? 'menos de 3 km'
-                                    : shippingCost === 15
-                                      ? 'menos de 6 km'
-                                      : shippingCost === 20
-                                        ? 'menos de 10 km'
-                                        : 'menos de 20 km'}
-                              </span>
-                            )
-                          ) : (
+                          ) : locationState !== 'confirmed' ? (
                             <span className="text-amber-600 font-medium text-xs">
                               Pendiente ubicación
+                            </span>
+                          ) : shippingCost === 0 ? (
+                            <span className="text-gray-700 font-semibold">
+                              Bs 0.00 <span className="text-green-600 text-xs">(Envío gratis)</span>
+                            </span>
+                          ) : (
+                            <span className="text-gray-700 font-semibold">
+                              Bs {shippingCost.toFixed(2)}
                             </span>
                           )}
                         </div>
