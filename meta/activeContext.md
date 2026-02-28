@@ -1,12 +1,12 @@
 # activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-02-28T11:35-04:00
+**Last Updated:** 2026-02-28T17:36-04:00
 **Updated By:** Antigravity Agent
 
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 11-B
-- **Block Name:** Banner aspect ratio, swipe, hero removal, discount NaN fix
+- **Block Number:** 11-D
+- **Block Name:** Fix Hero CTA smooth scroll and Update Map links
 - **Status:** ✅ DONE
 - **Started:** 2026-02-28
 - **Completed:** 2026-02-28
@@ -14,21 +14,20 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 11-B
-- **Block Name:** Banner aspect ratio, swipe, hero removal, discount NaN fix
+- **Block Number:** 11-D
+- **Block Name:** Fix Hero CTA smooth scroll and Update Map links
 - **Completed:** 2026-02-28
-- **Commit:** f8bb2ed
+- **Commit:** pending
 
 ### Files Changed
-- `components/landing/BannerCarousel.tsx` — Replaced `h-[400px]/h-[600px]` with `aspect-[16/9] md:aspect-[21/9]`; added touch swipe handlers.
-- `app/page.tsx` — Removed `HeroSection` import and JSX usage.
-- `components/cart/CheckoutModal.tsx` — Fixed discount NaN (read `discount_percentage` with `Number()` guard). Changed `marketingConsent` default to `false`.
+- `components/landing/HeroBanner.tsx`
+- `components/home/UbicacionSection.tsx`
 
 ### Database Changes
 - None
 
 ### Build Verification
-✅ `npm run build` exit code 0 — 22 pages, no errors.
+Pending
 
 ---
 
@@ -85,6 +84,8 @@
 | 10-K | Critical fixes for order flow and order history display | ✅ DONE | 2026-02-27 | f7ea6c2 |
 | 11-A | Dynamic Banner Carousel from Marketing CMS | ✅ DONE | 2026-02-28 | 35af00c |
 | 11-B | Banner aspect ratio, swipe, hero removal, discount NaN fix | ✅ DONE | 2026-02-28 | f8bb2ed |
+| 11-B.2 | Static High-Conversion Hero Section | ✅ DONE | 2026-02-28 | 70dd180 |
+| 11-C | Fix Hero Aspect Ratio, Remove Announcement Bar, Shipping Copy | ✅ DONE | 2026-02-28 | adda433 |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |

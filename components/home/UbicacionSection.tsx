@@ -219,22 +219,44 @@ export default function UbicacionSection() {
                   className="w-full"
                 />
 
-                {/* Barra inferior */}
-                <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-100">
-                  <div className="flex items-center gap-2">
+                {/* Barra inferior con los 3 puestos */}
+                <div className="bg-white px-4 py-4 flex flex-col gap-3 border-t border-gray-100">
+                  <div className="flex items-center gap-2 mb-1">
                     <span className="w-2 h-2 rounded-full bg-gray-900 animate-pulse" />
-                    <span className="text-xs text-gray-500 font-medium">
-                      Mercado Mutualista
+                    <span className="text-sm text-gray-700 font-bold">
+                      Nuestros 3 Puestos en Google Maps:
                     </span>
                   </div>
-                  <a
-                    href="https://maps.app.goo.gl/hjBRWHtFGePRphPB9"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-gray-600 hover:text-gray-800 font-semibold transition-colors"
-                  >
-                    Abrir en Google Maps &rarr;
-                  </a>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <a
+                      href="https://maps.app.goo.gl/hjBRWHtFGePRphPB9"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 px-3 py-2 rounded-lg text-xs font-semibold transition-colors"
+                    >
+                      <MapPin className="w-3.5 h-3.5 text-red-500" />
+                      Puesto 1 (Caseta 47-48)
+                    </a>
+                    <a
+                      href="https://maps.app.goo.gl/C7HLiz6cWNjvMFh1A"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 px-3 py-2 rounded-lg text-xs font-semibold transition-colors"
+                    >
+                      <MapPin className="w-3.5 h-3.5 text-red-500" />
+                      Puesto 2 (Caseta 123)
+                    </a>
+                    <a
+                      href="https://maps.app.goo.gl/7nxUX1ofcJhmfWKC6"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 px-3 py-2 rounded-lg text-xs font-semibold transition-colors"
+                    >
+                      <MapPin className="w-3.5 h-3.5 text-red-500" />
+                      Puesto 3 (Caseta 228-229)
+                    </a>
+                  </div>
                 </div>
               </div>
             </motion.div>

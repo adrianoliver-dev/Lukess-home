@@ -67,12 +67,15 @@ export default function HeroBanner(): React.JSX.Element {
                     transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
                     className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-6"
                 >
-                    <Link
-                        href="#catalogo"
+                    <button
+                        onClick={(e) => {
+                            e.preventDefault();
+                            document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth' });
+                        }}
                         className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-zinc-900 transition-all bg-white rounded-xl hover:scale-[1.03] hover:bg-zinc-100 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-zinc-300 active:scale-95"
                     >
                         Explorar la Colección
-                    </Link>
+                    </button>
                     <div className="flex items-center gap-2 text-sm font-bold text-zinc-300 drop-shadow-sm">
                         <svg className="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
