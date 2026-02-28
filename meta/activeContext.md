@@ -17,14 +17,15 @@
 - **Block Number:** 11-D
 - **Block Name:** Fix Hero CTA smooth scroll and Update Map links
 - **Completed:** 2026-02-28
-- **Commit:** pending
+- **Commit:** a372606
 
 ### Files Changed
 - `components/landing/HeroBanner.tsx`
 - `components/home/UbicacionSection.tsx`
 
 ### Database Changes
-- None
+- Add `discount_code_id` (UUID, FK to discount_codes) and `discount_amount` (DECIMAL) to `orders` table.
+- Regenerated `types/database.types.ts`.
 
 ### Build Verification
 Pending
