@@ -6,27 +6,34 @@ export function useHashScroll() {
     const pathname = usePathname()
 
     useEffect(() => {
-        // Check if there's a hash in the URL
         const hash = window.location.hash
         if (!hash) return
 
-        // Wait for page to fully load and elements to be in DOM
-        const scrollToHash = () => {
+        const NAVBAR_OFFSET = 80
+        let attempts = 0
+        const MAX_ATTEMPTS = 30 // 30 * 150ms = 4.5 seconds max wait
+
+        const scrollToElement = () => {
             const element = document.querySelector(hash)
             if (element) {
-                // Smooth scroll with offset for fixed navbar
-                const yOffset = -80 // Adjust based on your navbar height
-                const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset
+                const y = element.getBoundingClientRect().top + window.pageYOffset - NAVBAR_OFFSET
                 window.scrollTo({ top: y, behavior: 'smooth' })
+                return true
+            }
+            return false
+        }
+
+        const tryWithRetry = () => {
+            if (scrollToElement()) return
+            attempts++
+            if (attempts < MAX_ATTEMPTS) {
+                setTimeout(tryWithRetry, 150)
             }
         }
 
-        // Try immediately
-        scrollToHash()
+        // Start trying after a short initial delay
+        const initialTimeout = setTimeout(tryWithRetry, 150)
 
-        // Also try after a short delay (for dynamic content)
-        const timeoutId = setTimeout(scrollToHash, 100)
-
-        return () => clearTimeout(timeoutId)
+        return () => clearTimeout(initialTimeout)
     }, [pathname])
 }

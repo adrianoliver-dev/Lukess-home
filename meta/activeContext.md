@@ -17,7 +17,7 @@
 - **Block Number:** 10-H.4
 - **Block Name:** Fix Size Guide visibility (Unitalla)
 - **Completed:** 2026-02-27
-- **Commit:** pending
+- **Commit:** 964e1cb
 
 ### Files Changed
 - `components/producto/ProductDetail.tsx` — Refactored size selector to show "Guía de Tallas" even when `needsSize` is false (e.g., Gorras/Cinturones). Added "Talla Única" fallback display to maintain UI consistency.
@@ -75,7 +75,7 @@
 | 10-H.1 | Fix Size Guide whitelist (belts/hats) | ✅ DONE | 2026-02-27 | a7ca5c4 |
 | 10-H.2 | Fix Size Guide whitelist & Checkout dual buttons | ✅ DONE | 2026-02-27 | a80630c |
 | 10-H.3 | Hash anchor navigation cross-route | ✅ DONE | 2026-02-27 | b4bb562 |
-| 10-H.4 | Fix Size Guide visibility (Unitalla) | ✅ DONE | 2026-02-27 | pending |
+| 10-H.4 | Fix Size Guide visibility (Unitalla) | ✅ DONE | 2026-02-27 | 964e1cb |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |

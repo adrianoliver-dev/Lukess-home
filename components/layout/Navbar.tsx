@@ -66,26 +66,30 @@ export default function Navbar() {
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string): void => {
     e.preventDefault();
 
-    const [hashBase, queryString] = href.split('?');
-    const id = hashBase.replace('/#', '');
+    // Extract hash: works for both /#contacto and /?filter=gorras#catalogo
+    const hashIndex = href.indexOf('#');
+    const hash = hashIndex !== -1 ? href.slice(hashIndex) : '';
+
+    setIsOpen(false);
 
     if (pathname !== '/') {
-      setIsOpen(false);
+      // Navigate to the page first, useHashScroll will handle scrolling
       router.push(href);
     } else {
-      setIsOpen(false);
+      // Already on /, just scroll
+      if (!hash) return;
+
+      // For filter links, push to update URL first
+      if (href.includes('?')) {
+        window.history.pushState(null, '', href);
+        window.dispatchEvent(new HashChangeEvent('hashchange'));
+      }
 
       setTimeout(() => {
-        const element = document.getElementById(id);
+        const element = document.querySelector(hash);
         if (element) {
-          const navbarHeight = 80;
-          const top = element.getBoundingClientRect().top + window.scrollY - navbarHeight;
-          window.scrollTo({ top, behavior: 'smooth' });
-
-          if (queryString) {
-            window.history.pushState(null, '', href);
-            window.dispatchEvent(new HashChangeEvent('hashchange'));
-          }
+          const y = element.getBoundingClientRect().top + window.pageYOffset - 80;
+          window.scrollTo({ top: y, behavior: 'smooth' });
         }
       }, 100);
     }
@@ -149,14 +153,14 @@ export default function Navbar() {
                 </button>
                 <div className="absolute top-full left-0 bg-white border border-gray-200 shadow-sm py-2 min-w-[200px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                   {categoryLinks.map((cat) => (
-                    <Link
+                    <a
                       key={cat.name}
                       href={cat.href}
-                      scroll={false}
+                      onClick={(e) => handleNavClick(e, cat.href)}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
                     >
                       {cat.name}
-                    </Link>
+                    </a>
                   ))}
                 </div>
               </div>
@@ -315,15 +319,14 @@ export default function Navbar() {
                 </div>
 
                 {categoryLinks.map((cat) => (
-                  <Link
+                  <a
                     key={cat.name}
                     href={cat.href}
-                    scroll={false}
-                    onClick={() => setIsOpen(false)}
+                    onClick={(e) => { handleNavClick(e, cat.href); setIsOpen(false); }}
                     className="block py-2.5 px-3 rounded-lg text-sm font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors"
                   >
                     {cat.name}
-                  </Link>
+                  </a>
                 ))}
 
                 {/* Divider */}
