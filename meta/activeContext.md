@@ -1,12 +1,12 @@
 # activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-03-01T18:15-04:00
+**Last Updated:** 2026-03-01T18:40-04:00
 **Updated By:** Antigravity Agent
 
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 15-C
-- **Block Name:** WhatsApp Typo Fix & Debug Logging
+- **Block Number:** 15-D
+- **Block Name:** WhatsApp Checkout Trigger Fix
 - **Status:** ✅ DONE
 - **Started:** 2026-03-01
 - **Completed:** 2026-03-01
@@ -14,15 +14,13 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 15-C
-- **Block Name:** WhatsApp Typo Fix & Debug Logging
-- **Commit:** 9aa7f5e
+- **Block Number:** 15-D
+- **Block Name:** WhatsApp Checkout Trigger Fix
+- **Commit:** 1a92b56
 
 ### Files Changed
-- `lib/utils/whatsapp.ts` (fixed contact number to 59172643753)
-- `components/cart/CheckoutModal.tsx` (updated number placeholders and added WhatsApp trigger debug log)
-- `app/api/send-whatsapp/route.ts` (added detailed request/response debug logs)
-- `app/api/checkout/route.ts` (added WhatsApp trigger debug log)
+- `app/api/checkout/route.ts` (moved WhatsApp API fetch trigger here for backend reliability)
+- `components/cart/CheckoutModal.tsx` (removed duplicate client-side trigger)
 
 ### Files Changed
 - `c:\LukessHome\lukess-landing-ecommerce\app\api\send-email\route.ts`
@@ -108,6 +106,7 @@
 | GA4-A | Vercel Web Analytics + Custom Conversion Events | ✅ DONE | 2026-03-01 | 83f1a91 |
 | 15-B | WhatsApp Header Images & Contact Number Update | ✅ DONE | 2026-03-01 | 622db3f |
 | 15-C | WhatsApp Typo Fix & Debug Logging | ✅ DONE | 2026-03-01 | 9aa7f5e |
+| 15-D | WhatsApp Checkout Trigger Fix | ✅ DONE | 2026-03-01 | 1a92b56 |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
