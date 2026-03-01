@@ -1,12 +1,12 @@
 # activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-03-01T16:56-04:00
+**Last Updated:** 2026-03-01T18:02-04:00
 **Updated By:** Antigravity Agent
 
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** GA4-A
-- **Block Name:** Vercel Web Analytics + Custom Conversion Events
+- **Block Number:** 15-B
+- **Block Name:** WhatsApp Header Images & Contact Number Update
 - **Status:** ✅ DONE
 - **Started:** 2026-03-01
 - **Completed:** 2026-03-01
@@ -14,14 +14,14 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** GA4-A
-- **Block Name:** Vercel Web Analytics + Custom Conversion Events
-- **Commit:** 83f1a91
+- **Block Number:** 15-B
+- **Block Name:** WhatsApp Header Images & Contact Number Update
+- **Commit:** 622db3f
 
 ### Files Changed
-- `c:\LukessHome\lukess-landing-ecommerce\lib\analytics.ts` (added Vercel `track()` calls alongside GA4)
-- `c:\LukessHome\lukess-landing-ecommerce\app\layout.tsx` (added `<Analytics />` provider)
-- `c:\LukessHome\lukess-landing-ecommerce\package.json` (added `@vercel/analytics`)
+- `app/api/send-whatsapp/route.ts` (headerImage header component support)
+- `lib/utils/whatsapp.ts` (WHATSAPP_NUMBER → 59172643763)
+- `public/images/entregado.png` (NEW — placeholder delivery confirmation image)
 
 ### Files Changed
 - `c:\LukessHome\lukess-landing-ecommerce\app\api\send-email\route.ts`
@@ -104,7 +104,8 @@
 | 13-F | Enforce Cart Stock Limits & Fix Expired Discounts | ✅ DONE | 2026-03-01 | pending |
 | 14-B | Fix Visual UX & Mis Pedidos | ✅ DONE | 2026-03-01 | 648d93b |
 | 14-C | Urgent Mobile UX Fixes | ✅ DONE | 2026-03-01 | d651e34 |
-| 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
+| GA4-A | Vercel Web Analytics + Custom Conversion Events | ✅ DONE | 2026-03-01 | 83f1a91 |
+| 15-B | WhatsApp Header Images & Contact Number Update | ✅ DONE | 2026-03-01 | 622db3f |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |

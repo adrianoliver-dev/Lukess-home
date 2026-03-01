@@ -443,7 +443,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
     const phoneRegex = /^\d{7,8}$/
     if (!phoneRegex.test(customerData.phone.replace(/\s/g, ''))) {
-      toast.error('Número de teléfono inválido (ej: 75516136)', { position: 'bottom-center' })
+      toast.error('Número de teléfono inválido (ej: 72643753)', { position: 'bottom-center' })
       return
     }
 
@@ -695,6 +695,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
         const rawPhone = formData.customerData.phone.trim().replace(/\D/g, '')
         const formattedPhone = rawPhone.startsWith('591') ? rawPhone : `591${rawPhone}`
 
+        console.log('[Checkout] Triggering WhatsApp for order:', realOrderId, 'Phone:', formattedPhone)
         fetch('/api/send-whatsapp', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -908,7 +909,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                               setCustomerData({ ...customerData, phone: e.target.value })
                             }
                             className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-gray-500 focus:outline-none"
-                            placeholder="75516136"
+                            placeholder="72643753"
                           />
                         </div>
 

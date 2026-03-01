@@ -22,6 +22,8 @@ export async function POST(req: NextRequest) {
       headerImage?: string
     }
 
+    console.log('[WhatsApp API] Incoming request:', { to, templateName, variables, headerImage })
+
     if (!to || !templateName || !Array.isArray(variables)) {
       return NextResponse.json(
         { error: 'Faltan campos requeridos: to, templateName, variables' },
@@ -81,9 +83,10 @@ export async function POST(req: NextRequest) {
     })
 
     const data = await response.json()
+    console.log('[WhatsApp API] Meta response:', { status: response.status, data })
 
     if (!response.ok) {
-      console.error('[send-whatsapp] Error de Meta API:', data)
+      console.error('[WhatsApp API] Meta Error:', data)
       return NextResponse.json(
         { error: data?.error?.message ?? 'Error al enviar WhatsApp' },
         { status: response.status, headers: corsHeaders },

@@ -303,6 +303,10 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    if (notify_whatsapp) {
+      console.log('[Checkout] Triggering WhatsApp for order:', order.id, 'Phone:', customer_phone)
+    }
+
     revalidatePath('/', 'page')
     revalidatePath('/producto/[id]', 'page')
 
