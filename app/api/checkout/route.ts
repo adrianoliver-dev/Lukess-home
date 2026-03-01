@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { revalidatePath } from 'next/cache'
+import { sendWhatsAppMessage } from '@/lib/whatsapp/send-message'
 
 // ── Rate limiting en memoria ──────────────────────────────────────────────────
 // Simple Map por email e IP. Se resetea al reiniciar el servidor.
@@ -308,20 +309,15 @@ export async function POST(req: NextRequest) {
       const rawPhone = customer_phone.replace(/\D/g, '')
       const formattedPhone = rawPhone.startsWith('591') ? rawPhone : `591${rawPhone}`
 
-      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || req.nextUrl.origin
-      fetch(`${baseUrl}/api/send-whatsapp`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          to: formattedPhone,
-          templateName: 'pedido_recibido',
-          variables: [
-            customer_name,
-            order.id.substring(0, 8).toUpperCase(),
-            total.toFixed(2),
-          ],
-        }),
-      }).catch((err) => console.error('[api/checkout] Error triggering WhatsApp:', err))
+      sendWhatsAppMessage({
+        to: formattedPhone,
+        templateName: 'pedido_recibido',
+        variables: [
+          customer_name,
+          order.id.substring(0, 8).toUpperCase(),
+          total.toFixed(2),
+        ],
+      }).catch((err) => console.error('[Checkout] WhatsApp Error:', err))
     }
 
     revalidatePath('/', 'page')

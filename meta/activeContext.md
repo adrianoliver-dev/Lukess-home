@@ -1,12 +1,12 @@
 # activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-03-01T18:40-04:00
+**Last Updated:** 2026-03-01T19:07-04:00
 **Updated By:** Antigravity Agent
 
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 15-D
-- **Block Name:** WhatsApp Checkout Trigger Fix
+- **Block Number:** 15-E
+- **Block Name:** Resolve Vercel 404 for send-whatsapp route
 - **Status:** ✅ DONE
 - **Started:** 2026-03-01
 - **Completed:** 2026-03-01
@@ -14,13 +14,12 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 15-D
-- **Block Name:** WhatsApp Checkout Trigger Fix
-- **Commit:** 1a92b56
+- **Block Number:** 15-E
+- **Block Name:** Resolve Vercel 404 for send-whatsapp route
+- **Commit:** 62d477d
 
 ### Files Changed
-- `app/api/checkout/route.ts` (moved WhatsApp API fetch trigger here for backend reliability)
-- `components/cart/CheckoutModal.tsx` (removed duplicate client-side trigger)
+- `app/api/send-whatsapp/route.ts` (Recreated with user-provided exact code to fix 404 error on Vercel)
 
 ### Files Changed
 - `c:\LukessHome\lukess-landing-ecommerce\app\api\send-email\route.ts`
@@ -107,6 +106,7 @@
 | 15-B | WhatsApp Header Images & Contact Number Update | ✅ DONE | 2026-03-01 | 622db3f |
 | 15-C | WhatsApp Typo Fix & Debug Logging | ✅ DONE | 2026-03-01 | 9aa7f5e |
 | 15-D | WhatsApp Checkout Trigger Fix | ✅ DONE | 2026-03-01 | 1a92b56 |
+| 15-E | Resolve Vercel 404 for send-whatsapp route | ✅ DONE | 2026-03-01 | 62d477d |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
