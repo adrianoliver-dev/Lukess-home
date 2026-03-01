@@ -17,7 +17,7 @@
 - **Block Number:** 13-C
 - **Block Name:** Consume discount code, fix Admin Email, update Navbar, and show discounts in Mis Pedidos
 - **Completed:** 2026-03-01
-- **Commit:** pending
+- **Commit:** bfe1e23
 
 ### Files Changed
 - `app/api/checkout/route.ts`
@@ -92,7 +92,7 @@
 | 11-C | Fix Hero Aspect Ratio, Remove Announcement Bar, Shipping Copy | ✅ DONE | 2026-02-28 | adda433 |
 | 11-D | Fix Hero CTA smooth scroll and Update Map links | ✅ DONE | 2026-02-28 | 630e701 |
 | 11-E (Part 2) | Fix Navbar Logo scroll behavior and remove redundant locations section | ✅ DONE | 2026-03-01 | pending |
-| 13-C | Consume discount code, fix Admin Email, update Navbar, and show discounts in Mis Pedidos | ✅ DONE | 2026-03-01 | pending |
+| 13-C | Consume discount code, fix Admin Email, update Navbar, and show discounts in Mis Pedidos | ✅ DONE | 2026-03-01 | bfe1e23 |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
