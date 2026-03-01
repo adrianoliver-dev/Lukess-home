@@ -71,6 +71,22 @@ export default function Navbar() {
 
     setIsOpen(false);
 
+    // Specific logic for Contacto link as requested
+    if (href === '/#cta') {
+      e.preventDefault();
+      if (pathname === '/') {
+        // If already on homepage, scroll smoothly to the CTA section
+        document.getElementById('contacto-cta')?.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        // If on another page, navigate to homepage then scroll
+        router.push('/');
+        setTimeout(() => {
+          document.getElementById('contacto-cta')?.scrollIntoView({ behavior: 'smooth' });
+        }, 500); // Give time for the page to render
+      }
+      return;
+    }
+
     if (pathname === '/') {
       e.preventDefault();
 

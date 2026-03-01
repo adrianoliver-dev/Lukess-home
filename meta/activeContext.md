@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 13-D
-- **Block Name:** Fix checkout 500 error schema mismatch and cross-page hash routing
+- **Block Number:** 13-E
+- **Block Name:** Navbar Contacto scroll & Discount max_uses validation
 - **Status:** ✅ DONE
 - **Started:** 2026-03-01
 - **Completed:** 2026-03-01
@@ -14,19 +14,18 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 13-D
-- **Block Name:** Fix checkout 500 error schema mismatch and cross-page hash routing
+- **Block Number:** 13-E
+- **Block Name:** Navbar Contacto scroll & Discount max_uses validation
 - **Completed:** 2026-03-01
 - **Commit:** pending
 
 ### Files Changed
-- `app/api/checkout/route.ts`
-- `components/cart/CheckoutModal.tsx`
 - `components/layout/Navbar.tsx`
+- `components/cart/CheckoutModal.tsx`
 - `meta/activeContext.md`
 
 ### Database Changes
-- None (Added rpc call to `consume_order_discount`)
+- None
 
 ### Build Verification
 - ✅ Next.js Build pass
@@ -92,6 +91,7 @@
 | 11-E (Part 2) | Fix Navbar Logo scroll behavior and remove redundant locations section | ✅ DONE | 2026-03-01 | pending |
 | 13-C | Consume discount code, fix Admin Email, update Navbar, and show discounts in Mis Pedidos | ✅ DONE | 2026-03-01 | bfe1e23 |
 | 13-D | Fix checkout 500 error schema mismatch and cross-page hash routing | ✅ DONE | 2026-03-01 | 6e11a4d |
+| 13-E | Navbar Contacto scroll & Discount max_uses validation | ✅ DONE | 2026-03-01 | pending |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |

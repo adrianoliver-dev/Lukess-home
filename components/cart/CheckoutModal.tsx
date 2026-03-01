@@ -360,7 +360,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
         return
       }
 
-      if (data.max_uses !== null && data.used_count !== null && data.used_count >= data.max_uses) {
+      if (data.max_uses !== null && data.usage_count !== null && data.usage_count >= data.max_uses) {
         setDiscountValidation({ valid: false, discount_type: null, discount_amount: 0, message: 'Límite de usos alcanzado' })
         return
       }
