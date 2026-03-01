@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 13-C
-- **Block Name:** Consume discount code, fix Admin Email, update Navbar, and show discounts in Mis Pedidos
+- **Block Number:** 13-D
+- **Block Name:** Fix checkout 500 error schema mismatch and cross-page hash routing
 - **Status:** ✅ DONE
 - **Started:** 2026-03-01
 - **Completed:** 2026-03-01
@@ -14,18 +14,16 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 13-C
-- **Block Name:** Consume discount code, fix Admin Email, update Navbar, and show discounts in Mis Pedidos
+- **Block Number:** 13-D
+- **Block Name:** Fix checkout 500 error schema mismatch and cross-page hash routing
 - **Completed:** 2026-03-01
-- **Commit:** bfe1e23
+- **Commit:** pending
 
 ### Files Changed
 - `app/api/checkout/route.ts`
-- `app/api/send-email/route.ts`
 - `components/cart/CheckoutModal.tsx`
-- `app/mis-pedidos/page.tsx`
 - `components/layout/Navbar.tsx`
-- `app/page.tsx`
+- `meta/activeContext.md`
 
 ### Database Changes
 - None (Added rpc call to `consume_order_discount`)
@@ -93,6 +91,7 @@
 | 11-D | Fix Hero CTA smooth scroll and Update Map links | ✅ DONE | 2026-02-28 | 630e701 |
 | 11-E (Part 2) | Fix Navbar Logo scroll behavior and remove redundant locations section | ✅ DONE | 2026-03-01 | pending |
 | 13-C | Consume discount code, fix Admin Email, update Navbar, and show discounts in Mis Pedidos | ✅ DONE | 2026-03-01 | bfe1e23 |
+| 13-D | Fix checkout 500 error schema mismatch and cross-page hash routing | ✅ DONE | 2026-03-01 | pending |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |

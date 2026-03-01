@@ -65,19 +65,15 @@ export default function Navbar() {
   }, [isOpen]);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string): void => {
-    e.preventDefault();
-
     // Extract hash: works for both /#contacto and /?filter=gorras#catalogo
     const hashIndex = href.indexOf('#');
     const hash = hashIndex !== -1 ? href.slice(hashIndex) : '';
 
     setIsOpen(false);
 
-    if (pathname !== '/') {
-      // Navigate to the page first, useHashScroll will handle scrolling
-      router.push(href);
-    } else {
-      // Already on /, just scroll
+    if (pathname === '/') {
+      e.preventDefault();
+
       if (!hash) return;
 
       // For filter links, push to update URL first
@@ -94,6 +90,7 @@ export default function Navbar() {
         }
       }, 100);
     }
+    // If not on '/', we don't prevent default, letting Next.js <Link> handle the cross-page navigation natively.
   };
 
   const handleSearch = (e: React.FormEvent): void => {

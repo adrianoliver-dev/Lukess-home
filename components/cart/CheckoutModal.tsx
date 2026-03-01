@@ -153,6 +153,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
     discount_type: 'percentage' | 'fixed' | null
     discount_amount: number
     message: string
+    discount_code_id?: string
   } | null>(null)
   const [isValidatingCode, setIsValidatingCode] = useState(false)
 
@@ -375,6 +376,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
         // The DB column is `discount_percentage` — guard with Number() to prevent NaN
         discount_amount: Number(data.discount_percentage ?? data.discount_amount ?? 0),
         message: 'Código aplicado con éxito',
+        discount_code_id: data.id,
       })
     } catch {
       setDiscountValidation({ valid: false, discount_type: null, discount_amount: 0, message: 'Error de conexión' })
@@ -558,6 +560,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
           recipient_phone: formData.deliveryMethod === 'delivery' ? formData.recipientPhone.replace(/\s/g, '') : null,
           delivery_instructions: formData.deliveryMethod === 'delivery' ? formData.deliveryInstructions.trim() || null : null,
           discount_amount: formData.discountValidation?.valid ? formData.appliedDiscountAmount : 0,
+          discount_code_id: formData.discountValidation?.valid ? formData.discountValidation.discount_code_id : null,
           discount_code: formData.discountValidation?.valid ? formData.discountCode.toUpperCase() : null,
           items: cart.map((item) => ({
             product_id: item.product.id,

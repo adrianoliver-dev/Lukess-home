@@ -74,6 +74,7 @@ export async function POST(req: NextRequest) {
       delivery_instructions,
       items,
       discount_amount,
+      discount_code_id,
       discount_code,
     } = body
 
@@ -248,8 +249,8 @@ export async function POST(req: NextRequest) {
         customer_email: customer_email,
         marketing_consent: marketing_consent ?? false,
         subtotal: subtotal ?? total,
-        discount: discount_amount ?? 0,
-        discount_code: discount_code ?? null,
+        discount_amount: discount_amount ?? 0,
+        discount_code_id: discount_code_id ?? null,
         shipping_cost: shipping_cost ?? 0,
         total: total,
         status: 'pending',
