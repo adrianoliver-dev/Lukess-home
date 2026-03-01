@@ -73,6 +73,8 @@ export async function POST(req: NextRequest) {
       recipient_phone,
       delivery_instructions,
       items,
+      discount_amount,
+      discount_code,
     } = body
 
     // A) Honeypot — bots llenan este campo, humanos no lo ven
@@ -246,7 +248,8 @@ export async function POST(req: NextRequest) {
         customer_email: customer_email,
         marketing_consent: marketing_consent ?? false,
         subtotal: subtotal ?? total,
-        discount: 0,
+        discount: discount_amount ?? 0,
+        discount_code: discount_code ?? null,
         shipping_cost: shipping_cost ?? 0,
         total: total,
         status: 'pending',
@@ -293,6 +296,15 @@ export async function POST(req: NextRequest) {
     const { error: itemsError } = await supabase.from('order_items').insert(orderItems)
 
     if (itemsError) throw itemsError
+
+    // Consumir el código de descuento si se aplicó uno
+    if (discount_code) {
+      const { error: discountError } = await supabase.rpc('consume_order_discount', { p_order_id: order.id });
+      if (discountError) {
+        console.error('[api/checkout] Error consumiendo descuento:', discountError);
+        // We log the error but don't fail the order creation
+      }
+    }
 
     revalidatePath('/', 'page')
     revalidatePath('/producto/[id]', 'page')

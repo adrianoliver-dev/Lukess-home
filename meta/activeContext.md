@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 11-E (Part 2)
-- **Block Name:** Fix Navbar Logo scroll behavior and remove redundant locations section
+- **Block Number:** 13-C
+- **Block Name:** Consume discount code, fix Admin Email, update Navbar, and show discounts in Mis Pedidos
 - **Status:** ✅ DONE
 - **Started:** 2026-03-01
 - **Completed:** 2026-03-01
@@ -14,22 +14,24 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 11-E (Part 2)
-- **Block Name:** Fix Navbar Logo scroll behavior and remove redundant locations section
+- **Block Number:** 13-C
+- **Block Name:** Consume discount code, fix Admin Email, update Navbar, and show discounts in Mis Pedidos
 - **Completed:** 2026-03-01
-- **Commit:** cfbf424
+- **Commit:** pending
 
 ### Files Changed
-- `app/page.tsx`
+- `app/api/checkout/route.ts`
+- `app/api/send-email/route.ts`
+- `components/cart/CheckoutModal.tsx`
+- `app/mis-pedidos/page.tsx`
 - `components/layout/Navbar.tsx`
-- `components/home/UbicacionSection.tsx`
+- `app/page.tsx`
 
 ### Database Changes
-- None
-
+- None (Added rpc call to `consume_order_discount`)
 
 ### Build Verification
-Pending
+- ✅ Next.js Build pass
 
 ---
 
@@ -90,6 +92,7 @@ Pending
 | 11-C | Fix Hero Aspect Ratio, Remove Announcement Bar, Shipping Copy | ✅ DONE | 2026-02-28 | adda433 |
 | 11-D | Fix Hero CTA smooth scroll and Update Map links | ✅ DONE | 2026-02-28 | 630e701 |
 | 11-E (Part 2) | Fix Navbar Logo scroll behavior and remove redundant locations section | ✅ DONE | 2026-03-01 | pending |
+| 13-C | Consume discount code, fix Admin Email, update Navbar, and show discounts in Mis Pedidos | ✅ DONE | 2026-03-01 | pending |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |

@@ -4,7 +4,6 @@ import HeroBanner from "@/components/landing/HeroBanner";
 import TrustBanner from "@/components/landing/TrustBanner";
 
 import { CatalogoClient } from "@/components/home/CatalogoClient";
-import TestimoniosSection from "@/components/home/TestimoniosSection";
 import UbicacionSection from "@/components/home/UbicacionSection";
 import CTAFinalSection from "@/components/home/CTAFinalSection";
 import { NewsletterPopup } from "@/components/marketing/NewsletterPopup";
@@ -48,7 +47,6 @@ export default async function Home() {
       <TrustBanner />
 
       <CatalogoClient initialProducts={products} />
-      <TestimoniosSection />
       <UbicacionSection />
       <CTAFinalSection />
 

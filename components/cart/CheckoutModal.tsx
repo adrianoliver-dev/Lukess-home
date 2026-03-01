@@ -557,6 +557,8 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
           recipient_name: formData.deliveryMethod === 'delivery' ? formData.recipientName.trim() : null,
           recipient_phone: formData.deliveryMethod === 'delivery' ? formData.recipientPhone.replace(/\s/g, '') : null,
           delivery_instructions: formData.deliveryMethod === 'delivery' ? formData.deliveryInstructions.trim() || null : null,
+          discount_amount: formData.discountValidation?.valid ? formData.appliedDiscountAmount : 0,
+          discount_code: formData.discountValidation?.valid ? formData.discountCode.toUpperCase() : null,
           items: cart.map((item) => ({
             product_id: item.product.id,
             quantity: item.quantity,
@@ -1624,6 +1626,11 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             className="rounded-lg w-full max-w-[280px] h-auto"
                           />
                         </div>
+                        {formData?.discountValidation?.valid && (
+                          <p className="text-xs text-amber-600 mt-2">
+                            Al confirmar, tu cupón de descuento se usará permanentemente.
+                          </p>
+                        )}
                       </div>
 
                       {/* ── Subir comprobante (opcional) ── */}

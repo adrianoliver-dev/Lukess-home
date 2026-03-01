@@ -407,6 +407,22 @@ function buildAdminNewOrderHtml(data: OrderEmailData): string {
           </tr>
           ` : ''}
           <tr style="background-color: #1a1a1a; border-bottom: 1px solid #2a2a2a;">
+            <td style="padding: 10px 16px; color: #888; font-size: 13px;">Subtotal</td>
+            <td style="padding: 10px 16px; color: #e0e0e0; font-size: 13px;">Bs ${(data.subtotal ?? data.total).toFixed(2)}</td>
+          </tr>
+          ${data.shippingCost ? `
+          <tr style="background-color: #1a1a1a; border-bottom: 1px solid #2a2a2a;">
+            <td style="padding: 10px 16px; color: #888; font-size: 13px;">Costo de Envío</td>
+            <td style="padding: 10px 16px; color: #e0e0e0; font-size: 13px;">Bs ${data.shippingCost.toFixed(2)}</td>
+          </tr>
+          ` : ''}
+          ${data.discountAmount ? `
+          <tr style="background-color: #1a1a1a; border-bottom: 1px solid #2a2a2a;">
+            <td style="padding: 10px 16px; color: #888; font-size: 13px;">Descuento Aplicado</td>
+            <td style="padding: 10px 16px; color: #4caf50; font-size: 13px;">-Bs ${data.discountAmount.toFixed(2)}</td>
+          </tr>
+          ` : ''}
+          <tr style="background-color: #1a1a1a; border-bottom: 1px solid #2a2a2a;">
             <td style="padding: 10px 16px; color: #888; font-size: 13px;">Total</td>
             <td style="padding: 10px 16px; color: #D4AF37; font-size: 15px; font-weight: 900;">Bs ${data.total.toFixed(2)}</td>
           </tr>
