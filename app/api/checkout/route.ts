@@ -303,8 +303,25 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    if (notify_whatsapp) {
+    if (notify_whatsapp && customer_phone) {
       console.log('[Checkout] Triggering WhatsApp for order:', order.id, 'Phone:', customer_phone)
+      const rawPhone = customer_phone.replace(/\D/g, '')
+      const formattedPhone = rawPhone.startsWith('591') ? rawPhone : `591${rawPhone}`
+
+      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || req.nextUrl.origin
+      fetch(`${baseUrl}/api/send-whatsapp`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: formattedPhone,
+          templateName: 'pedido_recibido',
+          variables: [
+            customer_name,
+            order.id.substring(0, 8).toUpperCase(),
+            total.toFixed(2),
+          ],
+        }),
+      }).catch((err) => console.error('[api/checkout] Error triggering WhatsApp:', err))
     }
 
     revalidatePath('/', 'page')

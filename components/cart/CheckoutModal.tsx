@@ -689,27 +689,6 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
           },
         }),
       }).catch((err) => console.error('[admin-email] fetch error:', err))
-
-      // WhatsApp notification
-      if (formData.notifyByWhatsapp && formData.customerData.phone.trim()) {
-        const rawPhone = formData.customerData.phone.trim().replace(/\D/g, '')
-        const formattedPhone = rawPhone.startsWith('591') ? rawPhone : `591${rawPhone}`
-
-        console.log('[Checkout] Triggering WhatsApp for order:', realOrderId, 'Phone:', formattedPhone)
-        fetch('/api/send-whatsapp', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            to: formattedPhone,
-            templateName: 'pedido_recibido',
-            variables: [
-              formData.customerData.name,
-              realOrderId.substring(0, 8).toUpperCase(),
-              formData.orderTotal.toFixed(2),
-            ],
-          }),
-        }).catch((err) => console.error('[whatsapp] fetch error:', err))
-      }
     } catch (error: unknown) {
       const msg = error instanceof Error ? error.message : 'Intenta de nuevo'
       console.error('Error creating order:', error)
