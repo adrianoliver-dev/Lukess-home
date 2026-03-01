@@ -15,10 +15,11 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json()
-    const { to, templateName, variables } = body as {
+    const { to, templateName, variables, headerImage } = body as {
       to: string
       templateName: string
       variables: string[]
+      headerImage?: string
     }
 
     if (!to || !templateName || !Array.isArray(variables)) {
@@ -42,6 +43,23 @@ export async function POST(req: NextRequest) {
 
     const url = `https://graph.facebook.com/${version}/${phoneNumberId}/messages`
 
+    const bodyComponent = {
+      type: 'body',
+      parameters: variables.map((v) => ({
+        type: 'text',
+        text: v,
+      })),
+    }
+
+    const components: object[] = []
+    if (headerImage) {
+      components.push({
+        type: 'header',
+        parameters: [{ type: 'image', image: { link: headerImage } }],
+      })
+    }
+    components.push(bodyComponent)
+
     const payload = {
       messaging_product: 'whatsapp',
       to,
@@ -49,15 +67,7 @@ export async function POST(req: NextRequest) {
       template: {
         name: templateName,
         language: { code: 'es' },
-        components: [
-          {
-            type: 'body',
-            parameters: variables.map((v) => ({
-              type: 'text',
-              text: v,
-            })),
-          },
-        ],
+        components,
       },
     }
 
@@ -71,7 +81,6 @@ export async function POST(req: NextRequest) {
     })
 
     const data = await response.json()
-    console.log('[send-whatsapp] Respuesta Meta API:', JSON.stringify(data))
 
     if (!response.ok) {
       console.error('[send-whatsapp] Error de Meta API:', data)

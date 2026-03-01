@@ -1,12 +1,12 @@
 # activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-02-28T17:36-04:00
+**Last Updated:** 2026-03-01T16:56-04:00
 **Updated By:** Antigravity Agent
 
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 13-A
-- **Block Name:** Welcome Email & Discount Code
+- **Block Number:** GA4-A
+- **Block Name:** Vercel Web Analytics + Custom Conversion Events
 - **Status:** ✅ DONE
 - **Started:** 2026-03-01
 - **Completed:** 2026-03-01
@@ -14,9 +14,14 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 13-A
-- **Block Name:** Welcome Email with Unique Discount Code
-- **Commit:** pending
+- **Block Number:** GA4-A
+- **Block Name:** Vercel Web Analytics + Custom Conversion Events
+- **Commit:** 83f1a91
+
+### Files Changed
+- `c:\LukessHome\lukess-landing-ecommerce\lib\analytics.ts` (added Vercel `track()` calls alongside GA4)
+- `c:\LukessHome\lukess-landing-ecommerce\app\layout.tsx` (added `<Analytics />` provider)
+- `c:\LukessHome\lukess-landing-ecommerce\package.json` (added `@vercel/analytics`)
 
 ### Files Changed
 - `c:\LukessHome\lukess-landing-ecommerce\app\api\send-email\route.ts`
