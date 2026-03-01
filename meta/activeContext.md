@@ -91,7 +91,7 @@
 | 11-D | Fix Hero CTA smooth scroll and Update Map links | ✅ DONE | 2026-02-28 | 630e701 |
 | 11-E (Part 2) | Fix Navbar Logo scroll behavior and remove redundant locations section | ✅ DONE | 2026-03-01 | pending |
 | 13-C | Consume discount code, fix Admin Email, update Navbar, and show discounts in Mis Pedidos | ✅ DONE | 2026-03-01 | bfe1e23 |
-| 13-D | Fix checkout 500 error schema mismatch and cross-page hash routing | ✅ DONE | 2026-03-01 | pending |
+| 13-D | Fix checkout 500 error schema mismatch and cross-page hash routing | ✅ DONE | 2026-03-01 | 6e11a4d |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
