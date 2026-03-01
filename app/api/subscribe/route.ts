@@ -8,63 +8,78 @@ const CORS_HEADERS = {
     'Access-Control-Allow-Headers': 'Content-Type',
 }
 
-export async function OPTIONS() {
+export async function OPTIONS(): Promise<Response> {
     return new Response(null, { status: 200, headers: CORS_HEADERS })
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest): Promise<NextResponse> {
     try {
-        const { email, source } = await req.json()
+        const body = await req.json()
+        const { email, source } = body as { email: string; source?: string }
 
         if (!email || !email.includes('@')) {
             return NextResponse.json({ error: 'Email inválido' }, { status: 400, headers: CORS_HEADERS })
         }
 
+        // Use SERVICE_ROLE to bypass RLS policies on server-side insertions
         const supabase = createClient(
             process.env.NEXT_PUBLIC_SUPABASE_URL!,
             process.env.SUPABASE_SERVICE_ROLE_KEY!
         )
 
-        // Insert subscriber
+        // Attempt to insert subscriber
         const { error: insertError } = await supabase
             .from('subscribers')
-            .insert({ email: email.trim().toLowerCase(), source: source || 'api' })
+            .insert({ email: email.trim().toLowerCase(), source: source ?? 'api' })
 
         if (insertError) {
             if (insertError.code === '23505') {
-                // Already subscribed
+                // Already subscribed — not an error for the user, just skip
                 return NextResponse.json({ error: 'already_subscribed' }, { status: 409, headers: CORS_HEADERS })
             }
-            throw insertError
+            console.error('[api/subscribe] Supabase insert error:', insertError)
+            throw new Error(insertError.message)
         }
 
-        // Generate unique discount code
+        // Generate unique welcome discount code
         const discountCode = await generateWelcomeDiscount()
 
         if (!discountCode) {
-            throw new Error('No se pudo generar el código de descuento')
+            // Non-fatal: subscriber was created, discount failed — log and continue
+            console.error('[api/subscribe] Failed to generate discount code for:', email)
         }
 
-        // Send welcome email via internal route matching fetch (or directly)
-        // To send it directly calling our own route, or we can just fetch it:
-        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || req.nextUrl.origin
+        // Fire welcome email — wrapped in its own try/catch so email failures never crash the response
+        if (discountCode) {
+            try {
+                const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? req.nextUrl.origin
+                const emailRes = await fetch(`${baseUrl}/api/send-email`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: 'welcome_email',
+                        orderData: {
+                            customerEmail: email,
+                            discountCode,
+                        },
+                    }),
+                })
+                if (!emailRes.ok) {
+                    const errBody = await emailRes.text()
+                    console.error('[api/subscribe] Resend error response:', errBody)
+                }
+            } catch (emailErr) {
+                console.error('[api/subscribe] Resend threw exception:', emailErr)
+            }
+        }
 
-        // We do not wait for the email as it's non-blocking (fire and forget)
-        fetch(`${baseUrl}/api/send-email`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                type: 'welcome_email',
-                orderData: {
-                    customerEmail: email,
-                    discountCode: discountCode,
-                },
-            }),
-        }).catch(err => console.error('[api/subscribe] Error triggering email:', err))
-
-        return NextResponse.json({ success: true, discountCode }, { headers: CORS_HEADERS })
-    } catch (error: any) {
-        console.error('[api/subscribe] Error:', error)
-        return NextResponse.json({ error: error.message || 'Server error' }, { status: 500, headers: CORS_HEADERS })
+        return NextResponse.json(
+            { success: true, discountCode: discountCode ?? null },
+            { headers: CORS_HEADERS }
+        )
+    } catch (error: unknown) {
+        const msg = error instanceof Error ? error.message : 'Server error'
+        console.error('[api/subscribe] Unhandled error:', error)
+        return NextResponse.json({ error: msg }, { status: 500, headers: CORS_HEADERS })
     }
 }
