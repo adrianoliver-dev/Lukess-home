@@ -1,12 +1,12 @@
 # activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-03-01T18:02-04:00
+**Last Updated:** 2026-03-01T18:15-04:00
 **Updated By:** Antigravity Agent
 
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 15-B
-- **Block Name:** WhatsApp Header Images & Contact Number Update
+- **Block Number:** 15-C
+- **Block Name:** WhatsApp Typo Fix & Debug Logging
 - **Status:** ✅ DONE
 - **Started:** 2026-03-01
 - **Completed:** 2026-03-01
@@ -14,14 +14,15 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 15-B
-- **Block Name:** WhatsApp Header Images & Contact Number Update
-- **Commit:** 622db3f
+- **Block Number:** 15-C
+- **Block Name:** WhatsApp Typo Fix & Debug Logging
+- **Commit:** 9aa7f5e
 
 ### Files Changed
-- `app/api/send-whatsapp/route.ts` (headerImage header component support)
-- `lib/utils/whatsapp.ts` (WHATSAPP_NUMBER → 59172643763)
-- `public/images/entregado.png` (NEW — placeholder delivery confirmation image)
+- `lib/utils/whatsapp.ts` (fixed contact number to 59172643753)
+- `components/cart/CheckoutModal.tsx` (updated number placeholders and added WhatsApp trigger debug log)
+- `app/api/send-whatsapp/route.ts` (added detailed request/response debug logs)
+- `app/api/checkout/route.ts` (added WhatsApp trigger debug log)
 
 ### Files Changed
 - `c:\LukessHome\lukess-landing-ecommerce\app\api\send-email\route.ts`
@@ -106,6 +107,7 @@
 | 14-C | Urgent Mobile UX Fixes | ✅ DONE | 2026-03-01 | d651e34 |
 | GA4-A | Vercel Web Analytics + Custom Conversion Events | ✅ DONE | 2026-03-01 | 83f1a91 |
 | 15-B | WhatsApp Header Images & Contact Number Update | ✅ DONE | 2026-03-01 | 622db3f |
+| 15-C | WhatsApp Typo Fix & Debug Logging | ✅ DONE | 2026-03-01 | 9aa7f5e |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
