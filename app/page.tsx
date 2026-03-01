@@ -3,7 +3,6 @@ import Container from "@/components/ui/Container";
 import HeroBanner from "@/components/landing/HeroBanner";
 import TrustBanner from "@/components/landing/TrustBanner";
 
-import PuestosSection from "@/components/home/PuestosSection";
 import { CatalogoClient } from "@/components/home/CatalogoClient";
 import TestimoniosSection from "@/components/home/TestimoniosSection";
 import UbicacionSection from "@/components/home/UbicacionSection";
@@ -48,7 +47,6 @@ export default async function Home() {
       <HeroBanner />
       <TrustBanner />
 
-      <PuestosSection />
       <CatalogoClient initialProducts={products} />
       <TestimoniosSection />
       <UbicacionSection />

@@ -5,27 +5,28 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 11-D
-- **Block Name:** Fix Hero CTA smooth scroll and Update Map links
+- **Block Number:** 11-E (Part 2)
+- **Block Name:** Fix Navbar Logo scroll behavior and remove redundant locations section
 - **Status:** ✅ DONE
-- **Started:** 2026-02-28
-- **Completed:** 2026-02-28
+- **Started:** 2026-03-01
+- **Completed:** 2026-03-01
 
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 11-D
-- **Block Name:** Fix Hero CTA smooth scroll and Update Map links
-- **Completed:** 2026-02-28
-- **Commit:** a372606
+- **Block Number:** 11-E (Part 2)
+- **Block Name:** Fix Navbar Logo scroll behavior and remove redundant locations section
+- **Completed:** 2026-03-01
+- **Commit:** pending
 
 ### Files Changed
-- `components/landing/HeroBanner.tsx`
+- `app/page.tsx`
+- `components/layout/Navbar.tsx`
 - `components/home/UbicacionSection.tsx`
 
 ### Database Changes
-- Add `discount_code_id` (UUID, FK to discount_codes) and `discount_amount` (DECIMAL) to `orders` table.
-- Regenerated `types/database.types.ts`.
+- None
+
 
 ### Build Verification
 Pending
@@ -87,6 +88,8 @@ Pending
 | 11-B | Banner aspect ratio, swipe, hero removal, discount NaN fix | ✅ DONE | 2026-02-28 | f8bb2ed |
 | 11-B.2 | Static High-Conversion Hero Section | ✅ DONE | 2026-02-28 | 70dd180 |
 | 11-C | Fix Hero Aspect Ratio, Remove Announcement Bar, Shipping Copy | ✅ DONE | 2026-02-28 | adda433 |
+| 11-D | Fix Hero CTA smooth scroll and Update Map links | ✅ DONE | 2026-02-28 | 630e701 |
+| 11-E (Part 2) | Fix Navbar Logo scroll behavior and remove redundant locations section | ✅ DONE | 2026-03-01 | pending |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |

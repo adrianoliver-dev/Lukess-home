@@ -131,6 +131,12 @@ export default function Navbar() {
             {/* Logo */}
             <Link
               href="/"
+              onClick={(e) => {
+                if (window.location.pathname === '/') {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
               className="flex items-center gap-1.5 shrink-0 hover:opacity-80 transition-opacity"
             >
               <span className="text-xl sm:text-2xl font-extrabold tracking-tight text-gray-900">
