@@ -1,3 +1,5 @@
+import { track } from '@vercel/analytics'
+
 declare global {
   interface Window {
     gtag: (...args: unknown[]) => void
@@ -43,6 +45,11 @@ export function trackAddToCart(product: {
   quantity: number
   category?: string
 }): void {
+  try {
+    track('add_to_cart', { product_id: product.id, product_name: product.name, quantity: product.quantity })
+  } catch {
+    // non-blocking
+  }
   try {
     if (!isGtagReady()) return
     window.gtag('event', 'add_to_cart', {
@@ -98,6 +105,11 @@ export function trackBeginCheckout(cart: {
   total: number
 }): void {
   try {
+    track('started_checkout', { item_count: cart.items.length, value: cart.total })
+  } catch {
+    // non-blocking
+  }
+  try {
     if (!isGtagReady()) return
     window.gtag('event', 'begin_checkout', {
       currency: 'BOB',
@@ -125,6 +137,11 @@ export function trackPurchase(order: {
     category?: string
   }>
 }): void {
+  try {
+    track('completed_purchase', { value: order.total, order_id: order.orderId })
+  } catch {
+    // non-blocking
+  }
   try {
     if (!isGtagReady()) return
     window.gtag('event', 'purchase', {

@@ -8,6 +8,7 @@ import { CartProvider } from "@/lib/context/CartContext";
 import { WishlistProvider } from "@/lib/context/WishlistContext";
 import { AuthProvider } from "@/lib/context/AuthContext";
 import { Toaster } from "react-hot-toast";
+import { Analytics } from '@vercel/analytics/react'
 import { HashScrollHandler } from "@/components/layout/HashScrollHandler";
 
 const inter = Inter({
@@ -129,6 +130,7 @@ export default function RootLayout({
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
         )}
+        <Analytics />
       </body>
     </html>
   );
