@@ -12,6 +12,7 @@ import toast from 'react-hot-toast'
 import { ProductGallery } from './ProductGallery'
 import { SizeGuideModal } from './SizeGuideModal'
 import { buildWhatsAppUrl } from '@/lib/utils/whatsapp'
+import { hasActiveDiscount as hasDiscount, getDiscount, getPriceWithDiscount } from '@/lib/utils/price'
 
 interface ProductDetailProps {
   product: Product
@@ -54,20 +55,6 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
     return result
   }
 
-  // Funciones para descuentos
-  const getDiscount = (p: Product): number => {
-    return p.discount || p.discount_percentage || 0
-  }
-
-  const hasDiscount = (p: Product): boolean => {
-    return getDiscount(p) > 0
-  }
-
-  const getPriceWithDiscount = (p: Product): number => {
-    const discount = getDiscount(p)
-    return p.price * (1 - discount / 100)
-  }
-
   const categoryName = product.categories?.name || ''
   const normalizeText = (text: string) =>
     text.toLowerCase()
@@ -83,6 +70,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
   const stockBySize = getStockBySize(product)
   const isOutOfStock = stock === 0
   const discount = getDiscount(product)
+
   // Tallas reales: excluir vacíos y 'Unitalla' (accesorio sin talla real)
   const INTERNAL_SIZES = ['Unitalla', 'Única', 'Unico']
   const validSizes = (product.sizes ?? []).filter(

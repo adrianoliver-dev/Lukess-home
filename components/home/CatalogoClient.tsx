@@ -14,6 +14,7 @@ import { FilterSidebar, type Filters } from '@/components/catalogo/FilterSidebar
 import { ProductBadges } from '@/components/catalogo/ProductBadges'
 import { WishlistButton } from '@/components/wishlist/WishlistButton'
 import { buildWhatsAppUrl } from '@/lib/utils/whatsapp'
+import { hasActiveDiscount as hasDiscount, getDiscount, getPriceWithDiscount } from '@/lib/utils/price'
 
 interface CatalogoClientProps {
   initialProducts: Product[]
@@ -210,29 +211,11 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
     )
   }, [])
 
-  // Función para verificar si tiene descuento activo (con expiración)
-  const hasDiscount = useCallback((product: Product): boolean => {
-    const hasValue = !!(product.discount && product.discount > 0) || !!(product.discount_percentage && product.discount_percentage > 0)
-    if (!hasValue) return false
-    return !product.discount_expires_at || new Date(product.discount_expires_at) > new Date()
-  }, [])
-
-  // Función para obtener el porcentaje de descuento
-  const getDiscount = useCallback((product: Product): number => {
-    return product.discount || product.discount_percentage || 0
-  }, [])
-
-  // Función para calcular precio con descuento
-  const getPriceWithDiscount = useCallback((product: Product): number => {
-    const discount = getDiscount(product)
-    return product.price * (1 - discount / 100)
-  }, [getDiscount])
-
   // Función para calcular ahorro
   const getSavings = useCallback((product: Product): number => {
     const discount = getDiscount(product)
     return product.price * (discount / 100)
-  }, [getDiscount])
+  }, [])
 
   // Extraer categorías únicas
   const categories = useMemo(() => {
@@ -383,7 +366,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
     })
 
     return sorted
-  }, [selectedCategories, selectedSubcategories, selectedBrands, selectedColors, stockFilter, showNew, showDiscount, showCollection, searchQuery, sidebarFilters, initialProducts, getTotalStock, isProductNew, hasDiscount, sortOrder, getPriceWithDiscount])
+  }, [selectedCategories, selectedSubcategories, selectedBrands, selectedColors, stockFilter, showNew, showDiscount, showCollection, searchQuery, sidebarFilters, initialProducts, getTotalStock, isProductNew])
 
   // Contar filtros activos
   const activeFiltersCount = useMemo(() => {

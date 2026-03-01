@@ -14,6 +14,7 @@ import toast from 'react-hot-toast'
 import { ProductBadges } from '@/components/catalogo/ProductBadges'
 import { AuthModal } from '@/components/auth/AuthModal'
 import { buildWhatsAppUrl } from '@/lib/utils/whatsapp'
+import { hasActiveDiscount as hasDiscount, getDiscount, getPriceWithDiscount } from '@/lib/utils/price'
 
 interface WishlistClientProps {
   allProducts: Product[]
@@ -33,19 +34,6 @@ export function WishlistClient({ allProducts }: WishlistClientProps) {
 
   const getTotalStock = (product: Product): number => {
     return product.inventory?.reduce((sum, inv) => sum + inv.quantity, 0) || 0
-  }
-
-  const getDiscount = (product: Product): number => {
-    return product.discount || product.discount_percentage || 0
-  }
-
-  const getPriceWithDiscount = (product: Product): number => {
-    const discount = getDiscount(product)
-    return product.price * (1 - discount / 100)
-  }
-
-  const hasDiscount = (product: Product): boolean => {
-    return !!(product.discount && product.discount > 0) || !!(product.discount_percentage && product.discount_percentage > 0)
   }
 
   const handleAddToCart = (product: Product) => {

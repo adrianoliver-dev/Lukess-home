@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 13-E
-- **Block Name:** Navbar Contacto scroll & Discount max_uses validation
+- **Block Number:** 13-F
+- **Block Name:** Enforce Cart Stock Limits & Fix Expired Discounts
 - **Status:** ✅ DONE
 - **Started:** 2026-03-01
 - **Completed:** 2026-03-01
@@ -14,14 +14,18 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 13-E
-- **Block Name:** Navbar Contacto scroll & Discount max_uses validation
+- **Block Number:** 13-F
+- **Block Name:** Enforce Cart Stock Limits & Fix Expired Discounts
 - **Completed:** 2026-03-01
 - **Commit:** pending
 
 ### Files Changed
-- `components/layout/Navbar.tsx`
-- `components/cart/CheckoutModal.tsx`
+- `lib/utils/price.ts`
+- `lib/context/CartContext.tsx`
+- `components/cart/CartDrawer.tsx`
+- `components/home/CatalogoClient.tsx`
+- `components/producto/ProductDetail.tsx`
+- `components/wishlist/WishlistClient.tsx`
 - `meta/activeContext.md`
 
 ### Database Changes
@@ -92,6 +96,7 @@
 | 13-C | Consume discount code, fix Admin Email, update Navbar, and show discounts in Mis Pedidos | ✅ DONE | 2026-03-01 | bfe1e23 |
 | 13-D | Fix checkout 500 error schema mismatch and cross-page hash routing | ✅ DONE | 2026-03-01 | 6e11a4d |
 | 13-E | Navbar Contacto scroll & Discount max_uses validation | ✅ DONE | 2026-03-01 | b04e084 |
+| 13-F | Enforce Cart Stock Limits & Fix Expired Discounts | ✅ DONE | 2026-03-01 | pending |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |

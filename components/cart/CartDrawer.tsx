@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from 'motion/react'
 import Image from 'next/image'
 import { FREE_SHIPPING_THRESHOLD } from '@/lib/utils/shipping'
 
+import { hasActiveDiscount, getPriceWithDiscount } from '@/lib/utils/price'
+import { Product } from '@/lib/types'
+
 interface CartDrawerProps {
   isOpen: boolean
   onClose: () => void
@@ -13,6 +16,17 @@ interface CartDrawerProps {
 
 export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
   const { cart, removeFromCart, updateQuantity, total, itemCount } = useCart()
+
+  const getAvailableStock = (product: Product, size?: string): number => {
+    if (!product.inventory || product.inventory.length === 0) return 0
+    if (size) {
+      return product.inventory
+        .filter(inv => inv.size === size)
+        .reduce((sum, inv) => sum + Math.max(0, inv.quantity - (inv.reserved_qty ?? 0)), 0)
+    }
+    return product.inventory
+      .reduce((sum, inv) => sum + Math.max(0, inv.quantity - (inv.reserved_qty ?? 0)), 0)
+  }
 
   return (
     <AnimatePresence>
@@ -62,67 +76,72 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  {cart.map((item) => (
-                    <div key={item.id} className="flex gap-3 p-3 bg-gray-50 rounded-lg">
-                      {/* Image */}
-                      <div className="relative w-20 h-20 flex-shrink-0 bg-white rounded-lg overflow-hidden">
-                        <Image
-                          src={item.product.image_url || '/placeholder.png'}
-                          alt={item.product.name}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
+                  {cart.map((item) => {
+                    const availableStock = getAvailableStock(item.product, item.size)
 
-                      {/* Info */}
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-sm text-gray-900 truncate">
-                          {item.product.name}
-                        </h3>
-                        <div className="flex items-center gap-2 mt-1 text-xs text-gray-600">
-                          {item.size && <span className="bg-gray-200 px-2 py-0.5 rounded">Talla: {item.size}</span>}
-                          {item.color && <span className="bg-gray-200 px-2 py-0.5 rounded">Color: {item.color}</span>}
+                    return (
+                      <div key={item.id} className="flex gap-3 p-3 bg-gray-50 rounded-lg">
+                        {/* Image */}
+                        <div className="relative w-20 h-20 flex-shrink-0 bg-white rounded-lg overflow-hidden">
+                          <Image
+                            src={item.product.image_url || '/placeholder.png'}
+                            alt={item.product.name}
+                            fill
+                            className="object-cover"
+                          />
                         </div>
-                        {(item.product.discount || item.product.discount_percentage) ? (
-                          <div className="flex items-baseline gap-2 mt-1">
-                            <p className="text-gray-900 font-bold">
-                              Bs {(item.product.price * (1 - (item.product.discount || item.product.discount_percentage || 0) / 100)).toFixed(2)}
-                            </p>
-                            <p className="text-gray-400 text-xs line-through">
+
+                        {/* Info */}
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-semibold text-sm text-gray-900 truncate">
+                            {item.product.name}
+                          </h3>
+                          <div className="flex items-center gap-2 mt-1 text-xs text-gray-600">
+                            {item.size && <span className="bg-gray-200 px-2 py-0.5 rounded">Talla: {item.size}</span>}
+                            {item.color && <span className="bg-gray-200 px-2 py-0.5 rounded">Color: {item.color}</span>}
+                          </div>
+                          {hasActiveDiscount(item.product) ? (
+                            <div className="flex items-baseline gap-2 mt-1">
+                              <p className="text-gray-900 font-bold">
+                                Bs {getPriceWithDiscount(item.product).toFixed(2)}
+                              </p>
+                              <p className="text-gray-400 text-xs line-through">
+                                Bs {item.product.price.toFixed(2)}
+                              </p>
+                            </div>
+                          ) : (
+                            <p className="text-gray-900 font-bold mt-1">
                               Bs {item.product.price.toFixed(2)}
                             </p>
-                          </div>
-                        ) : (
-                          <p className="text-gray-900 font-bold mt-1">
-                            Bs {item.product.price.toFixed(2)}
-                          </p>
-                        )}
+                          )}
 
-                        {/* Quantity Controls */}
-                        <div className="flex items-center gap-2 mt-2">
-                          <button
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="w-7 h-7 flex items-center justify-center bg-white border-2 border-gray-300 rounded-lg hover:border-gray-500 transition-colors"
-                          >
-                            <Minus className="w-4 h-4" />
-                          </button>
-                          <span className="w-8 text-center font-bold">{item.quantity}</span>
-                          <button
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="w-7 h-7 flex items-center justify-center bg-white border-2 border-gray-300 rounded-lg hover:border-gray-500 transition-colors"
-                          >
-                            <Plus className="w-4 h-4" />
-                          </button>
-                          <button
-                            onClick={() => removeFromCart(item.id)}
-                            className="ml-auto p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
+                          {/* Quantity Controls */}
+                          <div className="flex items-center gap-2 mt-2">
+                            <button
+                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                              className="w-7 h-7 flex items-center justify-center bg-white border-2 border-gray-300 rounded-lg hover:border-gray-500 transition-colors"
+                            >
+                              <Minus className="w-4 h-4" />
+                            </button>
+                            <span className="w-8 text-center font-bold">{item.quantity}</span>
+                            <button
+                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              disabled={item.quantity >= availableStock}
+                              className="w-7 h-7 flex items-center justify-center bg-white border-2 border-gray-300 rounded-lg hover:border-gray-500 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                            >
+                              <Plus className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => removeFromCart(item.id)}
+                              className="ml-auto p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
               )}
             </div>

@@ -3,6 +3,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import toast from 'react-hot-toast'
 import { CartItem, Product } from '@/lib/types'
 import { trackAddToCart, trackRemoveFromCart } from '@/lib/analytics'
+import { getPriceWithDiscount } from '@/lib/utils/price'
 
 interface CartContextType {
   cart: CartItem[]
@@ -64,7 +65,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
 
     if (currentQtyInCart + quantity > availableStock) {
-      toast.error(`Solo hay ${availableStock} unidad${availableStock !== 1 ? 'es' : ''} disponible${availableStock !== 1 ? 's' : ''}`, {
+      toast.error('Stock máximo alcanzado para esta talla', {
         position: 'bottom-center',
       })
       return
@@ -112,19 +113,27 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (quantity <= 0) {
       removeFromCart(itemId)
     } else {
-      setCart(cart.map(item =>
-        item.id === itemId ? { ...item, quantity } : item
-      ))
+      const item = cart.find(i => i.id === itemId)
+      if (item) {
+        const availableStock = getAvailableStock(item.product, item.size)
+        if (quantity > availableStock) {
+          toast.error('Stock máximo alcanzado para esta talla', {
+            position: 'bottom-center',
+          })
+          setCart(cart.map(i =>
+            i.id === itemId ? { ...i, quantity: availableStock } : i
+          ))
+        } else {
+          setCart(cart.map(i =>
+            i.id === itemId ? { ...i, quantity } : i
+          ))
+        }
+      }
     }
   }
 
   const clearCart = () => {
     setCart([])
-  }
-
-  const getPriceWithDiscount = (product: Product): number => {
-    const discount = product.discount || product.discount_percentage || 0
-    return product.price * (1 - discount / 100)
   }
 
   const total = cart.reduce((sum, item) => sum + (getPriceWithDiscount(item.product) * item.quantity), 0)
