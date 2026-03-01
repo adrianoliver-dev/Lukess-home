@@ -24,15 +24,15 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
           src={images[currentIndex]}
           alt={`${productName} - Imagen ${currentIndex + 1}`}
           fill
-          className="object-cover"
+          className="object-contain"
           priority={currentIndex === 0}
           sizes="(max-width: 768px) 100vw, 50vw"
         />
-        
+
         {/* Botón zoom */}
         <button
           onClick={() => setIsZoomed(true)}
-          className="absolute top-4 right-4 p-2 bg-white/90 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg hover:bg-white"
+          className="hidden md:flex items-center justify-center absolute top-4 right-4 p-2 bg-white/90 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg hover:bg-white"
           aria-label="Ampliar imagen"
         >
           <ZoomIn className="w-5 h-5 text-gray-800" />
@@ -64,9 +64,8 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
             {images.map((_, i) => (
               <div
                 key={i}
-                className={`h-1.5 rounded-full transition-all ${
-                  i === currentIndex ? 'bg-white w-6' : 'bg-white/50 w-1.5'
-                }`}
+                className={`h-1.5 rounded-full transition-all ${i === currentIndex ? 'bg-white w-6' : 'bg-white/50 w-1.5'
+                  }`}
               />
             ))}
           </div>
@@ -80,9 +79,8 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
             <button
               key={i}
               onClick={() => setCurrentIndex(i)}
-              className={`relative aspect-square rounded-md overflow-hidden border-2 transition-all hover:border-gray-600 ${
-                i === currentIndex ? 'border-gray-800' : 'border-gray-200'
-              }`}
+              className={`relative aspect-square rounded-md overflow-hidden border-2 transition-all hover:border-gray-600 ${i === currentIndex ? 'border-gray-800' : 'border-gray-200'
+                }`}
               aria-label={`Ver imagen ${i + 1}`}
             >
               <Image
@@ -115,7 +113,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
             >
               <X className="w-6 h-6" />
             </button>
-            
+
             <div className="relative w-full h-full max-w-5xl max-h-[90vh]">
               <Image
                 src={images[currentIndex]}

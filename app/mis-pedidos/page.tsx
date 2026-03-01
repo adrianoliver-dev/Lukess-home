@@ -75,6 +75,7 @@ interface Order {
   total: number
   shipping_cost: number | null
   discount: number | null
+  discount_amount: number | null
   delivery_method: 'delivery' | 'pickup' | null
   shipping_address: string | null
   maps_link: string | null
@@ -89,6 +90,7 @@ const ORDER_SELECT = `
   total,
   shipping_cost,
   discount,
+  discount_amount,
   delivery_method,
   shipping_address,
   maps_link,
@@ -298,11 +300,11 @@ function OrderCard({ order }: { order: Order }) {
         <div className="flex flex-col items-start md:items-end justify-center pt-4 md:pt-0 md:pl-6 md:border-l border-gray-200">
           <div className="space-y-1 text-right w-full">
             <div className="text-xs text-gray-500">
-              Subtotal: Bs {(order.total - (order.shipping_cost || 0) + (order.discount || 0)).toFixed(2)}
+              Subtotal: Bs {(order.total - (order.shipping_cost || 0) + (order.discount_amount || order.discount || 0)).toFixed(2)}
             </div>
-            {order.discount && order.discount > 0 ? (
+            {(order.discount_amount || order.discount) && (order.discount_amount || order.discount)! > 0 ? (
               <div className="text-xs text-red-500">
-                Descuento: -Bs {order.discount.toFixed(2)}
+                Descuento: -Bs {(order.discount_amount || order.discount)!.toFixed(2)}
               </div>
             ) : null}
             <div className="text-xs text-gray-500">

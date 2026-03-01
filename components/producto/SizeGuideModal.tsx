@@ -134,7 +134,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                       : 'text-gray-600 hover:text-gray-900'
                       }`}
                   >
-                    Camisas / Polos
+                    Prendas Superiores
                     {activeTab === 'camisas' && (
                       <motion.div
                         layoutId="activeTab"
@@ -150,7 +150,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                       : 'text-gray-600 hover:text-gray-900'
                       }`}
                   >
-                    Pantalones
+                    Prendas Inferiores
                     {activeTab === 'pantalones' && (
                       <motion.div
                         layoutId="activeTab"
@@ -230,7 +230,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                       </p>
 
                       {/* Tabla responsive */}
-                      <div className="overflow-x-auto">
+                      <div className="overflow-x-auto w-full">
                         <table className="w-full border-collapse">
                           <thead>
                             <tr className="bg-gray-100">
@@ -304,7 +304,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                       </p>
 
                       {/* Tabla responsive */}
-                      <div className="overflow-x-auto">
+                      <div className="overflow-x-auto w-full">
                         <table className="w-full border-collapse">
                           <thead>
                             <tr className="bg-gray-100">
@@ -376,7 +376,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                         Para elegir tu talla correcta, puedes usar la medida de pantalón que
                         normalmente usas.
                       </p>
-                      <div className="overflow-x-auto">
+                      <div className="overflow-x-auto w-full">
                         <table className="w-full border-collapse">
                           <thead>
                             <tr className="bg-gray-100">
@@ -422,7 +422,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                       </p>
 
                       <h4 className="font-semibold text-gray-900 mt-2 mb-2">Sombreros</h4>
-                      <div className="overflow-x-auto mb-6">
+                      <div className="overflow-x-auto w-full mb-6">
                         <table className="w-full border-collapse">
                           <thead>
                             <tr className="bg-gray-100">
@@ -450,7 +450,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                       </div>
 
                       <h4 className="font-semibold text-gray-900 mt-2 mb-2">Gorras</h4>
-                      <div className="overflow-x-auto">
+                      <div className="overflow-x-auto w-full">
                         <table className="w-full border-collapse">
                           <thead>
                             <tr className="bg-gray-100">

@@ -409,7 +409,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                           src={p.image_url || '/placeholder.png'}
                           alt={p.name}
                           fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          className="object-contain group-hover:scale-105 transition-transform duration-500"
                         />
                         {relatedStock === 0 && (
                           <div className="absolute top-2 left-2 bg-gray-900 text-white px-2 py-1 text-xs font-semibold">
