@@ -5,7 +5,6 @@ import { Mail, MapPin, Phone, Send, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import { buildWhatsAppUrl, formatWhatsAppNumber } from '@/lib/utils/whatsapp'
-import { createClient } from '@/lib/supabase/client'
 
 const shopLinks = [
   { href: '/?filter=camisas#catalogo', label: 'Camisas' },
@@ -36,18 +35,23 @@ export default function Footer() {
 
     setIsSubmitting(true)
     try {
-      const supabase = createClient()
-      const { error } = await supabase
-        .from('subscribers')
-        .insert({ email: email.trim().toLowerCase(), source: 'footer' })
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim().toLowerCase(), source: 'footer' })
+      })
 
-      if (error?.code === '23505') {
+      const data = await res.json()
+
+      if (res.status === 409) {
         toast('Ya estás suscrito 😊')
         setEmail('')
         return
       }
-      if (error) throw error
-      toast.success('¡Suscripción exitosa!')
+
+      if (!res.ok) throw new Error(data.error || 'Error al suscribir')
+
+      toast.success('¡Suscripción exitosa! Revisa tu email.')
       setEmail('')
     } catch {
       toast.error('Error al suscribir, intenta de nuevo')

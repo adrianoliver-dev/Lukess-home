@@ -225,18 +225,14 @@ export async function POST(req: NextRequest) {
       customerId = guestCustomer?.id ?? null
     }
 
-    // Upsert subscriber si hay consentimiento y hay email
+    // Suscribir si hay consentimiento y hay email (usando el endpoint centralizado)
     if (marketing_consent && customer_email) {
-      await supabase
-        .from('subscribers')
-        .upsert(
-          {
-            email: customer_email,
-            name: customer_name.trim(),
-            source: 'checkout',
-          },
-          { onConflict: 'email', ignoreDuplicates: true }
-        )
+      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || req.nextUrl.origin
+      fetch(`${baseUrl}/api/subscribe`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: customer_email, source: 'checkout' })
+      }).catch(err => console.error('[api/checkout] Error calling subscribe:', err))
     }
 
     // Crear orden

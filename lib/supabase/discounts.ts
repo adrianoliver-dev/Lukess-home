@@ -1,0 +1,34 @@
+import { createClient } from '@supabase/supabase-js'
+
+export async function generateWelcomeDiscount(): Promise<string | null> {
+    try {
+        const supabase = createClient(
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.SUPABASE_SERVICE_ROLE_KEY!
+        )
+
+        const suffix = Math.random().toString(36).substring(2, 6).toUpperCase()
+        const code = `BIENVENIDO-${suffix}`
+
+        const { error } = await supabase.from('discount_codes').insert({
+            code,
+            type: 'percentage',
+            value: 10,
+            max_uses: 1,
+            current_uses: 0,
+            expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+            active: true,
+            description: 'Descuento de bienvenida por suscripción al newsletter'
+        })
+
+        if (error) {
+            console.error('[generateWelcomeDiscount] Error:', error)
+            return null
+        }
+
+        return code
+    } catch (err) {
+        console.error('[generateWelcomeDiscount] Exception:', err)
+        return null
+    }
+}

@@ -243,6 +243,43 @@ function wrapEmail(rows: string): string {
 
 // ── Email builders ─────────────────────────────────────────────────────────────
 
+function buildWelcomeEmailHtml(discountCode: string): string {
+  const rows = `
+    ${buildHeader()}
+    <tr>
+      <td style="padding: 40px 40px 20px; text-align: center;">
+        <h2 style="margin: 0; font-size: 24px; font-weight: 700; color: #f0f0f0;">¡Bienvenido a Lukess Home!</h2>
+        <p style="margin: 16px 0 0; font-size: 15px; color: #aaaaaa; line-height: 1.6;">
+          Gracias por unirte a nuestra comunidad. A partir de ahora recibirás nuestras promociones exclusivas, nuevas colecciones y avisos de stock antes que nadie.
+        </p>
+        <p style="margin: 16px 0 0; font-size: 15px; color: #e0e0e0; line-height: 1.6; font-weight: 600;">
+          Para celebrar tu llegada, aquí tienes un 10% de descuento en tu próxima compra.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding: 20px 40px;">
+        <div style="background-color: #111; border: 2px dashed #D4AF37; border-radius: 12px; padding: 24px; text-align: center;">
+          <p style="margin: 0; font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 2px;">Código de Descuento</p>
+          <p style="margin: 12px 0 0; font-size: 32px; font-weight: 900; color: #D4AF37; letter-spacing: 2px;">${discountCode}</p>
+        </div>
+        <div style="text-align: center; margin-top: 12px;">
+          <p style="margin: 0; font-size: 12px; color: #666;">* Válido por 7 días. De un solo uso.</p>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding: 20px 40px 40px; text-align: center;">
+        <a href="https://lukess-home.vercel.app" style="display: inline-block; background-color: #D4AF37; color: #111; font-size: 14px; font-weight: 900; padding: 16px 32px; border-radius: 8px; text-decoration: none; letter-spacing: 0.5px;">
+          Explorar la Tienda →
+        </a>
+      </td>
+    </tr>
+    ${buildFooter()}
+  `
+  return wrapEmail(rows)
+}
+
 function buildOrderConfirmationHtml(data: OrderEmailData): string {
   const stepsHtml = [
     { n: '1', icon: '💳', title: 'Confirmamos tu pago', desc: 'Puede tomar unos minutos mientras verificamos la transferencia.' },
@@ -488,90 +525,100 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json()
-    const { type, orderData } = body as { type: string; orderData: OrderEmailData }
+    const { type, orderData } = body as { type: string; orderData: any }
 
-    if (!orderData?.customerEmail) {
+    // EMAIL KILL-SWITCH FOR DEV TESTING
+    if (process.env.DISABLE_EMAILS === 'true') {
+      console.log('📧 Email sending bypassed (DISABLE_EMAILS=true). Payload:', body)
+      return NextResponse.json({ success: true, bypassed: true }, { headers: corsHeaders })
+    }
+
+    if (type !== 'welcome_email' && !orderData?.customerEmail) {
       return NextResponse.json(
         { error: 'Email del cliente requerido' },
         { status: 400, headers: corsHeaders },
       )
     }
 
-    const shortId = orderData.orderId.slice(0, 8).toUpperCase()
+    const shortId = orderData?.orderId ? orderData.orderId.slice(0, 8).toUpperCase() : ''
 
     let subject = ''
     let html = ''
 
-    switch (type) {
-      case 'order_confirmation':
-        subject = `✅ Pedido #${shortId} recibido — Lukess Home`
-        html = buildOrderConfirmationHtml(orderData)
-        break
+    if (type === 'welcome_email') {
+      subject = '¡Bienvenido a Lukess Home! Tu regalo adentro 🎁'
+      html = buildWelcomeEmailHtml(orderData.discountCode)
+    } else {
+      switch (type) {
+        case 'order_confirmation':
+          subject = `✅ Pedido #${shortId} recibido — Lukess Home`
+          html = buildOrderConfirmationHtml(orderData)
+          break
 
-      case 'order_paid':
-        subject = `💳 Pago confirmado — Pedido #${shortId} | Lukess Home`
-        html = buildStatusEmailHtml(
-          orderData,
-          '💳 Pago confirmado',
-          '#1a2e1a',
-          '#2d5a2d',
-          '#4caf50',
-          '¡Tu pago fue confirmado! Ya estamos preparando tu pedido con todo el cuidado que merece.',
-        )
-        break
+        case 'order_paid':
+          subject = `💳 Pago confirmado — Pedido #${shortId} | Lukess Home`
+          html = buildStatusEmailHtml(
+            orderData,
+            '💳 Pago confirmado',
+            '#1a2e1a',
+            '#2d5a2d',
+            '#4caf50',
+            '¡Tu pago fue confirmado! Ya estamos preparando tu pedido con todo el cuidado que merece.',
+          )
+          break
 
-      case 'order_shipped':
-        subject = `🛵 Tu pedido está en camino — Lukess Home`
-        html = buildStatusEmailHtml(
-          orderData,
-          '🛵 En camino',
-          '#1a2332',
-          '#2d4a6a',
-          '#60a5fa',
-          'Tu pedido ya salió y está en camino. El repartidor de Yango está llevando tu pedido. Pronto llegará a tu puerta.',
-        )
-        break
+        case 'order_shipped':
+          subject = `🛵 Tu pedido está en camino — Lukess Home`
+          html = buildStatusEmailHtml(
+            orderData,
+            '🛵 En camino',
+            '#1a2332',
+            '#2d4a6a',
+            '#60a5fa',
+            'Tu pedido ya salió y está en camino. El repartidor de Yango está llevando tu pedido. Pronto llegará a tu puerta.',
+          )
+          break
 
-      case 'order_completed':
-        subject = `✅ Pedido entregado — ¡Gracias por tu compra! | Lukess Home`
-        html = buildStatusEmailHtml(
-          orderData,
-          '✅ Pedido entregado',
-          '#1a3a1a',
-          '#2d6a2d',
-          '#4caf50',
-          '¡Tu pedido fue entregado con éxito! Gracias por confiar en Lukess Home. Esperamos verte pronto.',
-        )
-        break
+        case 'order_completed':
+          subject = `✅ Pedido entregado — ¡Gracias por tu compra! | Lukess Home`
+          html = buildStatusEmailHtml(
+            orderData,
+            '✅ Pedido entregado',
+            '#1a3a1a',
+            '#2d6a2d',
+            '#4caf50',
+            '¡Tu pedido fue entregado con éxito! Gracias por confiar en Lukess Home. Esperamos verte pronto.',
+          )
+          break
 
-      case 'order_cancelled':
-        subject = `❌ Pedido #${shortId} cancelado | Lukess Home`
-        html = buildStatusEmailHtml(
-          orderData,
-          '❌ Pedido cancelado',
-          '#3a1a1a',
-          '#6a2d2d',
-          '#f87171',
-          `Tu pedido fue cancelado. Si tenés dudas contáctanos por WhatsApp +${WHATSAPP_NUMBER}.`,
-        )
-        break
+        case 'order_cancelled':
+          subject = `❌ Pedido #${shortId} cancelado | Lukess Home`
+          html = buildStatusEmailHtml(
+            orderData,
+            '❌ Pedido cancelado',
+            '#3a1a1a',
+            '#6a2d2d',
+            '#f87171',
+            `Tu pedido fue cancelado. Si tenés dudas contáctanos por WhatsApp +${WHATSAPP_NUMBER}.`,
+          )
+          break
 
-      case 'admin_new_order':
-        subject = `🛎️ Nuevo pedido #${shortId} — Verificar pago`
-        html = buildAdminNewOrderHtml(orderData)
-        break
+        case 'admin_new_order':
+          subject = `🛎️ Nuevo pedido #${shortId} — Verificar pago`
+          html = buildAdminNewOrderHtml(orderData)
+          break
 
-      default:
-        return NextResponse.json(
-          { error: `Tipo de email desconocido: ${type}` },
-          { status: 400, headers: corsHeaders },
-        )
+        default:
+          return NextResponse.json(
+            { error: `Tipo de email desconocido: ${type}` },
+            { status: 400, headers: corsHeaders },
+          )
+      }
     }
 
-    const recipient =
-      type === 'admin_new_order'
-        ? (process.env.ADMIN_EMAIL ?? 'financenft01@gmail.com')
-        : orderData.customerEmail
+    // OVERRIDE FOR SANDBOX MODE
+    const recipient = 'financenst01@gmail.com'
+    console.log(`[send-email] Sandbox mode: mapping recipient to financenst01@gmail.com instead of intended ${type === 'admin_new_order' ? process.env.ADMIN_EMAIL : orderData?.customerEmail}`);
 
     const { error } = await resend.emails.send({
       from: 'Lukess Home <onboarding@resend.dev>',

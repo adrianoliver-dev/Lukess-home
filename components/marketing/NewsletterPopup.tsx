@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import { X, Mail, Gift, Loader2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import toast from 'react-hot-toast'
-import { createClient } from '@/lib/supabase/client'
 
 export function NewsletterPopup() {
   const [isOpen, setIsOpen] = useState(false)
@@ -33,17 +32,22 @@ export function NewsletterPopup() {
 
     setIsSubmitting(true)
     try {
-      const supabase = createClient()
-      const { error } = await supabase
-        .from('subscribers')
-        .insert({ email: email.trim().toLowerCase(), source: 'popup' })
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim().toLowerCase(), source: 'popup' })
+      })
 
-      if (error?.code === '23505') {
+      const data = await res.json()
+
+      if (res.status === 409) {
         toast('Ya estás suscrito 😊')
         handleClose()
         return
       }
-      if (error) throw error
+
+      if (!res.ok) throw new Error(data.error || 'Error al suscribir')
+
       toast.success('¡Suscripción exitosa! Revisa tu email.')
       handleClose()
     } catch {

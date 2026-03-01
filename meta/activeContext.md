@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 14-C
-- **Block Name:** Urgent Mobile UX Fixes
+- **Block Number:** 13-A
+- **Block Name:** Welcome Email & Discount Code
 - **Status:** ✅ DONE
 - **Started:** 2026-03-01
 - **Completed:** 2026-03-01
@@ -14,18 +14,21 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 14-C
-- **Block Name:** Urgent Mobile UX Fixes
-- **Completed:** 2026-03-01
+- **Block Number:** 13-A
+- **Block Name:** Welcome Email with Unique Discount Code
 - **Commit:** pending
 
 ### Files Changed
-- `components/producto/ProductGallery.tsx`
-- `components/producto/SizeGuideModal.tsx`
-- `meta/activeContext.md`
+- `c:\LukessHome\lukess-landing-ecommerce\app\api\send-email\route.ts`
+- `c:\LukessHome\lukess-landing-ecommerce\app\api\subscribe\route.ts` (NEW)
+- `c:\LukessHome\lukess-landing-ecommerce\lib\supabase\discounts.ts` (NEW)
+- `c:\LukessHome\lukess-landing-ecommerce\components\layout\Footer.tsx`
+- `c:\LukessHome\lukess-landing-ecommerce\components\marketing\NewsletterPopup.tsx`
+- `c:\LukessHome\lukess-landing-ecommerce\app\api\checkout\route.ts`
+- `c:\LukessHome\lukess-landing-ecommerce\meta\activeContext.md`
 
 ### Database Changes
-- None
+- None (Using existing `discount_codes` and `subscribers` tables)
 
 ### Build Verification
 - ✅ Next.js Build pass
@@ -89,12 +92,13 @@
 | 11-C | Fix Hero Aspect Ratio, Remove Announcement Bar, Shipping Copy | ✅ DONE | 2026-02-28 | adda433 |
 | 11-D | Fix Hero CTA smooth scroll and Update Map links | ✅ DONE | 2026-02-28 | 630e701 |
 | 11-E (Part 2) | Fix Navbar Logo scroll behavior and remove redundant locations section | ✅ DONE | 2026-03-01 | pending |
+| 13-A | Welcome Email with Unique Discount Code | ✅ DONE | 2026-03-01 | pending |
 | 13-C | Consume discount code, fix Admin Email, update Navbar, and show discounts in Mis Pedidos | ✅ DONE | 2026-03-01 | bfe1e23 |
 | 13-D | Fix checkout 500 error schema mismatch and cross-page hash routing | ✅ DONE | 2026-03-01 | 6e11a4d |
 | 13-E | Navbar Contacto scroll & Discount max_uses validation | ✅ DONE | 2026-03-01 | b04e084 |
 | 13-F | Enforce Cart Stock Limits & Fix Expired Discounts | ✅ DONE | 2026-03-01 | pending |
 | 14-B | Fix Visual UX & Mis Pedidos | ✅ DONE | 2026-03-01 | 648d93b |
-| 14-C | Urgent Mobile UX Fixes | ✅ DONE | 2026-03-01 | pending |
+| 14-C | Urgent Mobile UX Fixes | ✅ DONE | 2026-03-01 | d651e34 |
 | 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — | — |
 | 9f | SEO completo | ⬜ PENDING | — | — |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
