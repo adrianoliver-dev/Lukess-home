@@ -126,10 +126,10 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
 
               {/* Tabs */}
               <div className="border-b border-gray-200">
-                <div className="flex gap-1 px-6">
+                <div className="flex gap-2 px-6 overflow-x-auto hide-scrollbar whitespace-nowrap">
                   <button
                     onClick={() => setActiveTab('camisas')}
-                    className={`px-6 py-3 text-sm font-semibold transition-all relative ${activeTab === 'camisas'
+                    className={`flex-shrink-0 px-6 py-3 text-sm font-semibold transition-all relative ${activeTab === 'camisas'
                       ? 'text-gray-900'
                       : 'text-gray-600 hover:text-gray-900'
                       }`}
@@ -145,7 +145,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                   </button>
                   <button
                     onClick={() => setActiveTab('pantalones')}
-                    className={`px-6 py-3 text-sm font-semibold transition-all relative ${activeTab === 'pantalones'
+                    className={`flex-shrink-0 px-6 py-3 text-sm font-semibold transition-all relative ${activeTab === 'pantalones'
                       ? 'text-gray-900'
                       : 'text-gray-600 hover:text-gray-900'
                       }`}
@@ -161,7 +161,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                   </button>
                   <button
                     onClick={() => setActiveTab('cinturones')}
-                    className={`px-6 py-3 text-sm font-semibold transition-all relative ${activeTab === 'cinturones'
+                    className={`flex-shrink-0 px-6 py-3 text-sm font-semibold transition-all relative ${activeTab === 'cinturones'
                       ? 'text-gray-900'
                       : 'text-gray-600 hover:text-gray-900'
                       }`}
@@ -177,7 +177,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                   </button>
                   <button
                     onClick={() => setActiveTab('sombreros')}
-                    className={`px-6 py-3 text-sm font-semibold transition-all relative ${activeTab === 'sombreros'
+                    className={`flex-shrink-0 px-6 py-3 text-sm font-semibold transition-all relative ${activeTab === 'sombreros'
                       ? 'text-gray-900'
                       : 'text-gray-600 hover:text-gray-900'
                       }`}
@@ -193,7 +193,7 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                   </button>
                   <button
                     onClick={() => setActiveTab('como-medir')}
-                    className={`px-6 py-3 text-sm font-semibold transition-all relative ${activeTab === 'como-medir'
+                    className={`flex-shrink-0 px-6 py-3 text-sm font-semibold transition-all relative ${activeTab === 'como-medir'
                       ? 'text-gray-900'
                       : 'text-gray-600 hover:text-gray-900'
                       }`}
@@ -228,6 +228,14 @@ export function SizeGuideModal({ isOpen, onClose, category }: SizeGuideModalProp
                         Todas las medidas están en centímetros (cm). Para obtener la medida correcta,
                         mide sobre una prenda similar que te quede bien.
                       </p>
+
+                      <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <p className="text-sm font-semibold text-gray-900 mb-1">📏 Cómo usar esta tabla:</p>
+                        <p className="text-xs text-gray-600">
+                          Mide una prenda tuya que te quede bien acostada sobre una superficie plana,
+                          y compárala con estas medidas.
+                        </p>
+                      </div>
 
                       {/* Tabla responsive */}
                       <div className="overflow-x-auto w-full">

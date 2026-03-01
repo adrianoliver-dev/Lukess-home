@@ -19,7 +19,10 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
   return (
     <div className="space-y-4">
       {/* Imagen principal */}
-      <div className="relative aspect-[3/4] bg-gray-50 rounded-lg overflow-hidden group">
+      <div
+        className="relative aspect-[3/4] bg-gray-50 rounded-lg overflow-hidden group cursor-zoom-in"
+        onClick={() => setIsZoomed(true)}
+      >
         <Image
           src={images[currentIndex]}
           alt={`${productName} - Imagen ${currentIndex + 1}`}
@@ -31,11 +34,14 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
 
         {/* Botón zoom */}
         <button
-          onClick={() => setIsZoomed(true)}
-          className="hidden md:flex items-center justify-center absolute top-4 right-4 p-2 bg-white/90 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg hover:bg-white"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsZoomed(true);
+          }}
+          className="absolute bottom-4 right-4 p-2 bg-white/90 rounded-full shadow-lg md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 hover:bg-white z-10 flex items-center justify-center border border-gray-100"
           aria-label="Ampliar imagen"
         >
-          <ZoomIn className="w-5 h-5 text-gray-800" />
+          <ZoomIn className="w-5 h-5 text-gray-900" />
         </button>
 
         {/* Navegación */}
