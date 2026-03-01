@@ -13,6 +13,10 @@ export async function sendWhatsAppMessage(params: {
     const LANG = 'es'
     const API_VERSION = process.env.WHATSAPP_API_VERSION || 'v21.0'
 
+    if (templateName === 'pedido_en_camino') {
+        console.warn('[WhatsApp] WARNING: pedido_en_camino template is currently in English in Meta. This may fail. Please switch it to Spanish.')
+    }
+
     const bodyComponent = {
         type: 'body',
         parameters: variables.map((v) => ({ type: 'text', text: v })),
@@ -34,7 +38,10 @@ export async function sendWhatsAppMessage(params: {
         type: 'template',
         template: {
             name: templateName,
-            language: { code: LANG },
+            language: {
+                code: LANG,
+                policy: 'deterministic'
+            },
             components,
         },
     }
@@ -55,7 +62,11 @@ export async function sendWhatsAppMessage(params: {
     console.log('[WhatsApp] Meta response:', { status: res.status, data: responseData })
 
     if (!res.ok) {
-        console.error('[WhatsApp] Meta Error:', responseData)
+        console.error('[WhatsApp] Meta Error:', {
+            template: templateName,
+            language: LANG,
+            response: responseData
+        })
         throw new Error(`WhatsApp API Error: ${JSON.stringify(responseData)}`)
     }
 
