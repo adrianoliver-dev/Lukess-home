@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin "tailwindcss-motion";
+@plugin "@tailwindcss/typography";
 
 @theme {
   --color-accent-500: #c89b6e;

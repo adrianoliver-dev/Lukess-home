@@ -152,7 +152,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 </header>
 
                 {/* Cover Image */}
-                <div className="relative w-full h-[400px] md:h-[500px] mb-8 rounded-lg overflow-hidden">
+                <div className="relative w-full aspect-[1.91/1] md:max-h-[550px] mb-8 rounded-lg overflow-hidden bg-gray-100">
                     <Image
                         src={post.coverImage}
                         alt={post.title}
@@ -165,7 +165,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
                 {/* Content */}
                 <div
-                    className="prose prose-lg prose-zinc max-w-none
+                    className="prose prose-lg md:prose-xl prose-zinc max-w-none mx-auto
             prose-headings:font-bold prose-headings:text-zinc-900
             prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4
             prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3
