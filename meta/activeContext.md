@@ -16,7 +16,7 @@
 ## LAST COMPLETED BLOCK
 - **Block Number:** 16-A
 - **Block Name:** Technical SEO Implementation
-- **Commit:** pending
+- **Commit:** 8f093ac
 
 ### Files Changed
 - `app/layout.tsx`
@@ -104,7 +104,7 @@
 | 15-E | Resolve Vercel 404 for send-whatsapp route | ✅ DONE | 2026-03-01 | 62d477d |
 | 15-F | WhatsApp Refactor to Shared Utility | ✅ DONE | 2026-03-01 | a6cd33a |
 | 15-G | WhatsApp Language Policy Strictness | ✅ DONE | 2026-03-01 | e7a4665 |
-| 16-A | Technical SEO Implementation | ✅ DONE | 2026-03-01 | pending |
-| 9f | SEO completo | ✅ DONE | 2026-03-01 | pending |
+| 16-A | Technical SEO Implementation | ✅ DONE | 2026-03-01 | 8f093ac |
+| 9f | SEO completo | ✅ DONE | 2026-03-01 | 8f093ac |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
