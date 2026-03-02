@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-B.3.A
-- **Block Name:** Redacción y estructuración del primer Blog Post SEO
+- **Block Number:** 16-B.3.B
+- **Block Name:** Redacción del Segundo Blog Post SEO
 - **Status:** ✅ DONE
 - **Started:** 2026-03-02
 - **Completed:** 2026-03-02
@@ -14,12 +14,12 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-B.3.A
-- **Block Name:** Redacción y estructuración del primer Blog Post SEO
-- **Commit:** 5b7758d
+- **Block Number:** 16-B.3.B
+- **Block Name:** Redacción del Segundo Blog Post SEO
+- **Commit:** pending
 
 ### Files Changed
-- `content/blog/donde-comprar-ropa-marca-santa-cruz.md`
+- `content/blog/camisas-columbia-bolivia-precios.md`
 - `meta/activeContext.md`
 
 ### Database Changes
@@ -27,7 +27,6 @@
 
 ### Build Verification
 - Skipped (Solo contenido markdown)
-
 ---
 
 ## OPEN ISSUES
@@ -42,7 +41,7 @@
 ## NEXT BLOCK
 - **Block:** TBD
 - **Name:** TBD
-- **Dependencies:** 16-B.3.A
+- **Dependencies:** 16-B.3.B
 - **Scope:** TBD
 
 ---
@@ -106,6 +105,7 @@
 | 16-B.1 | Blog Architecture Implementation | ✅ DONE | 2026-03-02 | b23f45e |
 | 16-B.1-FIX | Blog Branding & Content Corrections | ✅ DONE | 2026-03-02 | 921fb94 |
 | 16-B.2 | Hero Refactor + Local SEO Fixes | ✅ DONE | 2026-03-02 | pending |
-| 16-B.3.A | Redacción y estructuración del primer Blog Post SEO | ✅ DONE | 2026-03-02 | 5b7758d |
+| 16-B.3.A | Redacción y estructuración del primer Blog Post SEO | ✅ DONE | 2026-03-02 | 9c4fc88 |
+| 16-B.3.B | Redacción del Segundo Blog Post SEO | ✅ DONE | 2026-03-02 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
