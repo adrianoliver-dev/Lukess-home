@@ -1,12 +1,12 @@
 # activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-03-01T19:07-04:00
+**Last Updated:** 2026-03-01T19:54-04:00
 **Updated By:** Antigravity Agent
 
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 15-E
-- **Block Name:** Resolve Vercel 404 for send-whatsapp route
+- **Block Number:** 16-A
+- **Block Name:** Technical SEO Implementation
 - **Status:** ✅ DONE
 - **Started:** 2026-03-01
 - **Completed:** 2026-03-01
@@ -14,24 +14,19 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 15-E
-- **Block Name:** Resolve Vercel 404 for send-whatsapp route
-- **Commit:** 62d477d
+- **Block Number:** 16-A
+- **Block Name:** Technical SEO Implementation
+- **Commit:** pending
 
 ### Files Changed
-- `app/api/send-whatsapp/route.ts` (Recreated with user-provided exact code to fix 404 error on Vercel)
-
-### Files Changed
-- `c:\LukessHome\lukess-landing-ecommerce\app\api\send-email\route.ts`
-- `c:\LukessHome\lukess-landing-ecommerce\app\api\subscribe\route.ts` (NEW)
-- `c:\LukessHome\lukess-landing-ecommerce\lib\supabase\discounts.ts` (NEW)
-- `c:\LukessHome\lukess-landing-ecommerce\components\layout\Footer.tsx`
-- `c:\LukessHome\lukess-landing-ecommerce\components\marketing\NewsletterPopup.tsx`
-- `c:\LukessHome\lukess-landing-ecommerce\app\api\checkout\route.ts`
-- `c:\LukessHome\lukess-landing-ecommerce\meta\activeContext.md`
+- `app/layout.tsx`
+- `app/producto/[id]/page.tsx`
+- `app/sitemap.ts` (NEW)
+- `app/robots.ts` (NEW)
+- `meta/activeContext.md`
 
 ### Database Changes
-- None (Using existing `discount_codes` and `subscribers` tables)
+- None (Using existing tables)
 
 ### Build Verification
 - ✅ Next.js Build pass
@@ -107,6 +102,9 @@
 | 15-C | WhatsApp Typo Fix & Debug Logging | ✅ DONE | 2026-03-01 | 9aa7f5e |
 | 15-D | WhatsApp Checkout Trigger Fix | ✅ DONE | 2026-03-01 | 1a92b56 |
 | 15-E | Resolve Vercel 404 for send-whatsapp route | ✅ DONE | 2026-03-01 | 62d477d |
-| 9f | SEO completo | ⬜ PENDING | — | — |
+| 15-F | WhatsApp Refactor to Shared Utility | ✅ DONE | 2026-03-01 | a6cd33a |
+| 15-G | WhatsApp Language Policy Strictness | ✅ DONE | 2026-03-01 | e7a4665 |
+| 16-A | Technical SEO Implementation | ✅ DONE | 2026-03-01 | pending |
+| 9f | SEO completo | ✅ DONE | 2026-03-01 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |

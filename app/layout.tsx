@@ -25,7 +25,10 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Lukess Home - Ropa Masculina en Santa Cruz | Mercado Mutualista",
+  title: {
+    template: "%s | Lukess Home",
+    default: "Lukess Home - Ropa Masculina en Santa Cruz | Mercado Mutualista",
+  },
   description:
     "Más de 10 años vistiendo a bolivianos con estilo. 3 puestos en el Mercado Mutualista. Camisas, pantalones, chaquetas y más. Calidad y precio justo.",
   keywords: [
