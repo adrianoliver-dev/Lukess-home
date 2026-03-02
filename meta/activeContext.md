@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-B.2
-- **Block Name:** Hero Refactor + Local SEO Fixes
+- **Block Number:** 16-B.3.A
+- **Block Name:** Redacción y estructuración del primer Blog Post SEO
 - **Status:** ✅ DONE
 - **Started:** 2026-03-02
 - **Completed:** 2026-03-02
@@ -14,23 +14,19 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-B.2
-- **Block Name:** Hero Refactor + Local SEO Fixes
+- **Block Number:** 16-B.3.A
+- **Block Name:** Redacción y estructuración del primer Blog Post SEO
 - **Commit:** pending
 
 ### Files Changed
-- `app/layout.tsx`
-- `components/landing/HeroBanner.tsx`
-- `components/layout/Navbar.tsx`
-- `app/blog/page.tsx`
-- `app/blog/[slug]/page.tsx`
+- `content/blog/donde-comprar-ropa-marca-santa-cruz.mdx`
 - `meta/activeContext.md`
 
 ### Database Changes
 - None
 
 ### Build Verification
-- ✅ Next.js Build pass
+- Skipped (Solo contenido markdown)
 
 ---
 
@@ -46,7 +42,7 @@
 ## NEXT BLOCK
 - **Block:** TBD
 - **Name:** TBD
-- **Dependencies:** 16-B.2
+- **Dependencies:** 16-B.3.A
 - **Scope:** TBD
 
 ---
@@ -110,5 +106,6 @@
 | 16-B.1 | Blog Architecture Implementation | ✅ DONE | 2026-03-02 | b23f45e |
 | 16-B.1-FIX | Blog Branding & Content Corrections | ✅ DONE | 2026-03-02 | 921fb94 |
 | 16-B.2 | Hero Refactor + Local SEO Fixes | ✅ DONE | 2026-03-02 | pending |
+| 16-B.3.A | Redacción y estructuración del primer Blog Post SEO | ✅ DONE | 2026-03-02 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
