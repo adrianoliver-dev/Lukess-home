@@ -32,7 +32,7 @@ export default async function BlogIndexPage() {
     }
 
     return (
-        <div className="container mx-auto px-4 py-12 max-w-6xl">
+        <div className="container mx-auto px-4 py-12 pt-28 max-w-6xl">
             {/* Header */}
             <header className="mb-12 text-center">
                 <h1 className="text-4xl md:text-5xl font-bold mb-4">

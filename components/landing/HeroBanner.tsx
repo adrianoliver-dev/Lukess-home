@@ -46,7 +46,7 @@ export default function HeroBanner(): React.JSX.Element {
                     className="max-w-xl"
                 >
                     <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white lg:text-7xl drop-shadow-lg text-balance">
-                        Ropa Premium para el <span className="text-amber-400">Hombre Moderno</span>.
+                        Ropa Masculina Premium<br /><span className="text-amber-400">en Santa Cruz</span>
                     </h1>
                 </motion.div>
 
@@ -57,7 +57,7 @@ export default function HeroBanner(): React.JSX.Element {
                     className="mt-4 max-w-lg"
                 >
                     <p className="text-lg font-medium text-zinc-200 md:text-xl drop-shadow-md text-pretty">
-                        Eleva tu estilo con marcas globales auténticas. Seleccionado exclusivamente para Santa Cruz.
+                        Camisas Columbia, blazers, pantalones y accesorios. Visítanos en nuestros 3 locales en el Mercado Mutualista.
                     </p>
                 </motion.div>
 

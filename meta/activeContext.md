@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-B.1
-- **Block Name:** Blog Architecture Implementation
+- **Block Number:** 16-B.2
+- **Block Name:** Hero Refactor + Local SEO Fixes
 - **Status:** ✅ DONE
 - **Started:** 2026-03-02
 - **Completed:** 2026-03-02
@@ -14,21 +14,20 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-B.1-FIX
-- **Block Name:** Blog Branding & Content Corrections
-- **Commit:** 4291746
+- **Block Number:** 16-B.2
+- **Block Name:** Hero Refactor + Local SEO Fixes
+- **Commit:** pending
 
 ### Files Changed
-- `package.json`
-- `content/blog/como-combinar-camisa-columbia-santa-cruz.md` (NEW)
-- `lib/blog.ts` (NEW)
-- `app/blog/page.tsx` (NEW)
-- `app/blog/[slug]/page.tsx` (NEW)
+- `app/layout.tsx`
+- `components/landing/HeroBanner.tsx`
 - `components/layout/Navbar.tsx`
+- `app/blog/page.tsx`
+- `app/blog/[slug]/page.tsx`
 - `meta/activeContext.md`
 
 ### Database Changes
-- None (Using existing tables)
+- None
 
 ### Build Verification
 - ✅ Next.js Build pass
@@ -45,10 +44,10 @@
 ---
 
 ## NEXT BLOCK
-- **Block:** 16-B.2
-- **Name:** Hero Refactor
-- **Dependencies:** 16-B.1
-- **Scope:** Static High-Conversion Hero Section
+- **Block:** TBD
+- **Name:** TBD
+- **Dependencies:** 16-B.2
+- **Scope:** TBD
 
 ---
 
@@ -109,6 +108,7 @@
 | 16-A | Technical SEO Implementation | ✅ DONE | 2026-03-01 | 8f093ac |
 | 9f | SEO completo | ✅ DONE | 2026-03-01 | 8f093ac |
 | 16-B.1 | Blog Architecture Implementation | ✅ DONE | 2026-03-02 | b23f45e |
-| 16-B.1-FIX | Blog Branding & Content Corrections | ✅ DONE | 2026-03-02 | 4291746 |
+| 16-B.1-FIX | Blog Branding & Content Corrections | ✅ DONE | 2026-03-02 | 921fb94 |
+| 16-B.2 | Hero Refactor + Local SEO Fixes | ✅ DONE | 2026-03-02 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |

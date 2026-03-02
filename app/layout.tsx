@@ -56,7 +56,11 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL("https://lukesshome.com"),
   alternates: {
-    canonical: "/",
+    canonical: "https://lukesshome.com",
+    languages: {
+      "es-BO": "https://lukesshome.com",
+      "x-default": "https://lukesshome.com",
+    },
   },
   openGraph: {
     title: "Lukess Home - Ropa Masculina en Santa Cruz | Mercado Mutualista",

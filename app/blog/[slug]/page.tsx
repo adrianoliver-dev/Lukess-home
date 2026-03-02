@@ -99,7 +99,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
 
-            <article className="container mx-auto px-4 py-12 max-w-4xl">
+            <article className="container mx-auto px-4 py-12 pt-28 max-w-4xl">
                 {/* Back to Blog Link */}
                 <Link
                     href="/blog"
@@ -184,7 +184,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     </h3>
                     <p className="text-gray-500 mb-6 max-w-2xl mx-auto">
                         Explorá nuestro catálogo completo de ropa masculina premium en
-                        Santa Cruz. Camisas Columbia, Nautica, blazers, pantalones y más.
+                        Santa Cruz. Camisas Columbia, blazers, pantalones y más.
                     </p>
                     <Link
                         href="/#catalogo"

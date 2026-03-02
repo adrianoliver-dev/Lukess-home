@@ -27,9 +27,9 @@ const categoryLinks = [
 
 const quickLinks = [
   { href: "/#catalogo", label: "Catálogo" },
-  { href: "/blog", label: "Blog" },
   { href: "/#contacto", label: "Ubicación" },
   { href: "/#cta", label: "Contacto" },
+  { href: "/blog", label: "Blog" },
 ];
 
 export default function Navbar() {
