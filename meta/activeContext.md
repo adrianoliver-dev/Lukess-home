@@ -14,9 +14,9 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-B.1
-- **Block Name:** Blog Architecture Implementation
-- **Commit:** b23f45e
+- **Block Number:** 16-B.1-FIX
+- **Block Name:** Blog Branding & Content Corrections
+- **Commit:** 4291746
 
 ### Files Changed
 - `package.json`
@@ -109,5 +109,6 @@
 | 16-A | Technical SEO Implementation | ✅ DONE | 2026-03-01 | 8f093ac |
 | 9f | SEO completo | ✅ DONE | 2026-03-01 | 8f093ac |
 | 16-B.1 | Blog Architecture Implementation | ✅ DONE | 2026-03-02 | b23f45e |
+| 16-B.1-FIX | Blog Branding & Content Corrections | ✅ DONE | 2026-03-02 | 4291746 |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |

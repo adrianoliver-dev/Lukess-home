@@ -20,8 +20,8 @@ Santa Cruz de la Sierra tiene un clima tropical que exige **ropa fresca pero con
 Para salidas informales los fines de semana, combina una **camisa Columbia manga corta** en color claro (beige, celeste) con un **pantalón chino ajustado** en café o verde oliva.
 
 **Productos sugeridos:**
-- [Camisa Columbia PFG Tamiami](/catalogo/camisas)
-- [Pantalón Chino Slim Fit](/catalogo/pantalones)
+- [Camisa Columbia PFG Tamiami](/?filter=camisas#catalogo)
+- [Pantalón Chino Slim Fit](/?filter=pantalones#catalogo)
 
 ---
 
@@ -36,12 +36,12 @@ Si tu oficina permite dress code semi-formal, una **camisa Columbia manga larga*
 Para cenas o eventos nocturnos, combina una **camisa Columbia estampada** (cuadros pequeños o textura sutil) con **jean oscuro** y un **cinturón de cuero** para cerrar el look con elegancia.
 
 **Productos sugeridos:**
-- [Cinturones de Cuero Premium](/catalogo/cinturones)
+- [Cinturones de Cuero Premium](/?filter=cinturones#catalogo)
 
 ---
 
 ## Conclusión
 
-Las camisas Columbia son versátiles, resistentes al calor y fáciles de combinar. En [Lukess Home](/catalogo/camisas) encontrás toda la línea Columbia original con entrega en Santa Cruz.
+Las camisas Columbia son versátiles, resistentes al calor y fáciles de combinar. En [Lukess Home](/?filter=camisas#catalogo) encontrás toda la línea Columbia original con entrega en Santa Cruz.
 
 **¿Querés ver más outfits?** Visitá nuestra [guía completa de ropa casual para hombre en Santa Cruz](/blog).

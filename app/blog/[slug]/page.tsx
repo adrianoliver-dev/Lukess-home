@@ -187,7 +187,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         Santa Cruz. Camisas Columbia, Nautica, blazers, pantalones y más.
                     </p>
                     <Link
-                        href="/catalogo"
+                        href="/#catalogo"
                         className="inline-block px-8 py-3 bg-gray-900 text-white font-bold uppercase tracking-widest text-sm rounded-md hover:bg-black transition-colors"
                     >
                         Ver Catálogo
