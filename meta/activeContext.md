@@ -1,28 +1,30 @@
 # activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-03-01T19:54-04:00
+**Last Updated:** 2026-03-02T08:42-04:00
 **Updated By:** Antigravity Agent
 
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-A
-- **Block Name:** Technical SEO Implementation
+- **Block Number:** 16-B.1
+- **Block Name:** Blog Architecture Implementation
 - **Status:** ✅ DONE
-- **Started:** 2026-03-01
-- **Completed:** 2026-03-01
+- **Started:** 2026-03-02
+- **Completed:** 2026-03-02
 
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-A
-- **Block Name:** Technical SEO Implementation
-- **Commit:** 8f093ac
+- **Block Number:** 16-B.1
+- **Block Name:** Blog Architecture Implementation
+- **Commit:** pending
 
 ### Files Changed
-- `app/layout.tsx`
-- `app/producto/[id]/page.tsx`
-- `app/sitemap.ts` (NEW)
-- `app/robots.ts` (NEW)
+- `package.json`
+- `content/blog/como-combinar-camisa-columbia-santa-cruz.md` (NEW)
+- `lib/blog.ts` (NEW)
+- `app/blog/page.tsx` (NEW)
+- `app/blog/[slug]/page.tsx` (NEW)
+- `components/layout/Navbar.tsx`
 - `meta/activeContext.md`
 
 ### Database Changes
@@ -43,10 +45,10 @@
 ---
 
 ## NEXT BLOCK
-- **Block:** 9e-B
-- **Name:** Mobile-first general + Checkout mobile
-- **Dependencies:** 10-D
-- **Scope:** Checkout UX, mobile responsiveness pass
+- **Block:** 16-B.2
+- **Name:** Hero Refactor
+- **Dependencies:** 16-B.1
+- **Scope:** Static High-Conversion Hero Section
 
 ---
 
@@ -106,5 +108,6 @@
 | 15-G | WhatsApp Language Policy Strictness | ✅ DONE | 2026-03-01 | e7a4665 |
 | 16-A | Technical SEO Implementation | ✅ DONE | 2026-03-01 | 8f093ac |
 | 9f | SEO completo | ✅ DONE | 2026-03-01 | 8f093ac |
+| 16-B.1 | Blog Architecture Implementation | ✅ DONE | 2026-03-02 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |

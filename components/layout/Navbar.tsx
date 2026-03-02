@@ -27,6 +27,7 @@ const categoryLinks = [
 
 const quickLinks = [
   { href: "/#catalogo", label: "Catálogo" },
+  { href: "/blog", label: "Blog" },
   { href: "/#contacto", label: "Ubicación" },
   { href: "/#cta", label: "Contacto" },
 ];
@@ -88,9 +89,9 @@ export default function Navbar() {
     }
 
     if (pathname === '/') {
-      e.preventDefault();
-
       if (!hash) return;
+
+      e.preventDefault();
 
       // For filter links, push to update URL first
       if (href.includes('?')) {
