@@ -16,7 +16,7 @@
 ## LAST COMPLETED BLOCK
 - **Block Number:** 16-B.1
 - **Block Name:** Blog Architecture Implementation
-- **Commit:** pending
+- **Commit:** b23f45e
 
 ### Files Changed
 - `package.json`
@@ -108,6 +108,6 @@
 | 15-G | WhatsApp Language Policy Strictness | ✅ DONE | 2026-03-01 | e7a4665 |
 | 16-A | Technical SEO Implementation | ✅ DONE | 2026-03-01 | 8f093ac |
 | 9f | SEO completo | ✅ DONE | 2026-03-01 | 8f093ac |
-| 16-B.1 | Blog Architecture Implementation | ✅ DONE | 2026-03-02 | pending |
+| 16-B.1 | Blog Architecture Implementation | ✅ DONE | 2026-03-02 | b23f45e |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |

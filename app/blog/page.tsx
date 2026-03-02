@@ -24,7 +24,7 @@ export default async function BlogIndexPage() {
         return (
             <div className="container mx-auto px-4 py-16 text-center">
                 <h1 className="text-3xl font-bold mb-4">Blog</h1>
-                <p className="text-zinc-600">
+                <p className="text-gray-500">
                     Próximamente: guías de estilo, outfits y consejos de moda masculina.
                 </p>
             </div>
@@ -38,7 +38,7 @@ export default async function BlogIndexPage() {
                 <h1 className="text-4xl md:text-5xl font-bold mb-4">
                     Blog de Moda Masculina
                 </h1>
-                <p className="text-lg text-zinc-600 max-w-2xl mx-auto">
+                <p className="text-lg text-gray-500 max-w-2xl mx-auto">
                     Guías de estilo, outfits y consejos para vestir bien en Santa Cruz.
                     Cómo combinar camisas Columbia, pantalones, blazers y más.
                 </p>
@@ -53,7 +53,7 @@ export default async function BlogIndexPage() {
                     >
                         <Link href={`/blog/${post.slug}`} className="flex flex-col h-full">
                             {/* Cover Image */}
-                            <div className="relative h-48 bg-zinc-100">
+                            <div className="relative h-48 bg-gray-50">
                                 <Image
                                     src={post.coverImage}
                                     alt={post.title}
@@ -66,8 +66,8 @@ export default async function BlogIndexPage() {
                             {/* Content */}
                             <div className="p-6 flex flex-col flex-1">
                                 {/* Category & Reading Time */}
-                                <div className="flex items-center gap-3 text-sm text-zinc-500 mb-3">
-                                    <span className="font-medium text-accent-600">
+                                <div className="flex items-center gap-3 text-sm text-gray-500 mb-3">
+                                    <span className="font-medium text-gray-700">
                                         {post.category}
                                     </span>
                                     <span>- </span>
@@ -75,17 +75,17 @@ export default async function BlogIndexPage() {
                                 </div>
 
                                 {/* Title */}
-                                <h2 className="text-xl font-bold mb-2 group-hover:text-accent-600 transition-colors">
+                                <h2 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-black transition-colors">
                                     {post.title}
                                 </h2>
 
                                 {/* Excerpt */}
-                                <p className="text-zinc-600 mb-4 line-clamp-3 flex-1">
+                                <p className="text-gray-500 mb-4 line-clamp-3 flex-1">
                                     {post.excerpt}
                                 </p>
 
                                 {/* Date */}
-                                <time className="text-sm text-zinc-500 mt-auto" dateTime={post.date}>
+                                <time className="text-sm text-gray-500 mt-auto" dateTime={post.date}>
                                     {new Date(post.date).toLocaleDateString('es-BO', {
                                         year: 'numeric',
                                         month: 'long',

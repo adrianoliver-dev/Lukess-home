@@ -33,7 +33,10 @@ Si tu oficina permite dress code semi-formal, una **camisa Columbia manga larga*
 
 ## 3. Salida Nocturna: Camisa Columbia + Jean Oscuro
 
-Para cenas o eventos nocturnos, combina una **camisa Columbia estampada** (cuadros pequeños o textura sutil) con **jean oscuro** y zapatillas casual premium.
+Para cenas o eventos nocturnos, combina una **camisa Columbia estampada** (cuadros pequeños o textura sutil) con **jean oscuro** y un **cinturón de cuero** para cerrar el look con elegancia.
+
+**Productos sugeridos:**
+- [Cinturones de Cuero Premium](/catalogo/cinturones)
 
 ---
 

@@ -103,7 +103,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 {/* Back to Blog Link */}
                 <Link
                     href="/blog"
-                    className="inline-flex items-center gap-2 text-accent-600 hover:text-accent-700 mb-8"
+                    className="inline-flex items-center gap-2 text-gray-900 hover:text-black mb-8 font-semibold"
                 >
                     <svg
                         className="w-5 h-5"
@@ -124,8 +124,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 {/* Header */}
                 <header className="mb-8">
                     {/* Category & Reading Time */}
-                    <div className="flex items-center gap-3 text-sm text-zinc-500 mb-4">
-                        <span className="px-3 py-1 bg-accent-100 text-accent-700 rounded-full font-medium">
+                    <div className="flex items-center gap-3 text-sm text-gray-500 mb-4">
+                        <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full font-medium">
                             {post.category}
                         </span>
                         <span>- </span>
@@ -138,7 +138,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     </h1>
 
                     {/* Meta info */}
-                    <div className="flex items-center gap-4 text-zinc-600">
+                    <div className="flex items-center gap-4 text-gray-500">
                         <span>{post.author}</span>
                         <span>- </span>
                         <time dateTime={post.date}>
@@ -182,13 +182,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     <h3 className="text-2xl font-bold mb-4">
                         ¿Te gustó este artículo?
                     </h3>
-                    <p className="text-zinc-700 mb-6 max-w-2xl mx-auto">
+                    <p className="text-gray-500 mb-6 max-w-2xl mx-auto">
                         Explorá nuestro catálogo completo de ropa masculina premium en
                         Santa Cruz. Camisas Columbia, Nautica, blazers, pantalones y más.
                     </p>
                     <Link
                         href="/catalogo"
-                        className="inline-block px-8 py-3 bg-accent-600 text-white font-semibold rounded-md hover:bg-accent-700 transition-colors"
+                        className="inline-block px-8 py-3 bg-gray-900 text-white font-bold uppercase tracking-widest text-sm rounded-md hover:bg-black transition-colors"
                     >
                         Ver Catálogo
                     </Link>
