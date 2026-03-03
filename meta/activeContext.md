@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-C
-- **Block Name:** Limpieza Pre-Producción
+- **Block Number:** 16-E
+- **Block Name:** Fix Auth UX & Products RLS Policy
 - **Status:** ✅ DONE
 - **Started:** 2026-03-03
 - **Completed:** 2026-03-03
@@ -14,19 +14,16 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-D
-- **Block Name:** Limpieza Profunda de Código (Console logs, Dead code)
-- **Commit:** d0c7807
+- **Block Number:** 16-E
+- **Block Name:** Fix Auth UX & Products RLS Policy
+- **Commit:** pending
 
 ### Files Changed
-- `app/api/send-email/route.ts`
-- `app/api/checkout/route.ts`
-- `components/ui/Confetti.tsx`
-- `lib/whatsapp/send-message.ts`
+- `components/auth/AuthModal.tsx`
 - `meta/activeContext.md`
 
 ### Database Changes
-- None
+- Modificada la política RLS de `products` para rol `authenticated` (`is_active = true`)
 
 ### Build Verification
 - Build successful (Next.js SSG)
@@ -44,7 +41,7 @@
 ## NEXT BLOCK
 - **Block:** TBD
 - **Name:** TBD
-- **Dependencies:** 16-B.3.I
+- **Dependencies:** 16-E
 - **Scope:** TBD
 
 ---
@@ -137,5 +134,6 @@
 | 16-B.A.HF.2 | Hotfix 2 en Footer (TikTok SVG y Email DEV) | ✅ DONE | 2026-03-03 | pending |
 | 16-C | Limpieza Pre-Producción de raíz | ✅ DONE | 2026-03-03 | 9074958 |
 | 16-D | Limpieza Profunda de Código Fuente | ✅ DONE | 2026-03-03 | d0c7807 |
+| 16-E | Fix Auth UX & Products RLS Policy | ✅ DONE | 2026-03-03 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |

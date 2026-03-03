@@ -100,17 +100,24 @@ export function AuthModal({
           { position: 'bottom-center', icon: '👋' }
         )
       } else {
-        await signUpWithEmail(form.email, form.password, form.name)
-        toast.success(
-          '¡Cuenta creada! Revisa tu email para confirmar.',
-          { position: 'bottom-center', icon: '🎉' }
-        )
+        const { session } = await signUpWithEmail(form.email, form.password, form.name)
+        if (session) {
+          toast.success(
+            '¡Cuenta creada y sesión iniciada!',
+            { position: 'bottom-center', icon: '🎉' }
+          )
+        } else {
+          toast.success(
+            '¡Cuenta creada! Revisa tu email para confirmar.',
+            { position: 'bottom-center', icon: '📩' }
+          )
+        }
       }
       onClose()
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Error desconocido'
       if (msg.includes('Invalid login credentials')) {
-        setErrors({ password: 'Email o contraseña incorrectos' })
+        setErrors({ password: 'Email o contraseña incorrectos, o falta confirmar correo' })
       } else if (msg.includes('User already registered')) {
         setErrors({ email: 'Ya existe una cuenta con este email' })
       } else {
@@ -122,10 +129,9 @@ export function AuthModal({
   }
 
   const inputClass = (field: string) =>
-    `w-full px-4 py-3 rounded-lg bg-[#1a1a1a] border text-white placeholder-gray-500 focus:outline-none focus:ring-2 transition-colors text-sm ${
-      errors[field]
-        ? 'border-red-500 focus:ring-red-500/30'
-        : 'border-gray-700 focus:ring-[#c89b6e]/40 focus:border-[#c89b6e]'
+    `w-full px-4 py-3 rounded-lg bg-[#1a1a1a] border text-white placeholder-gray-500 focus:outline-none focus:ring-2 transition-colors text-sm ${errors[field]
+      ? 'border-red-500 focus:ring-red-500/30'
+      : 'border-gray-700 focus:ring-[#c89b6e]/40 focus:border-[#c89b6e]'
     }`
 
   return (
@@ -236,11 +242,10 @@ export function AuthModal({
                         setTab(t)
                         setErrors({})
                       }}
-                      className={`flex-1 py-2 text-sm font-semibold rounded-md transition-all ${
-                        tab === t
+                      className={`flex-1 py-2 text-sm font-semibold rounded-md transition-all ${tab === t
                           ? 'bg-[#c89b6e] text-white shadow-sm'
                           : 'text-gray-400 hover:text-white'
-                      }`}
+                        }`}
                     >
                       {t === 'login' ? 'Iniciar sesión' : 'Registrarse'}
                     </button>
