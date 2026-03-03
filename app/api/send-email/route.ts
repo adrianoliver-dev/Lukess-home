@@ -529,7 +529,7 @@ export async function POST(req: NextRequest) {
 
     // EMAIL KILL-SWITCH FOR DEV TESTING
     if (process.env.DISABLE_EMAILS === 'true') {
-      console.log('📧 Email sending bypassed (DISABLE_EMAILS=true). Payload:', body)
+
       return NextResponse.json({ success: true, bypassed: true }, { headers: corsHeaders })
     }
 
@@ -618,7 +618,7 @@ export async function POST(req: NextRequest) {
 
     // OVERRIDE FOR SANDBOX MODE
     const recipient = 'financenst01@gmail.com'
-    console.log(`[send-email] Sandbox mode: mapping recipient to financenst01@gmail.com instead of intended ${type === 'admin_new_order' ? process.env.ADMIN_EMAIL : orderData?.customerEmail}`);
+
 
     const { error } = await resend.emails.send({
       from: 'Lukess Home <onboarding@resend.dev>',

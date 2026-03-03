@@ -6,7 +6,7 @@ export async function sendWhatsAppMessage(params: {
 }) {
     const { to, templateName, variables, headerImage } = params
 
-    console.log('[WhatsApp] Sending message:', { to, templateName, variables, headerImage })
+
 
     const PHONE_ID = process.env.WHATSAPP_PHONE_NUMBER_ID!
     const TOKEN = process.env.WHATSAPP_ACCESS_TOKEN!
@@ -59,7 +59,7 @@ export async function sendWhatsAppMessage(params: {
     )
 
     const responseData = await res.json()
-    console.log('[WhatsApp] Meta response:', { status: res.status, data: responseData })
+
 
     if (!res.ok) {
         console.error('[WhatsApp] Meta Error:', {

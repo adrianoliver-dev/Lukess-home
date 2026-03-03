@@ -305,7 +305,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (notify_whatsapp && customer_phone) {
-      console.log('[Checkout] Triggering WhatsApp for order:', order.id, 'Phone:', customer_phone)
+
       const rawPhone = customer_phone.replace(/\D/g, '')
       const formattedPhone = rawPhone.startsWith('591') ? rawPhone : `591${rawPhone}`
 

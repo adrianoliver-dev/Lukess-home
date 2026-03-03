@@ -92,7 +92,7 @@ export function Confetti({ isActive, duration = 3000 }: ConfettiProps) {
 
       } catch (e) {
         // Audio no disponible, continuar sin sonido
-        console.log('Audio not available')
+
       }
 
       const timer = setTimeout(() => {
