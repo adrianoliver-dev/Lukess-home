@@ -4,26 +4,64 @@ import { X, Mail, Gift, Loader2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import toast from 'react-hot-toast'
 
+import { useAuth } from '@/lib/context/AuthContext'
+
 export function NewsletterPopup() {
   const [isOpen, setIsOpen] = useState(false)
   const [email, setEmail] = useState('')
   const [mounted, setMounted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { isLoggedIn } = useAuth()
 
   useEffect(() => {
     setMounted(true)
 
-    // Mostrar después de 10 segundos, solo si no se ha mostrado antes
-    const hasSeenPopup = localStorage.getItem('newsletter-popup-seen')
-    if (!hasSeenPopup) {
-      const timer = setTimeout(() => setIsOpen(true), 10000)
-      return () => clearTimeout(timer)
+    // 1. Si el usuario está logueado, NUNCA mostrar el popup
+    if (isLoggedIn) return
+
+    // 2. Revisar si ya descartó/completó el popup en los últimos 30 días
+    const dismissedData = localStorage.getItem('lukess_newsletter_dismissed')
+    if (dismissedData) {
+      try {
+        const { timestamp } = JSON.parse(dismissedData)
+        const daysPassed = (Date.now() - timestamp) / (1000 * 60 * 60 * 24)
+        if (daysPassed < 30) return // Ocultar si pasaron menos de 30 días
+      } catch (e) {
+        // Fallback por si la data está corrupta
+        localStorage.removeItem('lukess_newsletter_dismissed')
+      }
     }
-  }, [])
+
+    // 3. Temporizador (12 segundos)
+    const timer = setTimeout(() => {
+      setIsOpen(true)
+    }, 12000)
+
+    // 4. Exit Intent (Mouseleave superior)
+    const handleMouseLeave = (e: MouseEvent) => {
+      if (e.clientY < 10) {
+        setIsOpen(true)
+        // Ya no necesitamos escuchar más
+        document.removeEventListener('mouseleave', handleMouseLeave)
+      }
+    }
+
+    // Solo agregar el listener si no está abierto aún
+    if (!isOpen) {
+      document.addEventListener('mouseleave', handleMouseLeave)
+    }
+
+    return () => {
+      clearTimeout(timer)
+      document.removeEventListener('mouseleave', handleMouseLeave)
+    }
+  }, [isLoggedIn, isOpen])
 
   const handleClose = () => {
     setIsOpen(false)
-    localStorage.setItem('newsletter-popup-seen', 'true')
+    localStorage.setItem('lukess_newsletter_dismissed', JSON.stringify({
+      timestamp: Date.now()
+    }))
   }
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {

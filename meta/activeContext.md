@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-E
-- **Block Name:** Fix Auth UX & Products RLS Policy
+- **Block Number:** 16-F
+- **Block Name:** UX: Smart Newsletter Popup
 - **Status:** ✅ DONE
 - **Started:** 2026-03-03
 - **Completed:** 2026-03-03
@@ -14,16 +14,16 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-E
-- **Block Name:** Fix Auth UX & Products RLS Policy
+- **Block Number:** 16-F
+- **Block Name:** UX: Smart Newsletter Popup
 - **Commit:** pending
 
 ### Files Changed
-- `components/auth/AuthModal.tsx`
+- `components/marketing/NewsletterPopup.tsx`
 - `meta/activeContext.md`
 
 ### Database Changes
-- Modificada la política RLS de `products` para rol `authenticated` (`is_active = true`)
+- None
 
 ### Build Verification
 - Build successful (Next.js SSG)
@@ -41,7 +41,7 @@
 ## NEXT BLOCK
 - **Block:** TBD
 - **Name:** TBD
-- **Dependencies:** 16-E
+- **Dependencies:** 16-F
 - **Scope:** TBD
 
 ---
@@ -134,6 +134,7 @@
 | 16-B.A.HF.2 | Hotfix 2 en Footer (TikTok SVG y Email DEV) | ✅ DONE | 2026-03-03 | pending |
 | 16-C | Limpieza Pre-Producción de raíz | ✅ DONE | 2026-03-03 | 9074958 |
 | 16-D | Limpieza Profunda de Código Fuente | ✅ DONE | 2026-03-03 | d0c7807 |
-| 16-E | Fix Auth UX & Products RLS Policy | ✅ DONE | 2026-03-03 | pending |
+| 16-E | Fix Auth UX & Products RLS Policy | ✅ DONE | 2026-03-03 | 8ae4351 |
+| 16-F | UX: Smart Newsletter Popup (Auth + Exist Intent) | ✅ DONE | 2026-03-03 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
