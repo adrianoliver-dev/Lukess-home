@@ -26,7 +26,7 @@ Por eso, la mayoría de sus prendas (especialmente en camisas y polos) vienen en
 
 ## Cómo Elegir tu Talla en Camisas Columbia
 
-<img src="/blog/blog-4-tallas-camisas-colgadas.webp" alt="Tallas camisas de marca hombre" class="w-full h-auto rounded-lg shadow-md my-8 aspect-square object-cover" />
+<img src="/blog/blog-4-tallas-camisas-colgadas.webp" alt="Tallas camisas de marca hombre" style="width: 100%; height: auto; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin: 2rem 0; aspect-ratio: 1/1; object-fit: cover;" />
 
 Al elegir la línea de camisas PFG (Performance Fishing Gear) o casual de Columbia, toma en cuenta estos simples tips:
 

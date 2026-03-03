@@ -28,7 +28,7 @@ La alternativa real es invertir en **pocas prendas de calidad**, de marcas que s
 
 Antes de comprar cualquier cosa, definí un núcleo. Estas cinco prendas cubren el 90% de tus situaciones: oficina, salida casual, almuerzo de negocios y fin de semana.
 
-<img src="/blog/blog-3-prendas-basicas-hombre.webp" alt="Prendas básicas hombre Santa Cruz" class="w-full h-auto rounded-lg shadow-md my-8 aspect-square object-cover" />
+<img src="/blog/blog-3-prendas-basicas-hombre.webp" alt="Prendas básicas hombre Santa Cruz" style="width: 100%; height: auto; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin: 2rem 0; aspect-ratio: 1/1; object-fit: cover;" />
 
 ### 1. La Camisa Técnica (Estilo Columbia)
 
