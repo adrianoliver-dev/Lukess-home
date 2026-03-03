@@ -120,21 +120,6 @@ export default function GarantiaAutenticidadPage() {
                     <li>Devolver el 100% de tu dinero si no contamos con stock para reemplazo.</li>
                 </ul>
             </section>
-
-            <section>
-                <div className="bg-gradient-to-r from-gray-900 to-gray-800 text-white rounded-xl p-8 text-center">
-                    <h3 className="font-bold text-2xl mb-4 text-white">¿Tenés Dudas Sobre la Autenticidad de un Producto?</h3>
-                    <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
-                        Visitá nuestras tiendas en el Mercado Mutualista. Revisá las etiquetas, tocá la calidad de las telas y compará con productos de otras tiendas. La diferencia es notable.
-                    </p>
-                    <Link
-                        href="/#ubicacion"
-                        className="inline-block bg-white text-gray-900 font-bold px-8 py-4 rounded-lg hover:bg-gray-100 transition-colors shadow-lg"
-                    >
-                        📍 Visitar Nuestras Tiendas
-                    </Link>
-                </div>
-            </section>
         </LegalPageTemplate>
     )
 }

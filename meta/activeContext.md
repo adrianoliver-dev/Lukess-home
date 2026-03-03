@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-B.A.4
-- **Block Name:** Actualización final del componente Footer
+- **Block Number:** 16-B.A.Hotfix
+- **Block Name:** Hotfixes en Footer y Garantía de Autenticidad
 - **Status:** ✅ DONE
 - **Started:** 2026-03-02
 - **Completed:** 2026-03-02
@@ -14,11 +14,12 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-B.A.4
-- **Block Name:** Actualización final del componente Footer
+- **Block Number:** 16-B.A.Hotfix
+- **Block Name:** Hotfixes en Footer y Garantía de Autenticidad
 - **Commit:** pending
 
 ### Files Changed
+- `app/garantia-autenticidad/page.tsx`
 - `components/layout/Footer.tsx`
 - `meta/activeContext.md`
 
@@ -129,6 +130,7 @@
 | 16-B.A.2.D | Reescritura de Políticas de Cambio y Devolución | ✅ DONE | 2026-03-02 | d56ffc2 |
 | 16-B.A.3.A | Crear página de "Garantía de Autenticidad" | ✅ DONE | 2026-03-02 | 3eedb29 |
 | 16-B.A.3.B | Crear página de "Preguntas Frecuentes" | ✅ DONE | 2026-03-02 | 6b7a03b |
-| 16-B.A.4 | Actualización final del componente Footer | ✅ DONE | 2026-03-02 | pending |
+| 16-B.A.4 | Actualización final del componente Footer | ✅ DONE | 2026-03-02 | fd9162e |
+| 16-B.A.HF | Hotfixes en Footer y Garantía de Autenticidad | ✅ DONE | 2026-03-02 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |

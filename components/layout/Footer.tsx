@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Instagram, Facebook, MapPin, Phone, Mail, ShieldCheck, PackageCheck, Truck, CreditCard } from 'lucide-react'
+import { Instagram, Facebook, MapPin, Phone, Mail, ShieldCheck, PackageCheck, Truck, CreditCard, Video } from 'lucide-react'
 import Container from '@/components/ui/Container'
 import { formatWhatsAppNumber } from '@/lib/utils/whatsapp'
 
@@ -22,7 +22,7 @@ export default function Footer() {
             </p>
             <div className="flex gap-3">
               <a
-                href="https://www.instagram.com/lukess_home/"
+                href="https://www.instagram.com/lukesshome"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-gray-800 hover:bg-accent-500 text-gray-400 hover:text-white rounded-full flex items-center justify-center transition-all"
@@ -31,13 +31,22 @@ export default function Footer() {
                 <Instagram className="w-5 h-5" />
               </a>
               <a
-                href="https://www.facebook.com/lukesshome"
+                href="https://www.facebook.com/share/1HsWDu9YgU/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-gray-800 hover:bg-accent-500 text-gray-400 hover:text-white rounded-full flex items-center justify-center transition-all"
                 aria-label="Facebook de Lukess Home"
               >
                 <Facebook className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.tiktok.com/@lukess.home"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-gray-800 hover:bg-accent-500 text-gray-400 hover:text-white rounded-full flex items-center justify-center transition-all"
+                aria-label="TikTok de Lukess Home"
+              >
+                <Video className="w-5 h-5" />
               </a>
             </div>
           </div>
