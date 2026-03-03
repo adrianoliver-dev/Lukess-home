@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-B.A.1.G
-- **Block Name:** Unify Anchor Links
+- **Block Number:** 16-B.A.2.A
+- **Block Name:** Reescritura profesional de Términos y Condiciones
 - **Status:** ✅ DONE
 - **Started:** 2026-03-02
 - **Completed:** 2026-03-02
@@ -14,13 +14,12 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-B.A.1.G
-- **Block Name:** Unify Anchor Links
-- **Commit:** 4f69a9b
+- **Block Number:** 16-B.A.2.A
+- **Block Name:** Reescritura profesional de Términos y Condiciones
+- **Commit:** pending
 
 ### Files Changed
-- `components/home/UbicacionSection.tsx`
-- `components/layout/Navbar.tsx`
+- `app/terminos/page.tsx`
 - `meta/activeContext.md`
 
 ### Database Changes
@@ -123,6 +122,7 @@
 | 16-B.A.1.E | Size Guide In-Product Update | ✅ DONE | 2026-03-02 | 95ec2b6 |
 | 16-B.A.1.E-FIX | Build Fix: Type Mismatch in ProductDetail | ✅ DONE | 2026-03-02 | ae53bd5 |
 | 16-B.A.1.F | Global Footer CTA | ✅ DONE | 2026-03-02 | a4230c8 |
-| 16-B.A.1.G | Unify Anchor Links | ✅ DONE | 2026-03-02 | 4f69a9b |
+| 16-B.A.1.G | Unify Anchor Links | ✅ DONE | 2026-03-02 | 4bd943d |
+| 16-B.A.2.A | Reescritura profesional de Términos y Condiciones | ✅ DONE | 2026-03-02 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
