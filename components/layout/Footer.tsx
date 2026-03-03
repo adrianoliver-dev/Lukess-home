@@ -219,14 +219,6 @@ export default function Footer() {
                     Políticas de Envío
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    href="/politicas-cambio"
-                    className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
-                  >
-                    Cambios y Devoluciones
-                  </Link>
-                </li>
               </ul>
             </div>
 
