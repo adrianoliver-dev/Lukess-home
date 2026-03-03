@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 11-F
-- **Block Name:** Dynamic Categories based on active products
+- **Block Number:** 12-A
+- **Block Name:** Smart Dynamic Filters via RPC + Remove Subcategories
 - **Status:** ✅ DONE
 - **Started:** 2026-03-03
 - **Completed:** 2026-03-03
@@ -14,13 +14,13 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 11-F
-- **Block Name:** Dynamic Categories based on active products
-- **Commit:** d22e389
+- **Block Number:** 12-A
+- **Block Name:** Smart Dynamic Filters via RPC + Remove Subcategories
+- **Commit:** 0cb4d0b
 
 ### Files Changed
-- `app/actions/categories.ts`
-- `components/layout/Navbar.tsx`
+- `app/actions/filters.ts`
+- `components/catalogo/FilterSidebar.tsx`
 - `components/home/CatalogoClient.tsx`
 - `meta/activeContext.md`
 
@@ -40,10 +40,10 @@
 ---
 
 ## NEXT BLOCK
-- **Block:** TBD
-- **Name:** TBD
-- **Dependencies:** 11-F
-- **Scope:** TBD
+- **Block:** 13
+- **Name:** Order State Management via Admin Dashboard
+- **Dependencies:** 12-A
+- **Scope:** Develop Order detail page to read real-time stock/reserve data.
 
 ---
 
@@ -141,5 +141,6 @@
 | 16-H | Checkout Auto-Fill Details from Last Order | ✅ DONE | 2026-03-03 | b8ff0da |
 | 16-I | Checkout QR Download Button | ✅ DONE | 2026-03-03 | a8f1e45 |
 | 11-F | Dynamic Categories based on active products | ✅ DONE | 2026-03-03 | d22e389 |
+| 12-A | Smart Dynamic Filters via RPC + Remove Subcategories | ✅ DONE | 2026-03-03 | 0cb4d0b |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |

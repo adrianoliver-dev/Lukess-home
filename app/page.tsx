@@ -7,6 +7,8 @@ import { CatalogoClient } from "@/components/home/CatalogoClient";
 import UbicacionSection from "@/components/home/UbicacionSection";
 import CTAFinalSection from "@/components/home/CTAFinalSection";
 import { NewsletterPopup } from "@/components/marketing/NewsletterPopup";
+import { getDynamicFilters } from "@/app/actions/filters";
+import { getActiveCategories } from "@/app/actions/categories";
 
 export default async function Home(
   props: {
@@ -15,8 +17,11 @@ export default async function Home(
 ) {
   const searchParams = await props.searchParams
   const sort = searchParams?.sort as string | undefined
+  const categoryParam = (searchParams?.category || searchParams?.filter) as string | undefined
 
   let products = []
+  let dynamicFilters = null
+  let activeCategories: string[] = []
 
   try {
     const supabase = await createClient()
@@ -57,12 +62,35 @@ export default async function Home(
     // Error handled silently in production
   }
 
+  try {
+    let categoryForFilters: string | null = null;
+    if (categoryParam) {
+      if (categoryParam === 'camisas-columbia' || categoryParam === 'camisas-manga-larga' || categoryParam === 'camisas-manga-corta' || categoryParam === 'camisas-elegantes') {
+        categoryForFilters = 'Camisas'
+      } else if (categoryParam === 'pantalones-oversize' || categoryParam === 'pantalones-jeans' || categoryParam === 'pantalones-elegantes') {
+        categoryForFilters = 'Pantalones'
+      } else if (categoryParam !== 'nuevo' && categoryParam !== 'descuento' && categoryParam !== 'descuentos') {
+        categoryForFilters = categoryParam.charAt(0).toUpperCase() + categoryParam.slice(1)
+      }
+    }
+
+    dynamicFilters = await getDynamicFilters(categoryForFilters)
+    activeCategories = await getActiveCategories()
+  } catch (err) {
+    console.error('Error fetching categories or filters:', err)
+  }
+
   return (
     <>
       <HeroBanner />
       <TrustBanner />
 
-      <CatalogoClient initialProducts={products} />
+      <CatalogoClient
+        initialProducts={products}
+        initialFilters={dynamicFilters}
+        categories={activeCategories}
+        selectedCategory={categoryParam || null}
+      />
       <UbicacionSection />
       <CTAFinalSection />
 

@@ -19,6 +19,9 @@ import { getDynamicFilters, type FilterOptions } from '@/app/actions/filters'
 
 interface CatalogoClientProps {
   initialProducts: Product[]
+  initialFilters?: FilterOptions | null
+  categories?: string[]
+  selectedCategory?: string | null
 }
 
 /* ───────── Variantes de animación ───────── */
@@ -72,9 +75,9 @@ const showAddedToast = (productName: string) => {
   ), { duration: 1500, position: 'bottom-right' })
 }
 
-export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
+export function CatalogoClient({ initialProducts, initialFilters, categories: serverCategories, selectedCategory }: CatalogoClientProps) {
   // Estados de filtros - Ahora son arrays para multiselección
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(selectedCategory ? [selectedCategory] : [])
   const [selectedBrands, setSelectedBrands] = useState<string[]>([])
   const [selectedColors, setSelectedColors] = useState<string[]>([])
   const [showFilters, setShowFilters] = useState(false)
@@ -94,7 +97,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
   const [displayLimit, setDisplayLimit] = useState(20)
 
   // Opciones Dinámicas de Filtros
-  const [dynamicFilters, setDynamicFilters] = useState<FilterOptions | null>(null)
+  const [dynamicFilters, setDynamicFilters] = useState<FilterOptions | null>(initialFilters || null)
   const [isFiltersLoading, setIsFiltersLoading] = useState(false)
 
   const searchParams = useSearchParams()
@@ -226,12 +229,15 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
 
   // Extraer categorías únicas
   const categories = useMemo(() => {
+    if (serverCategories && serverCategories.length > 0) {
+      return ['Todos', ...serverCategories.sort()]
+    }
     const cats = new Set<string>()
     initialProducts.forEach(p => {
       if (p.categories?.name) cats.add(p.categories.name)
     })
     return ['Todos', ...Array.from(cats).sort()]
-  }, [initialProducts])
+  }, [initialProducts, serverCategories])
 
   // Extraer marcas únicas (dinámico O general)
   const brands = useMemo(() => {
@@ -272,6 +278,21 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
     })
 
     return ['Todos', ...standardColors.filter(c => availableColors.has(c))]
+  }, [initialProducts, dynamicFilters])
+
+  // Tallas dinámicas
+  const sizes = useMemo(() => {
+    if (dynamicFilters && dynamicFilters.sizes.length > 0) {
+      return dynamicFilters.sizes.sort()
+    }
+
+    const availableSizes = new Set<string>()
+    initialProducts.forEach(p => {
+      if (p.sizes && Array.isArray(p.sizes)) {
+        p.sizes.forEach(s => availableSizes.add(s))
+      }
+    })
+    return Array.from(availableSizes).sort()
   }, [initialProducts, dynamicFilters])
 
   // Calcular stock disponible (quantity - reserved_qty para reflejar reservas activas)
@@ -679,11 +700,15 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                                 type="checkbox"
                                 checked={selectedCategories.includes(cat)}
                                 onChange={(e) => {
+                                  const params = new URLSearchParams(searchParams?.toString())
                                   if (e.target.checked) {
                                     setSelectedCategories([...selectedCategories, cat])
+                                    params.set('filter', cat.toLowerCase())
                                   } else {
                                     setSelectedCategories(selectedCategories.filter(c => c !== cat))
+                                    params.delete('filter')
                                   }
+                                  router.push(`${pathname}?${params.toString()}#catalogo`, { scroll: false })
                                 }}
                                 className="w-4 h-4 accent-primary-600 rounded"
                               />
@@ -774,7 +799,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                           Talla
                         </label>
                         <div className="flex flex-wrap gap-2">
-                          {['S', 'M', 'L', 'XL', '38', '40', '42', '44'].map((size) => (
+                          {sizes.map((size) => (
                             <button
                               key={size}
                               onClick={() => {
@@ -785,7 +810,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                               }}
                               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all min-w-[40px] ${sidebarFilters.sizes.includes(size)
                                 ? 'bg-gray-900 text-white'
-                                : 'bg-white text-gray-600 border border-gray-200 hover:border-gray-300'
+                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                 }`}
                             >
                               {size}
