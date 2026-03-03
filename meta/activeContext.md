@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-B.3.F
-- **Block Name:** Quinto Blog Post SEO: Pantalones y Blazers
+- **Block Number:** 16-B.3.H
+- **Block Name:** Fix Blog Images Inline Styles
 - **Status:** ✅ DONE
 - **Started:** 2026-03-02
 - **Completed:** 2026-03-02
@@ -14,11 +14,13 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-B.3.F
-- **Block Name:** Quinto Blog Post SEO: Pantalones y Blazers
-- **Commit:** pending
+- **Block Number:** 16-B.3.H
+- **Block Name:** Fix Blog Images Inline Styles
+- **Commit:** 5c1e2f0
 
 ### Files Changed
+- `content/blog/renovar-guardarropa-masculino-presupuesto.md`
+- `content/blog/guia-tallas-ropa-marca-bolivia.md`
 - `content/blog/pantalones-blazers-hombre-calor.md`
 - `meta/activeContext.md`
 
@@ -41,7 +43,7 @@
 ## NEXT BLOCK
 - **Block:** TBD
 - **Name:** TBD
-- **Dependencies:** 16-B.3.F
+- **Dependencies:** 16-B.3.H
 - **Scope:** TBD
 
 ---
@@ -110,6 +112,8 @@
 | 16-B.3.C | Fix Blog: Typography Plugin + Hero Aspect Ratio | ✅ DONE | 2026-03-02 | 3d4c591 |
 | 16-B.3.D | Tercer Blog Post SEO: Renovar Guardarropa Masculino | ✅ DONE | 2026-03-02 | 297c507 |
 | 16-B.3.E | Cuarto Blog Post SEO: Guía de Tallas | ✅ DONE | 2026-03-02 | 7e85245 |
-| 16-B.3.F | Quinto Blog Post SEO: Pantalones y Blazers | ✅ DONE | 2026-03-02 | pending |
+| 16-B.3.F | Quinto Blog Post SEO: Pantalones y Blazers | ✅ DONE | 2026-03-02 | d27986e |
+| 16-B.3.G | Blog Cleanup (Test post & Images HTML) | ✅ DONE | 2026-03-02 | f159b95 |
+| 16-B.3.H | Fix Blog Images Inline Styles | ✅ DONE | 2026-03-02 | 5c1e2f0 |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
