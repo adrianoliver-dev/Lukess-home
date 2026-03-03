@@ -197,6 +197,54 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
   // Pre-fill from authenticated account
   useEffect(() => {
+    let isMounted = true
+
+    const fetchLastOrder = async (email: string) => {
+      try {
+        const { data } = await supabase
+          .from('orders')
+          .select('*')
+          .eq('customer_email', email)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .single()
+
+        if (data && isMounted) {
+          // Si el usuario ya tiene un teléfono guardado pero el form está vacío
+          setCustomerData((prev) => ({
+            ...prev,
+            phone: prev.phone || data.customer_phone || '',
+          }))
+
+          if (data.delivery_method === 'pickup') {
+            setDeliveryMethod('pickup')
+            if (data.pickup_location) setPickupLocation(data.pickup_location)
+          } else if (data.delivery_method === 'delivery') {
+            setDeliveryMethod('delivery')
+            if (data.shipping_address) setShippingAddress(data.shipping_address)
+            if (data.shipping_reference) setShippingReference(data.shipping_reference)
+            if (data.recipient_name) {
+              setRecipientName(data.recipient_name)
+              hasManuallyEditedRecipient.current = true
+            }
+            if (data.recipient_phone) setRecipientPhone(data.recipient_phone)
+            if (data.delivery_instructions) setDeliveryInstructions(data.delivery_instructions)
+
+            // Si tenía coordenadas válidas, inicializamos el mapa como "confirmado"
+            if (data.gps_lat && data.gps_lng) {
+              setGpsLat(Number(data.gps_lat))
+              setGpsLng(Number(data.gps_lng))
+              if (data.gps_distance_km) setGpsDistanceKm(Number(data.gps_distance_km))
+              if (data.maps_link) setMapsLink(data.maps_link)
+              setLocationState('confirmed')
+            }
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching last order for checkout prefill:', err)
+      }
+    }
+
     if (isLoggedIn && user) {
       setCustomerData((prev) => ({
         ...prev,
@@ -204,8 +252,16 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
         phone: prev.phone || user.user_metadata?.phone || '',
         email: prev.email || user.email || '',
       }))
+
+      if (user.email && isOpen) {
+        fetchLastOrder(user.email)
+      }
     }
-  }, [isLoggedIn, user, customerName])
+
+    return () => {
+      isMounted = false
+    }
+  }, [isLoggedIn, user, customerName, isOpen])
 
   // GA4: begin_checkout cuando se abre el modal
   useEffect(() => {
