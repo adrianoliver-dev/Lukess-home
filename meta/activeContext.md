@@ -14,16 +14,15 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-C
-- **Block Name:** Limpieza Pre-Producción
-- **Commit:** 9074958
+- **Block Number:** 16-D
+- **Block Name:** Limpieza Profunda de Código (Console logs, Dead code)
+- **Commit:** d0c7807
 
 ### Files Changed
-- `build_output.log` (deleted)
-- `mcp_audit_26_02.md` (deleted)
-- `supabase_migration_descuentos.sql` (deleted)
-- `localhost_navigation_test_1772138152962.webp` (deleted)
-- `Pagina-web-Lukess-Home/` (deleted)
+- `app/api/send-email/route.ts`
+- `app/api/checkout/route.ts`
+- `components/ui/Confetti.tsx`
+- `lib/whatsapp/send-message.ts`
 - `meta/activeContext.md`
 
 ### Database Changes
@@ -137,5 +136,6 @@
 | 16-B.A.HF | Hotfixes en Footer y Garantía de Autenticidad | ✅ DONE | 2026-03-02 | 7800b35 |
 | 16-B.A.HF.2 | Hotfix 2 en Footer (TikTok SVG y Email DEV) | ✅ DONE | 2026-03-03 | pending |
 | 16-C | Limpieza Pre-Producción de raíz | ✅ DONE | 2026-03-03 | 9074958 |
+| 16-D | Limpieza Profunda de Código Fuente | ✅ DONE | 2026-03-03 | d0c7807 |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
