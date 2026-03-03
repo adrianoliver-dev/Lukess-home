@@ -173,15 +173,6 @@ export default function GuiaTallasPage() {
         <p className="text-gray-700 mb-8">
           <strong>Cómo medir tu cabeza:</strong> Usa una cinta métrica alrededor de tu cabeza, pasando por encima de las orejas y en la parte más ancha de la frente.
         </p>
-        <div className="bg-gray-900 text-white rounded-lg p-8 mt-12 text-center">
-          <h3 className="font-bold text-xl mb-3 text-white">¿Aún tienes dudas?</h3>
-          <p className="text-gray-300 mb-6">
-            Pasa por nuestras casetas en el Mercado Mutualista. Tenemos probadores acondicionados para que te pruebes todo el catálogo y encuentres tu calce perfecto sin compromiso.
-          </p>
-          <a href="/#ubicacion" className="inline-block bg-white text-gray-900 font-bold px-6 py-3 rounded hover:bg-gray-100 transition-colors uppercase tracking-wider text-sm">
-            Ver Ubicación
-          </a>
-        </div>
       </div>
     </LegalPageTemplate>
   )

@@ -155,24 +155,6 @@ export default function ComoComprarPage() {
         </div>
       </section>
 
-      <section>
-        <div className="bg-gray-900 text-white rounded-lg p-8 text-center">
-          <h3 className="font-bold text-2xl mb-3 text-white">
-            ¿Todavía tenés dudas?
-          </h3>
-          <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
-            Nuestro equipo está disponible todos los días para ayudarte con cualquier consulta sobre productos, tallas, envíos o formas de pago.
-          </p>
-          <a
-            href={buildWhatsAppUrl("Hola, tengo dudas sobre cómo comprar")}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-whatsapp text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-whatsapp-dark transition-colors shadow-lg"
-          >
-            📱 Consultar por WhatsApp
-          </a>
-        </div>
-      </section>
     </LegalPageTemplate>
   )
 }
