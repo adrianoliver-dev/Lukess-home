@@ -107,7 +107,72 @@ export default function GuiaTallasPage() {
           <li><strong>Talla 42R:</strong> Para un pecho de ~106cm. Equivale a una L.</li>
           <li><strong>Talla 44R:</strong> Para un pecho de ~111cm. Equivale a una XL.</li>
         </ul>
+        <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4 border-b pb-2">4. Shorts</h2>
+        <p className="text-gray-700 mb-4">
+          Los shorts deportivos o casuales siguen el mismo sistema de cintura (W) que los pantalones, pero sin el parámetro de largo (L).
+        </p>
+        <div className="overflow-x-auto mb-8">
+          <table className="min-w-full bg-white border border-gray-200 rounded-lg text-sm text-left">
+            <thead className="bg-gray-100 text-gray-900">
+              <tr>
+                <th className="py-3 px-4 border-b">Talla W</th>
+                <th className="py-3 px-4 border-b">Cintura (cm)</th>
+                <th className="py-3 px-4 border-b">Largo aproximado (cm)</th>
+              </tr>
+            </thead>
+            <tbody className="text-gray-700 divide-y divide-gray-200">
+              <tr><td className="py-3 px-4 font-bold">W30</td><td className="py-3 px-4">76-80</td><td className="py-3 px-4">48-50</td></tr>
+              <tr><td className="py-3 px-4 font-bold">W32</td><td className="py-3 px-4">80-84</td><td className="py-3 px-4">50-52</td></tr>
+              <tr><td className="py-3 px-4 font-bold">W34</td><td className="py-3 px-4">84-88</td><td className="py-3 px-4">52-54</td></tr>
+            </tbody>
+          </table>
+        </div>
 
+        <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4 border-b pb-2">5. Cinturones</h2>
+        <p className="text-gray-700 mb-4">
+          Los cinturones de cuero se miden desde la hebilla hasta el agujero central. La talla del cinturón debe ser aproximadamente 2 pulgadas más que tu talla de pantalón.
+        </p>
+        <div className="overflow-x-auto mb-8">
+          <table className="min-w-full bg-white border border-gray-200 rounded-lg text-sm text-left">
+            <thead className="bg-gray-100 text-gray-900">
+              <tr>
+                <th className="py-3 px-4 border-b">Talla Cinturón</th>
+                <th className="py-3 px-4 border-b">Largo Total (cm)</th>
+                <th className="py-3 px-4 border-b">Para tallas de pantalón</th>
+              </tr>
+            </thead>
+            <tbody className="text-gray-700 divide-y divide-gray-200">
+              <tr><td className="py-3 px-4 font-bold">32</td><td className="py-3 px-4">85-90</td><td className="py-3 px-4">W28-W30</td></tr>
+              <tr><td className="py-3 px-4 font-bold">34</td><td className="py-3 px-4">90-95</td><td className="py-3 px-4">W30-W32</td></tr>
+              <tr><td className="py-3 px-4 font-bold">36</td><td className="py-3 px-4">95-100</td><td className="py-3 px-4">W32-W34</td></tr>
+              <tr><td className="py-3 px-4 font-bold">38</td><td className="py-3 px-4">100-105</td><td className="py-3 px-4">W34-W36</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4 border-b pb-2">6. Gorras, Sombreros y Viseras</h2>
+        <p className="text-gray-700 mb-4">
+          La mayoría de nuestras gorras deportivas Columbia y sombreros tipo bucket tienen ajuste trasero o son de talla única adaptable.
+        </p>
+        <div className="overflow-x-auto mb-8">
+          <table className="min-w-full bg-white border border-gray-200 rounded-lg text-sm text-left">
+            <thead className="bg-gray-100 text-gray-900">
+              <tr>
+                <th className="py-3 px-4 border-b">Talla</th>
+                <th className="py-3 px-4 border-b">Circunferencia Cabeza (cm)</th>
+                <th className="py-3 px-4 border-b">Descripción</th>
+              </tr>
+            </thead>
+            <tbody className="text-gray-700 divide-y divide-gray-200">
+              <tr><td className="py-3 px-4 font-bold">S/M</td><td className="py-3 px-4">54-57</td><td className="py-3 px-4">Ajustable con cierre trasero</td></tr>
+              <tr><td className="py-3 px-4 font-bold">L/XL</td><td className="py-3 px-4">58-61</td><td className="py-3 px-4">Ajustable con cierre trasero</td></tr>
+              <tr><td className="py-3 px-4 font-bold">Unitalla</td><td className="py-3 px-4">55-60</td><td className="py-3 px-4">Ajuste universal (elástico interno)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="text-gray-700 mb-8">
+          <strong>Cómo medir tu cabeza:</strong> Usa una cinta métrica alrededor de tu cabeza, pasando por encima de las orejas y en la parte más ancha de la frente.
+        </p>
         <div className="bg-gray-900 text-white rounded-lg p-8 mt-12 text-center">
           <h3 className="font-bold text-xl mb-3 text-white">¿Aún tienes dudas?</h3>
           <p className="text-gray-300 mb-6">

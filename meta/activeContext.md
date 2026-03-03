@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-B.A.1-HOTFIX
-- **Block Name:** Footer CTA Colors Hotfix
+- **Block Number:** 16-B.A.1.E
+- **Block Name:** Size Guide In-Product Update
 - **Status:** ✅ DONE
 - **Started:** 2026-03-02
 - **Completed:** 2026-03-02
@@ -14,12 +14,12 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-B.A.1-HOTFIX
-- **Block Name:** Footer CTA Colors Hotfix
+- **Block Number:** 16-B.A.1.E
+- **Block Name:** Size Guide In-Product Update
 - **Commit:** TBD
 
 ### Files Changed
-- `app/como-comprar/page.tsx`
+- `components/producto/SizeGuideModal.tsx`
 - `app/guia-tallas/page.tsx`
 - `meta/activeContext.md`
 
@@ -115,9 +115,11 @@
 | 16-B.3.G | Blog Cleanup (Test post & Images HTML) | ✅ DONE | 2026-03-02 | f159b95 |
 | 16-B.3.H | Fix Blog Images Inline Styles | ✅ DONE | 2026-03-02 | 5c1e2f0 |
 | 16-B.3.I | Fix Markdown Parser HTML Sanitization | ✅ DONE | 2026-03-02 | d830478 |
-| 16-B.A.1.A | ¿Cómo Comprar? (Reescritura Profesional) | ✅ DONE | 2026-03-02 | pending |
+| 16-B.A.1.A | ¿Cómo Comprar? (Reescritura Profesional) | ✅ DONE | 2026-03-02 | e8a7c93 |
 | 16-B.A.1.B | Métodos de Pago | ✅ DONE | 2026-03-02 | 2dad14a |
 | 16-B.A.1.C | Mis Pedidos (SEO & Copy) | ✅ DONE | 2026-03-02 | 063d764 |
-| 16-B.A.1.D | Guía de Tallas | ✅ DONE | 2026-03-02 | pending |
+| 16-B.A.1.D | Guía de Tallas | ✅ DONE | 2026-03-02 | 26721e4 |
+| 16-B.A.1-HOTFIX | Footer CTA Colors Hotfix | ✅ DONE | 2026-03-02 | a268397 |
+| 16-B.A.1.E | Size Guide In-Product Update | ✅ DONE | 2026-03-02 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
