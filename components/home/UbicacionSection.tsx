@@ -76,7 +76,7 @@ export default function UbicacionSection() {
   });
 
   return (
-    <section id="contacto" className="py-20 md:py-28 bg-gray-50/60">
+    <section id="ubicacion" className="py-20 md:py-28 bg-gray-50/60">
       <Container>
         <motion.div
           ref={ref}

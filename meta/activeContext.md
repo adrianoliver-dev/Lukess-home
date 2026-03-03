@@ -16,7 +16,7 @@
 ## LAST COMPLETED BLOCK
 - **Block Number:** 16-B.A.1.G
 - **Block Name:** Unify Anchor Links
-- **Commit:** TBD
+- **Commit:** 4f69a9b
 
 ### Files Changed
 - `components/home/UbicacionSection.tsx`
@@ -123,6 +123,6 @@
 | 16-B.A.1.E | Size Guide In-Product Update | ✅ DONE | 2026-03-02 | 95ec2b6 |
 | 16-B.A.1.E-FIX | Build Fix: Type Mismatch in ProductDetail | ✅ DONE | 2026-03-02 | ae53bd5 |
 | 16-B.A.1.F | Global Footer CTA | ✅ DONE | 2026-03-02 | a4230c8 |
-| 16-B.A.1.G | Unify Anchor Links | ✅ DONE | 2026-03-02 | pending |
+| 16-B.A.1.G | Unify Anchor Links | ✅ DONE | 2026-03-02 | 4f69a9b |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
