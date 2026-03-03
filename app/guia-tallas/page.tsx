@@ -1,212 +1,123 @@
-import { buildWhatsAppUrl } from '@/lib/utils/whatsapp'
 import { LegalPageTemplate } from '@/components/legal/LegalPageTemplate'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Guía de Tallas - Lukess Home',
+  title: 'Guía de Tallas para Ropa de Marca Americana - Lukess Home',
+  description: 'Descubre cómo elegir tu talla perfecta en ropa importada como Columbia y Nautica en Bolivia. Tablas de medidas exactas para camisas, pantalones y blazers.',
+  keywords: 'guia tallas columbia, tallas nautica, ropa americana bolivia, equivalencia tallas pantalones W L, medidas camisas hombre',
 }
 
 export default function GuiaTallasPage() {
   return (
-    <LegalPageTemplate title="Guía de Tallas" lastUpdated="10 de febrero de 2026">
-      <section className="mb-8">
-        <h2>Camisas y Polos</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse">
-            <thead>
-              <tr className="bg-gray-50">
-                <th className="border border-gray-300 px-4 py-2">Talla</th>
-                <th className="border border-gray-300 px-4 py-2">Pecho (cm)</th>
-                <th className="border border-gray-300 px-4 py-2">Largo (cm)</th>
-                <th className="border border-gray-300 px-4 py-2">Hombro (cm)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="bg-white border-b border-gray-100">
-                <td className="border border-gray-300 px-4 py-2 font-semibold">S</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">90-95</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">68-70</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">42-44</td>
-              </tr>
-              <tr className="bg-white border-b border-gray-100">
-                <td className="border border-gray-300 px-4 py-2 font-semibold">M</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">96-101</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">71-73</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">45-47</td>
-              </tr>
-              <tr className="bg-white border-b border-gray-100">
-                <td className="border border-gray-300 px-4 py-2 font-semibold">L</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">102-107</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">74-76</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">48-50</td>
-              </tr>
-              <tr className="bg-white border-b border-gray-100">
-                <td className="border border-gray-300 px-4 py-2 font-semibold">XL</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">108-113</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">77-79</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">51-53</td>
-              </tr>
-              <tr className="bg-white border-b border-gray-100">
-                <td className="border border-gray-300 px-4 py-2 font-semibold">XXL</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">114-120</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">80-82</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">54-56</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+    <LegalPageTemplate title="Guía de Tallas y Ajustes" lastUpdated="2 de marzo de 2026">
+      <div className="prose prose-zinc max-w-none">
+        <p className="text-lg text-gray-600 leading-relaxed mb-8">
+          Sabemos que comprar ropa importada por internet genera dudas sobre el calce. Las marcas americanas como <strong>Columbia</strong>, <strong>Nautica</strong> y <strong>Tommy Hilfiger</strong> tienen estándares de costura diferentes a la ropa de confección nacional. Esta guía técnica está diseñada para que elijas tu talla exacta sin temor a equivocarte.
+        </p>
 
-      <section className="mb-8">
-        <h2>Pantalones, Jeans y Shorts</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse">
-            <thead>
-              <tr className="bg-gray-50">
-                <th className="border border-gray-300 px-4 py-2">Talla</th>
-                <th className="border border-gray-300 px-4 py-2">Cintura (cm)</th>
-                <th className="border border-gray-300 px-4 py-2">Cadera (cm)</th>
-                <th className="border border-gray-300 px-4 py-2">Largo (cm)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="bg-white border-b border-gray-100">
-                <td className="border border-gray-300 px-4 py-2 font-semibold">28</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">71-74</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">88-91</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">102</td>
-              </tr>
-              <tr className="bg-white border-b border-gray-100">
-                <td className="border border-gray-300 px-4 py-2 font-semibold">30</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">76-79</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">93-96</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">104</td>
-              </tr>
-              <tr className="bg-white border-b border-gray-100">
-                <td className="border border-gray-300 px-4 py-2 font-semibold">32</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">81-84</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">98-101</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">106</td>
-              </tr>
-              <tr className="bg-white border-b border-gray-100">
-                <td className="border border-gray-300 px-4 py-2 font-semibold">34</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">86-89</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">103-106</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">108</td>
-              </tr>
-              <tr className="bg-white border-b border-gray-100">
-                <td className="border border-gray-300 px-4 py-2 font-semibold">36</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">91-94</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">108-111</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">110</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+        <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-4 border-b pb-2">1. Camisas y Poleras (Prendas Superiores)</h2>
+        <p className="text-gray-700 mb-4">
+          La principal diferencia de marcas como Columbia es su corte <strong>"Relaxed Fit"</strong>. Están diseñadas para la comodidad al aire libre, por lo que son más holgadas en el pecho y los hombros.
+        </p>
 
-      <section className="mb-8">
-        <h2>Cinturones</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm border-collapse">
-            <thead>
-              <tr className="bg-gray-50">
-                <th className="border border-gray-300 px-4 py-2">Talla</th>
-                <th className="border border-gray-300 px-4 py-2">Cintura (cm)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="bg-white border-b border-gray-100">
-                <td className="border border-gray-300 px-4 py-2 font-semibold">S (28-30)</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">71-76</td>
-              </tr>
-              <tr className="bg-white border-b border-gray-100">
-                <td className="border border-gray-300 px-4 py-2 font-semibold">M (32-34)</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">81-86</td>
-              </tr>
-              <tr className="bg-white border-b border-gray-100">
-                <td className="border border-gray-300 px-4 py-2 font-semibold">L (36-38)</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">91-96</td>
-              </tr>
-              <tr className="bg-white border-b border-gray-100">
-                <td className="border border-gray-300 px-4 py-2 font-semibold">XL (40-42)</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">101-106</td>
-              </tr>
-            </tbody>
-          </table>
+        <div className="bg-gray-50 border border-gray-200 rounded-lg p-5 mb-6">
+          <p className="font-bold text-gray-900 mb-2">💡 La Regla de Oro en Bolivia:</p>
+          <p className="text-gray-700">Si en marcas bolivianas o brasileras usas habitualmente talla <strong>L</strong>, en Columbia o Nautica tu talla ideal será la <strong>M</strong>. Siempre calcula una talla menos a tu estándar habitual.</p>
         </div>
-      </section>
 
-      <section className="mb-8">
-        <h2>Sombreros y Gorras</h2>
-        <div className="overflow-x-auto mb-4">
-          <h3 className="font-semibold mb-2">Sombreros</h3>
-          <table className="w-full text-sm border-collapse">
-            <thead>
-              <tr className="bg-gray-50">
-                <th className="border border-gray-300 px-4 py-2">Talla</th>
-                <th className="border border-gray-300 px-4 py-2">Circunferencia (cm)</th>
+        <div className="overflow-x-auto mb-8">
+          <table className="min-w-full bg-white border border-gray-200 rounded-lg text-sm text-left">
+            <thead className="bg-gray-100 text-gray-900">
+              <tr>
+                <th className="py-3 px-4 border-b">Talla Americana</th>
+                <th className="py-3 px-4 border-b">Contorno Pecho (cm)</th>
+                <th className="py-3 px-4 border-b">Largo Manga (cm)</th>
+                <th className="py-3 px-4 border-b">Equivalencia Local</th>
               </tr>
             </thead>
-            <tbody>
-              <tr className="bg-white border-b border-gray-100">
-                <td className="border border-gray-300 px-4 py-2 font-semibold">M</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">57-58</td>
+            <tbody className="text-gray-700 divide-y divide-gray-200">
+              <tr>
+                <td className="py-3 px-4 font-bold">S (Small)</td>
+                <td className="py-3 px-4">89 - 97</td>
+                <td className="py-3 px-4">84</td>
+                <td className="py-3 px-4">M Nacional</td>
               </tr>
-              <tr className="bg-white border-b border-gray-100">
-                <td className="border border-gray-300 px-4 py-2 font-semibold">L</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">59-60</td>
+              <tr>
+                <td className="py-3 px-4 font-bold">M (Medium)</td>
+                <td className="py-3 px-4">97 - 104</td>
+                <td className="py-3 px-4">86</td>
+                <td className="py-3 px-4">L Nacional</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-bold">L (Large)</td>
+                <td className="py-3 px-4">107 - 114</td>
+                <td className="py-3 px-4">89</td>
+                <td className="py-3 px-4">XL Nacional</td>
+              </tr>
+              <tr>
+                <td className="py-3 px-4 font-bold">XL (X-Large)</td>
+                <td className="py-3 px-4">117 - 124</td>
+                <td className="py-3 px-4">91</td>
+                <td className="py-3 px-4">XXL Nacional</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <div className="overflow-x-auto">
-          <h3 className="font-semibold mb-2">Gorras</h3>
-          <table className="w-full text-sm border-collapse">
-            <thead>
-              <tr className="bg-gray-50">
-                <th className="border border-gray-300 px-4 py-2">Talla</th>
-                <th className="border border-gray-300 px-4 py-2">Circunferencia</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="bg-white border-b border-gray-100">
-                <td className="border border-gray-300 px-4 py-2 font-semibold">Universal</td>
-                <td className="border border-gray-300 px-4 py-2 text-center">Ajustable</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
 
-      <section className="mb-8">
-        <h2>Consejos para Elegir tu Talla</h2>
-        <ul className="space-y-3 text-gray-700">
-          <li>📏 <strong>Mide con cinta métrica</strong> sobre ropa ajustada</li>
-          <li>👕 <strong>Camisas:</strong> Si estás entre tallas, elige la mayor para mayor comodidad</li>
-          <li>👖 <strong>Pantalones:</strong> Considera el tipo de corte (slim fit es más ajustado)</li>
-          <li>🤔 <strong>¿Dudas?</strong> Consulta por WhatsApp y te asesoramos personalmente</li>
+        <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4 border-b pb-2">2. Pantalones, Jeans y Chinos</h2>
+        <p className="text-gray-700 mb-4">
+          La ropa americana profesional no usa tallas genéricas (40, 42). Utiliza el sistema alfanumérico basado en pulgadas: <strong>W (Waist/Cintura)</strong> y <strong>L (Length/Largo)</strong>.
+        </p>
+
+        <h3 className="text-lg font-bold text-gray-900 mt-6 mb-3">Entendiendo la Cintura (W)</h3>
+        <div className="overflow-x-auto mb-6">
+          <table className="min-w-full bg-white border border-gray-200 rounded-lg text-sm text-left">
+            <thead className="bg-gray-100 text-gray-900">
+              <tr>
+                <th className="py-3 px-4 border-b">Talla W (Pulgadas)</th>
+                <th className="py-3 px-4 border-b">Cintura en cm</th>
+                <th className="py-3 px-4 border-b">Talla referencial en pantalón de vestir</th>
+              </tr>
+            </thead>
+            <tbody className="text-gray-700 divide-y divide-gray-200">
+              <tr><td className="py-3 px-4 font-bold">W30</td><td className="py-3 px-4">76 cm</td><td className="py-3 px-4">Talla 38</td></tr>
+              <tr><td className="py-3 px-4 font-bold">W32</td><td className="py-3 px-4">81 cm</td><td className="py-3 px-4">Talla 40</td></tr>
+              <tr><td className="py-3 px-4 font-bold">W34</td><td className="py-3 px-4">86 cm</td><td className="py-3 px-4">Talla 42</td></tr>
+              <tr><td className="py-3 px-4 font-bold">W36</td><td className="py-3 px-4">91 cm</td><td className="py-3 px-4">Talla 44</td></tr>
+              <tr><td className="py-3 px-4 font-bold">W38</td><td className="py-3 px-4">96 cm</td><td className="py-3 px-4">Talla 46</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 className="text-lg font-bold text-gray-900 mt-6 mb-3">Entendiendo el Largo (L)</h3>
+        <p className="text-gray-700 mb-4">El largo se mide desde la costura de la entrepierna hasta el dobladillo final del pie.</p>
+        <ul className="list-disc list-inside text-gray-700 space-y-2 mb-8">
+          <li><strong>L30 (Largo 30):</strong> Ideal para estaturas entre 1.60m y 1.74m. (El largo más buscado en Bolivia).</li>
+          <li><strong>L32 (Largo 32):</strong> Ideal para estaturas entre 1.75m y 1.82m.</li>
+          <li><strong>L34 (Largo 34):</strong> Para hombres altos de 1.83m en adelante.</li>
         </ul>
-      </section>
 
-      <section>
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-          <h3 className="font-bold text-lg text-gray-900 mb-2">
-            ¿Necesitas ayuda con tu talla?
-          </h3>
-          <p className="text-gray-700 mb-4">
-            Nuestro equipo está disponible para asesorarte y ayudarte a elegir la talla perfecta.
+        <h2 className="text-2xl font-bold text-gray-900 mt-12 mb-4 border-b pb-2">3. Blazers y Sacos</h2>
+        <p className="text-gray-700 mb-4">
+          Los blazers se miden por el ancho del pecho (en pulgadas) seguido de una letra que indica el largo del torso y las mangas: <strong>S (Short)</strong>, <strong>R (Regular)</strong> o <strong>L (Long)</strong>.
+        </p>
+        <ul className="list-disc list-inside text-gray-700 space-y-2 mb-8">
+          <li><strong>Talla 38R:</strong> Para un pecho de ~96cm y estatura promedio. Equivale a una S/M ajustada.</li>
+          <li><strong>Talla 40R:</strong> Para un pecho de ~101cm. Equivale a una M.</li>
+          <li><strong>Talla 42R:</strong> Para un pecho de ~106cm. Equivale a una L.</li>
+          <li><strong>Talla 44R:</strong> Para un pecho de ~111cm. Equivale a una XL.</li>
+        </ul>
+
+        <div className="bg-gray-900 text-white rounded-lg p-8 mt-12 text-center">
+          <h3 className="font-bold text-xl mb-3">¿Aún tienes dudas?</h3>
+          <p className="text-gray-300 mb-6">
+            Pasa por nuestras casetas en el Mercado Mutualista. Tenemos probadores acondicionados para que te pruebes todo el catálogo y encuentres tu calce perfecto sin compromiso.
           </p>
-          <a
-            href={buildWhatsAppUrl("Hola, necesito ayuda con las tallas")}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-gray-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-black transition-colors"
-          >
-            Consultar por WhatsApp
+          <a href="/#ubicacion" className="inline-block bg-white text-gray-900 font-bold px-6 py-3 rounded hover:bg-gray-100 transition-colors uppercase tracking-wider text-sm">
+            Ver Ubicación
           </a>
         </div>
-      </section>
+      </div>
     </LegalPageTemplate>
   )
 }

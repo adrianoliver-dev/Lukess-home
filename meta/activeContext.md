@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-B.A.1.C
-- **Block Name:** Mis Pedidos (SEO & Copy)
+- **Block Number:** 16-B.A.1.D
+- **Block Name:** Guía de Tallas
 - **Status:** ✅ DONE
 - **Started:** 2026-03-02
 - **Completed:** 2026-03-02
@@ -14,13 +14,12 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-B.A.1.C
-- **Block Name:** Mis Pedidos (SEO & Copy)
+- **Block Number:** 16-B.A.1.D
+- **Block Name:** Guía de Tallas
 - **Commit:** TBD
 
 ### Files Changed
-- `app/mis-pedidos/layout.tsx`
-- `app/mis-pedidos/page.tsx`
+- `app/guia-tallas/page.tsx`
 - `meta/activeContext.md`
 
 ### Database Changes
@@ -117,6 +116,7 @@
 | 16-B.3.I | Fix Markdown Parser HTML Sanitization | ✅ DONE | 2026-03-02 | d830478 |
 | 16-B.A.1.A | ¿Cómo Comprar? (Reescritura Profesional) | ✅ DONE | 2026-03-02 | pending |
 | 16-B.A.1.B | Métodos de Pago | ✅ DONE | 2026-03-02 | 2dad14a |
-| 16-B.A.1.C | Mis Pedidos (SEO & Copy) | ✅ DONE | 2026-03-02 | pending |
+| 16-B.A.1.C | Mis Pedidos (SEO & Copy) | ✅ DONE | 2026-03-02 | 063d764 |
+| 16-B.A.1.D | Guía de Tallas | ✅ DONE | 2026-03-02 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
