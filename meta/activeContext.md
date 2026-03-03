@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-B.3.B
-- **Block Name:** Redacción del Segundo Blog Post SEO
+- **Block Number:** 16-B.3.E
+- **Block Name:** Cuarto Blog Post SEO: Guía de Tallas
 - **Status:** ✅ DONE
 - **Started:** 2026-03-02
 - **Completed:** 2026-03-02
@@ -14,19 +14,19 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-B.3.B
-- **Block Name:** Redacción del Segundo Blog Post SEO
+- **Block Number:** 16-B.3.E
+- **Block Name:** Cuarto Blog Post SEO: Guía de Tallas
 - **Commit:** pending
 
 ### Files Changed
-- `content/blog/camisas-columbia-bolivia-precios.md`
+- `content/blog/guia-tallas-ropa-marca-bolivia.md`
 - `meta/activeContext.md`
 
 ### Database Changes
 - None
 
 ### Build Verification
-- Skipped (Solo contenido markdown)
+- Skipped (solo contenido markdown)
 ---
 
 ## OPEN ISSUES
@@ -41,7 +41,7 @@
 ## NEXT BLOCK
 - **Block:** TBD
 - **Name:** TBD
-- **Dependencies:** 16-B.3.B
+- **Dependencies:** 16-B.3.E
 - **Scope:** TBD
 
 ---
@@ -106,6 +106,9 @@
 | 16-B.1-FIX | Blog Branding & Content Corrections | ✅ DONE | 2026-03-02 | 921fb94 |
 | 16-B.2 | Hero Refactor + Local SEO Fixes | ✅ DONE | 2026-03-02 | pending |
 | 16-B.3.A | Redacción y estructuración del primer Blog Post SEO | ✅ DONE | 2026-03-02 | 9c4fc88 |
-| 16-B.3.B | Redacción del Segundo Blog Post SEO | ✅ DONE | 2026-03-02 | pending |
+| 16-B.3.B | Redacción del Segundo Blog Post SEO | ✅ DONE | 2026-03-02 | 330906a |
+| 16-B.3.C | Fix Blog: Typography Plugin + Hero Aspect Ratio | ✅ DONE | 2026-03-02 | 3d4c591 |
+| 16-B.3.D | Tercer Blog Post SEO: Renovar Guardarropa Masculino | ✅ DONE | 2026-03-02 | 297c507 |
+| 16-B.3.E | Cuarto Blog Post SEO: Guía de Tallas | ✅ DONE | 2026-03-02 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
