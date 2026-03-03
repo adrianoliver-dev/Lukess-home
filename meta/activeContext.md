@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-B.A.HF.2
-- **Block Name:** Hotfix 2 en Footer (TikTok SVG y Email DEV)
+- **Block Number:** 16-C
+- **Block Name:** Limpieza Pre-Producción
 - **Status:** ✅ DONE
 - **Started:** 2026-03-03
 - **Completed:** 2026-03-03
@@ -14,12 +14,16 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-B.A.HF.2
-- **Block Name:** Hotfix 2 en Footer (TikTok SVG y Email DEV)
+- **Block Number:** 16-C
+- **Block Name:** Limpieza Pre-Producción
 - **Commit:** pending
 
 ### Files Changed
-- `components/layout/Footer.tsx`
+- `build_output.log` (deleted)
+- `mcp_audit_26_02.md` (deleted)
+- `supabase_migration_descuentos.sql` (deleted)
+- `localhost_navigation_test_1772138152962.webp` (deleted)
+- `Pagina-web-Lukess-Home/` (deleted)
 - `meta/activeContext.md`
 
 ### Database Changes
@@ -132,5 +136,6 @@
 | 16-B.A.4 | Actualización final del componente Footer | ✅ DONE | 2026-03-02 | fd9162e |
 | 16-B.A.HF | Hotfixes en Footer y Garantía de Autenticidad | ✅ DONE | 2026-03-02 | 7800b35 |
 | 16-B.A.HF.2 | Hotfix 2 en Footer (TikTok SVG y Email DEV) | ✅ DONE | 2026-03-03 | pending |
+| 16-C | Limpieza Pre-Producción de raíz | ✅ DONE | 2026-03-03 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
