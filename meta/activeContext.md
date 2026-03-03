@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-B.3.H
-- **Block Name:** Fix Blog Images Inline Styles
+- **Block Number:** 16-B.3.I
+- **Block Name:** Fix Markdown Parser HTML Sanitization
 - **Status:** ✅ DONE
 - **Started:** 2026-03-02
 - **Completed:** 2026-03-02
@@ -14,21 +14,19 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-B.3.H
-- **Block Name:** Fix Blog Images Inline Styles
-- **Commit:** 5c1e2f0
+- **Block Number:** 16-B.3.I
+- **Block Name:** Fix Markdown Parser HTML Sanitization
+- **Commit:** 03d47d5
 
 ### Files Changed
-- `content/blog/renovar-guardarropa-masculino-presupuesto.md`
-- `content/blog/guia-tallas-ropa-marca-bolivia.md`
-- `content/blog/pantalones-blazers-hombre-calor.md`
+- `lib/blog.ts`
 - `meta/activeContext.md`
 
 ### Database Changes
 - None
 
 ### Build Verification
-- Skipped (solo contenido markdown)
+- Build successful (Next.js SSG)
 ---
 
 ## OPEN ISSUES
@@ -43,7 +41,7 @@
 ## NEXT BLOCK
 - **Block:** TBD
 - **Name:** TBD
-- **Dependencies:** 16-B.3.H
+- **Dependencies:** 16-B.3.I
 - **Scope:** TBD
 
 ---
@@ -115,5 +113,6 @@
 | 16-B.3.F | Quinto Blog Post SEO: Pantalones y Blazers | ✅ DONE | 2026-03-02 | d27986e |
 | 16-B.3.G | Blog Cleanup (Test post & Images HTML) | ✅ DONE | 2026-03-02 | f159b95 |
 | 16-B.3.H | Fix Blog Images Inline Styles | ✅ DONE | 2026-03-02 | 5c1e2f0 |
+| 16-B.3.I | Fix Markdown Parser HTML Sanitization | ✅ DONE | 2026-03-02 | 03d47d5 |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |

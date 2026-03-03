@@ -45,8 +45,8 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
         // Parse frontmatter (expects YAML format with --- delimiters)
         const { data, content } = matter(fileContents);
 
-        // Convert Markdown to HTML
-        const processedContent = await remark().use(html).process(content);
+        // Convert Markdown to HTML (sanitize: false allows our raw <img> tags)
+        const processedContent = await remark().use(html, { sanitize: false }).process(content);
         const contentHtml = processedContent.toString();
 
         return {
