@@ -29,7 +29,7 @@ Para Santa Cruz, necesitas que tu blazer respire. Busca opciones que incorporen:
 
 ## Colores que Combaten el Sol
 
-![Outfit semiformal fresco hombre Santa Cruz](/blog/blog-5-outfit-formal-fresco.webp)
+<img src="/blog/blog-5-outfit-formal-fresco.webp" alt="Outfit semiformal fresco hombre Santa Cruz" class="w-full h-auto rounded-lg shadow-md my-8 aspect-square object-cover" />
 
 La física es simple: los colores oscuros absorben la radiación solar, los claros la reflejan. Guardá el traje completamente negro para los eventos estrictamente nocturnos y abrazá una paleta más inteligente para el día.
 
