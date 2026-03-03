@@ -90,10 +90,12 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
   const [stockFilter, setStockFilter] = useState<'all' | 'inStock' | 'lowStock'>('all')
   const [showNew, setShowNew] = useState(false)
   const [showDiscount, setShowDiscount] = useState(false)
-  const [showCollection, setShowCollection] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [displayLimit, setDisplayLimit] = useState(20)
-  const [sortOrder, setSortOrder] = useState<'recent' | 'price-asc' | 'price-desc'>('recent')
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const pathname = usePathname()
+
   const { addToCart } = useCart()
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -101,9 +103,8 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
     rootMargin: '50px'
   })
 
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const pathname = usePathname()
+  // Extraer el orden actual de la URL o default
+  const sortOrder = searchParams?.get('sort') || 'recent'
 
   // Sincronizar búsqueda y filtros principales desde la URL
   useEffect(() => {
@@ -123,7 +124,6 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
         setStockFilter('all')
         setShowNew(false)
         setShowDiscount(false)
-        setShowCollection(null)
       }
       setSearchQuery(busqueda)
     }
@@ -135,14 +135,11 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
       let newBrands: string[] = []
       let newShowNew = false
       let newShowDiscount = false
-      let newShowCollection: string | null = null
 
       if (filter === 'nuevo') {
         newShowNew = true
       } else if (filter === 'descuento' || filter === 'descuentos') {
         newShowDiscount = true
-      } else if (filter === 'primavera' || filter === 'collection-primavera') {
-        newShowCollection = 'primavera'
       } else if (filter === 'camisas') {
         newCategories = ['Camisas']
       } else if (filter === 'pantalones') {
@@ -188,7 +185,6 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
       setSelectedBrands(newBrands)
       setShowNew(newShowNew)
       setShowDiscount(newShowDiscount)
-      setShowCollection(newShowCollection)
       setSidebarFilters({
         priceRange: [0, 1000],
         brands: [],
@@ -292,8 +288,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
         // Buscar palabras clave especiales
         const matchesKeywords =
           (query === 'nuevo' || query === 'nuevos') && p.is_new === true ||
-          (query === 'descuento' || query === 'descuentos' || query === 'oferta' || query === 'ofertas') && hasDiscount(p) ||
-          (query === 'primavera') && p.collection === 'primavera'
+          (query === 'descuento' || query === 'descuentos' || query === 'oferta' || query === 'ofertas') && hasDiscount(p)
 
         if (!matchesName && !matchesBrand && !matchesCategory && !matchesDescription &&
           !matchesSKU && !matchesColor && !matchesSize && !matchesKeywords) {
@@ -306,9 +301,6 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
 
       // Filtro por "DESCUENTO"
       if (showDiscount && !hasDiscount(p)) return false
-
-      // Filtro por colección (primavera, verano, etc.)
-      if (showCollection && p.collection !== showCollection) return false
 
       // Filtro por subcategorías (multiselección)
       if (selectedSubcategories.length > 0 && !selectedSubcategories.includes(p.subcategory || '')) return false
@@ -342,31 +334,18 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
       return true
     })
 
-    // Ordenar productos: sin stock al final, featured primero, luego por sortOrder
+    // Ordenar productos: Solo colocar los sin stock al final. Dejar el resto del orden tal como
+    // viene del servidor (ya ordenado por Supabase debido al querystring).
     const sorted = [...filtered].sort((a, b) => {
       const stockA = getTotalStock(a)
       const stockB = getTotalStock(b)
       if (stockA === 0 && stockB > 0) return 1
       if (stockA > 0 && stockB === 0) return -1
-
-      // Featured products primero (dentro de cada grupo de stock)
-      const featA = a.is_featured ? 1 : 0
-      const featB = b.is_featured ? 1 : 0
-      if (featA !== featB) return featB - featA
-
-      switch (sortOrder) {
-        case 'price-asc':
-          return getPriceWithDiscount(a) - getPriceWithDiscount(b)
-        case 'price-desc':
-          return getPriceWithDiscount(b) - getPriceWithDiscount(a)
-        case 'recent':
-        default:
-          return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-      }
+      return 0
     })
 
     return sorted
-  }, [selectedCategories, selectedSubcategories, selectedBrands, selectedColors, stockFilter, showNew, showDiscount, showCollection, searchQuery, sidebarFilters, initialProducts, getTotalStock, isProductNew])
+  }, [selectedCategories, selectedSubcategories, selectedBrands, selectedColors, stockFilter, showNew, showDiscount, searchQuery, sidebarFilters, initialProducts, getTotalStock, isProductNew])
 
   // Contar filtros activos
   const activeFiltersCount = useMemo(() => {
@@ -379,10 +358,9 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
     if (stockFilter !== 'all') count++
     if (showNew) count++
     if (showDiscount) count++
-    if (showCollection) count++
     if (searchQuery.trim()) count++
     return count
-  }, [selectedCategories, selectedSubcategories, selectedBrands, selectedColors, sidebarFilters.sizes, stockFilter, showNew, showDiscount, showCollection, searchQuery])
+  }, [selectedCategories, selectedSubcategories, selectedBrands, selectedColors, sidebarFilters.sizes, stockFilter, showNew, showDiscount, searchQuery])
 
   // Limpiar todos los filtros
   const clearAllFilters = () => {
@@ -393,7 +371,6 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
     setStockFilter('all')
     setShowNew(false)
     setShowDiscount(false)
-    setShowCollection(null)
     setSidebarFilters({
       priceRange: [0, 1000],
       brands: [],
@@ -517,25 +494,6 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                 <Percent className="w-4 h-4" />
                 Descuentos
               </button>
-
-              {/* Botón Colección Primavera */}
-              <button
-                onClick={() => {
-                  clearAllFilters()
-                  setShowCollection('primavera')
-                }}
-                className={`
-                  px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold
-                  transition-all duration-300 flex items-center gap-2
-                  ${showCollection === 'primavera'
-                    ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white shadow-lg shadow-green-400/30 scale-105'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-800'
-                  }
-                `}
-              >
-                <Leaf className="w-4 h-4" />
-                Primavera
-              </button>
             </div>
 
             {/* Botón de filtros + contador + ordenamiento */}
@@ -580,7 +538,11 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                 <select
                   id="sort-order"
                   value={sortOrder}
-                  onChange={(e) => setSortOrder(e.target.value as 'recent' | 'price-asc' | 'price-desc')}
+                  onChange={(e) => {
+                    const params = new URLSearchParams(searchParams?.toString())
+                    params.set('sort', e.target.value)
+                    router.push(`${pathname}?${params.toString()}#catalogo`, { scroll: false })
+                  }}
                   className="px-3 py-1.5 text-sm border-2 border-gray-200 rounded-lg focus:border-gray-500 focus:outline-none bg-white cursor-pointer"
                 >
                   <option value="recent">Más recientes</option>
@@ -666,15 +628,6 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                     <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-medium">
                       % Descuentos
                       <button onClick={() => setShowDiscount(false)} className="hover:text-red-900">
-                        <X className="w-3 h-3" />
-                      </button>
-                    </span>
-                  )}
-
-                  {showCollection && (
-                    <span className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
-                      🌸 {showCollection}
-                      <button onClick={() => setShowCollection(null)} className="hover:text-green-900">
                         <X className="w-3 h-3" />
                       </button>
                     </span>

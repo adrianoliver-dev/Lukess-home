@@ -8,29 +8,45 @@ import UbicacionSection from "@/components/home/UbicacionSection";
 import CTAFinalSection from "@/components/home/CTAFinalSection";
 import { NewsletterPopup } from "@/components/marketing/NewsletterPopup";
 
-export default async function Home() {
+export default async function Home(
+  props: {
+    searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+  }
+) {
+  const searchParams = await props.searchParams
+  const sort = searchParams?.sort as string | undefined
+
   let products = []
 
   try {
     const supabase = await createClient()
 
     // Fetch productos del inventario real de Supabase
-    const { data, error } = await supabase
+    let query = supabase
       .from('products')
       .select(`
-        *,
-        categories!inner(name),
-        inventory(
-          quantity,
-          reserved_qty,
-          location_id,
-          locations(name)
-        )
-      `)
+          *,
+          categories!inner(name),
+          inventory(
+            quantity,
+            reserved_qty,
+            location_id,
+            locations(name)
+          )
+        `)
       .eq('is_active', true)
       .eq('published_to_landing', true)
-      .order('is_featured', { ascending: false })
-      .order('created_at', { ascending: false })
+
+    // El destacado siempre va primero a menos que se fuerce otro sort
+    if (!sort || sort === 'recent') {
+      query = query.order('is_featured', { ascending: false }).order('created_at', { ascending: false })
+    } else if (sort === 'price-desc') {
+      query = query.order('price', { ascending: false })
+    } else if (sort === 'price-asc') {
+      query = query.order('price', { ascending: true })
+    }
+
+    const { data, error } = await query
 
     if (error) {
       // Error handled silently in production
