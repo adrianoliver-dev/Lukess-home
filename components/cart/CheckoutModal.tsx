@@ -19,6 +19,7 @@ import {
   Loader2,
   Map,
   Paperclip,
+  Download,
 } from 'lucide-react'
 import { useCart } from '@/lib/context/CartContext'
 import { useAuth } from '@/lib/context/AuthContext'
@@ -1656,7 +1657,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         <p className="text-base font-bold text-gray-800 mb-4">
                           Escanea el QR para pagar
                         </p>
-                        <div className="bg-white p-4 rounded-xl border border-gray-200 inline-block max-w-full overflow-hidden">
+                        <div className="bg-white p-4 rounded-xl border border-gray-200 inline-block max-w-full overflow-hidden mb-4">
                           <Image
                             src="/qr-yolo-pago.png"
                             alt="QR Yolo Pago"
@@ -1665,6 +1666,16 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             className="rounded-lg w-full max-w-[280px] h-auto"
                           />
                         </div>
+
+                        <a
+                          href="/qr-yolo-pago.png"
+                          download="qr-yolo-pago.png"
+                          className="flex items-center justify-center gap-2 w-full max-w-[280px] mx-auto bg-gray-100 hover:bg-gray-200 text-gray-900 font-bold py-3 px-4 rounded-xl transition-all border border-gray-200 mb-2"
+                        >
+                          <Download className="w-5 h-5 flex-shrink-0" />
+                          <span className="truncate">⬇️ Descargar QR para pagar</span>
+                        </a>
+
                         {formData?.discountValidation?.valid && (
                           <p className="text-xs text-amber-600 mt-2">
                             Al confirmar, tu cupón de descuento se usará permanentemente.
