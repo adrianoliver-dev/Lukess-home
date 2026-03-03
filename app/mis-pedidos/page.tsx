@@ -614,9 +614,11 @@ export default function MisPedidosPage() {
               Hola, {customerName} {orderCount !== null && `— ${orderCount} ${orderCount === 1 ? 'pedido' : 'pedidos'} en tu historial`}
             </p>
           ) : (
-            <p className="text-sm text-gray-500">
-              Rastrea y gestiona tus pedidos recientes
-            </p>
+            <div className="max-w-2xl">
+              <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                Rastrea el estado de tus compras en tiempo real. Ingresá tu correo electrónico para ver si tu pedido de ropa de marca está en preparación, listo para retiro en el Mercado Mutualista, o en camino a tu domicilio en Santa Cruz.
+              </p>
+            </div>
           )}
         </div>
 
