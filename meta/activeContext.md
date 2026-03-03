@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-F
-- **Block Name:** UX: Smart Newsletter Popup
+- **Block Number:** 16-H
+- **Block Name:** Checkout Auto-Fill Details from Last Order
 - **Status:** ✅ DONE
 - **Started:** 2026-03-03
 - **Completed:** 2026-03-03
@@ -14,12 +14,12 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-F
-- **Block Name:** UX: Smart Newsletter Popup
-- **Commit:** pending
+- **Block Number:** 16-H
+- **Block Name:** Checkout Auto-Fill Details from Last Order
+- **Commit:** b8ff0da
 
 ### Files Changed
-- `components/marketing/NewsletterPopup.tsx`
+- `components/cart/CheckoutModal.tsx`
 - `meta/activeContext.md`
 
 ### Database Changes
@@ -31,7 +31,6 @@
 
 ## OPEN ISSUES
 1. `/cart` route returns 404 while cart drawer renders on top
-2. Checkout pre-fills with "admin" / "admin@lukesshome.com"
 3. Category card images are gray placeholders
 4. POS page stuck on loading skeleton
 5. "Fosiil" typo in Supabase product data
@@ -41,7 +40,7 @@
 ## NEXT BLOCK
 - **Block:** TBD
 - **Name:** TBD
-- **Dependencies:** 16-F
+- **Dependencies:** 16-H
 - **Scope:** TBD
 
 ---
@@ -135,6 +134,8 @@
 | 16-C | Limpieza Pre-Producción de raíz | ✅ DONE | 2026-03-03 | 9074958 |
 | 16-D | Limpieza Profunda de Código Fuente | ✅ DONE | 2026-03-03 | d0c7807 |
 | 16-E | Fix Auth UX & Products RLS Policy | ✅ DONE | 2026-03-03 | 8ae4351 |
-| 16-F | UX: Smart Newsletter Popup (Auth + Exist Intent) | ✅ DONE | 2026-03-03 | pending |
+| 16-F | UX: Smart Newsletter Popup (Auth + Exist Intent) | ✅ DONE | 2026-03-03 | 614b30f |
+| 16-G | UX Polish & Cart Fixes - Catalog Sort Fix | ✅ DONE | 2026-03-03 | 93aa1b8 |
+| 16-H | Checkout Auto-Fill Details from Last Order | ✅ DONE | 2026-03-03 | b8ff0da |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
