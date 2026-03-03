@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-B.A.1.E
-- **Block Name:** Size Guide In-Product Update
+- **Block Number:** 16-B.A.1.E-FIX
+- **Block Name:** Fix Build and Type Errors
 - **Status:** ✅ DONE
 - **Started:** 2026-03-02
 - **Completed:** 2026-03-02
@@ -14,11 +14,12 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-B.A.1.E
-- **Block Name:** Size Guide In-Product Update
+- **Block Number:** 16-B.A.1.E-FIX
+- **Block Name:** Fix Build and Type Errors
 - **Commit:** TBD
 
 ### Files Changed
+- `components/producto/ProductDetail.tsx`
 - `components/producto/SizeGuideModal.tsx`
 - `app/guia-tallas/page.tsx`
 - `meta/activeContext.md`
@@ -120,6 +121,7 @@
 | 16-B.A.1.C | Mis Pedidos (SEO & Copy) | ✅ DONE | 2026-03-02 | 063d764 |
 | 16-B.A.1.D | Guía de Tallas | ✅ DONE | 2026-03-02 | 26721e4 |
 | 16-B.A.1-HOTFIX | Footer CTA Colors Hotfix | ✅ DONE | 2026-03-02 | a268397 |
-| 16-B.A.1.E | Size Guide In-Product Update | ✅ DONE | 2026-03-02 | pending |
+| 16-B.A.1.E | Size Guide In-Product Update | ✅ DONE | 2026-03-02 | 95ec2b6 |
+| 16-B.A.1.E-FIX | Build Fix: Type Mismatch in ProductDetail | ✅ DONE | 2026-03-02 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |

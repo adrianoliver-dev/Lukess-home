@@ -459,7 +459,14 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
       <SizeGuideModal
         isOpen={isSizeGuideOpen}
         onClose={() => setIsSizeGuideOpen(false)}
-        category={product.categories?.name}
+        category={(() => {
+          const cat = normalizeText(product.categories?.name || '')
+          if (cat.includes('pantalon') || cat.includes('jeans')) return 'inferior'
+          if (cat.includes('short')) return 'shorts'
+          if (cat.includes('cinturon') || cat.includes('belt')) return 'cinturones'
+          if (cat.includes('gorra') || cat.includes('sombrero')) return 'gorras'
+          return 'superior' // camisas, polos, blazers, por defecto
+        })()}
       />
     </>
   )
