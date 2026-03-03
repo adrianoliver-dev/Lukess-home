@@ -27,7 +27,7 @@ const categoryLinks = [
 
 const quickLinks = [
   { href: "/#catalogo", label: "Catálogo" },
-  { href: "/#contacto", label: "Ubicación" },
+  { href: "/#ubicacion", label: "Ubicación" },
   { href: "/#cta", label: "Contacto" },
   { href: "/blog", label: "Blog" },
 ];
