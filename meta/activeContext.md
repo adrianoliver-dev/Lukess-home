@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-B.A.2.A
-- **Block Name:** Reescritura profesional de Términos y Condiciones
+- **Block Number:** 16-B.A.2.B
+- **Block Name:** Reescritura de Políticas de Privacidad
 - **Status:** ✅ DONE
 - **Started:** 2026-03-02
 - **Completed:** 2026-03-02
@@ -14,12 +14,12 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-B.A.2.A
-- **Block Name:** Reescritura profesional de Términos y Condiciones
+- **Block Number:** 16-B.A.2.B
+- **Block Name:** Reescritura de Políticas de Privacidad
 - **Commit:** pending
 
 ### Files Changed
-- `app/terminos/page.tsx`
+- `app/privacidad/page.tsx`
 - `meta/activeContext.md`
 
 ### Database Changes
@@ -123,6 +123,7 @@
 | 16-B.A.1.E-FIX | Build Fix: Type Mismatch in ProductDetail | ✅ DONE | 2026-03-02 | ae53bd5 |
 | 16-B.A.1.F | Global Footer CTA | ✅ DONE | 2026-03-02 | a4230c8 |
 | 16-B.A.1.G | Unify Anchor Links | ✅ DONE | 2026-03-02 | 4bd943d |
-| 16-B.A.2.A | Reescritura profesional de Términos y Condiciones | ✅ DONE | 2026-03-02 | pending |
+| 16-B.A.2.A | Reescritura profesional de Términos y Condiciones | ✅ DONE | 2026-03-02 | ff8330b |
+| 16-B.A.2.B | Reescritura de Políticas de Privacidad | ✅ DONE | 2026-03-02 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
