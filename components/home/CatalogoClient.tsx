@@ -140,22 +140,6 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
         newShowNew = true
       } else if (filter === 'descuento' || filter === 'descuentos') {
         newShowDiscount = true
-      } else if (filter === 'camisas') {
-        newCategories = ['Camisas']
-      } else if (filter === 'pantalones') {
-        newCategories = ['Pantalones']
-      } else if (filter === 'blazers') {
-        newCategories = ['Blazers']
-      } else if (filter === 'polos') {
-        newCategories = ['Polos']
-      } else if (filter === 'shorts') {
-        newCategories = ['Shorts']
-      } else if (filter === 'gorras') {
-        newCategories = ['Gorras']
-      } else if (filter === 'cinturones') {
-        newCategories = ['Cinturones']
-      } else if (filter === 'billeteras') {
-        newCategories = ['Billeteras']
       } else if (filter === 'camisas-columbia') {
         newCategories = ['Camisas']
         newBrands = ['Columbia']
@@ -177,6 +161,11 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
       } else if (filter === 'pantalones-elegantes') {
         newCategories = ['Pantalones']
         newSubcategories = ['elegante']
+      } else {
+        // Dynamic fallback: capitalize the first letter to match the DB format typically used 
+        // e.g., 'gorras' -> 'Gorras', 'polos' -> 'Polos'
+        const formattedCategory = filter.charAt(0).toUpperCase() + filter.slice(1);
+        newCategories = [formattedCategory];
       }
 
       // Reiniciar filtros completamente basados en el parametro

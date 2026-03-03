@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Menu, X, Search, Heart, ShoppingCart, User, ChevronDown, Package, LogOut } from "lucide-react";
+import { Menu, X, Search, Heart, ShoppingCart, User, ChevronDown, Package, LogOut, Check } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { getActiveCategories } from "@/app/actions/categories";
 import Container from "@/components/ui/Container";
 import { CartButton } from "@/components/cart/CartButton";
 import { CartDrawer } from "@/components/cart/CartDrawer";
@@ -14,16 +15,7 @@ import { AuthModal } from "@/components/auth/AuthModal";
 import { useCart } from "@/lib/context/CartContext";
 import { useAuth } from "@/lib/context/AuthContext";
 
-const categoryLinks = [
-  { name: 'Camisas', href: '/?filter=camisas#catalogo' },
-  { name: 'Pantalones', href: '/?filter=pantalones#catalogo' },
-  { name: 'Blazers', href: '/?filter=blazers#catalogo' },
-  { name: 'Polos', href: '/?filter=polos#catalogo' },
-  { name: 'Shorts', href: '/?filter=shorts#catalogo' },
-  { name: 'Gorras', href: '/?filter=gorras#catalogo' },
-  { name: 'Cinturones', href: '/?filter=cinturones#catalogo' },
-  { name: 'Billeteras', href: '/?filter=billeteras#catalogo' },
-];
+// Hardcoded links are removed, fetched dynamically in component
 
 const quickLinks = [
   { href: "/#catalogo", label: "Catálogo" },
@@ -45,7 +37,28 @@ export default function Navbar() {
   const { isLoggedIn, customerName, signOut } = useAuth();
   const userMenuRef = useRef<HTMLDivElement>(null);
 
+  // Dynamic categories state
+  const [categories, setCategories] = useState<string[]>([]);
+  const [isCategoriesLoading, setIsCategoriesLoading] = useState(true);
+
   const cartItemCount = cart?.reduce((sum, item) => sum + item.quantity, 0) || 0;
+
+  useEffect(() => {
+    async function fetchCategories() {
+      setIsCategoriesLoading(true);
+      try {
+        const data = await getActiveCategories();
+        if (data && data.length > 0) {
+          setCategories(data);
+        }
+      } catch (error) {
+        console.error("Failed to load categories:", error);
+      } finally {
+        setIsCategoriesLoading(false);
+      }
+    }
+    fetchCategories();
+  }, []);
 
   // Close user menu on outside click
   useEffect(() => {
@@ -173,16 +186,22 @@ export default function Navbar() {
                   <ChevronDown className="w-3 h-3 transition-transform group-hover:rotate-180" />
                 </button>
                 <div className="absolute top-full left-0 bg-white border border-gray-200 shadow-sm py-2 min-w-[200px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                  {categoryLinks.map((cat) => (
-                    <a
-                      key={cat.name}
-                      href={cat.href}
-                      onClick={(e) => handleNavClick(e, cat.href)}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
-                    >
-                      {cat.name}
-                    </a>
-                  ))}
+                  {isCategoriesLoading ? (
+                    <div className="px-4 py-3 text-sm text-gray-400">Cargando...</div>
+                  ) : categories.length === 0 ? (
+                    <div className="px-4 py-3 text-sm text-gray-400">Sin categorías</div>
+                  ) : (
+                    categories.map((cat) => (
+                      <a
+                        key={cat}
+                        href={`/?filter=${cat.toLowerCase()}#catalogo`}
+                        onClick={(e) => handleNavClick(e, `/?filter=${cat.toLowerCase()}#catalogo`)}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                      >
+                        {cat}
+                      </a>
+                    ))
+                  )}
                 </div>
               </div>
 
@@ -339,16 +358,20 @@ export default function Navbar() {
                   </form>
                 </div>
 
-                {categoryLinks.map((cat) => (
-                  <a
-                    key={cat.name}
-                    href={cat.href}
-                    onClick={(e) => { handleNavClick(e, cat.href); setIsOpen(false); }}
-                    className="block py-2.5 px-3 rounded-lg text-sm font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors"
-                  >
-                    {cat.name}
-                  </a>
-                ))}
+                {isCategoriesLoading ? (
+                  <div className="px-3 py-2 text-sm text-gray-400">Cargando categorías...</div>
+                ) : (
+                  categories.map((cat) => (
+                    <a
+                      key={cat}
+                      href={`/?filter=${cat.toLowerCase()}#catalogo`}
+                      onClick={(e) => { handleNavClick(e, `/?filter=${cat.toLowerCase()}#catalogo`); setIsOpen(false); }}
+                      className="block py-2.5 px-3 rounded-lg text-sm font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+                    >
+                      {cat}
+                    </a>
+                  ))
+                )}
 
                 {/* Divider */}
                 <div className="h-px bg-gray-100 my-3"></div>

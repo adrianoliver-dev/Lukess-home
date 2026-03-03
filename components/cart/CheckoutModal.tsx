@@ -1673,7 +1673,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                           className="flex items-center justify-center gap-2 w-full max-w-[280px] mx-auto bg-gray-100 hover:bg-gray-200 text-gray-900 font-bold py-3 px-4 rounded-xl transition-all border border-gray-200 mb-2"
                         >
                           <Download className="w-5 h-5 flex-shrink-0" />
-                          <span className="truncate">⬇️ Descargar QR para pagar</span>
+                          <span className="truncate">Descargar QR</span>
                         </a>
 
                         {formData?.discountValidation?.valid && (

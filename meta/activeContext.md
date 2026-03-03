@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-H
-- **Block Name:** Checkout Auto-Fill Details from Last Order
+- **Block Number:** 16-I
+- **Block Name:** Checkout QR Download Button
 - **Status:** ✅ DONE
 - **Started:** 2026-03-03
 - **Completed:** 2026-03-03
@@ -14,9 +14,9 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-H
-- **Block Name:** Checkout Auto-Fill Details from Last Order
-- **Commit:** b8ff0da
+- **Block Number:** 16-I
+- **Block Name:** Checkout QR Download Button
+- **Commit:** a8f1e45
 
 ### Files Changed
 - `components/cart/CheckoutModal.tsx`
@@ -40,7 +40,7 @@
 ## NEXT BLOCK
 - **Block:** TBD
 - **Name:** TBD
-- **Dependencies:** 16-H
+- **Dependencies:** 16-I
 - **Scope:** TBD
 
 ---
@@ -137,5 +137,6 @@
 | 16-F | UX: Smart Newsletter Popup (Auth + Exist Intent) | ✅ DONE | 2026-03-03 | 614b30f |
 | 16-G | UX Polish & Cart Fixes - Catalog Sort Fix | ✅ DONE | 2026-03-03 | 93aa1b8 |
 | 16-H | Checkout Auto-Fill Details from Last Order | ✅ DONE | 2026-03-03 | b8ff0da |
+| 16-I | Checkout QR Download Button | ✅ DONE | 2026-03-03 | a8f1e45 |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
