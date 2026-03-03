@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-B.3.I
-- **Block Name:** Fix Markdown Parser HTML Sanitization
+- **Block Number:** 16-B.A.1.A
+- **Block Name:** ¿Cómo Comprar? (Reescritura Profesional)
 - **Status:** ✅ DONE
 - **Started:** 2026-03-02
 - **Completed:** 2026-03-02
@@ -14,12 +14,12 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-B.3.I
-- **Block Name:** Fix Markdown Parser HTML Sanitization
-- **Commit:** 03d47d5
+- **Block Number:** 16-B.A.1.A
+- **Block Name:** ¿Cómo Comprar? (Reescritura Profesional)
+- **Commit:** TBD
 
 ### Files Changed
-- `lib/blog.ts`
+- `app/como-comprar/page.tsx`
 - `meta/activeContext.md`
 
 ### Database Changes
@@ -113,6 +113,7 @@
 | 16-B.3.F | Quinto Blog Post SEO: Pantalones y Blazers | ✅ DONE | 2026-03-02 | d27986e |
 | 16-B.3.G | Blog Cleanup (Test post & Images HTML) | ✅ DONE | 2026-03-02 | f159b95 |
 | 16-B.3.H | Fix Blog Images Inline Styles | ✅ DONE | 2026-03-02 | 5c1e2f0 |
-| 16-B.3.I | Fix Markdown Parser HTML Sanitization | ✅ DONE | 2026-03-02 | 03d47d5 |
+| 16-B.3.I | Fix Markdown Parser HTML Sanitization | ✅ DONE | 2026-03-02 | d830478 |
+| 16-B.A.1.A | ¿Cómo Comprar? (Reescritura Profesional) | ✅ DONE | 2026-03-02 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
