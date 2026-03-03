@@ -17,10 +17,11 @@ interface FilterSidebarProps {
   onFilterChange: (filters: Filters) => void
   brands: string[]
   colors: string[]
+  sizes: string[]
   categories: string[]
 }
 
-export function FilterSidebar({ onFilterChange, brands, colors, categories }: FilterSidebarProps) {
+export function FilterSidebar({ onFilterChange, brands, colors, sizes, categories }: FilterSidebarProps) {
   const [filters, setFilters] = useState<Filters>({
     priceRange: [0, 1000],
     brands: [],
@@ -30,7 +31,7 @@ export function FilterSidebar({ onFilterChange, brands, colors, categories }: Fi
     category: null,
     hasDiscount: null,
   })
-  
+
   const [openSections, setOpenSections] = useState({
     price: true,
     brand: true,
@@ -64,7 +65,7 @@ export function FilterSidebar({ onFilterChange, brands, colors, categories }: Fi
     onFilterChange(emptyFilters)
   }
 
-  const activeFiltersCount = 
+  const activeFiltersCount =
     filters.brands.length +
     filters.colors.length +
     filters.sizes.length +
@@ -139,7 +140,7 @@ export function FilterSidebar({ onFilterChange, brands, colors, categories }: Fi
               min="0"
             />
           </div>
-          
+
           {/* Rangos predefinidos */}
           <div className="flex flex-wrap gap-2">
             {[
@@ -151,11 +152,10 @@ export function FilterSidebar({ onFilterChange, brands, colors, categories }: Fi
               <button
                 key={`${min}-${max}`}
                 onClick={() => updateFilters({ priceRange: [min, max] })}
-                className={`px-3 py-1 text-xs rounded-full transition-all ${
-                  filters.priceRange[0] === min && filters.priceRange[1] === max
-                    ? 'bg-gray-900 text-white'
-                    : 'border border-gray-300 hover:border-gray-600 hover:text-gray-900'
-                }`}
+                className={`px-3 py-1 text-xs rounded-full transition-all ${filters.priceRange[0] === min && filters.priceRange[1] === max
+                  ? 'bg-gray-900 text-white'
+                  : 'border border-gray-300 hover:border-gray-600 hover:text-gray-900'
+                  }`}
               >
                 Bs {min}-{max}
               </button>
@@ -165,89 +165,92 @@ export function FilterSidebar({ onFilterChange, brands, colors, categories }: Fi
       </FilterSection>
 
       {/* Marca */}
-      <FilterSection
-        title="Marca"
-        icon={<Tag className="w-4 h-4" />}
-        isOpen={openSections.brand}
-        onToggle={() => toggleSection('brand')}
-      >
-        <div className="space-y-2 max-h-48 overflow-y-auto scrollbar-hide">
-          {brands.map((brand) => (
-            <label key={brand} className="flex items-center gap-2 cursor-pointer group">
-              <input
-                type="checkbox"
-                checked={filters.brands.includes(brand)}
-                onChange={(e) => {
-                  const newBrands = e.target.checked
-                    ? [...filters.brands, brand]
-                    : filters.brands.filter(b => b !== brand)
-                  updateFilters({ brands: newBrands })
-                }}
-                className="w-4 h-4 accent-primary-600"
-              />
-              <span className="text-sm group-hover:text-gray-900 transition-colors">{brand}</span>
-            </label>
-          ))}
-        </div>
-      </FilterSection>
-
-      {/* Color */}
-      <FilterSection
-        title="Color"
-        icon={<Palette className="w-4 h-4" />}
-        isOpen={openSections.color}
-        onToggle={() => toggleSection('color')}
-      >
-        <div className="flex flex-wrap gap-2">
-          {colors.map((color) => (
-            <button
-              key={color}
-              onClick={() => {
-                const newColors = filters.colors.includes(color)
-                  ? filters.colors.filter(c => c !== color)
-                  : [...filters.colors, color]
-                updateFilters({ colors: newColors })
-              }}
-              className={`px-3 py-1.5 text-xs rounded-full border-2 transition-all ${
-                filters.colors.includes(color)
-                  ? 'border-gray-600 bg-gray-100 text-gray-900 font-semibold'
-                  : 'border-gray-300 hover:border-gray-400'
-              }`}
-            >
-              {color}
-            </button>
-          ))}
-        </div>
-      </FilterSection>
+      {brands.length > 0 && (
+        <FilterSection
+          title="Marca"
+          icon={<Tag className="w-4 h-4" />}
+          isOpen={openSections.brand}
+          onToggle={() => toggleSection('brand')}
+        >
+          <div className="space-y-2 max-h-48 overflow-y-auto scrollbar-hide">
+            {brands.map((brand) => (
+              <label key={brand} className="flex items-center gap-2 cursor-pointer group">
+                <input
+                  type="checkbox"
+                  checked={filters.brands.includes(brand)}
+                  onChange={(e) => {
+                    const newBrands = e.target.checked
+                      ? [...filters.brands, brand]
+                      : filters.brands.filter(b => b !== brand)
+                    updateFilters({ brands: newBrands })
+                  }}
+                  className="w-4 h-4 accent-primary-600"
+                />
+                <span className="text-sm group-hover:text-gray-900 transition-colors">{brand}</span>
+              </label>
+            ))}
+          </div>
+        </FilterSection>
+      )}
+      {
+        colors.length > 0 && (
+          <FilterSection
+            title="Color"
+            icon={<Palette className="w-4 h-4" />}
+            isOpen={openSections.color}
+            onToggle={() => toggleSection('color')}
+          >
+            <div className="flex flex-wrap gap-2">
+              {colors.map((color) => (
+                <button
+                  key={color}
+                  onClick={() => {
+                    const newColors = filters.colors.includes(color)
+                      ? filters.colors.filter(c => c !== color)
+                      : [...filters.colors, color]
+                    updateFilters({ colors: newColors })
+                  }}
+                  className={`px-3 py-1.5 text-xs rounded-full border-2 transition-all ${filters.colors.includes(color)
+                    ? 'border-gray-600 bg-gray-100 text-gray-900 font-semibold'
+                    : 'border-gray-300 hover:border-gray-400'
+                    }`}
+                >
+                  {color}
+                </button>
+              ))}
+            </div>
+          </FilterSection>
+        )}
 
       {/* Talla */}
-      <FilterSection
-        title="Talla"
-        icon={<Ruler className="w-4 h-4" />}
-        isOpen={openSections.size}
-        onToggle={() => toggleSection('size')}
-      >
-        <div className="grid grid-cols-4 gap-2">
-          {['S', 'M', 'L', 'XL', '38', '40', '42', '44'].map((size) => (
-            <button
-              key={size}
-              onClick={() => {
-                const newSizes = filters.sizes.includes(size)
-                  ? filters.sizes.filter(s => s !== size)
-                  : [...filters.sizes, size]
-                updateFilters({ sizes: newSizes })
-              }}
-              className={`py-2 text-sm font-semibold rounded-lg border-2 transition-all ${
-                filters.sizes.includes(size)
+      {sizes.length > 0 && (
+        <FilterSection
+          title="Talla"
+          icon={<Ruler className="w-4 h-4" />}
+          isOpen={openSections.size}
+          onToggle={() => toggleSection('size')}
+        >
+          <div className="grid grid-cols-4 gap-2">
+            {sizes.map((size) => (
+              <button
+                key={size}
+                onClick={() => {
+                  const newSizes = filters.sizes.includes(size)
+                    ? filters.sizes.filter(s => s !== size)
+                    : [...filters.sizes, size]
+                  updateFilters({ sizes: newSizes })
+                }}
+                className={`py-2 text-sm font-semibold rounded-lg border-2 transition-all ${filters.sizes.includes(size)
                   ? 'border-gray-600 bg-gray-900 text-white'
                   : 'border-gray-300 hover:border-gray-400'
-              }`}
-            >
-              {size}
-            </button>
-          ))}
-        </div>
-      </FilterSection>
+                  }`}
+              >
+                {size}
+              </button>
+            ))}
+          </div>
+        </FilterSection>
+      )}
 
       {/* Disponibilidad */}
       <FilterSection

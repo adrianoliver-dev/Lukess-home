@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-I
-- **Block Name:** Checkout QR Download Button
+- **Block Number:** 11-F
+- **Block Name:** Dynamic Categories based on active products
 - **Status:** ✅ DONE
 - **Started:** 2026-03-03
 - **Completed:** 2026-03-03
@@ -14,12 +14,14 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-I
-- **Block Name:** Checkout QR Download Button
-- **Commit:** a8f1e45
+- **Block Number:** 11-F
+- **Block Name:** Dynamic Categories based on active products
+- **Commit:** d22e389
 
 ### Files Changed
-- `components/cart/CheckoutModal.tsx`
+- `app/actions/categories.ts`
+- `components/layout/Navbar.tsx`
+- `components/home/CatalogoClient.tsx`
 - `meta/activeContext.md`
 
 ### Database Changes
@@ -40,7 +42,7 @@
 ## NEXT BLOCK
 - **Block:** TBD
 - **Name:** TBD
-- **Dependencies:** 16-I
+- **Dependencies:** 11-F
 - **Scope:** TBD
 
 ---
@@ -138,5 +140,6 @@
 | 16-G | UX Polish & Cart Fixes - Catalog Sort Fix | ✅ DONE | 2026-03-03 | 93aa1b8 |
 | 16-H | Checkout Auto-Fill Details from Last Order | ✅ DONE | 2026-03-03 | b8ff0da |
 | 16-I | Checkout QR Download Button | ✅ DONE | 2026-03-03 | a8f1e45 |
+| 11-F | Dynamic Categories based on active products | ✅ DONE | 2026-03-03 | d22e389 |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |

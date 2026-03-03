@@ -15,6 +15,7 @@ import { ProductBadges } from '@/components/catalogo/ProductBadges'
 import { WishlistButton } from '@/components/wishlist/WishlistButton'
 import { buildWhatsAppUrl } from '@/lib/utils/whatsapp'
 import { hasActiveDiscount as hasDiscount, getDiscount, getPriceWithDiscount } from '@/lib/utils/price'
+import { getDynamicFilters, type FilterOptions } from '@/app/actions/filters'
 
 interface CatalogoClientProps {
   initialProducts: Product[]
@@ -74,7 +75,6 @@ const showAddedToast = (productName: string) => {
 export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
   // Estados de filtros - Ahora son arrays para multiselección
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
-  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([])
   const [selectedBrands, setSelectedBrands] = useState<string[]>([])
   const [selectedColors, setSelectedColors] = useState<string[]>([])
   const [showFilters, setShowFilters] = useState(false)
@@ -92,6 +92,11 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
   const [showDiscount, setShowDiscount] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [displayLimit, setDisplayLimit] = useState(20)
+
+  // Opciones Dinámicas de Filtros
+  const [dynamicFilters, setDynamicFilters] = useState<FilterOptions | null>(null)
+  const [isFiltersLoading, setIsFiltersLoading] = useState(false)
+
   const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
@@ -118,7 +123,6 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
       if (busqueda) {
         // Limpiar otros filtros al buscar
         setSelectedCategories([])
-        setSelectedSubcategories([])
         setSelectedBrands([])
         setSelectedColors([])
         setStockFilter('all')
@@ -131,7 +135,6 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
     // Manejar parámetro de filtro (viene de Navbar, Banners, etc.)
     if (filter) {
       let newCategories: string[] = []
-      let newSubcategories: string[] = []
       let newBrands: string[] = []
       let newShowNew = false
       let newShowDiscount = false
@@ -145,22 +148,16 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
         newBrands = ['Columbia']
       } else if (filter === 'camisas-manga-larga') {
         newCategories = ['Camisas']
-        newSubcategories = ['manga-larga']
       } else if (filter === 'camisas-manga-corta') {
         newCategories = ['Camisas']
-        newSubcategories = ['manga-corta']
       } else if (filter === 'camisas-elegantes') {
         newCategories = ['Camisas']
-        newSubcategories = ['elegante']
       } else if (filter === 'pantalones-oversize') {
         newCategories = ['Pantalones']
-        newSubcategories = ['oversize']
       } else if (filter === 'pantalones-jeans') {
         newCategories = ['Pantalones']
-        newSubcategories = ['jeans']
       } else if (filter === 'pantalones-elegantes') {
         newCategories = ['Pantalones']
-        newSubcategories = ['elegante']
       } else {
         // Dynamic fallback: capitalize the first letter to match the DB format typically used 
         // e.g., 'gorras' -> 'Gorras', 'polos' -> 'Polos'
@@ -170,7 +167,6 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
 
       // Reiniciar filtros completamente basados en el parametro
       setSelectedCategories(newCategories)
-      setSelectedSubcategories(newSubcategories)
       setSelectedBrands(newBrands)
       setShowNew(newShowNew)
       setShowDiscount(newShowDiscount)
@@ -188,6 +184,32 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
       setSearchQuery('')
     }
   }, [searchParams, searchQuery])
+
+  // Cargar filtros dinámicos basados en la categoría actual
+  useEffect(() => {
+    async function loadDynamicFilters() {
+      setIsFiltersLoading(true)
+      try {
+        // Usamos la primera categoría seleccionada o null si no hay ninguna
+        const category = selectedCategories.length > 0 ? selectedCategories[0] : null
+        const filters = await getDynamicFilters(category)
+
+        // Si no hay categoría, forzar vacíos para que los campos regresen al default general
+        // Opcional: Podríamos dejar que cargue todos, pero el plan es usar el RPC con parámetro.
+        if (category && filters) {
+          setDynamicFilters(filters)
+        } else {
+          setDynamicFilters(null) // Resetea la lista dinámica a usar las globales de initialProducts
+        }
+      } catch (err) {
+        console.error('Error loading dynamic filters:', err)
+        setDynamicFilters(null)
+      } finally {
+        setIsFiltersLoading(false)
+      }
+    }
+    loadDynamicFilters()
+  }, [selectedCategories])
 
   // Función para verificar si un producto es nuevo (con expiración)
   const isProductNew = useCallback((product: Product): boolean => {
@@ -211,18 +233,27 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
     return ['Todos', ...Array.from(cats).sort()]
   }, [initialProducts])
 
-  // Extraer marcas únicas (máximo 8)
+  // Extraer marcas únicas (dinámico O general)
   const brands = useMemo(() => {
+    if (dynamicFilters && dynamicFilters.brands.length > 0) {
+      return ['Todas', ...dynamicFilters.brands.sort()]
+    }
+
+    // Fallback original para "Todos" los productos
     const brandSet = new Set<string>()
     initialProducts.forEach(p => {
       if (p.brand) brandSet.add(p.brand)
     })
     const sortedBrands = Array.from(brandSet).sort()
     return ['Todas', ...sortedBrands.slice(0, 8)]
-  }, [initialProducts])
+  }, [initialProducts, dynamicFilters])
 
-  // Colores estándar (9 colores típicos)
+  // Colores estándar o dinámicos
   const colors = useMemo(() => {
+    if (dynamicFilters && dynamicFilters.colors.length > 0) {
+      return ['Todos', ...dynamicFilters.colors.sort()]
+    }
+
     const standardColors = ['Blanco', 'Negro', 'Gris', 'Azul', 'Rojo', 'Verde', 'Beige', 'Café', 'Amarillo']
     const availableColors = new Set<string>()
 
@@ -241,7 +272,7 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
     })
 
     return ['Todos', ...standardColors.filter(c => availableColors.has(c))]
-  }, [initialProducts])
+  }, [initialProducts, dynamicFilters])
 
   // Calcular stock disponible (quantity - reserved_qty para reflejar reservas activas)
   const getTotalStock = useCallback((product: Product): number => {
@@ -291,9 +322,6 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
       // Filtro por "DESCUENTO"
       if (showDiscount && !hasDiscount(p)) return false
 
-      // Filtro por subcategorías (multiselección)
-      if (selectedSubcategories.length > 0 && !selectedSubcategories.includes(p.subcategory || '')) return false
-
       // Filtros del sidebar - Precio
       if (p.price < sidebarFilters.priceRange[0] || p.price > sidebarFilters.priceRange[1]) return false
 
@@ -334,13 +362,12 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
     })
 
     return sorted
-  }, [selectedCategories, selectedSubcategories, selectedBrands, selectedColors, stockFilter, showNew, showDiscount, searchQuery, sidebarFilters, initialProducts, getTotalStock, isProductNew])
+  }, [selectedCategories, selectedBrands, selectedColors, stockFilter, showNew, showDiscount, searchQuery, sidebarFilters, initialProducts, getTotalStock, isProductNew])
 
   // Contar filtros activos
   const activeFiltersCount = useMemo(() => {
     let count = 0
     count += selectedCategories.length
-    count += selectedSubcategories.length
     count += selectedBrands.length
     count += selectedColors.length
     count += sidebarFilters.sizes.length
@@ -349,12 +376,11 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
     if (showDiscount) count++
     if (searchQuery.trim()) count++
     return count
-  }, [selectedCategories, selectedSubcategories, selectedBrands, selectedColors, sidebarFilters.sizes, stockFilter, showNew, showDiscount, searchQuery])
+  }, [selectedCategories, selectedBrands, selectedColors, sidebarFilters.sizes, stockFilter, showNew, showDiscount, searchQuery])
 
   // Limpiar todos los filtros
   const clearAllFilters = () => {
     setSelectedCategories([])
-    setSelectedSubcategories([])
     setSelectedBrands([])
     setSelectedColors([])
     setStockFilter('all')
@@ -568,15 +594,6 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                     </span>
                   ))}
 
-                  {selectedSubcategories.map(sub => (
-                    <span key={sub} className="inline-flex items-center gap-1 bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-medium">
-                      {sub}
-                      <button onClick={() => setSelectedSubcategories(selectedSubcategories.filter(s => s !== sub))} className="hover:text-purple-900">
-                        <X className="w-3 h-3" />
-                      </button>
-                    </span>
-                  ))}
-
                   {selectedBrands.map(brand => (
                     <span key={brand} className="inline-flex items-center gap-1 bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-medium">
                       {brand}
@@ -648,7 +665,6 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                             <button
                               onClick={() => {
                                 setSelectedCategories([])
-                                setSelectedSubcategories([])
                               }}
                               className="text-xs text-red-600 hover:text-red-700 font-medium"
                             >
@@ -667,8 +683,6 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                                     setSelectedCategories([...selectedCategories, cat])
                                   } else {
                                     setSelectedCategories(selectedCategories.filter(c => c !== cat))
-                                    // Limpiar subcategorías de esta categoría
-                                    setSelectedSubcategories([])
                                   }
                                 }}
                                 className="w-4 h-4 accent-primary-600 rounded"
@@ -678,80 +692,6 @@ export function CatalogoClient({ initialProducts }: CatalogoClientProps) {
                           ))}
                         </div>
                       </div>
-
-                      {/* Subcategorías - Multiselección */}
-                      {(selectedCategories.includes('Camisas') || selectedCategories.includes('Pantalones')) && (
-                        <div>
-                          <div className="flex items-center justify-between mb-3">
-                            <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-                              <Filter className="w-4 h-4 text-gray-600" />
-                              Subcategoría {selectedSubcategories.length > 0 && `(${selectedSubcategories.length})`}
-                            </label>
-                            {selectedSubcategories.length > 0 && (
-                              <button
-                                onClick={() => setSelectedSubcategories([])}
-                                className="text-xs text-red-600 hover:text-red-700 font-medium"
-                              >
-                                Limpiar
-                              </button>
-                            )}
-                          </div>
-                          <div className="space-y-2">
-                            {selectedCategories.includes('Camisas') && (
-                              <>
-                                <p className="text-xs text-gray-500 font-semibold mb-1">Camisas:</p>
-                                {[
-                                  { label: 'Manga Larga', value: 'manga-larga' },
-                                  { label: 'Manga Corta', value: 'manga-corta' },
-                                  { label: 'Elegantes', value: 'elegante' },
-                                ].map((sub) => (
-                                  <label key={sub.value} className="flex items-center gap-2 cursor-pointer group ml-2">
-                                    <input
-                                      type="checkbox"
-                                      checked={selectedSubcategories.includes(sub.value)}
-                                      onChange={(e) => {
-                                        if (e.target.checked) {
-                                          setSelectedSubcategories([...selectedSubcategories, sub.value])
-                                        } else {
-                                          setSelectedSubcategories(selectedSubcategories.filter(s => s !== sub.value))
-                                        }
-                                      }}
-                                      className="w-4 h-4 accent-primary-600 rounded"
-                                    />
-                                    <span className="text-sm group-hover:text-gray-900 transition-colors">{sub.label}</span>
-                                  </label>
-                                ))}
-                              </>
-                            )}
-                            {selectedCategories.includes('Pantalones') && (
-                              <>
-                                <p className="text-xs text-gray-500 font-semibold mb-1 mt-2">Pantalones:</p>
-                                {[
-                                  { label: 'Oversize', value: 'oversize' },
-                                  { label: 'Jeans', value: 'jeans' },
-                                  { label: 'Elegantes', value: 'elegante' },
-                                ].map((sub) => (
-                                  <label key={sub.value} className="flex items-center gap-2 cursor-pointer group ml-2">
-                                    <input
-                                      type="checkbox"
-                                      checked={selectedSubcategories.includes(sub.value)}
-                                      onChange={(e) => {
-                                        if (e.target.checked) {
-                                          setSelectedSubcategories([...selectedSubcategories, sub.value])
-                                        } else {
-                                          setSelectedSubcategories(selectedSubcategories.filter(s => s !== sub.value))
-                                        }
-                                      }}
-                                      className="w-4 h-4 accent-primary-600 rounded"
-                                    />
-                                    <span className="text-sm group-hover:text-gray-900 transition-colors">{sub.label}</span>
-                                  </label>
-                                ))}
-                              </>
-                            )}
-                          </div>
-                        </div>
-                      )}
 
                       {/* Filtro por Marca - Multiselección */}
                       <div>
