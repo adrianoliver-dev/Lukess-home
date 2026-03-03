@@ -156,11 +156,11 @@ export default function ComoComprarPage() {
       </section>
 
       <section>
-        <div className="bg-gradient-to-r from-gray-900 to-gray-800 text-white rounded-lg p-8 text-center">
-          <h3 className="font-bold text-2xl mb-3">
+        <div className="bg-gray-900 text-white rounded-lg p-8 text-center">
+          <h3 className="font-bold text-2xl mb-3 text-white">
             ¿Todavía tenés dudas?
           </h3>
-          <p className="text-gray-200 mb-6 max-w-2xl mx-auto">
+          <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
             Nuestro equipo está disponible todos los días para ayudarte con cualquier consulta sobre productos, tallas, envíos o formas de pago.
           </p>
           <a

@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-B.A.1.D
-- **Block Name:** Guía de Tallas
+- **Block Number:** 16-B.A.1-HOTFIX
+- **Block Name:** Footer CTA Colors Hotfix
 - **Status:** ✅ DONE
 - **Started:** 2026-03-02
 - **Completed:** 2026-03-02
@@ -14,11 +14,12 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-B.A.1.D
-- **Block Name:** Guía de Tallas
+- **Block Number:** 16-B.A.1-HOTFIX
+- **Block Name:** Footer CTA Colors Hotfix
 - **Commit:** TBD
 
 ### Files Changed
+- `app/como-comprar/page.tsx`
 - `app/guia-tallas/page.tsx`
 - `meta/activeContext.md`
 

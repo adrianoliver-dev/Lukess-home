@@ -109,7 +109,7 @@ export default function GuiaTallasPage() {
         </ul>
 
         <div className="bg-gray-900 text-white rounded-lg p-8 mt-12 text-center">
-          <h3 className="font-bold text-xl mb-3">¿Aún tienes dudas?</h3>
+          <h3 className="font-bold text-xl mb-3 text-white">¿Aún tienes dudas?</h3>
           <p className="text-gray-300 mb-6">
             Pasa por nuestras casetas en el Mercado Mutualista. Tenemos probadores acondicionados para que te pruebes todo el catálogo y encuentres tu calce perfecto sin compromiso.
           </p>
