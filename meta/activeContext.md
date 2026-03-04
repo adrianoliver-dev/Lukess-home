@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 12-A
-- **Block Name:** Smart Dynamic Filters via RPC + Remove Subcategories
+- **Block Number:** 12-A-FIX6
+- **Block Name:** call RPC for all products when no category is selected
 - **Status:** ✅ DONE
 - **Started:** 2026-03-03
 - **Completed:** 2026-03-03
@@ -14,14 +14,12 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 12-A
-- **Block Name:** Smart Dynamic Filters via RPC + Remove Subcategories
-- **Commit:** 0cb4d0b
+- **Block Number:** 12-A-FIX6
+- **Block Name:** call RPC for all products when no category is selected
+- **Commit:** pending
 
 ### Files Changed
 - `app/actions/filters.ts`
-- `components/catalogo/FilterSidebar.tsx`
-- `components/home/CatalogoClient.tsx`
 - `meta/activeContext.md`
 
 ### Database Changes
@@ -146,5 +144,7 @@
 | 12-A-FIX2 | Remove hardcoded categories parsing | ✅ DONE | 2026-03-03 | b88682d |
 | 12-A-FIX3 | Move dynamic filter fetching to server component only | ✅ DONE | 2026-03-03 | 5654fda |
 | 12-A-FIX4 | Correct RPC to use unnest() on TEXT[] and correct schema column names | ✅ DONE | 2026-03-03 | DB migration |
+| 12-A-FIX5 | Visual color swatches + fix cross-navigation filter sync | ✅ DONE | 2026-03-03 | afa2900 |
+| 12-A-FIX6 | call RPC for all products when no category is selected | ✅ DONE | 2026-03-03 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |

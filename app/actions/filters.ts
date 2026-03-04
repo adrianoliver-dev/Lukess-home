@@ -16,28 +16,25 @@ export async function getDynamicFilters(category?: string | null): Promise<Filte
     const supabase = await createClient()
 
     try {
-        if (category) {
-            const { data, error } = await supabase.rpc('get_available_filters_by_category', {
-                p_category: category
-            })
+        // Siempre llamar al RPC, con la categoría o sin ella (null = todos)
+        const { data, error } = await supabase.rpc('get_available_filters_by_category', {
+            p_category: category || null
+        })
 
-            if (error) {
-                console.error('Error fetching dynamic filters for category:', category, error)
-                return { brands: [], colors: [], sizes: [] }
-            }
+        if (error) {
+            console.error('Error fetching dynamic filters:', error)
+            return { brands: [], colors: [], sizes: [] }
+        }
 
-            // The RPC returns { brands: string[], colors: string[], sizes: string[] }
-            if (data && data.length > 0) {
-                return {
-                    brands: data[0].brands || [],
-                    colors: data[0].colors || [],
-                    sizes: data[0].sizes || []
-                }
+        if (data && data.length > 0) {
+            return {
+                brands: data[0].brands || [],
+                colors: data[0].colors || [],
+                sizes: data[0].sizes || []
             }
         }
 
-        // Default Fallback (no category or error parsing RPC logic)
-        // Here we could extract global unique tags if necessary, but returning empty triggers UI hiding
+        // Si el RPC retorna vacío (no hay productos), retornar arrays vacíos
         return { brands: [], colors: [], sizes: [] }
     } catch (err) {
         console.error('Unexpected error in getDynamicFilters:', err)
