@@ -55,19 +55,19 @@ export const metadata: Metadata = {
     address: false,
     telephone: true,
   },
-  metadataBase: new URL("https://lukesshome.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://lukess-home.vercel.app"),
   alternates: {
-    canonical: "https://lukesshome.com",
+    canonical: process.env.NEXT_PUBLIC_SITE_URL || "https://lukess-home.vercel.app",
     languages: {
-      "es-BO": "https://lukesshome.com",
-      "x-default": "https://lukesshome.com",
+      "es-BO": process.env.NEXT_PUBLIC_SITE_URL || "https://lukess-home.vercel.app",
+      "x-default": process.env.NEXT_PUBLIC_SITE_URL || "https://lukess-home.vercel.app",
     },
   },
   openGraph: {
     title: "Lukess Home - Ropa Masculina en Santa Cruz | Mercado Mutualista",
     description:
       "Más de 10 años vistiendo a bolivianos con estilo. 3 puestos en el Mercado Mutualista. Camisas, pantalones, chaquetas y más.",
-    url: "https://lukesshome.com",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://lukess-home.vercel.app",
     siteName: "Lukess Home",
     locale: "es_BO",
     type: "website",

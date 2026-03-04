@@ -1,12 +1,12 @@
 # activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-03-04T10:25-04:00
+**Last Updated:** 2026-03-04T10:40-04:00
 **Updated By:** Antigravity Agent
 
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** SEO-GSC
-- **Block Name:** Google Search Console verification
+- **Block Number:** SEO-ENV
+- **Block Name:** Dynamic Base URL for Sitemap & Metadata
 - **Status:** ✅ DONE
 - **Started:** 2026-03-04
 - **Completed:** 2026-03-04
@@ -14,13 +14,14 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** SEO-GSC
-- **Block Name:** Google Search Console HTML verification
-- **Commit:** 6c2f8ef
+- **Block Number:** SEO-ENV
+- **Block Name:** Dynamic Base URL for Sitemap & Metadata
+- **Commit:** 6f8933f
 
 ### Files Changed
-- `public/google5831edd08f6795a1.html` (Added)
-- `app/layout.tsx` (Removed GSC meta tag, switched to HTML file method)
+- `.env.local`
+- `app/layout.tsx`
+- `app/sitemap.ts`
 - `meta/activeContext.md`
 
 ### Database Changes
@@ -153,6 +154,7 @@
 | 12-E | use local state for dynamic filter logic instead of server prop | ✅ DONE | 2026-03-03 | 66b2f46 |
 | 12-F | Force remount on category change with key prop | ✅ DONE | 2026-03-03 | 66b2f46 |
 | Clarity-A | Integrate Microsoft Clarity Session Recording + Heatmaps | ✅ DONE | 2026-03-04 | 6a50fc9 |
-| SEO-GSC | Google Search Console HTML verification file | ✅ DONE | 2026-03-04 | pending |
+| SEO-GSC | Google Search Console HTML verification file | ✅ DONE | 2026-03-04 | 6c2f8ef |
+| SEO-ENV | Dynamic Base URL for Sitemap & Metadata | ✅ DONE | 2026-03-04 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
