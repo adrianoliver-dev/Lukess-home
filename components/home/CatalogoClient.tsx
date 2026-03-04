@@ -202,7 +202,8 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
 
   // Extraer marcas únicas (dinámico O general)
   const brands = useMemo(() => {
-    if (selectedCategory) {
+    // Si hay al menos una categoría seleccionada localmente, usar filtros dinámicos
+    if (selectedCategories.length > 0) {
       return dynamicFilters?.brands.length ? ['Todas', ...dynamicFilters.brands.sort()] : [];
     }
 
@@ -217,11 +218,12 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
     })
     const sortedBrands = Array.from(brandSet).sort()
     return ['Todas', ...sortedBrands.slice(0, 8)]
-  }, [initialProducts, dynamicFilters, selectedCategory])
+  }, [initialProducts, dynamicFilters, selectedCategories])
 
   // Colores estándar o dinámicos
   const colors = useMemo(() => {
-    if (selectedCategory) {
+    // Si hay al menos una categoría seleccionada localmente, usar filtros dinámicos
+    if (selectedCategories.length > 0) {
       return dynamicFilters?.colors.length ? ['Todos', ...dynamicFilters.colors.sort()] : [];
     }
 
@@ -237,11 +239,12 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
       }
     })
     return ['Todos', ...Array.from(availableColors).sort()]
-  }, [initialProducts, dynamicFilters, selectedCategory])
+  }, [initialProducts, dynamicFilters, selectedCategories])
 
   // Tallas dinámicas
   const sizes = useMemo(() => {
-    if (selectedCategory) {
+    // Si hay al menos una categoría seleccionada localmente, usar filtros dinámicos
+    if (selectedCategories.length > 0) {
       return dynamicFilters?.sizes.length ? dynamicFilters.sizes.sort() : [];
     }
 
@@ -256,7 +259,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
       }
     })
     return Array.from(availableSizes).sort()
-  }, [initialProducts, dynamicFilters, selectedCategory])
+  }, [initialProducts, dynamicFilters, selectedCategories])
 
   // Calcular stock disponible (quantity - reserved_qty para reflejar reservas activas)
   const getTotalStock = useCallback((product: Product): number => {
