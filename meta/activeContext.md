@@ -144,5 +144,7 @@
 | 12-A | Smart Dynamic Filters via RPC + Remove Subcategories | ✅ DONE | 2026-03-03 | 0cb4d0b |
 | 12-A-FIX | Connect dynamic filters to category selection UI | ✅ DONE | 2026-03-03 | d0f0a4c |
 | 12-A-FIX2 | Remove hardcoded categories parsing | ✅ DONE | 2026-03-03 | b88682d |
+| 12-A-FIX3 | Move dynamic filter fetching to server component only | ✅ DONE | 2026-03-03 | 5654fda |
+| 12-A-FIX4 | Correct RPC to use unnest() on TEXT[] and correct schema column names | ✅ DONE | 2026-03-03 | DB migration |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |

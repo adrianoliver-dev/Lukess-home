@@ -118,7 +118,8 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
     if (!searchParams) return
 
     const busqueda = searchParams.get('busqueda') || ''
-    const filter = searchParams.get('filter') || ''
+    // Leer tanto `filter` (clicks del catálogo) como `category` (links de Navbar)
+    const filter = searchParams.get('filter') || searchParams.get('category') || ''
 
     // Manejar parámetro de búsqueda
     if (busqueda !== searchQuery) {
@@ -134,42 +135,40 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
       setSearchQuery(busqueda)
     }
 
-    if (filter) {
-      let newCategories: string[] = []
-      let newBrands: string[] = []
-      let newShowNew = false
-      let newShowDiscount = false
+    // Manejar parámetro de filtro/categoría — sobrescribe siempre el estado
+    let newCategories: string[] = []
+    let newBrands: string[] = []
+    let newShowNew = false
+    let newShowDiscount = false
 
-      if (filter === 'nuevo') {
-        newShowNew = true
-      } else if (filter === 'descuento' || filter === 'descuentos') {
-        newShowDiscount = true
-      } else {
-        // Dynamic fallback: capitalize the first letter to match the DB format typically used 
-        // e.g., 'gorras' -> 'Gorras', 'polos' -> 'Polos'
-        const formattedCategory = filter.charAt(0).toUpperCase() + filter.slice(1);
-        newCategories = [formattedCategory];
-      }
-
-      // Reiniciar filtros completamente basados en el parametro
-      setSelectedCategories(newCategories)
-      setSelectedBrands(newBrands)
-      setShowNew(newShowNew)
-      setShowDiscount(newShowDiscount)
-      setSidebarFilters({
-        priceRange: [0, 1000],
-        brands: [],
-        colors: [],
-        sizes: [],
-        inStock: false,
-        category: null,
-        hasDiscount: null,
-      })
-      setStockFilter('all')
-      setSelectedColors([])
-      setSearchQuery('')
+    if (filter === 'nuevo') {
+      newShowNew = true
+    } else if (filter === 'descuento' || filter === 'descuentos') {
+      newShowDiscount = true
+    } else if (filter) {
+      const formattedCategory = filter.charAt(0).toUpperCase() + filter.slice(1)
+      newCategories = [formattedCategory]
     }
-  }, [searchParams, searchQuery])
+
+    // Siempre sobrescribir el estado para reflejar la URL actual
+    setSelectedCategories(newCategories)
+    setSelectedBrands(newBrands)
+    setShowNew(newShowNew)
+    setShowDiscount(newShowDiscount)
+    setSidebarFilters({
+      priceRange: [0, 1000],
+      brands: [],
+      colors: [],
+      sizes: [],
+      inStock: false,
+      category: null,
+      hasDiscount: null,
+    })
+    setStockFilter('all')
+    setSelectedColors([])
+    if (!busqueda) setSearchQuery('')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams])
 
   // Sync filtros dinámicos cuando llegan nuevas props desde el Server Component
   useEffect(() => {

@@ -192,35 +192,90 @@ export function FilterSidebar({ onFilterChange, brands, colors, sizes, categorie
           </div>
         </FilterSection>
       )}
-      {
-        colors.length > 0 && (
-          <FilterSection
-            title="Color"
-            icon={<Palette className="w-4 h-4" />}
-            isOpen={openSections.color}
-            onToggle={() => toggleSection('color')}
-          >
-            <div className="flex flex-wrap gap-2">
-              {colors.map((color) => (
+      {/* Color Swatches Map */}
+
+      {colors.length > 0 && (
+        <FilterSection
+          title="Color"
+          icon={<Palette className="w-4 h-4" />}
+          isOpen={openSections.color}
+          onToggle={() => toggleSection('color')}
+        >
+          <div className="flex flex-wrap gap-3">
+            {colors.map((color) => {
+              const COLOR_MAP: Record<string, string> = {
+                'Negro': '#111111',
+                'Blanco': '#FFFFFF',
+                'Gris': '#808080',
+                'Gris oscuro': '#555555',
+                'Gris claro': '#D1D5DB',
+                'Azul': '#2563EB',
+                'Azul marino': '#1e3a5f',
+                'Azul oscuro': '#1e40af',
+                'Azul cielo': '#38BDF8',
+                'Celeste': '#87CEEB',
+                'Verde': '#16A34A',
+                'Verde militar': '#4B5320',
+                'Verde menta': '#34D399',
+                'Rojo': '#DC2626',
+                'Vino': '#7f1d1d',
+                'Rosado': '#EC4899',
+                'Rosa': '#F9A8D4',
+                'Beige': '#F5F0E8',
+                'Café': '#78350F',
+                'Marrón': '#92400E',
+                'Amarillo': '#EAB308',
+                'Mostaza': '#CA8A04',
+                'Naranja': '#EA580C',
+                'Morado': '#7C3AED',
+                'Lila': '#A78BFA',
+                'Dorado': '#F59E0B',
+                'Plateado': '#9CA3AF',
+              }
+              const hex = COLOR_MAP[color]
+              const isSelected = filters.colors.includes(color)
+              const isLight = hex === '#FFFFFF' || hex === '#F5F0E8' || hex === '#F9A8D4' || hex === '#D1D5DB'
+
+              return (
                 <button
                   key={color}
+                  title={color}
                   onClick={() => {
-                    const newColors = filters.colors.includes(color)
+                    const newColors = isSelected
                       ? filters.colors.filter(c => c !== color)
                       : [...filters.colors, color]
                     updateFilters({ colors: newColors })
                   }}
-                  className={`px-3 py-1.5 text-xs rounded-full border-2 transition-all ${filters.colors.includes(color)
-                    ? 'border-gray-600 bg-gray-100 text-gray-900 font-semibold'
-                    : 'border-gray-300 hover:border-gray-400'
-                    }`}
+                  className={`relative w-8 h-8 rounded-full transition-all duration-150 focus:outline-none
+                    ${isSelected
+                      ? 'ring-2 ring-offset-2 ring-gray-800 scale-110'
+                      : 'ring-1 ring-gray-300 hover:scale-110 hover:ring-gray-500'
+                    }
+                    ${isLight ? 'border border-gray-300' : ''}
+                  `}
+                  style={{ backgroundColor: hex ?? undefined }}
+                  aria-label={color}
+                  aria-pressed={isSelected}
                 >
-                  {color}
+                  {/* Fallback gradient for unknown colors */}
+                  {!hex && (
+                    <span
+                      className="absolute inset-0 rounded-full"
+                      style={{ background: 'conic-gradient(red, yellow, green, cyan, blue, magenta, red)' }}
+                    />
+                  )}
+                  {/* Checkmark for selected */}
+                  {isSelected && (
+                    <span className={`absolute inset-0 flex items-center justify-center text-[10px] font-bold ${isLight ? 'text-gray-900' : 'text-white'}`}>
+                      ✓
+                    </span>
+                  )}
                 </button>
-              ))}
-            </div>
-          </FilterSection>
-        )}
+              )
+            })}
+          </div>
+        </FilterSection>
+      )}
 
       {/* Talla */}
       {sizes.length > 0 && (
