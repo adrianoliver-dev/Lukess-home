@@ -1,32 +1,31 @@
 # activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-03-02T08:42-04:00
+**Last Updated:** 2026-03-04T10:16-04:00
 **Updated By:** Antigravity Agent
 
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 12-F
-- **Block Name:** Force remount on category change with key prop
+- **Block Number:** SEO-GSC
+- **Block Name:** Google Search Console verification
 - **Status:** ✅ DONE
-- **Started:** 2026-03-03
-- **Completed:** 2026-03-03
+- **Started:** 2026-03-04
+- **Completed:** 2026-03-04
 
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 12-F
-- **Block Name:** Force remount on category change with key prop
-- **Commit:** 66b2f46
+- **Block Number:** SEO-GSC
+- **Block Name:** Google Search Console verification
+- **Commit:** cd6da71
 
 ### Files Changed
-- `app/page.tsx`
-- `meta/activeContext.md`
+- `app/layout.tsx` (added GSC meta tag)
 
 ### Database Changes
 - None
 
 ### Build Verification
-- Build successful (Next.js SSG)
+- TypeScript strict check passed (exit code 0)
 ---
 
 ## OPEN ISSUES
@@ -151,5 +150,7 @@
 | 12-D | Move color swatches to catalog and fix empty filters fallback | ✅ DONE | 2026-03-03 | b163521 |
 | 12-E | use local state for dynamic filter logic instead of server prop | ✅ DONE | 2026-03-03 | 66b2f46 |
 | 12-F | Force remount on category change with key prop | ✅ DONE | 2026-03-03 | 66b2f46 |
+| Clarity-A | Integrate Microsoft Clarity Session Recording + Heatmaps | ✅ DONE | 2026-03-04 | 6a50fc9 |
+| SEO-GSC | Google Search Console verification meta tag | ✅ DONE | 2026-03-04 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
