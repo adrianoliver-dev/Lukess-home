@@ -72,8 +72,8 @@ export function QuickViewModal({
       : 'Agregar al Carrito'
 
   // Obtener imágenes (máximo 3)
-  const images = product.images && product.images.length > 0
-    ? product.images.slice(0, 3)
+  const images = product.gallery && product.gallery.length > 0
+    ? product.gallery.slice(0, 3)
     : product.image_url
       ? [product.image_url]
       : ['/placeholder.png']
@@ -196,13 +196,13 @@ export function QuickViewModal({
 
                         {/* Indicadores */}
                         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
-                          {images.map((_, i) => (
+                          {images.map((_: string, i: number) => (
                             <button
                               key={i}
                               onClick={() => setCurrentImageIndex(i)}
                               className={`h-1.5 rounded-full transition-all ${i === currentImageIndex
-                                  ? 'bg-gray-900 w-6'
-                                  : 'bg-gray-300 w-1.5 hover:bg-gray-400'
+                                ? 'bg-gray-900 w-6'
+                                : 'bg-gray-300 w-1.5 hover:bg-gray-400'
                                 }`}
                               aria-label={`Ver imagen ${i + 1}`}
                             />
@@ -229,13 +229,13 @@ export function QuickViewModal({
                   {/* Miniaturas */}
                   {images.length > 1 && (
                     <div className="flex gap-2">
-                      {images.map((img, i) => (
+                      {images.map((img: string, i: number) => (
                         <button
                           key={i}
                           onClick={() => setCurrentImageIndex(i)}
                           className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${i === currentImageIndex
-                              ? 'border-gray-600 scale-105'
-                              : 'border-gray-200 hover:border-gray-300'
+                            ? 'border-gray-600 scale-105'
+                            : 'border-gray-200 hover:border-gray-300'
                             }`}
                         >
                           <Image
@@ -308,10 +308,10 @@ export function QuickViewModal({
                     <div className="flex items-center gap-2">
                       <Package className="w-4 h-4 text-gray-400" />
                       <span className={`text-sm font-bold ${stock === 0
-                          ? 'text-red-600'
-                          : stock < 10
-                            ? 'text-amber-600'
-                            : 'text-green-600'
+                        ? 'text-red-600'
+                        : stock < 10
+                          ? 'text-amber-600'
+                          : 'text-green-600'
                         }`}>
                         {stock === 0 ? '🚫 Sin stock' : stock < 10 ? `⚠️ Solo ${stock} unidades` : '✓ Disponible'}
                       </span>
@@ -332,10 +332,10 @@ export function QuickViewModal({
                             onClick={() => setSelectedColor(color)}
                             disabled={isOutOfStock}
                             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all border-2 ${selectedColor === color
-                                ? 'border-gray-600 bg-gray-900 text-white shadow-md scale-105'
-                                : isOutOfStock
-                                  ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed'
-                                  : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400 hover:bg-gray-100'
+                              ? 'border-gray-600 bg-gray-900 text-white shadow-md scale-105'
+                              : isOutOfStock
+                                ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed'
+                                : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400 hover:bg-gray-100'
                               }`}
                           >
                             {color}
@@ -367,10 +367,10 @@ export function QuickViewModal({
                             onClick={() => !isOutOfStock && setSelectedSize(size)}
                             disabled={isOutOfStock}
                             className={`px-4 py-2 rounded-lg text-sm font-bold transition-all border-2 min-w-[60px] ${selectedSize === size
-                                ? 'border-gray-600 bg-gray-900 text-white shadow-md scale-105'
-                                : isOutOfStock
-                                  ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed opacity-40 line-through'
-                                  : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400 hover:bg-gray-100'
+                              ? 'border-gray-600 bg-gray-900 text-white shadow-md scale-105'
+                              : isOutOfStock
+                                ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed opacity-40 line-through'
+                                : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400 hover:bg-gray-100'
                               }`}
                           >
                             {size}
@@ -399,8 +399,8 @@ export function QuickViewModal({
                       onClick={handleAddToCart}
                       disabled={addToCartDisabled}
                       className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl text-base font-bold transition-all duration-300 ${addToCartDisabled
-                          ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                          : 'bg-gradient-to-r from-gray-600 to-gray-700 text-white hover:from-gray-700 hover:to-gray-800 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]'
+                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                        : 'bg-gradient-to-r from-gray-600 to-gray-700 text-white hover:from-gray-700 hover:to-gray-800 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]'
                         }`}
                     >
                       <ShoppingCart className="w-5 h-5" />

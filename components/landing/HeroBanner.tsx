@@ -3,8 +3,8 @@ import Link from "next/link";
 import { getActiveBanners } from "@/lib/banners";
 import HeroBannerCarousel from "@/components/home/HeroBannerCarousel";
 
-// Always fetch fresh banners on every request — no caching
-export const dynamic = "force-dynamic";
+// Cache banners for 5 minutes, then revalidate (ISR). Avoids querying Supabase on every request.
+export const revalidate = 300;
 
 /**
  * HeroBanner — Server Component

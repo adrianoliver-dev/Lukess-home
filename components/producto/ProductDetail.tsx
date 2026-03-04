@@ -165,8 +165,8 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
             {/* Gallery */}
             <div>
               <ProductGallery
-                images={product.images && product.images.length > 0
-                  ? product.images
+                images={product.gallery && product.gallery.length > 0
+                  ? product.gallery
                   : [product.image_url || '/placeholder.png']
                 }
                 productName={product.name}

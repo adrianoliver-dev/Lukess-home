@@ -9,18 +9,19 @@ export interface Product {
   sizes: string[] | null
   colors: string[] | null
   color?: string | null
-  image_url: string | null
-  images: string[] | null  // Array de URLs de imágenes para galería
+  image_url: string | null          // Hero image for detail page (800×1000px)
+  thumbnail_url?: string | null     // Thumbnail for catalog cards (480×600px, WebP ≤80KB)
+  gallery?: string[] | null         // Gallery images for detail page (up to 5 images)
   is_active: boolean
-  is_new?: boolean  // Badge "NUEVO" - productos de la nueva colección
-  is_new_until?: string | null  // Fecha hasta la cual se muestra badge NUEVO
-  is_best_seller?: boolean  // Badge "MÁS VENDIDO"
-  discount: number | null  // Descuento en porcentaje (0-100)
+  is_new?: boolean                  // Badge "NUEVO" - productos de la nueva colección
+  is_new_until?: string | null      // Fecha hasta la cual se muestra badge NUEVO
+  is_best_seller?: boolean          // Badge "MÁS VENDIDO"
+  discount: number | null           // Descuento en porcentaje (0-100)
   discount_percentage?: number | null  // Alias para compatibilidad
   discount_expires_at?: string | null  // Fecha de expiración del descuento
-  is_featured: boolean | null  // Producto destacado
-  collection?: string | null  // Colección: 'primavera', 'verano', etc.
-  subcategory?: string | null  // Subcategoría: 'manga-larga', 'oversize', 'elegante', etc.
+  is_featured: boolean | null       // Producto destacado
+  collection?: string | null        // Colección: 'primavera', 'verano', etc.
+  subcategory?: string | null       // Subcategoría: 'manga-larga', 'oversize', 'elegante', etc.
   category_id: string | null
   created_at: string
   categories?: {

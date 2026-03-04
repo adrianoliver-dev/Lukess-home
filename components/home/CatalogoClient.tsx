@@ -518,6 +518,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                 <button
                   onClick={clearAllFilters}
                   className="inline-flex items-center gap-1 px-4 py-2 rounded-full text-sm font-medium text-red-600 hover:bg-red-50 transition-all border border-red-200"
+                  aria-label="Limpiar todos los filtros activos"
                 >
                   <X className="w-4 h-4" />
                   Limpiar filtros
@@ -564,7 +565,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                       <button onClick={() => {
                         setSearchQuery('')
                         window.history.pushState(null, '', '/#catalogo')
-                      }} className="hover:text-blue-900">
+                      }} className="hover:text-blue-900" aria-label="Remover filtro de búsqueda">
                         <X className="w-3 h-3" />
                       </button>
                     </span>
@@ -573,7 +574,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                   {selectedCategories.map(cat => (
                     <span key={cat} className="inline-flex items-center gap-1 bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-xs font-medium">
                       {cat}
-                      <button onClick={() => setSelectedCategories(selectedCategories.filter(c => c !== cat))} className="hover:text-gray-900">
+                      <button onClick={() => setSelectedCategories(selectedCategories.filter(c => c !== cat))} className="hover:text-gray-900" aria-label={`Remover filtro ${cat}`}>
                         <X className="w-3 h-3" />
                       </button>
                     </span>
@@ -582,7 +583,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                   {selectedBrands.map(brand => (
                     <span key={brand} className="inline-flex items-center gap-1 bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-medium">
                       {brand}
-                      <button onClick={() => setSelectedBrands(selectedBrands.filter(b => b !== brand))} className="hover:text-amber-900">
+                      <button onClick={() => setSelectedBrands(selectedBrands.filter(b => b !== brand))} className="hover:text-amber-900" aria-label={`Remover filtro ${brand}`}>
                         <X className="w-3 h-3" />
                       </button>
                     </span>
@@ -591,7 +592,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                   {selectedColors.map(color => (
                     <span key={color} className="inline-flex items-center gap-1 bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-xs font-medium">
                       {color}
-                      <button onClick={() => setSelectedColors(selectedColors.filter(c => c !== color))} className="hover:text-pink-900">
+                      <button onClick={() => setSelectedColors(selectedColors.filter(c => c !== color))} className="hover:text-pink-900" aria-label={`Remover filtro ${color}`}>
                         <X className="w-3 h-3" />
                       </button>
                     </span>
@@ -600,7 +601,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                   {sidebarFilters.sizes.map(size => (
                     <span key={size} className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
                       Talla {size}
-                      <button onClick={() => setSidebarFilters({ ...sidebarFilters, sizes: sidebarFilters.sizes.filter(s => s !== size) })} className="hover:text-green-900">
+                      <button onClick={() => setSidebarFilters({ ...sidebarFilters, sizes: sidebarFilters.sizes.filter(s => s !== size) })} className="hover:text-green-900" aria-label={`Remover filtro talla ${size}`}>
                         <X className="w-3 h-3" />
                       </button>
                     </span>
@@ -609,7 +610,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                   {showNew && (
                     <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-medium">
                       ✨ Nuevo
-                      <button onClick={() => setShowNew(false)} className="hover:text-amber-900">
+                      <button onClick={() => setShowNew(false)} className="hover:text-amber-900" aria-label="Remover filtro Nuevo">
                         <X className="w-3 h-3" />
                       </button>
                     </span>
@@ -618,7 +619,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                   {showDiscount && (
                     <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-medium">
                       % Descuentos
-                      <button onClick={() => setShowDiscount(false)} className="hover:text-red-900">
+                      <button onClick={() => setShowDiscount(false)} className="hover:text-red-900" aria-label="Remover filtro Descuentos">
                         <X className="w-3 h-3" />
                       </button>
                     </span>
@@ -881,7 +882,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
               </motion.div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 lg:gap-6">
-                {filteredProducts.slice(0, displayLimit).map((product) => {
+                {filteredProducts.slice(0, displayLimit).map((product, index) => {
                   const stock = getTotalStock(product)
                   const isOutOfStock = stock === 0
 
@@ -895,12 +896,15 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                         {/* Imagen */}
                         <div className="relative aspect-[4/5] overflow-hidden bg-gray-50 p-3">
                           <Image
-                            src={product.image_url || '/placeholder.png'}
-                            alt={product.name}
-                            fill
+                            src={product.thumbnail_url || product.image_url || '/placeholder.png'}
+                            alt={`${product.name}${product.brand ? ` - ${product.brand}` : ''}${product.color ? ` ${product.color}` : ''}${product.sizes?.[0] ? ` talla ${product.sizes[0]}` : ''}`}
+                            width={480}
+                            height={600}
                             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                             className="object-contain transition-transform duration-300 group-hover:scale-105"
-                            loading="lazy"
+                            loading={index < 4 ? 'eager' : 'lazy'}
+                            priority={index === 0}
+                            quality={85}
                           />
 
                           {/* Badges promocionales */}

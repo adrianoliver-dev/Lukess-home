@@ -1,12 +1,12 @@
 # activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-03-04T14:34-04:00
+**Last Updated:** 2026-03-04T16:30-04:00
 **Updated By:** Antigravity Agent
 
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-C-4-B
-- **Block Name:** Hero Banner Carousel from Supabase
+- **Block Number:** 16-C.a-A
+- **Block Name:** Performance Optimization + Dual Image System
 - **Status:** ✅ DONE
 - **Started:** 2026-03-04
 - **Completed:** 2026-03-04
@@ -14,21 +14,27 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-C-4-B
-- **Block Name:** Hero Banner Carousel from Supabase
-- **Commit:** e5f454c
+- **Block Number:** 16-C.a-A
+- **Block Name:** Performance Optimization + Dual Image System
+- **Commit:** pending push
 
 ### Files Changed
-- `lib/banners.ts` (NEW — server fetch helper)
-- `components/home/HeroBannerCarousel.tsx` (NEW — client carousel)
-- `components/landing/HeroBanner.tsx` (REPLACED — now Server Component)
+- `lib/types.ts` (MODIFIED — added thumbnail_url + gallery, removed images)
+- `types/database.types.ts` (MODIFIED — added thumbnail_url to products Row/Insert/Update)
+- `components/home/CatalogoClient.tsx` (MODIFIED — Image fix: explicit 480×600 dims, smart lazy load, 8 aria-labels)
+- `components/landing/HeroBanner.tsx` (MODIFIED — force-dynamic → revalidate=300)
+- `components/catalogo/QuickViewModal.tsx` (MODIFIED — images→gallery rename)
+- `components/home/CatalogoSection.tsx` (MODIFIED — images→gallery rename)
+- `components/producto/ProductDetail.tsx` (MODIFIED — images→gallery rename)
 - `meta/activeContext.md`
 
 ### Database Changes
-- None (banners table already exists with 5 rows)
+- `products` table: added `thumbnail_url TEXT` column (nullable, for catalog card optimization)
+- Migration: `add_thumbnail_url_to_products`
 
 ### Build Verification
 - TypeScript strict check passed (exit code 0)
+
 ---
 
 ## OPEN ISSUES
@@ -40,10 +46,10 @@
 ---
 
 ## NEXT BLOCK
-- **Block:** 13
-- **Name:** Order State Management via Admin Dashboard
-- **Dependencies:** 12-A
-- **Scope:** Develop Order detail page to read real-time stock/reserve data.
+- **Block:** 16-C.a-B
+- **Name:** Admin inventory form — add thumbnail upload field
+- **Dependencies:** 16-C.a-A (thumbnail_url column)
+- **Scope:** Add thumbnail image upload to admin product form so Aldrin can upload optimized card thumbnails.
 
 ---
 
