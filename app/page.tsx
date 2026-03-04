@@ -70,6 +70,7 @@ export default async function Home(
       }
     }
 
+    // ALWAYS call getDynamicFilters with current category
     dynamicFilters = await getDynamicFilters(categoryForFilters)
     activeCategories = await getActiveCategories()
   } catch (err) {

@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 12-B
-- **Block Name:** Fix color filtering logic and color swatches display
+- **Block Number:** 12-C
+- **Block Name:** Fix color swatches empty state, color selection border and Navbar dynamic filter synchronization
 - **Status:** ✅ DONE
 - **Started:** 2026-03-03
 - **Completed:** 2026-03-03
@@ -14,14 +14,13 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 12-B
-- **Block Name:** Fix color filtering logic and color swatches display
+- **Block Number:** 12-C
+- **Block Name:** Fix color swatches empty state, color selection border and Navbar dynamic filter synchronization
 - **Commit:** pending
 
 ### Files Changed
-- `components/home/CatalogoClient.tsx`
+- `app/page.tsx`
 - `components/catalogo/FilterSidebar.tsx`
-- `lib/types.ts`
 - `meta/activeContext.md`
 
 ### Database Changes
@@ -148,6 +147,7 @@
 | 12-A-FIX4 | Correct RPC to use unnest() on TEXT[] and correct schema column names | ✅ DONE | 2026-03-03 | DB migration |
 | 12-A-FIX5 | Visual color swatches + fix cross-navigation filter sync | ✅ DONE | 2026-03-03 | afa2900 |
 | 12-A-FIX6 | call RPC for all products when no category is selected | ✅ DONE | 2026-03-03 | 5b7eb24 |
-| 12-B | Fix color filtering logic and color swatches display | ✅ DONE | 2026-03-03 | pending |
+| 12-B | Fix color filtering logic and color swatches display | ✅ DONE | 2026-03-03 | 46028e3 |
+| 12-C | Fix color swatches empty state, selection UI and layout sync | ✅ DONE | 2026-03-03 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |

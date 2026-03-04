@@ -249,12 +249,12 @@ export function FilterSidebar({ onFilterChange, brands, colors, sizes, categorie
                   }}
                   className={`relative w-8 h-8 rounded-full transition-all duration-150 focus:outline-none
                     ${isSelected
-                      ? 'ring-2 ring-offset-2 ring-gray-800 scale-110'
-                      : 'ring-1 ring-gray-300 hover:scale-110 hover:ring-gray-500'
+                      ? 'ring-4 ring-gray-900 scale-110'
+                      : 'ring-1 ring-gray-300 hover:scale-110 hover:ring-gray-400'
                     }
                     ${isLight ? 'border border-gray-300' : ''}
                   `}
-                  style={{ backgroundColor: hex || 'transparent' }}
+                  style={hex ? { backgroundColor: hex } : {}}
                   aria-label={color}
                   aria-pressed={isSelected}
                 >
@@ -262,15 +262,13 @@ export function FilterSidebar({ onFilterChange, brands, colors, sizes, categorie
                   {!hex && (
                     <span
                       className="absolute inset-0 rounded-full"
-                      style={{ background: 'conic-gradient(red, yellow, green, cyan, blue, magenta, red)' }}
+                      style={{
+                        background: 'conic-gradient(red, yellow, green, cyan, blue, magenta, red)',
+                        zIndex: 0
+                      }}
                     />
                   )}
-                  {/* Checkmark for selected */}
-                  {isSelected && (
-                    <span className={`absolute inset-0 flex items-center justify-center text-[10px] font-bold ${isLight ? 'text-gray-900' : 'text-white'}`}>
-                      ✓
-                    </span>
-                  )}
+
                 </button>
               )
             })}
