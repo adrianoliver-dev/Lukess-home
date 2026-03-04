@@ -142,5 +142,6 @@
 | 16-I | Checkout QR Download Button | ✅ DONE | 2026-03-03 | a8f1e45 |
 | 11-F | Dynamic Categories based on active products | ✅ DONE | 2026-03-03 | d22e389 |
 | 12-A | Smart Dynamic Filters via RPC + Remove Subcategories | ✅ DONE | 2026-03-03 | 0cb4d0b |
+| 12-A-FIX | Connect dynamic filters to category selection UI | ✅ DONE | 2026-03-03 | d0f0a4c |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |

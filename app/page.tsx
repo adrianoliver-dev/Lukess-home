@@ -65,11 +65,7 @@ export default async function Home(
   try {
     let categoryForFilters: string | null = null;
     if (categoryParam) {
-      if (categoryParam === 'camisas-columbia' || categoryParam === 'camisas-manga-larga' || categoryParam === 'camisas-manga-corta' || categoryParam === 'camisas-elegantes') {
-        categoryForFilters = 'Camisas'
-      } else if (categoryParam === 'pantalones-oversize' || categoryParam === 'pantalones-jeans' || categoryParam === 'pantalones-elegantes') {
-        categoryForFilters = 'Pantalones'
-      } else if (categoryParam !== 'nuevo' && categoryParam !== 'descuento' && categoryParam !== 'descuentos') {
+      if (categoryParam !== 'nuevo' && categoryParam !== 'descuento' && categoryParam !== 'descuentos') {
         categoryForFilters = categoryParam.charAt(0).toUpperCase() + categoryParam.slice(1)
       }
     }

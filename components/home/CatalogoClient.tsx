@@ -135,7 +135,6 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
       setSearchQuery(busqueda)
     }
 
-    // Manejar parámetro de filtro (viene de Navbar, Banners, etc.)
     if (filter) {
       let newCategories: string[] = []
       let newBrands: string[] = []
@@ -146,21 +145,6 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
         newShowNew = true
       } else if (filter === 'descuento' || filter === 'descuentos') {
         newShowDiscount = true
-      } else if (filter === 'camisas-columbia') {
-        newCategories = ['Camisas']
-        newBrands = ['Columbia']
-      } else if (filter === 'camisas-manga-larga') {
-        newCategories = ['Camisas']
-      } else if (filter === 'camisas-manga-corta') {
-        newCategories = ['Camisas']
-      } else if (filter === 'camisas-elegantes') {
-        newCategories = ['Camisas']
-      } else if (filter === 'pantalones-oversize') {
-        newCategories = ['Pantalones']
-      } else if (filter === 'pantalones-jeans') {
-        newCategories = ['Pantalones']
-      } else if (filter === 'pantalones-elegantes') {
-        newCategories = ['Pantalones']
       } else {
         // Dynamic fallback: capitalize the first letter to match the DB format typically used 
         // e.g., 'gorras' -> 'Gorras', 'polos' -> 'Polos'
