@@ -1,12 +1,12 @@
 # activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-03-04T10:40-04:00
+**Last Updated:** 2026-03-04T14:34-04:00
 **Updated By:** Antigravity Agent
 
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** SEO-ENV
-- **Block Name:** Dynamic Base URL for Sitemap & Metadata
+- **Block Number:** 16-C-4-B
+- **Block Name:** Hero Banner Carousel from Supabase
 - **Status:** ✅ DONE
 - **Started:** 2026-03-04
 - **Completed:** 2026-03-04
@@ -14,18 +14,18 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** SEO-ENV
-- **Block Name:** Dynamic Base URL for Sitemap & Metadata
-- **Commit:** 6f8933f
+- **Block Number:** 16-C-4-B
+- **Block Name:** Hero Banner Carousel from Supabase
+- **Commit:** e5f454c
 
 ### Files Changed
-- `.env.local`
-- `app/layout.tsx`
-- `app/sitemap.ts`
+- `lib/banners.ts` (NEW — server fetch helper)
+- `components/home/HeroBannerCarousel.tsx` (NEW — client carousel)
+- `components/landing/HeroBanner.tsx` (REPLACED — now Server Component)
 - `meta/activeContext.md`
 
 ### Database Changes
-- None
+- None (banners table already exists with 5 rows)
 
 ### Build Verification
 - TypeScript strict check passed (exit code 0)
@@ -155,6 +155,7 @@
 | 12-F | Force remount on category change with key prop | ✅ DONE | 2026-03-03 | 66b2f46 |
 | Clarity-A | Integrate Microsoft Clarity Session Recording + Heatmaps | ✅ DONE | 2026-03-04 | 6a50fc9 |
 | SEO-GSC | Google Search Console HTML verification file | ✅ DONE | 2026-03-04 | 6c2f8ef |
-| SEO-ENV | Dynamic Base URL for Sitemap & Metadata | ✅ DONE | 2026-03-04 | pending |
+| SEO-ENV | Dynamic Base URL for Sitemap & Metadata | ✅ DONE | 2026-03-04 | 6f8933f |
+| 16-C-4-B | Hero Banner Carousel from Supabase | ✅ DONE | 2026-03-04 | e5f454c |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
