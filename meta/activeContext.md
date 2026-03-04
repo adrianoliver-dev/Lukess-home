@@ -1,5 +1,5 @@
 # activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-03-04T10:16-04:00
+**Last Updated:** 2026-03-04T10:25-04:00
 **Updated By:** Antigravity Agent
 
 ---
@@ -15,11 +15,13 @@
 
 ## LAST COMPLETED BLOCK
 - **Block Number:** SEO-GSC
-- **Block Name:** Google Search Console verification
-- **Commit:** cd6da71
+- **Block Name:** Google Search Console HTML verification
+- **Commit:** 6c2f8ef
 
 ### Files Changed
-- `app/layout.tsx` (added GSC meta tag)
+- `public/google5831edd08f6795a1.html` (Added)
+- `app/layout.tsx` (Removed GSC meta tag, switched to HTML file method)
+- `meta/activeContext.md`
 
 ### Database Changes
 - None
@@ -151,6 +153,6 @@
 | 12-E | use local state for dynamic filter logic instead of server prop | ✅ DONE | 2026-03-03 | 66b2f46 |
 | 12-F | Force remount on category change with key prop | ✅ DONE | 2026-03-03 | 66b2f46 |
 | Clarity-A | Integrate Microsoft Clarity Session Recording + Heatmaps | ✅ DONE | 2026-03-04 | 6a50fc9 |
-| SEO-GSC | Google Search Console verification meta tag | ✅ DONE | 2026-03-04 | pending |
+| SEO-GSC | Google Search Console HTML verification file | ✅ DONE | 2026-03-04 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
