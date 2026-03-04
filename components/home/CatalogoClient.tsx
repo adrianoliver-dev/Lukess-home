@@ -15,7 +15,7 @@ import { ProductBadges } from '@/components/catalogo/ProductBadges'
 import { WishlistButton } from '@/components/wishlist/WishlistButton'
 import { buildWhatsAppUrl } from '@/lib/utils/whatsapp'
 import { hasActiveDiscount as hasDiscount, getDiscount, getPriceWithDiscount } from '@/lib/utils/price'
-import { getDynamicFilters, type FilterOptions } from '@/app/actions/filters'
+import { type FilterOptions } from '@/app/actions/filters'
 
 interface CatalogoClientProps {
   initialProducts: Product[]
@@ -96,9 +96,8 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
   const [searchQuery, setSearchQuery] = useState('')
   const [displayLimit, setDisplayLimit] = useState(20)
 
-  // Opciones Dinámicas de Filtros
+  // Opciones Dinámicas de Filtros — se reciben desde el Server Component como prop
   const [dynamicFilters, setDynamicFilters] = useState<FilterOptions | null>(initialFilters || null)
-  const [isFiltersLoading, setIsFiltersLoading] = useState(false)
 
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -172,31 +171,10 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
     }
   }, [searchParams, searchQuery])
 
-  // Cargar filtros dinámicos basados en la categoría actual
+  // Sync filtros dinámicos cuando llegan nuevas props desde el Server Component
   useEffect(() => {
-    async function loadDynamicFilters() {
-      setIsFiltersLoading(true)
-      try {
-        // Usamos la primera categoría seleccionada o null si no hay ninguna
-        const category = selectedCategories.length > 0 ? selectedCategories[0] : null
-        const filters = await getDynamicFilters(category)
-
-        // Si no hay categoría, forzar vacíos para que los campos regresen al default general
-        // Opcional: Podríamos dejar que cargue todos, pero el plan es usar el RPC con parámetro.
-        if (category && filters) {
-          setDynamicFilters(filters)
-        } else {
-          setDynamicFilters(null) // Resetea la lista dinámica a usar las globales de initialProducts
-        }
-      } catch (err) {
-        console.error('Error loading dynamic filters:', err)
-        setDynamicFilters(null)
-      } finally {
-        setIsFiltersLoading(false)
-      }
-    }
-    loadDynamicFilters()
-  }, [selectedCategories])
+    setDynamicFilters(initialFilters || null)
+  }, [initialFilters])
 
   // Función para verificar si un producto es nuevo (con expiración)
   const isProductNew = useCallback((product: Product): boolean => {
@@ -244,24 +222,14 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
       return ['Todos', ...dynamicFilters.colors.sort()]
     }
 
-    const standardColors = ['Blanco', 'Negro', 'Gris', 'Azul', 'Rojo', 'Verde', 'Beige', 'Café', 'Amarillo']
+    // Fallback: extraer colores únicos de todos los productos
     const availableColors = new Set<string>()
-
     initialProducts.forEach(p => {
       if (p.colors && Array.isArray(p.colors)) {
-        p.colors.forEach(c => {
-          // Normalizar y matchear con colores estándar
-          const normalized = c.toLowerCase()
-          standardColors.forEach(std => {
-            if (normalized.includes(std.toLowerCase())) {
-              availableColors.add(std)
-            }
-          })
-        })
+        p.colors.forEach(c => availableColors.add(c))
       }
     })
-
-    return ['Todos', ...standardColors.filter(c => availableColors.has(c))]
+    return ['Todos', ...Array.from(availableColors).sort()]
   }, [initialProducts, dynamicFilters])
 
   // Tallas dinámicas
