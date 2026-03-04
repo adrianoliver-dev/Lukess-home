@@ -8,6 +8,7 @@ export interface Product {
   brand: string | null
   sizes: string[] | null
   colors: string[] | null
+  color?: string | null
   image_url: string | null
   images: string[] | null  // Array de URLs de imágenes para galería
   is_active: boolean

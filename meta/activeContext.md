@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 12-A-FIX6
-- **Block Name:** call RPC for all products when no category is selected
+- **Block Number:** 12-B
+- **Block Name:** Fix color filtering logic and color swatches display
 - **Status:** ✅ DONE
 - **Started:** 2026-03-03
 - **Completed:** 2026-03-03
@@ -14,12 +14,14 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 12-A-FIX6
-- **Block Name:** call RPC for all products when no category is selected
+- **Block Number:** 12-B
+- **Block Name:** Fix color filtering logic and color swatches display
 - **Commit:** pending
 
 ### Files Changed
-- `app/actions/filters.ts`
+- `components/home/CatalogoClient.tsx`
+- `components/catalogo/FilterSidebar.tsx`
+- `lib/types.ts`
 - `meta/activeContext.md`
 
 ### Database Changes
@@ -145,6 +147,7 @@
 | 12-A-FIX3 | Move dynamic filter fetching to server component only | ✅ DONE | 2026-03-03 | 5654fda |
 | 12-A-FIX4 | Correct RPC to use unnest() on TEXT[] and correct schema column names | ✅ DONE | 2026-03-03 | DB migration |
 | 12-A-FIX5 | Visual color swatches + fix cross-navigation filter sync | ✅ DONE | 2026-03-03 | afa2900 |
-| 12-A-FIX6 | call RPC for all products when no category is selected | ✅ DONE | 2026-03-03 | pending |
+| 12-A-FIX6 | call RPC for all products when no category is selected | ✅ DONE | 2026-03-03 | 5b7eb24 |
+| 12-B | Fix color filtering logic and color swatches display | ✅ DONE | 2026-03-03 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |

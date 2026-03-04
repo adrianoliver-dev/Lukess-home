@@ -224,8 +224,8 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
     // Fallback: extraer colores únicos de todos los productos
     const availableColors = new Set<string>()
     initialProducts.forEach(p => {
-      if (p.colors && Array.isArray(p.colors)) {
-        p.colors.forEach(c => availableColors.add(c))
+      if (p.color) {
+        availableColors.add(p.color)
       }
     })
     return ['Todos', ...Array.from(availableColors).sort()]
@@ -268,9 +268,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
         const matchesSKU = p.sku?.toLowerCase().includes(query)
 
         // Buscar en colores
-        const matchesColor = p.colors?.some(color =>
-          color.toLowerCase().includes(query)
-        )
+        const matchesColor = p.color?.toLowerCase().includes(query)
 
         // Buscar en tallas
         const matchesSize = p.sizes?.some(size =>
@@ -314,7 +312,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
       if (selectedBrands.length > 0 && !selectedBrands.includes(p.brand || '')) return false
 
       // Filtro por colores (multiselección)
-      if (selectedColors.length > 0 && (!p.colors || !p.colors.some(c => selectedColors.includes(c)))) return false
+      if (selectedColors.length > 0 && !selectedColors.includes(p.color || '')) return false
 
       // Filtro por stock (botones superiores)
       if (stockFilter === 'inStock' && stock === 0) return false

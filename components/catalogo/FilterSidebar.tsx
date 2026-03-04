@@ -232,7 +232,8 @@ export function FilterSidebar({ onFilterChange, brands, colors, sizes, categorie
                 'Dorado': '#F59E0B',
                 'Plateado': '#9CA3AF',
               }
-              const hex = COLOR_MAP[color]
+              const normalizedColor = color.charAt(0).toUpperCase() + color.slice(1).toLowerCase();
+              const hex = COLOR_MAP[normalizedColor] || COLOR_MAP[color];
               const isSelected = filters.colors.includes(color)
               const isLight = hex === '#FFFFFF' || hex === '#F5F0E8' || hex === '#F9A8D4' || hex === '#D1D5DB'
 
@@ -253,7 +254,7 @@ export function FilterSidebar({ onFilterChange, brands, colors, sizes, categorie
                     }
                     ${isLight ? 'border border-gray-300' : ''}
                   `}
-                  style={{ backgroundColor: hex ?? undefined }}
+                  style={{ backgroundColor: hex || 'transparent' }}
                   aria-label={color}
                   aria-pressed={isSelected}
                 >
