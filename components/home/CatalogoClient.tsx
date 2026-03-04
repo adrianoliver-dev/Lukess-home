@@ -202,6 +202,10 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
 
   // Extraer marcas únicas (dinámico O general)
   const brands = useMemo(() => {
+    if (selectedCategory) {
+      return dynamicFilters?.brands.length ? ['Todas', ...dynamicFilters.brands.sort()] : [];
+    }
+
     if (dynamicFilters && dynamicFilters.brands.length > 0) {
       return ['Todas', ...dynamicFilters.brands.sort()]
     }
@@ -213,10 +217,14 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
     })
     const sortedBrands = Array.from(brandSet).sort()
     return ['Todas', ...sortedBrands.slice(0, 8)]
-  }, [initialProducts, dynamicFilters])
+  }, [initialProducts, dynamicFilters, selectedCategory])
 
   // Colores estándar o dinámicos
   const colors = useMemo(() => {
+    if (selectedCategory) {
+      return dynamicFilters?.colors.length ? ['Todos', ...dynamicFilters.colors.sort()] : [];
+    }
+
     if (dynamicFilters && dynamicFilters.colors.length > 0) {
       return ['Todos', ...dynamicFilters.colors.sort()]
     }
@@ -229,10 +237,14 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
       }
     })
     return ['Todos', ...Array.from(availableColors).sort()]
-  }, [initialProducts, dynamicFilters])
+  }, [initialProducts, dynamicFilters, selectedCategory])
 
   // Tallas dinámicas
   const sizes = useMemo(() => {
+    if (selectedCategory) {
+      return dynamicFilters?.sizes.length ? dynamicFilters.sizes.sort() : [];
+    }
+
     if (dynamicFilters && dynamicFilters.sizes.length > 0) {
       return dynamicFilters.sizes.sort()
     }
@@ -244,7 +256,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
       }
     })
     return Array.from(availableSizes).sort()
-  }, [initialProducts, dynamicFilters])
+  }, [initialProducts, dynamicFilters, selectedCategory])
 
   // Calcular stock disponible (quantity - reserved_qty para reflejar reservas activas)
   const getTotalStock = useCallback((product: Product): number => {
@@ -704,7 +716,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                         </div>
                       </div>
 
-                      {/* Filtro por Color - Multiselección */}
+                      {/* Filtro por Color - Multiselección con Swatches */}
                       <div>
                         <div className="flex items-center justify-between mb-3">
                           <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
@@ -720,24 +732,51 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                             </button>
                           )}
                         </div>
-                        <div className="space-y-2">
-                          {colors.filter(c => c !== 'Todos').map((color) => (
-                            <label key={color} className="flex items-center gap-2 cursor-pointer group">
-                              <input
-                                type="checkbox"
-                                checked={selectedColors.includes(color)}
-                                onChange={(e) => {
-                                  if (e.target.checked) {
-                                    setSelectedColors([...selectedColors, color])
+                        <div className="flex flex-wrap gap-3">
+                          {colors.filter(c => c !== 'Todos').map((color) => {
+                            const COLOR_MAP: Record<string, string> = {
+                              'Negro': '#111111', 'Blanco': '#FFFFFF', 'Gris': '#808080',
+                              'Gris oscuro': '#555555', 'Gris claro': '#D1D5DB', 'Azul': '#2563EB',
+                              'Azul marino': '#1e3a5f', 'Azul oscuro': '#1e40af', 'Azul cielo': '#38BDF8',
+                              'Celeste': '#87CEEB', 'Verde': '#16A34A', 'Verde militar': '#4B5320',
+                              'Verde menta': '#34D399', 'Rojo': '#DC2626', 'Vino': '#7f1d1d',
+                              'Rosado': '#EC4899', 'Rosa': '#F9A8D4', 'Beige': '#F5F0E8',
+                              'Café': '#78350F', 'Marrón': '#92400E', 'Amarillo': '#EAB308',
+                              'Mostaza': '#CA8A04', 'Naranja': '#EA580C', 'Morado': '#7C3AED',
+                              'Lila': '#A78BFA', 'Dorado': '#F59E0B', 'Plateado': '#9CA3AF',
+                            };
+                            const normalizedColor = color.charAt(0).toUpperCase() + color.slice(1).toLowerCase();
+                            const hex = COLOR_MAP[normalizedColor] || COLOR_MAP[color];
+                            const isSelected = selectedColors.includes(color);
+                            const isLight = hex === '#FFFFFF' || hex === '#F5F0E8' || hex === '#F9A8D4' || hex === '#D1D5DB';
+
+                            return (
+                              <button
+                                key={color}
+                                title={color}
+                                onClick={() => {
+                                  if (isSelected) {
+                                    setSelectedColors(selectedColors.filter(c => c !== color));
                                   } else {
-                                    setSelectedColors(selectedColors.filter(c => c !== color))
+                                    setSelectedColors([...selectedColors, color]);
                                   }
                                 }}
-                                className="w-4 h-4 accent-primary-600 rounded"
-                              />
-                              <span className="text-sm group-hover:text-gray-900 transition-colors">{color}</span>
-                            </label>
-                          ))}
+                                className={`relative w-8 h-8 rounded-full transition-all duration-150 focus:outline-none flex items-center justify-center
+                                  ${isSelected ? 'ring-4 ring-gray-900 scale-110' : 'ring-1 ring-gray-300 hover:scale-110 hover:ring-gray-400'}
+                                  ${isLight ? 'border border-gray-300' : ''}
+                                `}
+                                style={hex ? { backgroundColor: hex } : {}}
+                                aria-label={color}
+                              >
+                                {!hex && (
+                                  <span
+                                    className="absolute inset-0 rounded-full"
+                                    style={{ background: 'conic-gradient(red, yellow, green, cyan, blue, magenta, red)', zIndex: 0 }}
+                                  />
+                                )}
+                              </button>
+                            );
+                          })}
                         </div>
                       </div>
 

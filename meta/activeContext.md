@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 12-C
-- **Block Name:** Fix color swatches empty state, color selection border and Navbar dynamic filter synchronization
+- **Block Number:** 12-D
+- **Block Name:** Move color swatches to main catalog and fix empty filters fallback
 - **Status:** ✅ DONE
 - **Started:** 2026-03-03
 - **Completed:** 2026-03-03
@@ -14,13 +14,12 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 12-C
-- **Block Name:** Fix color swatches empty state, color selection border and Navbar dynamic filter synchronization
+- **Block Number:** 12-D
+- **Block Name:** Move color swatches to main catalog and fix empty filters fallback
 - **Commit:** pending
 
 ### Files Changed
-- `app/page.tsx`
-- `components/catalogo/FilterSidebar.tsx`
+- `components/home/CatalogoClient.tsx`
 - `meta/activeContext.md`
 
 ### Database Changes
@@ -148,6 +147,7 @@
 | 12-A-FIX5 | Visual color swatches + fix cross-navigation filter sync | ✅ DONE | 2026-03-03 | afa2900 |
 | 12-A-FIX6 | call RPC for all products when no category is selected | ✅ DONE | 2026-03-03 | 5b7eb24 |
 | 12-B | Fix color filtering logic and color swatches display | ✅ DONE | 2026-03-03 | 46028e3 |
-| 12-C | Fix color swatches empty state, selection UI and layout sync | ✅ DONE | 2026-03-03 | pending |
+| 12-C | Fix color swatches empty state, selection UI and layout sync | ✅ DONE | 2026-03-03 | 8c09167 |
+| 12-D | Move color swatches to catalog and fix empty filters fallback | ✅ DONE | 2026-03-03 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
