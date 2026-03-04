@@ -83,6 +83,7 @@ export default async function Home(
       <TrustBanner />
 
       <CatalogoClient
+        key={categoryParam || 'all'}
         initialProducts={products}
         initialFilters={dynamicFilters}
         categories={activeCategories}

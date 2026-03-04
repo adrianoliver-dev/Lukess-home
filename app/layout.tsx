@@ -10,6 +10,7 @@ import { AuthProvider } from "@/lib/context/AuthContext";
 import { Toaster } from "react-hot-toast";
 import { Analytics } from '@vercel/analytics/react'
 import { HashScrollHandler } from "@/components/layout/HashScrollHandler";
+import MicrosoftClarity from "@/components/analytics/MicrosoftClarity";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -138,6 +139,7 @@ export default function RootLayout({
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
         )}
         <Analytics />
+        {process.env.NEXT_PUBLIC_CLARITY_ID && <MicrosoftClarity />}
       </body>
     </html>
   );

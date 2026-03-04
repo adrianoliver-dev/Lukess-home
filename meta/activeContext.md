@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 12-E
-- **Block Name:** use local state for dynamic filter logic instead of server prop
+- **Block Number:** 12-F
+- **Block Name:** Force remount on category change with key prop
 - **Status:** ✅ DONE
 - **Started:** 2026-03-03
 - **Completed:** 2026-03-03
@@ -14,12 +14,12 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 12-E
-- **Block Name:** use local state for dynamic filter logic instead of server prop
-- **Commit:** pending
+- **Block Number:** 12-F
+- **Block Name:** Force remount on category change with key prop
+- **Commit:** 66b2f46
 
 ### Files Changed
-- `components/home/CatalogoClient.tsx`
+- `app/page.tsx`
 - `meta/activeContext.md`
 
 ### Database Changes
@@ -149,6 +149,7 @@
 | 12-B | Fix color filtering logic and color swatches display | ✅ DONE | 2026-03-03 | 46028e3 |
 | 12-C | Fix color swatches empty state, selection UI and layout sync | ✅ DONE | 2026-03-03 | 8c09167 |
 | 12-D | Move color swatches to catalog and fix empty filters fallback | ✅ DONE | 2026-03-03 | b163521 |
-| 12-E | use local state for dynamic filter logic instead of server prop | ✅ DONE | 2026-03-03 | pending |
+| 12-E | use local state for dynamic filter logic instead of server prop | ✅ DONE | 2026-03-03 | 66b2f46 |
+| 12-F | Force remount on category change with key prop | ✅ DONE | 2026-03-03 | 66b2f46 |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
