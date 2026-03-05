@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 17-A-3.1 (FIX)
-- **Block Name:** Payment Copy Polish & Order Labels
+- **Block Number:** 17-A-4.1
+- **Block Name:** Email Templates for Pickup Flow + Custom Cancellation Reasons
 - **Status:** ✅ DONE
 - **Started:** 2026-03-05
 - **Completed:** 2026-03-05
@@ -14,13 +14,13 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 17-A-3.1 (FIX)
-- **Block Name:** Payment Copy Polish & Order Labels
-- **Commit Landing:** b62f1ca
+- **Block Number:** 17-A-4.1
+- **Block Name:** Email Templates for Pickup Flow + Custom Cancellation Reasons
+- **Commit Landing:** pending
 
 ### Files Changed
-- `components/cart/CheckoutModal.tsx` (MODIFIED — relabeled payment options, updated delivery info subtitle, updated reservation banner wording)
-- `app/mis-pedidos/page.tsx` (MODIFIED — added payment_method to Order interface + ORDER_SELECT, added pickup payment label badge)
+- `app/api/send-email/route.ts` (MODIFIED — added new EmailType cases and imported templates)
+- `lib/emails/templates.ts` (MODIFIED — added pickup reservation, payment confirmed, ready, and cancelled templates)
 
 ### Build Verification
 - TypeScript strict check passed (exit code 0)
@@ -46,6 +46,7 @@
 ## BLOCK HISTORY
 | Block | Name | Status | Date | Commit |
 |---|---|---|---|---|
+| 17-A-4.1 | Email Templates for Pickup + Cancellation | ✅ DONE | 2026-03-05 | pending |
 | Cleanup-01 | framer-motion removal + Memory Bank | ✅ DONE | 2026-02-26 | pending |
 | 9b-A | Bugs + Fixes Urgentes A | ✅ DONE | 2026-02-26 | 7a0d980 |
 | 9b-B | Bugs + Fixes Urgentes B | ✅ DONE | 2026-02-26 | dc0d079 |

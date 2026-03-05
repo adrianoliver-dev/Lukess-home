@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { WHATSAPP_NUMBER } from '@/lib/utils/whatsapp'
+import {
+  pickupReservationReceivedEmail,
+  pickupPaymentConfirmedEmail,
+  pickupReadyForCollectionEmail,
+  orderCancelledEmail
+} from '@/lib/emails/templates'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -520,12 +526,24 @@ export async function OPTIONS() {
 
 // ── POST handler ───────────────────────────────────────────────────────────────
 
+export type EmailType =
+  | 'welcome_email'
+  | 'order_confirmation'
+  | 'order_paid'
+  | 'order_shipped'
+  | 'order_completed'
+  | 'order_cancelled'
+  | 'admin_new_order'
+  | 'pickup_reservation_received'
+  | 'pickup_payment_confirmed'
+  | 'pickup_ready_for_collection'
+
 export async function POST(req: NextRequest) {
   const corsHeaders = new Headers(CORS_HEADERS)
 
   try {
     const body = await req.json()
-    const { type, orderData } = body as { type: string; orderData: any }
+    const { type, orderData } = body as { type: EmailType; orderData: any }
 
     // EMAIL KILL-SWITCH FOR DEV TESTING
     if (process.env.DISABLE_EMAILS === 'true') {
@@ -593,19 +611,49 @@ export async function POST(req: NextRequest) {
 
         case 'order_cancelled':
           subject = `❌ Pedido #${shortId} cancelado | Lukess Home`
-          html = buildStatusEmailHtml(
-            orderData,
-            '❌ Pedido cancelado',
-            '#3a1a1a',
-            '#6a2d2d',
-            '#f87171',
-            `Tu pedido fue cancelado. Si tenés dudas contáctanos por WhatsApp +${WHATSAPP_NUMBER}.`,
-          )
+          html = orderCancelledEmail({
+            orderId: orderData.orderId,
+            customerName: orderData.customerName,
+            cancellationReason: orderData.cancellationReason,
+            customReason: orderData.customCancellationReason,
+          })
           break
 
         case 'admin_new_order':
           subject = `🛎️ Nuevo pedido #${shortId} — Verificar pago`
           html = buildAdminNewOrderHtml(orderData)
+          break
+
+        case 'pickup_reservation_received':
+          subject = `Reserva Confirmada - #${shortId}`
+          html = pickupReservationReceivedEmail({
+            orderId: orderData.orderId,
+            customerName: orderData.customerName,
+            pickupLocation: orderData.pickupLocationName,
+            pickupLocationAddress: orderData.pickupLocationAddress,
+            items: orderData.items,
+            total: orderData.total,
+          })
+          break
+
+        case 'pickup_payment_confirmed':
+          subject = `Pago Confirmado - #${shortId}`
+          html = pickupPaymentConfirmedEmail({
+            orderId: orderData.orderId,
+            customerName: orderData.customerName,
+            pickupLocation: orderData.pickupLocationName,
+          })
+          break
+
+        case 'pickup_ready_for_collection':
+          subject = `¡Tu pedido está listo! - #${shortId}`
+          html = pickupReadyForCollectionEmail({
+            orderId: orderData.orderId,
+            customerName: orderData.customerName,
+            pickupLocation: orderData.pickupLocationName,
+            pickupLocationAddress: orderData.pickupLocationAddress,
+            expiresInHours: orderData.expiresInHours || 48,
+          })
           break
 
         default:
