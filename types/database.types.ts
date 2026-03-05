@@ -549,6 +549,8 @@ export type Database = {
       orders: {
         Row: {
           canal: string | null
+          cancellation_reason: string | null
+          cancelled_at: string | null
           created_at: string | null
           customer_email: string | null
           customer_id: string | null
@@ -594,6 +596,8 @@ export type Database = {
         }
         Insert: {
           canal?: string | null
+          cancellation_reason?: string | null
+          cancelled_at?: string | null
           created_at?: string | null
           customer_email?: string | null
           customer_id?: string | null
@@ -639,6 +643,8 @@ export type Database = {
         }
         Update: {
           canal?: string | null
+          cancellation_reason?: string | null
+          cancelled_at?: string | null
           created_at?: string | null
           customer_email?: string | null
           customer_id?: string | null

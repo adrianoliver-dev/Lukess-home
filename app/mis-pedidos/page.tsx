@@ -15,6 +15,7 @@ import { PICKUP_LOCATIONS } from '@/lib/utils/shipping'
 
 function Countdown48h({ createdAt }: { createdAt: string }) {
   const [timeLeft, setTimeLeft] = useState<string>('')
+  const [isExpired, setIsExpired] = useState(false)
 
   useEffect(() => {
     const updateTimer = () => {
@@ -24,31 +25,40 @@ function Countdown48h({ createdAt }: { createdAt: string }) {
       const diff = expiresAt - now
 
       if (diff <= 0) {
-        setTimeLeft('Expirado')
+        setTimeLeft('Reserva expiró · será cancelada pronto')
+        setIsExpired(true)
         return
       }
 
       const hours = Math.floor(diff / (1000 * 60 * 60))
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
-
       setTimeLeft(`${hours}h ${minutes}m restantes`)
+      setIsExpired(false)
     }
 
     updateTimer()
-    const interval = setInterval(updateTimer, 60000) // Update every minute
+    const interval = setInterval(updateTimer, 60000) // every minute
 
     return () => clearInterval(interval)
   }, [createdAt])
 
+  if (isExpired) {
+    return (
+      <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-red-100 text-red-600 border border-red-200">
+        ⚠️ {timeLeft}
+      </div>
+    )
+  }
+
   return (
     <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-700 border border-amber-200">
       <Clock className="w-3 h-3" />
-      {timeLeft}
+      ⏰ Reserva activa · {timeLeft}
     </div>
   )
 }
 
-type OrderStatus = 'pending' | 'confirmed' | 'shipped' | 'completed' | 'cancelled'
+type OrderStatus = 'pending' | 'pending_payment' | 'confirmed' | 'shipped' | 'completed' | 'cancelled'
 
 interface OrderProduct {
   id: string
@@ -81,6 +91,7 @@ interface Order {
   maps_link: string | null
   pickup_location: string | null
   payment_method: 'qr' | 'cash_on_pickup' | null
+  cancellation_reason: string | null
   order_items?: OrderItem[]
 }
 
@@ -97,6 +108,7 @@ const ORDER_SELECT = `
   maps_link,
   pickup_location,
   payment_method,
+  cancellation_reason,
   order_items (
     id,
     product_id,
@@ -119,6 +131,7 @@ const STATUS_CONFIG: Record<
   { label: string; icon: React.ReactNode }
 > = {
   pending: { label: 'Pendiente', icon: <Clock className="w-3.5 h-3.5" /> },
+  pending_payment: { label: 'Reserva activa', icon: <Store className="w-3.5 h-3.5" /> },
   confirmed: { label: 'Confirmado', icon: <CheckCircle className="w-3.5 h-3.5" /> },
   shipped: { label: 'En camino', icon: <Package className="w-3.5 h-3.5" /> },
   completed: { label: 'Entregado', icon: <CheckCircle className="w-3.5 h-3.5" /> },
@@ -248,8 +261,13 @@ function OrderCard({ order }: { order: Order }) {
             {status.icon}
             {status.label}
           </div>
-          {order.delivery_method === 'pickup' && order.status === 'pending' && (
+          {order.payment_method === 'cash_on_pickup' && order.status === 'pending_payment' && (
             <Countdown48h createdAt={order.created_at} />
+          )}
+          {order.status === 'cancelled' && order.cancellation_reason === 'expired_reservation' && (
+            <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold bg-red-100 text-red-600 border border-red-200">
+              ❌ Reserva expirada (no recogido en 48h)
+            </span>
           )}
         </div>
       </div>
@@ -364,8 +382,8 @@ function OrderCard({ order }: { order: Order }) {
                 </p>
                 {/* Payment method label for pickup orders */}
                 <span className={`inline-flex items-center gap-1 mt-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold ${order.payment_method === 'cash_on_pickup'
-                    ? 'bg-amber-100 text-amber-700'
-                    : 'bg-blue-50 text-blue-700'
+                  ? 'bg-amber-100 text-amber-700'
+                  : 'bg-blue-50 text-blue-700'
                   }`}>
                   {order.payment_method === 'cash_on_pickup' ? '🏪 Pago en puesto' : '📱 Pago online (QR)'}
                 </span>
