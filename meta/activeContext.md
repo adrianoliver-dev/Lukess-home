@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-C.a-A
-- **Block Name:** Performance Optimization + Dual Image System
+- **Block Number:** 16-C.a.C
+- **Block Name:** Fix Gallery + Image Centering + Admin Hero Label
 - **Status:** ✅ DONE
 - **Started:** 2026-03-04
 - **Completed:** 2026-03-04
@@ -14,18 +14,16 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-C.a-A
-- **Block Name:** Performance Optimization + Dual Image System
-- **Commit:** pending push
+- **Block Number:** 16-C.a.C
+- **Block Name:** Fix Gallery + Image Centering + Admin Hero Label
+- **Commit Landing:** e.g. 7f509a8 (Landing)
+- **Commit Inventory:** 9d185b9 (Inventory)
 
 ### Files Changed
-- `lib/types.ts` (MODIFIED — added thumbnail_url + gallery, removed images)
-- `types/database.types.ts` (MODIFIED — added thumbnail_url to products Row/Insert/Update)
-- `components/home/CatalogoClient.tsx` (MODIFIED — Image fix: explicit 480×600 dims, smart lazy load, 8 aria-labels)
-- `components/landing/HeroBanner.tsx` (MODIFIED — force-dynamic → revalidate=300)
-- `components/catalogo/QuickViewModal.tsx` (MODIFIED — images→gallery rename)
-- `components/home/CatalogoSection.tsx` (MODIFIED — images→gallery rename)
-- `components/producto/ProductDetail.tsx` (MODIFIED — images→gallery rename)
+- `components/producto/ProductDetail.tsx` (MODIFIED — fix gallery array logic to always include hero)
+- `components/home/CatalogoClient.tsx` (MODIFIED — revert to fill+object-center for portrait/landscape centering)
+- `[Inventory] app/(dashboard)/inventario/[id]/edit-product-form.tsx` (MODIFIED — update image upload UI labels with explicit Specs)
+- `[Inventory] app/(dashboard)/inventario/nuevo/new-product-form.tsx` (MODIFIED — update image upload UI labels with explicit Specs)
 - `meta/activeContext.md`
 
 ### Database Changes
@@ -46,10 +44,10 @@
 ---
 
 ## NEXT BLOCK
-- **Block:** 16-C.a-B
-- **Name:** Admin inventory form — add thumbnail upload field
-- **Dependencies:** 16-C.a-A (thumbnail_url column)
-- **Scope:** Add thumbnail image upload to admin product form so Aldrin can upload optimized card thumbnails.
+- **Block:** TBD
+- **Name:** TBD
+- **Dependencies:** None
+- **Scope:** Address open issues or proceed to next feature.
 
 ---
 
@@ -163,5 +161,7 @@
 | SEO-GSC | Google Search Console HTML verification file | ✅ DONE | 2026-03-04 | 6c2f8ef |
 | SEO-ENV | Dynamic Base URL for Sitemap & Metadata | ✅ DONE | 2026-03-04 | 6f8933f |
 | 16-C-4-B | Hero Banner Carousel from Supabase | ✅ DONE | 2026-03-04 | e5f454c |
+| 16-C.a-A | Performance Optimization + Dual Image System | ✅ DONE | 2026-03-04 | 7f509a8 |
+| 16-C.a.C | Fix Gallery + Image Centering + Admin Hero Label | ✅ DONE | 2026-03-04 | 9d185b9 |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |

@@ -11,7 +11,7 @@ export interface Product {
   color?: string | null
   image_url: string | null          // Hero image for detail page (800×1000px)
   thumbnail_url?: string | null     // Thumbnail for catalog cards (480×600px, WebP ≤80KB)
-  gallery?: string[] | null         // Gallery images for detail page (up to 5 images)
+  images?: string[] | null          // Gallery images for detail page (up to 5 images)
   is_active: boolean
   is_new?: boolean                  // Badge "NUEVO" - productos de la nueva colección
   is_new_until?: string | null      // Fecha hasta la cual se muestra badge NUEVO

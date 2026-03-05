@@ -72,8 +72,8 @@ export function QuickViewModal({
       : 'Agregar al Carrito'
 
   // Obtener imágenes (máximo 3)
-  const images = product.gallery && product.gallery.length > 0
-    ? product.gallery.slice(0, 3)
+  const images = product.images && product.images.length > 0
+    ? product.images.slice(0, 3)
     : product.image_url
       ? [product.image_url]
       : ['/placeholder.png']

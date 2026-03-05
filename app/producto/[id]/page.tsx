@@ -16,7 +16,7 @@ export async function generateMetadata(
 
   const { data: product } = await supabase
     .from('products')
-    .select('name, description, image_url, gallery')
+    .select('name, description, image_url, images')
     .eq('id', id)
     .single()
 
@@ -27,8 +27,8 @@ export async function generateMetadata(
   }
 
   const images = product.image_url ? [product.image_url] : []
-  if (product.gallery && product.gallery.length > 0) {
-    images.push(...product.gallery)
+  if (product.images && product.images.length > 0) {
+    images.push(...product.images)
   }
 
   return {

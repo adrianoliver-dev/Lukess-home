@@ -898,10 +898,9 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                           <Image
                             src={product.thumbnail_url || product.image_url || '/placeholder.png'}
                             alt={`${product.name}${product.brand ? ` - ${product.brand}` : ''}${product.color ? ` ${product.color}` : ''}${product.sizes?.[0] ? ` talla ${product.sizes[0]}` : ''}`}
-                            width={480}
-                            height={600}
+                            fill
                             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                            className="object-contain transition-transform duration-300 group-hover:scale-105"
+                            className="object-contain object-center transition-transform duration-300 group-hover:scale-105"
                             loading={index < 4 ? 'eager' : 'lazy'}
                             priority={index === 0}
                             quality={85}

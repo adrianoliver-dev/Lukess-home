@@ -165,10 +165,11 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
             {/* Gallery */}
             <div>
               <ProductGallery
-                images={product.gallery && product.gallery.length > 0
-                  ? product.gallery
-                  : [product.image_url || '/placeholder.png']
-                }
+                images={(() => {
+                  const hero = product.image_url || '/placeholder.png'
+                  const extra = (product.images || []).filter(Boolean)
+                  return [hero, ...extra]
+                })()}
                 productName={product.name}
               />
               {isOutOfStock && (

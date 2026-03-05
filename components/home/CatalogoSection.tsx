@@ -80,7 +80,7 @@ export function CatalogoSection() {
       sizes: product.sizes,
       colors: null,
       image_url: product.images?.[0] ?? null,
-      gallery: product.images,
+      images: product.images,
       is_active: true,
       discount: null,
       is_featured: null,
