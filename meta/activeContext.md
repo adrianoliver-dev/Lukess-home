@@ -16,7 +16,7 @@
 ## LAST COMPLETED BLOCK
 - **Block Number:** 17-B-2
 - **Block Name:** Newsletter Visual Polish
-- **Commit Landing:** pending
+- **Commit Landing:** e24dfe3
 
 ### Files Changed
 - `components/marketing/FooterNewsletter.tsx` (MODIFIED — replaced text gradient with solid green on 10% OFF text)
