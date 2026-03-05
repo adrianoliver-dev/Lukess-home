@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-C.a.C
-- **Block Name:** Fix Gallery + Image Centering + Admin Hero Label
+- **Block Number:** 16-C.a.D
+- **Block Name:** Fix Gallery Images Field Mapping
 - **Status:** ✅ DONE
 - **Started:** 2026-03-04
 - **Completed:** 2026-03-04
@@ -14,16 +14,16 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-C.a.C
-- **Block Name:** Fix Gallery + Image Centering + Admin Hero Label
-- **Commit Landing:** e.g. 7f509a8 (Landing)
-- **Commit Inventory:** 9d185b9 (Inventory)
+- **Block Number:** 16-C.a.D
+- **Block Name:** Fix Gallery Images Field Mapping
+- **Commit Landing:** 8650297
 
 ### Files Changed
-- `components/producto/ProductDetail.tsx` (MODIFIED — fix gallery array logic to always include hero)
-- `components/home/CatalogoClient.tsx` (MODIFIED — revert to fill+object-center for portrait/landscape centering)
-- `[Inventory] app/(dashboard)/inventario/[id]/edit-product-form.tsx` (MODIFIED — update image upload UI labels with explicit Specs)
-- `[Inventory] app/(dashboard)/inventario/nuevo/new-product-form.tsx` (MODIFIED — update image upload UI labels with explicit Specs)
+- `lib/types.ts` (MODIFIED — renamed gallery to images)
+- `components/producto/ProductDetail.tsx` (MODIFIED — mapped product.images instead of product.gallery)
+- `components/catalogo/QuickViewModal.tsx` (MODIFIED — mapped product.images instead of product.gallery)
+- `components/home/CatalogoSection.tsx` (MODIFIED — images prop now correctly points to product.images)
+- `app/producto/[id]/page.tsx` (MODIFIED — changed select query and usage to images)
 - `meta/activeContext.md`
 
 ### Database Changes
@@ -163,5 +163,6 @@
 | 16-C-4-B | Hero Banner Carousel from Supabase | ✅ DONE | 2026-03-04 | e5f454c |
 | 16-C.a-A | Performance Optimization + Dual Image System | ✅ DONE | 2026-03-04 | 7f509a8 |
 | 16-C.a.C | Fix Gallery + Image Centering + Admin Hero Label | ✅ DONE | 2026-03-04 | 9d185b9 |
+| 16-C.a.D | Fix Gallery Images Field Mapping | ✅ DONE | 2026-03-04 | 8650297 |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |

@@ -164,10 +164,11 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
             <div>
               <ProductGallery
                 images={(() => {
-                  const hero = product.image_url || '/placeholder.png'
-                  // Use product.images — actual DB column name (NOT product.gallery)
-                  const extra = (product.images || []).filter(Boolean)
-                  return [hero, ...extra]
+                  // images array already contains hero as first item
+                  const allImages = product.images && product.images.length > 0
+                    ? product.images
+                    : [product.image_url || '/placeholder.png']
+                  return allImages.filter(Boolean)
                 })()}
                 productName={product.name}
               />
