@@ -1,10 +1,12 @@
 'use client'
+
 import { useState, useEffect } from 'react'
-import { X, Mail, Gift, Loader2 } from 'lucide-react'
+import { X, Gift, Loader2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'
 import toast from 'react-hot-toast'
 
 import { useAuth } from '@/lib/context/AuthContext'
+import { useNewsletter } from '@/hooks/useNewsletter'
 
 export function NewsletterPopup() {
   const [isOpen, setIsOpen] = useState(false)
@@ -12,6 +14,7 @@ export function NewsletterPopup() {
   const [mounted, setMounted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { isLoggedIn } = useAuth()
+  const { isSubscribed, markAsSubscribed } = useNewsletter()
 
   useEffect(() => {
     setMounted(true)
@@ -19,34 +22,34 @@ export function NewsletterPopup() {
     // 1. Si el usuario está logueado, NUNCA mostrar el popup
     if (isLoggedIn) return
 
-    // 2. Revisar si ya descartó/completó el popup en los últimos 30 días
+    // 2. Si ya está suscrito globalmente, nunca mostrar
+    if (isSubscribed) return
+
+    // 3. Revisar si ya descartó el popup en los últimos 30 días
     const dismissedData = localStorage.getItem('lukess_newsletter_dismissed')
     if (dismissedData) {
       try {
         const { timestamp } = JSON.parse(dismissedData)
         const daysPassed = (Date.now() - timestamp) / (1000 * 60 * 60 * 24)
-        if (daysPassed < 30) return // Ocultar si pasaron menos de 30 días
-      } catch (e) {
-        // Fallback por si la data está corrupta
+        if (daysPassed < 30) return
+      } catch {
         localStorage.removeItem('lukess_newsletter_dismissed')
       }
     }
 
-    // 3. Temporizador (12 segundos)
+    // 4. Temporizador (12 segundos)
     const timer = setTimeout(() => {
       setIsOpen(true)
     }, 12000)
 
-    // 4. Exit Intent (Mouseleave superior)
+    // 5. Exit Intent (Mouseleave superior)
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY < 10) {
         setIsOpen(true)
-        // Ya no necesitamos escuchar más
         document.removeEventListener('mouseleave', handleMouseLeave)
       }
     }
 
-    // Solo agregar el listener si no está abierto aún
     if (!isOpen) {
       document.addEventListener('mouseleave', handleMouseLeave)
     }
@@ -55,7 +58,7 @@ export function NewsletterPopup() {
       clearTimeout(timer)
       document.removeEventListener('mouseleave', handleMouseLeave)
     }
-  }, [isLoggedIn, isOpen])
+  }, [isLoggedIn, isSubscribed, isOpen])
 
   const handleClose = () => {
     setIsOpen(false)
@@ -66,19 +69,21 @@ export function NewsletterPopup() {
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault()
-    if (!email || isSubmitting) return
+    const trimmed = email.trim().toLowerCase()
+    if (!trimmed || isSubmitting) return
 
     setIsSubmitting(true)
     try {
       const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim().toLowerCase(), source: 'popup' })
+        body: JSON.stringify({ email: trimmed, source: 'popup' })
       })
 
       const data = await res.json()
 
       if (res.status === 409) {
+        markAsSubscribed(trimmed)
         toast('Ya estás suscrito 😊')
         handleClose()
         return
@@ -86,7 +91,8 @@ export function NewsletterPopup() {
 
       if (!res.ok) throw new Error(data.error || 'Error al suscribir')
 
-      toast.success('¡Suscripción exitosa! Revisa tu email.')
+      markAsSubscribed(trimmed)
+      toast.success('¡Suscripción exitosa! Revisá tu email para tu código.')
       handleClose()
     } catch {
       toast.error('Error al suscribir, intenta de nuevo')
@@ -107,78 +113,80 @@ export function NewsletterPopup() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={handleClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"
           />
 
           {/* Modal */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            initial={{ opacity: 0, scale: 0.92, y: 24 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            exit={{ opacity: 0, scale: 0.92, y: 24 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 30 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
           >
-            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative pointer-events-auto">
-              {/* Botón cerrar */}
+            <div className="bg-zinc-950 border border-zinc-800 rounded-2xl shadow-2xl max-w-md w-full p-8 relative pointer-events-auto overflow-hidden">
+              {/* Background glow */}
+              <div className="absolute -top-20 -right-20 w-48 h-48 bg-accent-500/20 rounded-full blur-3xl pointer-events-none" />
+
+              {/* Close button */}
               <button
                 onClick={handleClose}
-                className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
+                className="absolute top-4 right-4 p-2 hover:bg-zinc-800 rounded-full transition-colors"
                 aria-label="Cerrar"
               >
-                <X className="w-5 h-5" />
+                <X className="w-5 h-5 text-zinc-400" />
               </button>
 
-              {/* Contenido */}
-              <div className="text-center space-y-6">
-                <div className="inline-flex p-4 bg-accent-500/20 rounded-full">
-                  <Gift className="w-12 h-12 text-accent-500" />
+              {/* Content */}
+              <div className="space-y-6 relative">
+                <div className="inline-flex p-4 bg-accent-500/15 border border-accent-500/30 rounded-2xl">
+                  <Gift className="w-10 h-10 text-accent-400" />
                 </div>
 
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                    10% OFF en tu primera compra
+                  <p className="text-xs font-bold text-accent-400 uppercase tracking-widest mb-2">
+                    Oferta para nuevos clientes
+                  </p>
+                  <h3 className="text-3xl font-black text-white leading-tight tracking-tight">
+                    Desbloquea{' '}
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-400 to-emerald-400">
+                      10% OFF
+                    </span>
+                    {' '}en tu primera compra.
                   </h3>
-                  <p className="text-gray-600">
-                    Suscríbete a nuestro newsletter y recibe ofertas exclusivas
+                  <p className="text-zinc-400 text-sm mt-2">
+                    Únete. Recibe tu código al instante. Sin compromiso.
                   </p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="tucorreo@ejemplo.com"
-                      className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg focus:border-gray-600 focus:outline-none"
-                      required
-                      disabled={isSubmitting}
-                    />
-                  </div>
+                <form onSubmit={handleSubmit} className="space-y-3">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="tucorreo@gmail.com"
+                    className="w-full bg-zinc-800 border-2 border-zinc-700 focus:border-accent-500 text-white placeholder-zinc-500 rounded-xl px-4 py-3 text-sm focus:outline-none transition-colors"
+                    required
+                    disabled={isSubmitting}
+                  />
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-gray-800 text-white py-3 rounded-lg font-bold hover:bg-gray-900 transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full bg-white text-zinc-900 py-3.5 rounded-xl font-black text-sm hover:bg-zinc-100 transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
-                    {isSubmitting ? (
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                    ) : null}
-                    {isSubmitting ? 'Suscribiendo...' : 'Obtener mi descuento'}
+                    {isSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
+                    {isSubmitting ? 'Un momento...' : 'OBTENER MI 10% OFF →'}
                   </button>
 
                   <button
                     type="button"
                     onClick={handleClose}
-                    className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+                    className="w-full text-xs text-zinc-600 hover:text-zinc-400 transition-colors py-1"
                   >
                     No gracias, prefiero pagar precio completo
                   </button>
                 </form>
-
-                <p className="text-xs text-gray-500">
-                  Podrás desuscribirte en cualquier momento
-                </p>
               </div>
             </div>
           </motion.div>

@@ -23,6 +23,7 @@ import {
 } from 'lucide-react'
 import { useCart } from '@/lib/context/CartContext'
 import { useAuth } from '@/lib/context/AuthContext'
+import { useNewsletter } from '@/hooks/useNewsletter'
 import { trackBeginCheckout, trackPurchase } from '@/lib/analytics'
 import { motion, AnimatePresence } from 'motion/react'
 import Image from 'next/image'
@@ -69,6 +70,7 @@ type ReceiptUploadState = 'idle' | 'uploading' | 'success' | 'error'
 export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   const { cart, total, clearCart } = useCart()
   const { user, isLoggedIn, customerName, signInWithGoogle } = useAuth()
+  const { isSubscribed, markAsSubscribed } = useNewsletter()
   const [step, setStep] = useState<Step>('form')
   const [orderId, setOrderId] = useState('')
   const [isProcessing, setIsProcessing] = useState(false)
@@ -713,6 +715,18 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
         }).catch((err) => console.error('[send-email] fetch error:', err))
       }
 
+      // Fire-and-forget: newsletter subscription
+      if (formData.marketingConsent && formData.customerData.email.trim()) {
+        fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: formData.customerData.email.trim(), source: 'checkout' }),
+        }).catch((err) => console.error('[subscribe] fetch error:', err))
+
+        // Mark global state
+        markAsSubscribed(formData.customerData.email.trim())
+      }
+
       // Reserve stock
       fetch('/api/reserve-order', {
         method: 'POST',
@@ -974,6 +988,29 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             <p className="mt-1 text-xs text-red-500">{emailError}</p>
                           )}
                         </div>
+
+                        {/* Marketing Consent Checkbox */}
+                        {!isSubscribed && (
+                          <label className="flex items-start gap-3 cursor-pointer group mt-2 bg-gray-50 border-2 border-gray-100 rounded-lg p-3 hover:border-gray-200 transition-colors">
+                            <div className="relative flex items-center mt-0.5">
+                              <input
+                                type="checkbox"
+                                checked={marketingConsent}
+                                onChange={(e) => setMarketingConsent(e.target.checked)}
+                                className="peer appearance-none w-5 h-5 border-2 border-gray-300 rounded cursor-pointer checked:bg-gray-900 checked:border-gray-900 transition-colors"
+                              />
+                              <CheckCircle className="absolute inset-0 w-5 h-5 text-white opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" />
+                            </div>
+                            <div className="flex-1">
+                              <p className="text-sm font-semibold text-gray-800">
+                                Quiero recibir ofertas exclusivas
+                              </p>
+                              <p className="text-xs text-gray-500 mt-0.5">
+                                Desbloquea <span className="text-accent-600 font-bold">10% OFF</span> en tu próxima compra si te unes al newsletter.
+                              </p>
+                            </div>
+                          </label>
+                        )}
 
                         {/* ── Preferencias de notificación ── */}
                         <div className="bg-gray-900 border border-gray-700 rounded-xl p-4 space-y-3">

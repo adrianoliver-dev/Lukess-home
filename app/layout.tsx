@@ -4,6 +4,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { FooterNewsletter } from "@/components/marketing/FooterNewsletter";
 import { CartProvider } from "@/lib/context/CartContext";
 import { WishlistProvider } from "@/lib/context/WishlistContext";
 import { AuthProvider } from "@/lib/context/AuthContext";
@@ -124,6 +125,7 @@ export default function RootLayout({
               </a>
               <Navbar />
               <main role="main">{children}</main>
+              <FooterNewsletter />
               <Footer />
               <Toaster
                 position="bottom-right"
