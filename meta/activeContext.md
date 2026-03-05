@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 17-B-2
-- **Block Name:** Store Pickup Hours Validation & Newsletter Color Polish
+- **Block Number:** 17-A-3.1
+- **Block Name:** Dual Payment Method for Store Pickup
 - **Status:** ✅ DONE
 - **Started:** 2026-03-05
 - **Completed:** 2026-03-05
@@ -14,18 +14,16 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 17-B-2
-- **Block Name:** Store Pickup Hours Validation & Newsletter Color Polish
-- **Commit Landing:** pending
+- **Block Number:** 17-A-3.1
+- **Block Name:** Dual Payment Method for Store Pickup
+- **Commit Landing:** 48dd518
 
 ### Files Changed
-- `lib/utils/business-hours.ts` (NEW — utility to check store availability and calculate nextOpenTime)
-- `components/cart/CheckoutModal.tsx` (MODIFIED — integrated store status to warn about out-of-hours pickup & delivery)
-- `components/marketing/FooterNewsletter.tsx` (MODIFIED — replaced text gradient with solid green on 10% OFF text and then to accent-500)
-- `meta/activeContext.md` (MODIFIED)
+- `components/cart/CheckoutModal.tsx` (MODIFIED — extended PaymentMethod type, added formData.selectedPayment, payment selector UI, cash_on_pickup branch handler, 48h reservation success banner, branched WhatsApp CTAs)
+- `app/api/checkout/route.ts` (MODIFIED — accepts payment_method from body, sets status to pending_payment for cash_on_pickup)
 
 ### Database Changes
-- None
+- `orders` table: added column `payment_method TEXT DEFAULT 'qr' CHECK (payment_method IN ('qr', 'cash_on_pickup'))` via migration `add_payment_method_to_orders`
 
 ### Build Verification
 - TypeScript strict check passed (exit code 0)
