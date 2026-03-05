@@ -6,7 +6,7 @@
 
 ## CURRENT BLOCK
 - **Block Number:** 17-B-2
-- **Block Name:** Newsletter Visual Polish
+- **Block Name:** Store Pickup Hours Validation & Newsletter Color Polish
 - **Status:** ✅ DONE
 - **Started:** 2026-03-05
 - **Completed:** 2026-03-05
@@ -15,11 +15,13 @@
 
 ## LAST COMPLETED BLOCK
 - **Block Number:** 17-B-2
-- **Block Name:** Newsletter Visual Polish
-- **Commit Landing:** e24dfe3
+- **Block Name:** Store Pickup Hours Validation & Newsletter Color Polish
+- **Commit Landing:** pending
 
 ### Files Changed
-- `components/marketing/FooterNewsletter.tsx` (MODIFIED — replaced text gradient with solid green on 10% OFF text)
+- `lib/utils/business-hours.ts` (NEW — utility to check store availability and calculate nextOpenTime)
+- `components/cart/CheckoutModal.tsx` (MODIFIED — integrated store status to warn about out-of-hours pickup & delivery)
+- `components/marketing/FooterNewsletter.tsx` (MODIFIED — replaced text gradient with solid green on 10% OFF text and then to accent-500)
 - `meta/activeContext.md` (MODIFIED)
 
 ### Database Changes

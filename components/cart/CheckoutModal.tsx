@@ -40,6 +40,7 @@ import {
 } from '@/lib/utils/shipping'
 import { buildWhatsAppUrl, WHATSAPP_NUMBER } from '@/lib/utils/whatsapp'
 import { supabase } from '@/lib/supabase/client'
+import { isStoreOpen } from '@/lib/utils/business-hours'
 
 const DeliveryMapPicker = dynamic(
   () => import('@/components/cart/DeliveryMapPicker'),
@@ -132,6 +133,15 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   const [pickupLocation, setPickupLocation] = useState('')
   const [shippingAddressError, setShippingAddressError] = useState('')
   const [pickupLocationError, setPickupLocationError] = useState('')
+
+  // Store Hours status
+  const [storeStatus, setStoreStatus] = useState<{ open: boolean; message: string; nextOpenTime?: string } | null>(null)
+
+  useEffect(() => {
+    if (isOpen) {
+      setStoreStatus(isStoreOpen())
+    }
+  }, [isOpen, deliveryMethod])
 
   // Location state
   const [locationState, setLocationState] = useState<LocationState>('initial')
@@ -1514,6 +1524,22 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                               )}
                             </div>
 
+                            {/* Store closed notice for delivery */}
+                            {storeStatus && !storeStatus.open && (
+                              <div className="flex items-start gap-2.5 bg-blue-50 border border-blue-200 rounded-xl px-3 py-2.5 mb-2">
+                                <span className="text-base flex-shrink-0 mt-0.5">ℹ️</span>
+                                <div>
+                                  <p className="text-xs font-semibold text-blue-700 mb-0.5">
+                                    Pedido fuera de horario
+                                  </p>
+                                  <p className="text-xs text-blue-600 leading-relaxed">
+                                    Lo procesaremos cuando abramos: <strong>{storeStatus.nextOpenTime}</strong>.<br />
+                                    Los envíos se coordinan en horario de atención.
+                                  </p>
+                                </div>
+                              </div>
+                            )}
+
                             {/* Coordination notice */}
                             <div className="flex items-start gap-2.5 bg-blue-50 border border-blue-200 rounded-xl px-3 py-2.5">
                               <span className="text-base flex-shrink-0 mt-0.5">ℹ️</span>
@@ -1543,6 +1569,16 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
                             {pickupLocationError && (
                               <p className="text-xs text-red-500 mb-1">{pickupLocationError}</p>
+                            )}
+
+                            {storeStatus && !storeStatus.open && (
+                              <div className="bg-amber-50 border border-amber-200 text-amber-700 rounded-xl p-3 text-xs mb-2 mt-1">
+                                <p className="font-bold">⏰ Fuera de horario de atención</p>
+                                <p className="mt-1">
+                                  Tu pedido será procesado cuando abramos: <strong>{storeStatus.nextOpenTime}</strong><br />
+                                  Lun–Sáb 8AM–10PM · Dom 9AM–9PM
+                                </p>
+                              </div>
                             )}
 
                             {PICKUP_LOCATIONS.map((loc) => (
