@@ -80,6 +80,7 @@ interface Order {
   shipping_address: string | null
   maps_link: string | null
   pickup_location: string | null
+  payment_method: 'qr' | 'cash_on_pickup' | null
   order_items?: OrderItem[]
 }
 
@@ -95,6 +96,7 @@ const ORDER_SELECT = `
   shipping_address,
   maps_link,
   pickup_location,
+  payment_method,
   order_items (
     id,
     product_id,
@@ -360,6 +362,13 @@ function OrderCard({ order }: { order: Order }) {
                 <p className="text-sm text-gray-700">
                   {PICKUP_LOCATIONS.find(p => p.id === order.pickup_location)?.name || order.pickup_location}
                 </p>
+                {/* Payment method label for pickup orders */}
+                <span className={`inline-flex items-center gap-1 mt-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold ${order.payment_method === 'cash_on_pickup'
+                    ? 'bg-amber-100 text-amber-700'
+                    : 'bg-blue-50 text-blue-700'
+                  }`}>
+                  {order.payment_method === 'cash_on_pickup' ? '🏪 Pago en puesto' : '📱 Pago online (QR)'}
+                </span>
                 {PICKUP_LOCATIONS.find(p => p.id === order.pickup_location) && (
                   <a
                     href={PICKUP_LOCATIONS.find(p => p.id === order.pickup_location)!.mapsUrl}

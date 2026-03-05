@@ -1752,8 +1752,8 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         {deliveryMethod === 'pickup' ? (
                           <div className="grid grid-cols-1 gap-2">
                             {[
-                              { value: 'qr' as PaymentMethod, icon: '📱', label: 'Ya pagué por QR', sub: 'Pago online anticipado' },
-                              { value: 'cash_on_pickup' as PaymentMethod, icon: '💵', label: 'Pagaré al recoger', sub: 'Efectivo al retirar en el puesto' },
+                              { value: 'qr' as PaymentMethod, icon: '📱', label: 'Pagaré por QR', sub: 'Pago online antes de recoger' },
+                              { value: 'cash_on_pickup' as PaymentMethod, icon: '🏪', label: 'Pagaré en el puesto', sub: 'Efectivo, QR o tarjeta al recoger' },
                             ].map((opt) => (
                               <button
                                 key={opt.value}
@@ -1779,8 +1779,8 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                           <div className="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-xl p-3">
                             <span className="text-2xl">📱</span>
                             <div>
-                              <p className="font-semibold text-sm text-gray-800">Pago por QR</p>
-                              <p className="text-xs text-gray-500">Escanea el QR antes de recibir tu pedido</p>
+                              <p className="font-semibold text-sm text-gray-800">Pago online</p>
+                              <p className="text-xs text-gray-500">Te mostraremos el QR para pagar</p>
                             </div>
                           </div>
                         )}
@@ -2221,7 +2221,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             durante las próximas 48 horas. Pasado ese tiempo, la reserva se cancelará.
                           </p>
                           <p className="text-xs font-semibold text-amber-800 pt-1">
-                            💵 Recuerda traer efectivo para pagar al recoger.
+                            💳 Pago en el puesto: efectivo, QR o tarjeta.
                           </p>
                         </motion.div>
                       )}
