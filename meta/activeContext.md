@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 17-A-3.1
-- **Block Name:** Dual Payment Method for Store Pickup
+- **Block Number:** 17-A-3.1 (FIX)
+- **Block Name:** Payment Copy Polish & Order Labels
 - **Status:** ✅ DONE
 - **Started:** 2026-03-05
 - **Completed:** 2026-03-05
@@ -14,16 +14,13 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 17-A-3.1
-- **Block Name:** Dual Payment Method for Store Pickup
-- **Commit Landing:** 48dd518
+- **Block Number:** 17-A-3.1 (FIX)
+- **Block Name:** Payment Copy Polish & Order Labels
+- **Commit Landing:** b62f1ca
 
 ### Files Changed
-- `components/cart/CheckoutModal.tsx` (MODIFIED — extended PaymentMethod type, added formData.selectedPayment, payment selector UI, cash_on_pickup branch handler, 48h reservation success banner, branched WhatsApp CTAs)
-- `app/api/checkout/route.ts` (MODIFIED — accepts payment_method from body, sets status to pending_payment for cash_on_pickup)
-
-### Database Changes
-- `orders` table: added column `payment_method TEXT DEFAULT 'qr' CHECK (payment_method IN ('qr', 'cash_on_pickup'))` via migration `add_payment_method_to_orders`
+- `components/cart/CheckoutModal.tsx` (MODIFIED — relabeled payment options, updated delivery info subtitle, updated reservation banner wording)
+- `app/mis-pedidos/page.tsx` (MODIFIED — added payment_method to Order interface + ORDER_SELECT, added pickup payment label badge)
 
 ### Build Verification
 - TypeScript strict check passed (exit code 0)
