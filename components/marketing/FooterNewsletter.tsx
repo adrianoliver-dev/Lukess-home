@@ -73,7 +73,7 @@ export function FooterNewsletter() {
                             </div>
                             <h2 className="text-3xl md:text-4xl font-black text-gray-900 leading-tight tracking-tight">
                                 Desbloquea{' '}
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-600 to-emerald-500">
+                                <span className="text-accent-600 font-black">
                                     10% OFF
                                 </span>
                                 <br />

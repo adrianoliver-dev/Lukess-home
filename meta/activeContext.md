@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 17-A-1
-- **Block Name:** Resend Debugging & Welcome Email Architecture Cleanup
+- **Block Number:** 17-B-2
+- **Block Name:** Newsletter Visual Polish
 - **Status:** ✅ DONE
 - **Started:** 2026-03-05
 - **Completed:** 2026-03-05
@@ -14,16 +14,13 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 17-A-1
-- **Block Name:** Resend Debugging & Welcome Email Architecture Cleanup
+- **Block Number:** 17-B-2
+- **Block Name:** Newsletter Visual Polish
 - **Commit Landing:** pending
 
 ### Files Changed
-- `app/api/send-email/route.ts` (MODIFIED — removed hardcoded recipient lock, added sandbox domain error trapping)
-- `app/api/subscribe/route.ts` (MODIFIED — removed non-fatal console log clutter)
-- `components/marketing/NewsletterPopup.tsx` (MODIFIED — fixed `framer-motion` import to `motion/react`)
-- `components/emails/WelcomeNewsletterEmail.tsx` (DELETED — dead code)
-- `meta/activeContext.md` (MODIFIED — block marked as completed)
+- `components/marketing/FooterNewsletter.tsx` (MODIFIED — replaced text gradient with solid green on 10% OFF text)
+- `meta/activeContext.md` (MODIFIED)
 
 ### Database Changes
 - None
@@ -163,6 +160,7 @@
 | 16-C.a.C | Fix Gallery + Image Centering + Admin Hero Label | ✅ DONE | 2026-03-04 | 9d185b9 |
 | 16-C.a.D | Fix Gallery Images Field Mapping | ✅ DONE | 2026-03-04 | 8650297 |
 | HOTFIX | Remove duplicate hero image in product gallery | ✅ DONE | 2026-03-04 | 115d769 |
-| 17-A-1 | Resend Debugging & Welcome Email Cleanup | ✅ DONE | 2026-03-05 | pending |
+| 17-A-1 | Resend Debugging & Welcome Email Cleanup | ✅ DONE | 2026-03-05 | 016f898 |
+| 17-A-2 | UI Newsletter "Nike-Style" & Subscription State Sync | ✅ DONE | 2026-03-05 | 29d15d5 |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |
