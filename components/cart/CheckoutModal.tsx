@@ -63,7 +63,7 @@ interface CheckoutModalProps {
 }
 
 type Step = 'form' | 'qr' | 'success'
-type PaymentMethod = 'qr' | 'libelula'
+type PaymentMethod = 'qr' | 'libelula' | 'cash_on_pickup'
 type DeliveryMethod = 'delivery' | 'pickup'
 type LocationState = 'initial' | 'gps_loading' | 'gps_denied' | 'map_open' | 'confirmed'
 type ReceiptUploadState = 'idle' | 'uploading' | 'success' | 'error'
@@ -106,6 +106,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   const [formData, setFormData] = useState<{
     customerData: typeof customerData
     deliveryMethod: DeliveryMethod
+    selectedPayment: PaymentMethod
     shippingAddress: string
     shippingReference: string
     pickupLocation: string
@@ -575,9 +576,10 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
     setOrderId(tempOrderId)
 
     // Store form data for later
-    setFormData({
+    const snapshotFormData = {
       customerData: { ...customerData },
       deliveryMethod,
+      selectedPayment,
       shippingAddress,
       shippingReference,
       pickupLocation,
@@ -596,10 +598,95 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
       notifyByEmail,
       notifyByWhatsapp,
       marketingConsent,
-    })
+    }
+    setFormData(snapshotFormData)
 
-    setStep('qr')
-    scrollModalToTop()
+    if (selectedPayment === 'cash_on_pickup') {
+      // Skip QR screen — create order immediately then go to success
+      await handleCashOnPickupCheckout(snapshotFormData)
+    } else {
+      setStep('qr')
+      scrollModalToTop()
+    }
+  }
+
+  const handleCashOnPickupCheckout = async (fd: NonNullable<typeof formData>) => {
+    setIsProcessing(true)
+    const tempOrderId = crypto.randomUUID()
+    setOrderId(tempOrderId)
+
+    try {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          website: fd.customerData.website,
+          user_id: user?.id ?? undefined,
+          customer_name: fd.customerData.name,
+          customer_phone: fd.customerData.phone.replace(/\s/g, ''),
+          customer_email: fd.customerData.email,
+          marketing_consent: fd.marketingConsent,
+          notify_email: fd.notifyByEmail,
+          notify_whatsapp: fd.notifyByWhatsapp,
+          subtotal: total,
+          shipping_cost: fd.shippingCost,
+          total: fd.orderTotal,
+          delivery_method: fd.deliveryMethod,
+          shipping_address: null,
+          shipping_reference: null,
+          pickup_location: fd.pickupLocation,
+          gps_lat: null,
+          gps_lng: null,
+          gps_distance_km: null,
+          maps_link: null,
+          recipient_name: null,
+          recipient_phone: null,
+          delivery_instructions: null,
+          payment_method: 'cash_on_pickup',
+          discount_amount: fd.discountValidation?.valid ? fd.appliedDiscountAmount : 0,
+          discount_code_id: fd.discountValidation?.valid ? fd.discountValidation.discount_code_id : null,
+          discount_code: fd.discountValidation?.valid ? fd.discountCode.toUpperCase() : null,
+          items: cart.map((item) => ({
+            product_id: item.product.id,
+            quantity: item.quantity,
+            unit_price: item.product.price,
+            size: item.size || null,
+            color: item.color || null,
+            subtotal: item.product.price * item.quantity,
+          })),
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        toast.error(data.error || 'Error al crear la orden', { position: 'bottom-center' })
+        setIsProcessing(false)
+        return
+      }
+
+      const { orderId: realOrderId } = data
+      setOrderId(realOrderId)
+      setStep('success')
+      scrollModalToTop()
+      setShowConfetti(true)
+
+      trackPurchase({
+        orderId: realOrderId,
+        total: fd.orderTotal,
+        items: cart.map((item) => ({
+          id: item.product.id,
+          name: item.product.name,
+          price: item.product.price,
+          quantity: item.quantity,
+          category: item.product.categories?.name,
+        })),
+      })
+    } catch {
+      toast.error('Error al procesar el pedido. Intenta de nuevo.', { position: 'bottom-center' })
+    } finally {
+      setIsProcessing(false)
+    }
   }
 
   const handlePaymentConfirmed = async () => {
@@ -638,6 +725,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
           recipient_name: formData.deliveryMethod === 'delivery' ? formData.recipientName.trim() : null,
           recipient_phone: formData.deliveryMethod === 'delivery' ? formData.recipientPhone.replace(/\s/g, '') : null,
           delivery_instructions: formData.deliveryMethod === 'delivery' ? formData.deliveryInstructions.trim() || null : null,
+          payment_method: formData.selectedPayment === 'cash_on_pickup' ? 'cash_on_pickup' : 'qr',
           discount_amount: formData.discountValidation?.valid ? formData.appliedDiscountAmount : 0,
           discount_code_id: formData.discountValidation?.valid ? formData.discountValidation.discount_code_id : null,
           discount_code: formData.discountValidation?.valid ? formData.discountCode.toUpperCase() : null,
@@ -1655,6 +1743,49 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         )}
                       </div>
 
+                      {/* ── Método de Pago ── */}
+                      <div className="space-y-3">
+                        <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+                          ¿Cómo vas a pagar?
+                        </h3>
+
+                        {deliveryMethod === 'pickup' ? (
+                          <div className="grid grid-cols-1 gap-2">
+                            {[
+                              { value: 'qr' as PaymentMethod, icon: '📱', label: 'Ya pagué por QR', sub: 'Pago online anticipado' },
+                              { value: 'cash_on_pickup' as PaymentMethod, icon: '💵', label: 'Pagaré al recoger', sub: 'Efectivo al retirar en el puesto' },
+                            ].map((opt) => (
+                              <button
+                                key={opt.value}
+                                type="button"
+                                onClick={() => setSelectedPayment(opt.value)}
+                                className={`w-full flex items-center gap-3 p-3 rounded-xl border-2 text-left transition-all ${selectedPayment === opt.value
+                                  ? 'border-gray-900 bg-gray-50'
+                                  : 'border-gray-200 hover:border-gray-300'
+                                  }`}
+                              >
+                                <span className="text-2xl flex-shrink-0">{opt.icon}</span>
+                                <div>
+                                  <p className="font-semibold text-sm text-gray-800">{opt.label}</p>
+                                  <p className="text-xs text-gray-500">{opt.sub}</p>
+                                </div>
+                                {selectedPayment === opt.value && (
+                                  <CheckCircle className="w-4 h-4 text-gray-900 ml-auto flex-shrink-0" />
+                                )}
+                              </button>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-xl p-3">
+                            <span className="text-2xl">📱</span>
+                            <div>
+                              <p className="font-semibold text-sm text-gray-800">Pago por QR</p>
+                              <p className="text-xs text-gray-500">Escanea el QR antes de recibir tu pedido</p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
                       {/* ── Order Summary ── */}
                       <div className="bg-gray-100 p-4 rounded-lg border-2 border-gray-200 space-y-2">
                         <div className="flex items-center justify-between text-sm text-gray-600">
@@ -2073,6 +2204,28 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         </motion.div>
                       )}
 
+                      {/* 48h reservation banner for cash on pickup */}
+                      {formData?.selectedPayment === 'cash_on_pickup' && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.57 }}
+                          className="bg-amber-50 border-2 border-amber-200 rounded-xl p-4 text-left space-y-1"
+                        >
+                          <p className="text-sm font-bold text-amber-800">
+                            ⏰ Reserva activa por 48 horas
+                          </p>
+                          <p className="text-xs text-amber-700 leading-relaxed">
+                            Tu pedido estará disponible en{' '}
+                            <strong>{selectedPickup?.name ?? pickupLocation}</strong>{' '}
+                            durante las próximas 48 horas. Pasado ese tiempo, la reserva se cancelará.
+                          </p>
+                          <p className="text-xs font-semibold text-amber-800 pt-1">
+                            💵 Recuerda traer efectivo para pagar al recoger.
+                          </p>
+                        </motion.div>
+                      )}
+
                       {/* WhatsApp — Primary CTA */}
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -2082,33 +2235,40 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                       >
                         {deliveryMethod === 'pickup' ? (
                           <>
-                            <p className="text-sm text-gray-600 text-center mb-4">
-                              ¿Cómo prefieres pagar tu pedido?
-                            </p>
-
-                            {/* Option 1: Already paid online */}
-                            <a
-                              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}${receiptUploadState === 'success' ? encodeURIComponent('\n📎 Ya subí mi comprobante de pago en el sistema.') : ''}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center justify-center gap-2 w-full bg-green-600 hover:bg-green-700 text-white font-bold uppercase py-4 rounded-lg transition-all shadow-sm"
-                            >
-                              ✅ Ya Pagué Online (con QR)
-                            </a>
-
-                            {/* Option 2: Will pay in store */}
-                            <a
-                              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage.replace(encodeURIComponent('Ya realicé el pago por QR. ¿Pueden confirmar? 🙏'), encodeURIComponent('💵 Pagaré al recoger en el puesto. Mi reserva dura 48 horas. 🙏'))}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center justify-center gap-2 w-full bg-gray-900 hover:bg-black text-white font-bold uppercase py-4 rounded-lg transition-all shadow-sm"
-                            >
-                              💵 Pagaré en el Puesto
-                            </a>
-
-                            <p className="text-xs text-gray-500 text-center mt-2 leading-relaxed">
-                              ⏱️ Recuerda: Tu reserva dura <strong>48 horas</strong>. Pasado ese tiempo, se cancelará automáticamente.
-                            </p>
+                            {formData?.selectedPayment === 'cash_on_pickup' ? (
+                              <>
+                                <p className="text-sm text-gray-600 text-center">
+                                  Avísanos por WhatsApp para confirmar tu reserva.
+                                </p>
+                                <a
+                                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hola! Hice el pedido #${orderId.slice(0, 8).toUpperCase()} para recoger en tienda. Pagaré al recoger en efectivo. ¿Pueden confirmar? 🙏`)}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex items-center justify-center gap-2 w-full bg-gray-900 hover:bg-black text-white font-bold uppercase py-4 rounded-lg transition-all shadow-sm"
+                                >
+                                  <MessageCircle className="w-5 h-5" />
+                                  CONFIRMAR RESERVA POR WHATSAPP
+                                </a>
+                                <p className="text-xs text-gray-500 text-center leading-relaxed">
+                                  ⏱️ Tu reserva dura <strong>48 horas</strong>. Pasado ese tiempo, se cancelará automáticamente.
+                                </p>
+                              </>
+                            ) : (
+                              <>
+                                <p className="text-sm text-gray-600 text-center">
+                                  Envíanos el comprobante por WhatsApp para confirmar.
+                                </p>
+                                <a
+                                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}${receiptUploadState === 'success' ? encodeURIComponent('\n📎 Ya subí mi comprobante de pago en el sistema.') : ''}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex items-center justify-center gap-2 w-full bg-green-600 hover:bg-green-700 text-white font-bold uppercase py-4 rounded-lg transition-all shadow-sm"
+                                >
+                                  <MessageCircle className="w-5 h-5" />
+                                  CONFIRMAR PAGO POR WHATSAPP
+                                </a>
+                              </>
+                            )}
                           </>
                         ) : (
                           <>
