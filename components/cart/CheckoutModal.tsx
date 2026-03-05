@@ -1656,19 +1656,6 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         </div>
                       </div>
 
-                      <label className="flex items-start gap-3 cursor-pointer group">
-                        <div className="relative mt-0.5">
-                          <input
-                            type="checkbox"
-                            checked={marketingConsent}
-                            onChange={(e) => setMarketingConsent(e.target.checked)}
-                            className="w-4 h-4 accent-primary-600 cursor-pointer"
-                          />
-                        </div>
-                        <span className="text-xs text-gray-500 group-hover:text-gray-700 transition-colors leading-relaxed">
-                          Quiero recibir ofertas y promociones exclusivas por email
-                        </span>
-                      </label>
 
                       <button
                         type="submit"

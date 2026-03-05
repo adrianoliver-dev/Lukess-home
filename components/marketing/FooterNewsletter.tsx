@@ -44,21 +44,21 @@ export function FooterNewsletter() {
     }
 
     return (
-        <section className="bg-zinc-950 border-t border-zinc-800 py-16 px-4">
+        <section className="bg-gray-50 border-t border-gray-200 py-16 px-4">
             <div className="max-w-5xl mx-auto">
                 {isSubscribed ? (
                     /* ── Subscribed State ── */
                     <div className="flex flex-col items-center text-center gap-4">
-                        <div className="inline-flex items-center justify-center w-14 h-14 bg-green-500/10 rounded-full border border-green-500/30">
-                            <CheckCircle className="w-7 h-7 text-green-400" />
+                        <div className="inline-flex items-center justify-center w-14 h-14 bg-green-100 rounded-full border border-green-200">
+                            <CheckCircle className="w-7 h-7 text-green-600" />
                         </div>
                         <div>
-                            <p className="text-white text-xl font-bold tracking-tight">
+                            <p className="text-gray-900 text-xl font-bold tracking-tight">
                                 Ya eres parte del club.
                             </p>
-                            <p className="text-zinc-400 text-sm mt-1.5">
+                            <p className="text-gray-600 text-sm mt-1.5">
                                 Te enviamos promociones exclusivas a{' '}
-                                <span className="text-white font-semibold">{userEmail}</span>
+                                <span className="text-gray-900 font-semibold">{userEmail}</span>
                             </p>
                         </div>
                     </div>
@@ -67,21 +67,20 @@ export function FooterNewsletter() {
                     <div className="flex flex-col md:flex-row items-center justify-between gap-10">
                         {/* Left: copy */}
                         <div className="flex-1 text-center md:text-left">
-                            <div className="inline-flex items-center gap-2 bg-accent-500/15 border border-accent-500/30 text-accent-400 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
+                            <div className="inline-flex items-center gap-2 bg-accent-100 border border-accent-200 text-accent-700 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
                                 <Sparkles className="w-3.5 h-3.5" />
                                 Oferta exclusiva
                             </div>
-                            <h2 className="text-3xl md:text-4xl font-black text-white leading-tight tracking-tight">
+                            <h2 className="text-3xl md:text-4xl font-black text-gray-900 leading-tight tracking-tight">
                                 Desbloquea{' '}
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-400 to-emerald-400">
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-600 to-emerald-500">
                                     10% OFF
                                 </span>
                                 <br />
                                 en tu primera compra.
                             </h2>
-                            <p className="text-zinc-400 mt-3 text-base max-w-sm">
-                                Únete a miles de clientes que reciben las mejores ofertas antes que nadie.
-                                Sin spam. Cancela cuando quieras.
+                            <p className="text-gray-600 mt-3 text-base max-w-sm">
+                                Sé el primero en enterarte de nuevas colecciones y ofertas especiales. Sin spam, cancela cuando quieras.
                             </p>
                         </div>
 
@@ -96,12 +95,12 @@ export function FooterNewsletter() {
                                         placeholder="tucorreo@gmail.com"
                                         required
                                         disabled={isSubmitting}
-                                        className="flex-1 bg-zinc-800 border-2 border-zinc-700 hover:border-zinc-600 focus:border-accent-500 text-white placeholder-zinc-500 rounded-xl px-4 py-3.5 text-sm focus:outline-none transition-colors disabled:opacity-60"
+                                        className="flex-1 bg-white border border-gray-300 hover:border-gray-400 focus:border-accent-500 text-gray-900 placeholder-gray-400 rounded-xl px-4 py-3.5 text-sm focus:outline-none transition-colors disabled:opacity-60 shadow-sm"
                                     />
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="bg-white hover:bg-zinc-100 text-zinc-900 font-bold px-5 py-3.5 rounded-xl text-sm transition-all flex items-center gap-2 whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
+                                        className="bg-gray-900 hover:bg-black text-white font-bold px-5 py-3.5 rounded-xl text-sm transition-all flex items-center gap-2 whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
                                     >
                                         {isSubmitting ? (
                                             <Loader2 className="w-4 h-4 animate-spin" />
@@ -110,23 +109,10 @@ export function FooterNewsletter() {
                                         )}
                                     </button>
                                 </div>
-                                <p className="text-xs text-zinc-600 text-center md:text-left">
+                                <p className="text-xs text-gray-500 text-center md:text-left">
                                     Recibirás tu código de descuento por email. Sin compromiso.
                                 </p>
                             </form>
-
-                            <div className="flex items-center gap-6 mt-5 justify-center md:justify-start">
-                                {[
-                                    { value: '10%', label: 'Descuento inmediato' },
-                                    { value: '+500', label: 'Suscriptores' },
-                                    { value: '0', label: 'Spam' },
-                                ].map(({ value, label }) => (
-                                    <div key={label} className="text-center">
-                                        <p className="text-white font-black text-lg leading-none">{value}</p>
-                                        <p className="text-zinc-500 text-xs mt-1">{label}</p>
-                                    </div>
-                                ))}
-                            </div>
                         </div>
                     </div>
                 )}
