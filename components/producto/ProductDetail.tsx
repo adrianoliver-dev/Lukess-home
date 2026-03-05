@@ -59,7 +59,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
   const normalizeText = (text: string) =>
     text.toLowerCase()
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '') // Remove accents
+      .replace(/[\u0300-\u036f]/g, '')
       .trim()
 
   const normalizedCategory = normalizeText(categoryName)
@@ -71,7 +71,6 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
   const isOutOfStock = stock === 0
   const discount = getDiscount(product)
 
-  // Tallas reales: excluir vacíos y 'Unitalla' (accesorio sin talla real)
   const INTERNAL_SIZES = ['Unitalla', 'Única', 'Unico']
   const validSizes = (product.sizes ?? []).filter(
     (s: string) => s && s.trim() !== '' && !INTERNAL_SIZES.includes(s)
@@ -114,7 +113,6 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
       return
     }
 
-    // Para accesorios (needsSize=false), no pasar size al carrito
     const sizeForCart = needsSize ? selectedSize : undefined
     addToCart(product, quantity, sizeForCart, selectedColor || undefined)
     toast.success(`${quantity}x ${product.name} agregado al carrito`)
@@ -167,6 +165,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
               <ProductGallery
                 images={(() => {
                   const hero = product.image_url || '/placeholder.png'
+                  // Use product.images — actual DB column name (NOT product.gallery)
                   const extra = (product.images || []).filter(Boolean)
                   return [hero, ...extra]
                 })()}
@@ -200,7 +199,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                 </p>
               )}
 
-              {/* Price — SCOPE 1 */}
+              {/* Price */}
               <div className="flex items-baseline gap-3">
                 {hasDiscount(product) ? (
                   <>
@@ -221,7 +220,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                 )}
               </div>
 
-              {/* Stock — solo visible si agotado */}
+              {/* Stock */}
               {stock === 0 && (
                 <div className="flex items-center gap-2">
                   <Package className="w-4 h-4 text-gray-400" />
@@ -241,7 +240,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
               {/* Divider */}
               <hr className="border-gray-200" />
 
-              {/* Sizes — SCOPE 2 */}
+              {/* Sizes */}
               {(needsSize || shouldShowSizeGuide) && (
                 <div>
                   <div className="flex items-center justify-between mb-3">
@@ -322,7 +321,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                 </div>
               )}
 
-              {/* Quantity — SCOPE 2 */}
+              {/* Quantity */}
               {!isOutOfStock && !selectedSizeAgotada && (
                 <div>
                   <label className="block text-sm font-semibold text-gray-900 uppercase tracking-wider mb-3">
@@ -350,7 +349,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                 </div>
               )}
 
-              {/* Action Buttons — SCOPE 3 */}
+              {/* Action Buttons */}
               <div className="flex flex-col gap-3 pt-2">
                 <button
                   onClick={handleAddToCart}
@@ -372,7 +371,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                 </button>
               </div>
 
-              {/* Trust Badges — SCOPE 4 */}
+              {/* Trust Badges */}
               <div className="space-y-3 pt-2">
                 <div className="flex items-center gap-3 text-sm text-gray-600">
                   <span className="text-base">🚚</span>
@@ -407,10 +406,10 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                     >
                       <div className="relative aspect-[3/4] bg-gray-100 overflow-hidden mb-3">
                         <Image
-                          src={p.image_url || '/placeholder.png'}
+                          src={p.thumbnail_url || p.image_url || '/placeholder.png'}
                           alt={p.name}
                           fill
-                          className="object-contain group-hover:scale-105 transition-transform duration-500"
+                          className="object-contain object-center group-hover:scale-105 transition-transform duration-500"
                         />
                         {relatedStock === 0 && (
                           <div className="absolute top-2 left-2 bg-gray-900 text-white px-2 py-1 text-xs font-semibold">
@@ -466,7 +465,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
           if (cat.includes('short')) return 'shorts'
           if (cat.includes('cinturon') || cat.includes('belt')) return 'cinturones'
           if (cat.includes('gorra') || cat.includes('sombrero')) return 'gorras'
-          return 'superior' // camisas, polos, blazers, por defecto
+          return 'superior'
         })()}
       />
     </>
