@@ -165,7 +165,8 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
               <ProductGallery
                 images={(() => {
                   const hero = product.image_url || '/placeholder.png'
-                  const extra = (product.gallery || []).filter(Boolean)
+                  // Use product.images — actual DB column name (NOT product.gallery)
+                  const extra = (product.images || []).filter(Boolean)
                   return [hero, ...extra]
                 })()}
                 productName={product.name}
