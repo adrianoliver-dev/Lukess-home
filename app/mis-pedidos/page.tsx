@@ -166,6 +166,7 @@ function formatDate(dateString: string) {
 }
 
 function OrderCard({ order }: { order: Order }) {
+  console.log('[OrderCard] Rendering order:', order.id, 'items:', order.order_items?.length)
   const { addToCart } = useCart()
   const [isReordering, setIsReordering] = useState(false)
   const status = STATUS_CONFIG[order.status] ?? STATUS_CONFIG.pending
@@ -442,15 +443,22 @@ function GuestSearch() {
     setSearched(true)
     try {
       const supabase = createClient()
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('orders')
         .select(ORDER_SELECT)
         .eq('customer_email', email.trim().toLowerCase())
         .order('created_at', { ascending: false })
 
+      if (error) {
+        console.error('[handleSearch] Supabase error:', error)
+        setOrders([])
+        return
+      }
+
+      console.log('[handleSearch] Fetched orders:', data?.length ?? 0)
       setOrders((data as unknown as Order[]) ?? [])
     } catch (err) {
-      console.error('Error fetching orders:', err)
+      console.error('[handleSearch] Exception:', err)
       setOrders([])
     } finally {
       setIsLoading(false)
@@ -548,15 +556,28 @@ function AuthenticatedOrders({ email }: { email: string }) {
     const fetchOrders = async () => {
       try {
         const supabase = createClient()
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from('orders')
           .select(ORDER_SELECT)
           .eq('customer_email', email)
           .order('created_at', { ascending: false })
 
-        setOrders((data as unknown as Order[]) ?? [])
+        if (error) {
+          console.error('[fetchOrders] Supabase error:', error)
+          setOrders([])
+          return
+        }
+
+        if (!data) {
+          console.warn('[fetchOrders] No data returned')
+          setOrders([])
+          return
+        }
+
+        console.log('[fetchOrders] Fetched orders:', data.length)
+        setOrders(data as unknown as Order[])
       } catch (err) {
-        console.error('Error fetching orders:', err)
+        console.error('[fetchOrders] Exception:', err)
         setOrders([])
       } finally {
         setIsLoading(false)
