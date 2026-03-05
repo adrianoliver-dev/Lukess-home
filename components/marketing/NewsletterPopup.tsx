@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { X, Mail, Gift, Loader2 } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'motion/react'
 import toast from 'react-hot-toast'
 
 import { useAuth } from '@/lib/context/AuthContext'

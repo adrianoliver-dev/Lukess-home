@@ -1,27 +1,34 @@
 # activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-02-26
-**Updated By:** Antigravity Agent
+**Last Updated:** 2026-03-05
+**Updated By:** Adrian Oliver (Manual Update — Block 16-D-C)
+
+---
+
+## PROJECT PHASE
+**Phase 3: Pre-Documentation & Handover**
+**Status: FEATURE-COMPLETE — Production Ready**
+All development blocks completed. Awaiting client data validation (Aldrin) before Block 17 (final presentation documents).
 
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 9b-A
-- **Block Name:** Bugs + Fixes Urgentes — Parte A
-- **Status:** PENDING
-- **Started:** —
+- **Block Number:** 16-D-C
+- **Block Name:** Memory Bank + Rules Update
+- **Status:** IN PROGRESS
+- **Started:** 2026-03-05
 
 ---
 
 ## STACK
 | Layer | Version |
 |---|---|
-| Next.js | 16.1.6 (App Router only — never Pages Router) |
-| React | 19.2.x |
-| TypeScript | 5.9.x strict (no `any`, explicit return types) |
-| Tailwind CSS | v4.1.18 (config in `@theme` block in CSS, not tailwind.config.ts) |
+| Next.js | 15 (App Router only — never Pages Router) |
+| React | 19.x |
+| TypeScript | 5.x strict (no `any`, explicit return types) |
+| Tailwind CSS | v4 (config in `@theme` block in CSS, not tailwind.config.ts) |
 | Supabase SSR | 0.8.x |
-| motion | ^12.34.3 (package name: `motion`, NOT `framer-motion`) |
-| tailwindcss-motion | ^1.1.1 (CSS plugin, for micro-interaction utilities) |
+| motion | ^12.x (package name: `motion`, NOT `framer-motion`) |
+| tailwindcss-motion | ^1.x (CSS plugin, for micro-interaction utilities) |
 
 ---
 
@@ -35,10 +42,18 @@
 ---
 
 ## CRITICAL ENV VARS
-```
 NEXT_PUBLIC_WHATSAPP_NUMBER=72643753
-```
-> ⚠️ Was hardcoded as `76020369` in ~20 files. All references must use this env var.
+NEXT_PUBLIC_SITE_URL=https://lukess-home.vercel.app
+
+text
+> ⚠️ WhatsApp was hardcoded as `76020369` in ~20 files. All references now use the env var. NEVER hardcode the number again.
+
+---
+
+## CRITICAL RULES (LEARNED FROM BUGS)
+> ⛔ NEVER rename TypeScript interface properties that map directly to Supabase column names without a DB migration first. The DB column name is the source of truth at runtime. (`images` vs `gallery` bug — March 4, 2026)
+> ⛔ NEVER rewrite entire components in one prompt if the file is >300 lines. Use scoped edits.
+> ⛔ NEVER run DB column renames without updating `database.types.ts` first.
 
 ---
 
@@ -59,61 +74,42 @@ NEXT_PUBLIC_WHATSAPP_NUMBER=72643753
 ## DESIGN TOKEN — DO NOT DUPLICATE
 ```css
 --color-accent-500: #c89b6e;  /* único dorado — ya en globals.css */
-```
+OPEN BUGS (Post-Feature-Complete)
+ID	Description	Priority
+BUG-04	recipientName pre-fill only captures first character typed	🟡 MEDIUM
+BUG-05	No scrollTo({top:0}) when switching modal steps (form → qr → success)	🟡 MEDIUM
+BUG-06	"⚠️ Últimas X" badge may appear multiple times in ProductDetail	🟡 MEDIUM
+BUG-01	QR image overflows on screens < 360px	🟢 LOW
+LAST COMPLETED BLOCK
+Block: 16-H-fix — Gallery images vs gallery mapping fix
 
----
+Completed: 2026-03-05
 
-## OPEN BUGS
-| ID | Description | Priority |
-|---|---|---|
-| BUG-WA | ~20 files have hardcoded WhatsApp `76020369` — must use `NEXT_PUBLIC_WHATSAPP_NUMBER` | 🔴 CRITICAL |
-| BUG-07 | `CatalogoClient` — hash/searchParams useEffect causes hydration warning | 🔴 HIGH |
-| BUG-04 | `recipientName` pre-fill only captures first character typed | 🟡 MEDIUM |
-| BUG-05 | No `scrollTo({top:0})` when switching modal steps (form → qr → success) | 🟡 MEDIUM |
-| BUG-06 | "⚠️ Últimas X" badge appears 3× simultaneously in ProductDetail | 🟡 MEDIUM |
-| BUG-01 | QR image overflows on screens < 360px — needs `max-w-[280px]` in CheckoutModal | 🟢 LOW |
+Commit: 115d769 — fix: remove duplicate hero in gallery
 
----
-
-## LAST COMPLETED BLOCK
-- **Block:** Cleanup-01 — framer-motion removal + Memory Bank setup
-- **Completed:** 2026-02-26
-- **Files Changed:**
-  - `app/globals.css` — removed duplicate `@import "tailwindcss"`
-  - `components/layout/Navbar.tsx` — `framer-motion` → `motion/react`
-  - `components/home/UbicacionSection.tsx` — `framer-motion` → `motion/react`
-  - `components/home/TestimoniosSection.tsx` — `framer-motion` → `motion/react`
-  - `components/home/PuestosSection.tsx` — `framer-motion` → `motion/react`
-  - `components/home/HeroSection.tsx` — `framer-motion` → `motion/react`
-  - `components/home/CTAFinalSection.tsx` — `framer-motion` → `motion/react`
-  - `components/home/CatalogoSection.tsx` — `framer-motion` → `motion/react`
-  - `.context/activeContext.md` — created
-  - `.context/systemPatterns.md` — created
-  - `.agent/skills/startblock.md` — created
-  - `.agent/skills/qa.md` — created
-
----
-
-## NEXT BLOCK
-- **Block:** 9b-A
-- **Name:** Bugs + Fixes Urgentes — Parte A
-- **Scope:** WhatsApp centralization (`NEXT_PUBLIC_WHATSAPP_NUMBER` across 20 files) + BUG-07 (CatalogoClient hash/searchParams)
-- **Dependencies:** None
-
----
-
-## BLOCK HISTORY
-| Block | Name | Status | Date |
-|---|---|---|---|
-| Cleanup-01 | framer-motion removal + Memory Bank | ✅ DONE | 2026-02-26 |
-| 9b-A | Bugs + Fixes Urgentes A | ⬜ PENDING | — |
-| 9b-B | Bugs + Fixes Urgentes B | ⬜ PENDING | — |
-| 9c-A | Inventario: BD + formulario descuentos/is_new | ⬜ PENDING | — |
-| 9c-B | Inventario: Upload múltiples imágenes | ⬜ PENDING | — |
-| 9d-A | Landing: Badges + Galería múltiple | ⬜ PENDING | — |
-| 9d-B | Landing: Banner + Códigos descuento + Tallas | ⬜ PENDING | — |
-| 9e-A | Visual Polish: Footer + Navbar mobile | ⬜ PENDING | — |
-| 9e-B | Mobile-first general + Checkout mobile | ⬜ PENDING | — |
-| 9f | SEO completo | ⬜ PENDING | — |
-| 9g-A | Investigación dominio + branding | ⬜ PENDING | — |
-| 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — |
+BLOCK HISTORY
+Block	Name	Status	Date	Commit
+Block	Name	Status	Date	Commit
+Cleanup-01	framer-motion removal + Memory Bank setup	✅ DONE	2026-02-26	—
+9b-A	WhatsApp centralization (20 files → env var)	✅ DONE	2026-02-27	—
+9b-B	Bugs + Fixes Urgentes B	✅ DONE	2026-02-27	—
+9c-A	Discount codes system + is_new flag	✅ DONE	2026-02-28	630e701
+9d-A/B	Banner carousel + Dynamic Hero (desktop/mobile)	✅ DONE	2026-02-28	35af00c
+10-J	Order creation on payment confirm + order history	✅ DONE	2026-02-28	f7ea6c2
+10-K	Order history full info (shipping, location, timer)	✅ DONE	2026-02-28	f7ea6c2
+10-H	UX — QR download mobile + checkout autofill from last order	✅ DONE	2026-03-03	b8ff0da
+13-C/D/E	Discount consumption end-to-end (cart → order → history)	✅ DONE	2026-03-01	6e11a4d
+15-A	Vercel Web Analytics + GA4 custom events	✅ DONE	2026-03-01	83f1a91
+15-B	WhatsApp API — Backend trigger (checkout → WA notification)	✅ DONE	2026-03-01	1a92b56
+15-B-fix	WhatsApp deterministic policy + validation warnings	✅ DONE	2026-03-01	e7a4665
+16-A	Source cleanup (console.logs + dead code removal)	✅ DONE	2026-03-03	d0c7807
+16-B	Blog system — Markdown architecture + 5 SEO posts	✅ DONE	2026-03-02	b23f45e
+16-C	Footer overhaul — 15+ legal/info pages + Size Guide + FAQ	✅ DONE	2026-03-03	fd9162e
+16-D	Filter Wars — Dynamic filters, color swatches, RPC	✅ DONE	2026-03-03/04	0cb4d0b
+16-E	Analytics — Microsoft Clarity + Google Search Console	✅ DONE	2026-03-04	6a50fc9
+16-F	SEO — sitemap env var, GSC HTML verification, metadataBase	✅ DONE	2026-03-04	d2b7496
+16-G	Dynamic Hero Banner CMS (desktop/mobile from Supabase)	✅ DONE	2026-03-04	2d0198f
+16-H	Performance — Dual Image System, LCP 5.6s→2.5s, thumbnail_url	✅ DONE	2026-03-04	7f509a8
+16-H-fix	Gallery bug fix (images vs gallery, duplicate hero)	✅ DONE	2026-03-05	115d769
+16-D-C	Memory Bank + Rules Update (this block)	🔄 IN PROGRESS	2026-03-05	—
+17	Final Presentation Documents (Block Commercial)	⬜ PENDING	—	—

@@ -5,30 +5,28 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-C.a.D
-- **Block Name:** Fix Gallery Images Field Mapping
+- **Block Number:** 17-A-1
+- **Block Name:** Resend Debugging & Welcome Email Architecture Cleanup
 - **Status:** ✅ DONE
-- **Started:** 2026-03-04
-- **Completed:** 2026-03-04
+- **Started:** 2026-03-05
+- **Completed:** 2026-03-05
 
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 16-C.a.D
-- **Block Name:** Fix Gallery Images Field Mapping
-- **Commit Landing:** 8650297
+- **Block Number:** 17-A-1
+- **Block Name:** Resend Debugging & Welcome Email Architecture Cleanup
+- **Commit Landing:** pending
 
 ### Files Changed
-- `lib/types.ts` (MODIFIED — renamed gallery to images)
-- `components/producto/ProductDetail.tsx` (MODIFIED — mapped product.images instead of product.gallery)
-- `components/catalogo/QuickViewModal.tsx` (MODIFIED — mapped product.images instead of product.gallery)
-- `components/home/CatalogoSection.tsx` (MODIFIED — images prop now correctly points to product.images)
-- `app/producto/[id]/page.tsx` (MODIFIED — changed select query and usage to images)
-- `meta/activeContext.md`
+- `app/api/send-email/route.ts` (MODIFIED — removed hardcoded recipient lock, added sandbox domain error trapping)
+- `app/api/subscribe/route.ts` (MODIFIED — removed non-fatal console log clutter)
+- `components/marketing/NewsletterPopup.tsx` (MODIFIED — fixed `framer-motion` import to `motion/react`)
+- `components/emails/WelcomeNewsletterEmail.tsx` (DELETED — dead code)
+- `meta/activeContext.md` (MODIFIED — block marked as completed)
 
 ### Database Changes
-- `products` table: added `thumbnail_url TEXT` column (nullable, for catalog card optimization)
-- Migration: `add_thumbnail_url_to_products`
+- None
 
 ### Build Verification
 - TypeScript strict check passed (exit code 0)
@@ -164,5 +162,7 @@
 | 16-C.a-A | Performance Optimization + Dual Image System | ✅ DONE | 2026-03-04 | 7f509a8 |
 | 16-C.a.C | Fix Gallery + Image Centering + Admin Hero Label | ✅ DONE | 2026-03-04 | 9d185b9 |
 | 16-C.a.D | Fix Gallery Images Field Mapping | ✅ DONE | 2026-03-04 | 8650297 |
+| HOTFIX | Remove duplicate hero image in product gallery | ✅ DONE | 2026-03-04 | 115d769 |
+| 17-A-1 | Resend Debugging & Welcome Email Cleanup | ✅ DONE | 2026-03-05 | pending |
 | 9g-A | Investigación dominio + branding | ⬜ PENDING | — | — |
 | 9g-B | Dominio + Deploy final producción | ⬜ PENDING | — | — |

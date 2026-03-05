@@ -44,11 +44,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         // Generate unique welcome discount code
         const discountCode = await generateWelcomeDiscount()
 
-        if (!discountCode) {
-            // Non-fatal: subscriber was created, discount failed — log and continue
-            console.error('[api/subscribe] Failed to generate discount code for:', email)
-        }
-
         // Fire welcome email — wrapped in its own try/catch so email failures never crash the response
         if (discountCode) {
             try {

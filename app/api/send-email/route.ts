@@ -616,9 +616,8 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // OVERRIDE FOR SANDBOX MODE
-    const recipient = 'financenst01@gmail.com'
-
+    // Set recipient from order data, fallback to dev email if missing for some reason
+    const recipient = orderData.customerEmail ?? 'financenst01@gmail.com'
 
     const { error } = await resend.emails.send({
       from: 'Lukess Home <onboarding@resend.dev>',
@@ -628,6 +627,16 @@ export async function POST(req: NextRequest) {
     })
 
     if (error) {
+      // Handle Sandbox/Unverified Domain errors gracefully so they don't break the checkout flow
+      if (
+        error.message?.toLowerCase().includes('sandbox') ||
+        error.message?.toLowerCase().includes('verified') ||
+        error.message?.toLowerCase().includes('domain')
+      ) {
+        console.warn(`[send-email] Sandbox/Domain error: Email not sent to ${recipient}. Resend says: ${error.message}`)
+        return NextResponse.json({ success: true, warning: 'Email not sent due to sandbox domain verification' }, { headers: corsHeaders })
+      }
+
       console.error('[send-email] Resend error:', error)
       return NextResponse.json({ error: error.message }, { status: 500, headers: corsHeaders })
     }
