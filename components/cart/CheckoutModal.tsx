@@ -682,6 +682,78 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
           category: item.product.categories?.name,
         })),
       })
+
+      // Reserve stock for cash_on_pickup
+      fetch('/api/reserve-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId: realOrderId }),
+      }).catch((err) => console.error('[reserve-order] fetch error:', err))
+
+      // Fire-and-forget: pickup reservation confirmation email
+      if (fd.notifyByEmail && fd.customerData.email.trim()) {
+        const selectedPickupInfo = PICKUP_LOCATIONS.find((p) => p.id === fd.pickupLocation)
+        fetch('/api/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'pickup_reservation_received',
+            orderData: {
+              orderId: realOrderId,
+              customerName: fd.customerData.name,
+              customerEmail: fd.customerData.email,
+              pickupLocationName: selectedPickupInfo?.name ?? fd.pickupLocation,
+              pickupLocationAddress: selectedPickupInfo
+                ? `${selectedPickupInfo.aisle} · ${selectedPickupInfo.stall}`
+                : '',
+              items: cart.map((item) => ({
+                name: item.product.name,
+                quantity: item.quantity,
+                unit_price: item.product.price,
+              })),
+              total: fd.orderTotal,
+            },
+          }),
+        }).catch((err) => console.error('[send-email] fetch error:', err))
+      }
+
+      // Fire-and-forget: newsletter subscription
+      if (fd.marketingConsent && fd.customerData.email.trim()) {
+        fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: fd.customerData.email.trim(), source: 'checkout' }),
+        }).catch((err) => console.error('[subscribe] fetch error:', err))
+
+        markAsSubscribed(fd.customerData.email.trim())
+      }
+
+      // Admin notification
+      fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'admin_new_order',
+          orderData: {
+            orderId: realOrderId,
+            customerName: fd.customerData.name,
+            customerEmail: fd.customerData.email,
+            customerPhone: fd.customerData.phone,
+            items: cart,
+            subtotal: total,
+            shippingCost: fd.shippingCost,
+            shippingDistance: null,
+            deliveryAddress: null,
+            locationUrl: null,
+            deliveryInstructions: null,
+            discountAmount: fd.discountValidation?.valid ? fd.appliedDiscountAmount : 0,
+            discountCode: fd.discountValidation?.valid ? fd.discountCode.toUpperCase() : null,
+            total: fd.orderTotal,
+            deliveryMethod: fd.deliveryMethod,
+            hasReceipt: false,
+          },
+        }),
+      }).catch((err) => console.error('[admin-email] fetch error:', err))
     } catch {
       toast.error('Error al procesar el pedido. Intenta de nuevo.', { position: 'bottom-center' })
     } finally {

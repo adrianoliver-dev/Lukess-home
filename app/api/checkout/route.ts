@@ -237,6 +237,22 @@ export async function POST(req: NextRequest) {
       }).catch(err => console.error('[api/checkout] Error calling subscribe:', err))
     }
 
+    // Strict server-side discount email check
+    if (discount_code) {
+      const { data: codeData } = await supabase
+        .from('discount_codes')
+        .select('assigned_email')
+        .eq('code', discount_code)
+        .single()
+
+      if (codeData?.assigned_email && codeData.assigned_email !== customer_email?.toLowerCase()) {
+        return NextResponse.json(
+          { error: 'El cupón no pertenece a este correo', code: 'invalid_coupon_email' },
+          { status: 400 }
+        )
+      }
+    }
+
     // Crear orden
     const { data: order, error: orderError } = await supabase
       .from('orders')
