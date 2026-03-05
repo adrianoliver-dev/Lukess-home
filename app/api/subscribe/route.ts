@@ -43,7 +43,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         }
 
         // Generate unique welcome discount code
-        const discountCode = await generateWelcomeDiscount()
+        const discountCode = await generateWelcomeDiscount(email)
 
         console.log(`[api/subscribe] Success: New subscriber ${email} joined. Generated discount: ${discountCode}`)
 

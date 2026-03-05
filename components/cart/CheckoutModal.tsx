@@ -394,6 +394,11 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
       return
     }
 
+    if (!customerData.email.trim()) {
+      setDiscountValidation({ valid: false, discount_type: null, discount_amount: 0, message: 'Ingresa tu email arriba antes de validar el cupón.' })
+      return
+    }
+
     setIsValidatingCode(true)
     setDiscountValidation(null)
 
@@ -406,6 +411,11 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
       if (error || !data) {
         setDiscountValidation({ valid: false, discount_type: null, discount_amount: 0, message: 'Código no válido' })
+        return
+      }
+
+      if (data.assigned_email && data.assigned_email !== customerData.email.trim().toLowerCase()) {
+        setDiscountValidation({ valid: false, discount_type: null, discount_amount: 0, message: 'Este cupón está vinculado a otro correo. Usa el correo con el que te suscribiste.' })
         return
       }
 

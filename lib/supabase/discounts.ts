@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 
-export async function generateWelcomeDiscount(): Promise<string | null> {
+export async function generateWelcomeDiscount(email: string): Promise<string | null> {
     try {
         // Use SERVICE_ROLE to bypass RLS — server-side only
         const supabase = createClient(
@@ -19,6 +19,7 @@ export async function generateWelcomeDiscount(): Promise<string | null> {
             usage_count: 0,
             expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
             is_active: true,
+            assigned_email: email.trim().toLowerCase(),
         })
 
         if (error) {
