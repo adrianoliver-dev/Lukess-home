@@ -12,8 +12,8 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 
 // Acepta items de la landing (CartItem) y del inventario (JOIN de Supabase)
 interface OrderItem {
-  // Landing: item.product.name / item.product.price
-  product?: { name?: string; price?: number }
+  // Landing: item.product.name / item.product.price, plus images
+  product?: { name?: string; price?: number; images?: string[]; image_url?: string }
   // Inventario JOIN: item.products.name
   products?: { name?: string }
   // Landing alternativo: item.name / item.price
@@ -27,6 +27,9 @@ interface OrderItem {
   size?: string | null
   color?: string | null
   variant?: string | null
+  image_url?: string | null
+  // Si viene del carrito completo en admin_new_order
+  images?: string[]
 }
 
 interface OrderEmailData {
@@ -78,49 +81,49 @@ function buildOrderNumber(orderId: string): string {
   `
 }
 
+function buildProductRow(item: OrderItem): string {
+  const productName = item.name ?? item.products?.name ?? item.product?.name ?? 'Producto'
+  const unitPrice = item.unit_price ?? item.price ?? item.product?.price ?? 0
+  const qty = item.quantity ?? item.qty ?? 1
+  const size = item.size ?? item.variant ?? null
+  const color = item.color ?? null
+
+  // Try to resolve the image from either the direct property or the product object
+  const imageUrl = item.image_url ?? item.product?.images?.[0] ?? item.product?.image_url ?? 'https://lukess-home.vercel.app/placeholder-product.jpg'
+
+  const details = [size, color].filter(Boolean).join(' · ')
+
+  return `
+    <tr>
+      <td style="padding: 12px; border-bottom: 1px solid #2a2a2a;">
+        <table cellpadding="0" cellspacing="0" width="100%">
+          <tr>
+            <td style="width: 80px; vertical-align: top;">
+              <img src="${imageUrl}" alt="${productName}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid #333;" />
+            </td>
+            <td style="padding-left: 12px; vertical-align: middle;">
+              <p style="margin: 0; font-size: 14px; font-weight: 600; color: #e0e0e0;">${productName}</p>
+              ${details ? `<p style="margin: 4px 0 0; font-size: 12px; color: #888;">${details}</p>` : ''}
+              <p style="margin: 4px 0 0; font-size: 12px; color: #aaa;">Cantidad: ${qty} &times; Bs ${unitPrice.toFixed(2)}</p>
+            </td>
+            <td style="text-align: right; vertical-align: middle; white-space: nowrap;">
+              <p style="margin: 0; font-size: 16px; font-weight: 700; color: #D4AF37;">Bs ${(unitPrice * qty).toFixed(2)}</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  `
+}
+
 function buildItemsTable(items: OrderItem[]): string {
-  const rows = items
-    .map((item) => {
-      const productName =
-        item.name ??
-        item.products?.name ??
-        item.product?.name ??
-        'Producto'
-      const unitPrice =
-        item.unit_price ??
-        item.price ??
-        item.product?.price ??
-        0
-      const qty = item.quantity ?? item.qty ?? 1
-      const size = item.size ?? item.variant ?? null
-      const color = item.color ?? null
-      const details = [size, color].filter(Boolean).join(' · ')
-      return `
-        <tr>
-          <td style="padding: 10px 12px; border-bottom: 1px solid #2a2a2a; color: #e0e0e0; font-size: 14px;">
-            ${productName}${details ? `<br><span style="color: #888; font-size: 12px;">${details}</span>` : ''}
-          </td>
-          <td style="padding: 10px 12px; border-bottom: 1px solid #2a2a2a; color: #e0e0e0; text-align: center; font-size: 14px;">${qty}</td>
-          <td style="padding: 10px 12px; border-bottom: 1px solid #2a2a2a; color: #e0e0e0; text-align: right; font-size: 14px; white-space: nowrap;">Bs ${unitPrice.toFixed(2)}</td>
-          <td style="padding: 10px 12px; border-bottom: 1px solid #2a2a2a; color: #D4AF37; text-align: right; font-size: 14px; font-weight: bold; white-space: nowrap;">Bs ${(unitPrice * qty).toFixed(2)}</td>
-        </tr>
-      `
-    })
-    .join('')
+  const rows = items.map((item) => buildProductRow(item)).join('')
 
   return `
     <tr>
       <td style="padding: 24px 40px 0;">
         <p style="margin: 0 0 12px; font-size: 12px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 1.5px;">Detalle del pedido</p>
         <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse; border-radius: 8px; overflow: hidden; border: 1px solid #333;">
-          <thead>
-            <tr style="background-color: #1a1a1a;">
-              <th style="padding: 10px 12px; text-align: left; font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; border-bottom: 1px solid #333;">Producto</th>
-              <th style="padding: 10px 12px; text-align: center; font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; border-bottom: 1px solid #333;">Cant.</th>
-              <th style="padding: 10px 12px; text-align: right; font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; border-bottom: 1px solid #333;">Precio</th>
-              <th style="padding: 10px 12px; text-align: right; font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; border-bottom: 1px solid #333;">Subtotal</th>
-            </tr>
-          </thead>
           <tbody>
             ${rows}
           </tbody>
@@ -380,6 +383,48 @@ function buildStatusEmailHtml(
   return wrapEmail(rows)
 }
 
+function buildCompletionEmailHtml(data: OrderEmailData, method: 'delivery' | 'pickup'): string {
+  const message = method === 'delivery'
+    ? 'Tu pedido fue entregado con éxito. ¡Esperamos que disfrutes tu compra!'
+    : '¡Gracias por recoger tu pedido! Esperamos que te encante.'
+
+  const rows = `
+    ${buildHeader()}
+    <tr>
+      <td style="padding: 28px 40px 0; text-align: center;">
+        <div style="display: inline-block; background-color: #1a3a1a; border: 1px solid #2d6a2d; border-radius: 999px; padding: 8px 20px;">
+          <span style="color: #4caf50; font-size: 13px; font-weight: 600;">🎉 Pedido Completado</span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding: 24px 40px 0;">
+        <p style="margin: 0; font-size: 22px; font-weight: 700; color: #f0f0f0;">¡Gracias, ${data.customerName}!</p>
+        <p style="margin: 12px 0 0; font-size: 15px; color: #aaaaaa; line-height: 1.6;">${message}</p>
+      </td>
+    </tr>
+    ${buildOrderNumber(data.orderId)}
+    ${data.items && data.items.length > 0 ? buildItemsTable(data.items) : ''}
+    ${buildCostBreakdown(data)}
+    <tr>
+      <td style="padding: 32px 40px; text-align: center;">
+        <p style="margin: 0 0 16px; font-size: 15px; color: #aaa;">¿Te gustó tu compra? Volvé a visitarnos</p>
+        <a href="https://lukess-home.vercel.app" style="display: inline-block; background-color: #D4AF37; color: #111; font-size: 16px; font-weight: 900; padding: 18px 48px; border-radius: 10px; text-decoration: none; letter-spacing: 0.5px; box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);">
+          🛍️ Volver a comprar
+        </a>
+        <p style="margin: 16px 0 0; font-size: 13px; color: #666;">O seguinos en nuestras redes para no perderte las nuevas colecciones</p>
+        <div style="margin-top: 12px;">
+          <a href="https://instagram.com/lukesshome" style="display: inline-block; margin: 0 8px; color: #D4AF37; text-decoration: none; font-size: 12px;">📸 Instagram</a>
+          <a href="https://facebook.com/lukesshome" style="display: inline-block; margin: 0 8px; color: #D4AF37; text-decoration: none; font-size: 12px;">📘 Facebook</a>
+        </div>
+      </td>
+    </tr>
+    ${buildWhatsappCta()}
+    ${buildFooter()}
+  `
+  return wrapEmail(rows)
+}
+
 function buildAdminNewOrderHtml(data: OrderEmailData): string {
   const shortId = data.orderId.slice(0, 8).toUpperCase()
   const isDelivery = data.deliveryMethod === 'delivery'
@@ -601,29 +646,13 @@ export async function POST(req: NextRequest) {
           break
 
         case 'order_completed':
-          subject = `✅ Pedido entregado — ¡Gracias por tu compra! | Lukess Home`
-          html = buildStatusEmailHtml(
-            orderData,
-            '✅ Pedido entregado',
-            '#1a3a1a',
-            '#2d6a2d',
-            '#4caf50',
-            'Gracias por tu compra. Esperamos verte pronto. Si necesitás algo más, visitanos en nuestra tienda online.',
-            '<a href="https://lukess-home.vercel.app" style="display: inline-block; background-color: #D4AF37; color: #111; font-size: 16px; font-weight: 900; padding: 18px 40px; border-radius: 10px; text-decoration: none; letter-spacing: 0.5px;">¡Volver a comprar! 🛍️</a>'
-          )
+          subject = `🎉 ¡Tu pedido #${shortId} fue entregado con éxito! | Lukess Home`
+          html = buildCompletionEmailHtml(orderData, 'delivery')
           break
 
         case 'pickup_completed':
-          subject = `✅ Pedido recogido — ¡Gracias por tu compra! | Lukess Home`
-          html = buildStatusEmailHtml(
-            orderData,
-            '✅ Pedido recogido',
-            '#1a3a1a',
-            '#2d6a2d',
-            '#4caf50',
-            'Gracias por tu compra. Esperamos verte pronto. Si necesitás algo más, visitanos en nuestra tienda online.',
-            '<a href="https://lukess-home.vercel.app" style="display: inline-block; background-color: #D4AF37; color: #111; font-size: 16px; font-weight: 900; padding: 18px 40px; border-radius: 10px; text-decoration: none; letter-spacing: 0.5px;">¡Volver a comprar! 🛍️</a>'
-          )
+          subject = `🎉 ¡Gracias por tu compra, ${orderData.customerName}! | Lukess Home`
+          html = buildCompletionEmailHtml(orderData, 'pickup')
           break
 
         case 'order_cancelled':

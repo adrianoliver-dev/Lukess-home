@@ -299,6 +299,7 @@ export async function POST(req: NextRequest) {
         size: string | null
         color: string | null
         subtotal: number
+        image_url?: string | null
       }) => ({
         order_id: order.id,
         product_id: item.product_id,
@@ -307,6 +308,7 @@ export async function POST(req: NextRequest) {
         size: item.size || null,
         color: item.color || null,
         subtotal: item.subtotal,
+        image_url: item.image_url || null,
       })
     )
 

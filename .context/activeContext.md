@@ -12,25 +12,20 @@ All development blocks completed. Awaiting client data validation (Aldrin) befor
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 17-B-A-1
-- **Block Name:** Fix Checkout receipt flow and Admin Email recipient
+- **Block Number:** 17-C
+- **Block Name:** Premium Email Templates
 - **Status:** ✅ DONE
 - **Completed:** 2026-03-05
 - **Commit:** pending
 
 ### Files Changed
-- `app/api/upload-receipt/route.ts` — removed orders table update, returned url
-- `components/cart/CheckoutModal.tsx` — added uploadedReceiptPath state, included in checkout payload
-- `app/api/checkout/route.ts` — save payment_receipt_url
-- `app/api/send-email/route.ts` — fixed admin email recipient logic and typo
+- `app/api/checkout/route.ts` — Added `image_url` insertion mapping.
+- `components/cart/CheckoutModal.tsx` — Included `image_url` mapped from product images in `/api/checkout` calls.
+- `app/api/send-email/route.ts` — Added `image_url` to `OrderItem` interface, created `buildProductRow`, replaced `buildItemsTable` with thumbnail row, created `buildCompletionEmailHtml`, updated `order_completed` and `pickup_completed` cases.
+- `lib/emails/templates.ts` — Removed old button and added luxury explicit text-link for the cancelled email.
 
-### DB Changes (PENDING — Adrian must apply manually)
-> ⚠️ Supabase MCP was Forbidden in this session. Apply `supabase/migrations/block_17_a_3_2_expire_pickup_reservations.sql` in the Supabase SQL Editor.
-- ADD COLUMN `orders.cancellation_reason TEXT`
-- ADD COLUMN `orders.cancelled_at TIMESTAMPTZ`
-- CREATE FUNCTION `expire_pickup_reservations()`
-- CRON JOB `expire-pickup-reservations` (every hour)
-- After applying, run `generate_typescript_types` to regenerate `types/database.types.ts`
+### DB Changes
+- None required.
 
 ---
 
@@ -128,5 +123,6 @@ Cleanup-01	framer-motion removal + Memory Bank setup	✅ DONE	2026-02-26	—
 16-H-fix	Gallery bug fix (images vs gallery, duplicate hero)	✅ DONE	2026-03-05	115d769
 16-D-C	Memory Bank + Rules Update	✅ DONE	2026-03-05	—
 17-A-3.2	Auto-expire pickup reservations after 48h	✅ DONE	2026-03-05	fac6f85
-17-B-A-1	Fix Checkout receipt flow and Admin Email recipient	✅ DONE	2026-03-05	pending
+17-B-A-1	Fix Checkout receipt flow and Admin Email recipient	✅ DONE	2026-03-05	3ea40c8
+17-C	Premium Email Templates	✅ DONE	2026-03-05	pending
 17	Final Presentation Documents (Block Commercial)	⬜ PENDING	—	—

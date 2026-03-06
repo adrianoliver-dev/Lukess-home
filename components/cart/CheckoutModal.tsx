@@ -657,6 +657,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
             size: item.size || null,
             color: item.color || null,
             subtotal: item.product.price * item.quantity,
+            image_url: item.product.images?.[0] ?? item.product.image_url ?? null,
           })),
         }),
       })
@@ -813,6 +814,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
             size: item.size || null,
             color: item.color || null,
             subtotal: item.product.price * item.quantity,
+            image_url: item.product.images?.[0] ?? item.product.image_url ?? null,
           })),
         }),
       })
