@@ -133,6 +133,7 @@ const STATUS_CONFIG: Record<
   pending: { label: 'Pendiente', icon: <Clock className="w-3.5 h-3.5" /> },
   pending_payment: { label: 'Reserva activa', icon: <Store className="w-3.5 h-3.5" /> },
   confirmed: { label: 'Confirmado', icon: <CheckCircle className="w-3.5 h-3.5" /> },
+  // NOTE: 'shipped' label is resolved dynamically in OrderCard based on delivery_method
   shipped: { label: 'En camino', icon: <Package className="w-3.5 h-3.5" /> },
   completed: { label: 'Entregado', icon: <CheckCircle className="w-3.5 h-3.5" /> },
   cancelled: { label: 'Cancelado', icon: <Clock className="w-3.5 h-3.5" /> },
@@ -169,8 +170,12 @@ function OrderCard({ order }: { order: Order }) {
   console.log('[OrderCard] Rendering order:', order.id, 'items:', order.order_items?.length)
   const { addToCart } = useCart()
   const [isReordering, setIsReordering] = useState(false)
-  const status = STATUS_CONFIG[order.status] ?? STATUS_CONFIG.pending
   const orderNumber = order.id.slice(0, 8).toUpperCase()
+
+  // Resolve the status config. For 'shipped', differentiate pickup vs delivery.
+  const status = order.status === 'shipped' && order.delivery_method === 'pickup'
+    ? { label: 'Listo para recojo', icon: <Store className="w-3.5 h-3.5" /> }
+    : (STATUS_CONFIG[order.status] ?? STATUS_CONFIG.pending)
 
   const handleReorder = async () => {
     const items = order.order_items
