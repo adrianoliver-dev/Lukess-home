@@ -1,28 +1,28 @@
 export function pickupReservationReceivedEmail(data: {
-    orderId: string
-    customerName: string
-    pickupLocation: string
-    pickupLocationAddress: string
-    items: Array<{
-        name?: string
-        product?: { name?: string; price?: number }
-        products?: { name?: string }
-        quantity?: number
-        qty?: number
-        unit_price?: number
-        price?: number
-    }>
-    total: number
+  orderId: string
+  customerName: string
+  pickupLocation: string
+  pickupLocationAddress: string
+  items: Array<{
+    name?: string
+    product?: { name?: string; price?: number }
+    products?: { name?: string }
+    quantity?: number
+    qty?: number
+    unit_price?: number
+    price?: number
+  }>
+  total: number
 }): string {
-    const shortId = data.orderId.slice(0, 8).toUpperCase()
-    const itemsList = data.items.map(item => {
-        const itemName = item.name ?? item.products?.name ?? item.product?.name ?? 'Producto'
-        const itemQty = item.quantity ?? item.qty ?? 1
-        const itemPrice = item.unit_price ?? item.price ?? item.product?.price ?? 0
-        return `<li>${itemName} x${itemQty} — Bs ${(itemPrice * itemQty).toFixed(2)}</li>`
-    }).join('')
+  const shortId = data.orderId.slice(0, 8).toUpperCase()
+  const itemsList = data.items.map(item => {
+    const itemName = item.name ?? item.products?.name ?? item.product?.name ?? 'Producto'
+    const itemQty = item.quantity ?? item.qty ?? 1
+    const itemPrice = item.unit_price ?? item.price ?? item.product?.price ?? 0
+    return `<li>${itemName} x${itemQty} — Bs ${(itemPrice * itemQty).toFixed(2)}</li>`
+  }).join('')
 
-    return `
+  return `
     <!DOCTYPE html>
     <html>
     <head>
@@ -96,12 +96,12 @@ export function pickupReservationReceivedEmail(data: {
 }
 
 export function pickupPaymentConfirmedEmail(data: {
-    orderId: string
-    customerName: string
-    pickupLocation: string
+  orderId: string
+  customerName: string
+  pickupLocation: string
 }): string {
-    const shortId = data.orderId.slice(0, 8).toUpperCase()
-    return `
+  const shortId = data.orderId.slice(0, 8).toUpperCase()
+  return `
     <!DOCTYPE html>
     <html>
     <head><meta charset="UTF-8"></head>
@@ -129,14 +129,14 @@ export function pickupPaymentConfirmedEmail(data: {
 }
 
 export function pickupReadyForCollectionEmail(data: {
-    orderId: string
-    customerName: string
-    pickupLocation: string
-    pickupLocationAddress: string
-    expiresInHours: number
+  orderId: string
+  customerName: string
+  pickupLocation: string
+  pickupLocationAddress: string
+  expiresInHours: number
 }): string {
-    const shortId = data.orderId.slice(0, 8).toUpperCase()
-    return `
+  const shortId = data.orderId.slice(0, 8).toUpperCase()
+  return `
     <!DOCTYPE html>
     <html>
     <head><meta charset="UTF-8"></head>
@@ -169,25 +169,25 @@ export function pickupReadyForCollectionEmail(data: {
 }
 
 export function orderCancelledEmail(data: {
-    orderId: string
-    customerName: string
-    cancellationReason: string
-    customReason?: string
+  orderId: string
+  customerName: string
+  cancellationReason: string
+  customReason?: string
 }): string {
-    const shortId = data.orderId.slice(0, 8).toUpperCase()
+  const shortId = data.orderId.slice(0, 8).toUpperCase()
 
-    const reasonMap: Record<string, string> = {
-        'expired_reservation': 'La reserva expiró (no recogido en 48h)',
-        'out_of_stock': 'Producto sin stock',
-        'customer_request': 'Solicitud del cliente',
-        'payment_failed': 'Pago no confirmado',
-        'duplicate_order': 'Pedido duplicado',
-        'other': data.customReason || 'Motivo no especificado',
-    }
+  const reasonMap: Record<string, string> = {
+    'expired_reservation': 'La reserva expiró (no recogido en 48h)',
+    'out_of_stock': 'Producto sin stock',
+    'customer_request': 'Solicitud del cliente',
+    'payment_failed': 'Pago no confirmado',
+    'duplicate_order': 'Pedido duplicado',
+    'other': data.customReason || 'Motivo no especificado',
+  }
 
-    const displayReason = reasonMap[data.cancellationReason] || data.cancellationReason
+  const displayReason = reasonMap[data.cancellationReason] || data.cancellationReason
 
-    return `
+  return `
     <!DOCTYPE html>
     <html>
     <head><meta charset="UTF-8"></head>
@@ -206,9 +206,14 @@ export function orderCancelledEmail(data: {
             <p style="margin:0;color:#991b1b;font-size:14px;font-weight:600;">Motivo:</p>
             <p style="margin:4px 0 0;color:#991b1b;font-size:14px;">${displayReason}</p>
           </div>
-          <p style="color:#6b7280;font-size:14px;line-height:1.6;margin:0;">
-            Si crees que esto es un error o necesitas más información, no dudes en contactarnos por WhatsApp.
+          <p style="color:#6b7280;font-size:14px;line-height:1.6;margin:0 0 24px;">
+            Si crees que esto es un error o necesitas más información, no dudes en contactarnos por WhatsApp al <a href="https://wa.me/59172643753" style="color:#D4AF37;text-decoration:none;font-weight:700;">+591 72643753</a>.
           </p>
+          <div style="text-align:center;">
+            <a href="https://lukess-home.vercel.app" style="display: inline-block; background-color: #D4AF37; color: #111; font-size: 16px; font-weight: 900; padding: 16px 32px; border-radius: 8px; text-decoration: none; letter-spacing: 0.5px;">
+              Volver a la tienda
+            </a>
+          </div>
         </div>
       </div>
     </body>

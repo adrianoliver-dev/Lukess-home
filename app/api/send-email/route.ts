@@ -352,6 +352,7 @@ function buildStatusEmailHtml(
   badgeBorder: string,
   badgeColor: string,
   message: string,
+  ctaHtml?: string,
 ): string {
   const rows = `
     ${buildHeader()}
@@ -366,6 +367,7 @@ function buildStatusEmailHtml(
       <td style="padding: 24px 40px 0;">
         <p style="margin: 0; font-size: 22px; font-weight: 700; color: #f0f0f0;">Hola ${data.customerName},</p>
         <p style="margin: 12px 0 0; font-size: 15px; color: #aaaaaa; line-height: 1.6;">${message}</p>
+        ${ctaHtml ? `<div style="margin-top: 24px; text-align: center;">${ctaHtml}</div>` : ''}
       </td>
     </tr>
     ${buildOrderNumber(data.orderId)}
@@ -537,6 +539,7 @@ export type EmailType =
   | 'pickup_reservation_received'
   | 'pickup_payment_confirmed'
   | 'pickup_ready_for_collection'
+  | 'pickup_completed'
 
 export async function POST(req: NextRequest) {
   const corsHeaders = new Headers(CORS_HEADERS)
@@ -605,7 +608,21 @@ export async function POST(req: NextRequest) {
             '#1a3a1a',
             '#2d6a2d',
             '#4caf50',
-            '¡Tu pedido fue entregado con éxito! Gracias por confiar en Lukess Home. Esperamos verte pronto.',
+            'Gracias por tu compra. Esperamos verte pronto. Si necesitás algo más, visitanos en nuestra tienda online.',
+            '<a href="https://lukess-home.vercel.app" style="display: inline-block; background-color: #D4AF37; color: #111; font-size: 16px; font-weight: 900; padding: 18px 40px; border-radius: 10px; text-decoration: none; letter-spacing: 0.5px;">¡Volver a comprar! 🛍️</a>'
+          )
+          break
+
+        case 'pickup_completed':
+          subject = `✅ Pedido recogido — ¡Gracias por tu compra! | Lukess Home`
+          html = buildStatusEmailHtml(
+            orderData,
+            '✅ Pedido recogido',
+            '#1a3a1a',
+            '#2d6a2d',
+            '#4caf50',
+            'Gracias por tu compra. Esperamos verte pronto. Si necesitás algo más, visitanos en nuestra tienda online.',
+            '<a href="https://lukess-home.vercel.app" style="display: inline-block; background-color: #D4AF37; color: #111; font-size: 16px; font-weight: 900; padding: 18px 40px; border-radius: 10px; text-decoration: none; letter-spacing: 0.5px;">¡Volver a comprar! 🛍️</a>'
           )
           break
 
