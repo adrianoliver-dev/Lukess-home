@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { revalidatePath } from 'next/cache'
 import { sendWhatsAppMessage } from '@/lib/whatsapp/send-message'
+import { getWhatsAppTemplate, OrderForWhatsApp } from '@/lib/whatsapp/template-router'
 
 // ── Rate limiting en memoria ──────────────────────────────────────────────────
 // Simple Map por email e IP. Se resetea al reiniciar el servidor.
@@ -330,15 +331,36 @@ export async function POST(req: NextRequest) {
       const rawPhone = customer_phone.replace(/\D/g, '')
       const formattedPhone = rawPhone.startsWith('591') ? rawPhone : `591${rawPhone}`
 
-      sendWhatsAppMessage({
-        to: formattedPhone,
-        templateName: 'pedido_recibido',
-        variables: [
-          customer_name,
-          order.id.substring(0, 8).toUpperCase(),
-          total.toFixed(2),
-        ],
-      }).catch((err) => console.error('[Checkout] WhatsApp Error:', err))
+      const orderForWhatsApp: OrderForWhatsApp = {
+        id: order.id,
+        customer_name: customer_name.trim(),
+        customer_phone: customer_phone,
+        notify_whatsapp: notify_whatsapp,
+        delivery_method: delivery_method ?? 'delivery',
+        payment_method: payment_method === 'cash_on_pickup' ? 'cash_on_pickup' : 'qr',
+        shipping_address: shipping_address ?? null,
+        pickup_location: pickup_location ?? null,
+        total: total,
+      }
+
+      // Initial status depends on payment method
+      const initialStatus = payment_method === 'cash_on_pickup' ? 'pending_payment' : 'pending'
+
+      const config = getWhatsAppTemplate(orderForWhatsApp, initialStatus)
+
+      if (config) {
+        sendWhatsAppMessage({
+          to: formattedPhone,
+          templateName: config.templateName,
+          variables: config.variables,
+          headerImage: config.headerImage,
+        })
+          .then(async () => {
+            // Update DB with the whatsapp message sent
+            await supabase.from('orders').update({ whatsapp_last_status_sent: initialStatus }).eq('id', order.id)
+          })
+          .catch((err) => console.error('[Checkout] WhatsApp Error:', err))
+      }
     }
 
     revalidatePath('/', 'page')
