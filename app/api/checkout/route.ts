@@ -309,7 +309,6 @@ export async function POST(req: NextRequest) {
         size: item.size || null,
         color: item.color || null,
         subtotal: item.subtotal,
-        image_url: item.image_url || null,
       })
     )
 

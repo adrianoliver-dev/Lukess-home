@@ -1,6 +1,6 @@
 # activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-03-05
-**Updated By:** Adrian Oliver (Manual Update — Block 16-D-C)
+**Last Updated:** 2026-03-06
+**Updated By:** Adrian Oliver (Agent Update — Block 17-F)
 
 ---
 
@@ -12,17 +12,14 @@ All development blocks completed. Awaiting client data validation (Aldrin) befor
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 17-C
-- **Block Name:** Premium Email Templates
+- **Block Number:** 17-F
+- **Block Name:** Checkout Bug Fix & Final Notification QA
 - **Status:** ✅ DONE
-- **Completed:** 2026-03-05
+- **Completed:** 2026-03-06
 - **Commit:** pending
 
 ### Files Changed
-- `app/api/checkout/route.ts` — Added `image_url` insertion mapping.
-- `components/cart/CheckoutModal.tsx` — Included `image_url` mapped from product images in `/api/checkout` calls.
-- `app/api/send-email/route.ts` — Added `image_url` to `OrderItem` interface, created `buildProductRow`, replaced `buildItemsTable` with thumbnail row, created `buildCompletionEmailHtml`, updated `order_completed` and `pickup_completed` cases.
-- `lib/emails/templates.ts` — Removed old button and added luxury explicit text-link for the cancelled email.
+- `app/api/checkout/route.ts` — Removed `image_url` from `orderItems` insert payload.
 
 ### DB Changes
 - None required.
@@ -91,11 +88,11 @@ BUG-05	No scrollTo({top:0}) when switching modal steps (form → qr → success)
 BUG-06	"⚠️ Últimas X" badge may appear multiple times in ProductDetail	🟡 MEDIUM
 BUG-01	QR image overflows on screens < 360px	🟢 LOW
 LAST COMPLETED BLOCK
-Block: 17-B-A-1 — Fix Checkout receipt flow and Admin Email recipient
+Block: 17-F — Checkout Bug Fix & Final Notification QA
 
-Completed: 2026-03-05
+Completed: 2026-03-06
 
-Commit: pending — fix(checkout): receipt upload flow and admin email recipient
+Commit: pending — fix(checkout): remove image_url from order_items payload
 
 BLOCK HISTORY
 Block	Name	Status	Date	Commit
@@ -125,4 +122,5 @@ Cleanup-01	framer-motion removal + Memory Bank setup	✅ DONE	2026-02-26	—
 17-A-3.2	Auto-expire pickup reservations after 48h	✅ DONE	2026-03-05	fac6f85
 17-B-A-1	Fix Checkout receipt flow and Admin Email recipient	✅ DONE	2026-03-05	3ea40c8
 17-C	Premium Email Templates	✅ DONE	2026-03-05	pending
+17-F	Checkout Bug Fix & Final Notification QA	✅ DONE	2026-03-06	pending
 17	Final Presentation Documents (Block Commercial)	⬜ PENDING	—	—
