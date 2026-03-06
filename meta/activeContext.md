@@ -5,8 +5,8 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 17-A-4.1
-- **Block Name:** Email Templates for Pickup Flow + Custom Cancellation Reasons
+- **Block Number:** FIX-1
+- **Block Name:** Fix Landing Page Issues (Reservations, Discounts, Receipts)
 - **Status:** ✅ DONE
 - **Started:** 2026-03-05
 - **Completed:** 2026-03-05
@@ -14,13 +14,14 @@
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 17-A-4.1
-- **Block Name:** Email Templates for Pickup Flow + Custom Cancellation Reasons
-- **Commit Landing:** pending
+- **Block Number:** FIX-1
+- **Block Name:** Fix Landing Page Issues (Reservations, Discounts, Receipts)
+- **Commit Landing:** 2bc9e18
 
 ### Files Changed
-- `app/api/send-email/route.ts` (MODIFIED — added new EmailType cases and imported templates)
-- `lib/emails/templates.ts` (MODIFIED — added pickup reservation, payment confirmed, ready, and cancelled templates)
+- `components/cart/CheckoutModal.tsx` (MODIFIED — added reserve-order call, pickup confirmation email, newsletter subscription, and admin email in `handleCashOnPickupCheckout`)
+- `app/api/checkout/route.ts` (MODIFIED — server-side discount email ownership check before order creation)
+- `docs/TESTING_EMAILS.md` (NEW — instructions to reset newsletter/discount state for local email testing)
 
 ### Build Verification
 - TypeScript strict check passed (exit code 0)
@@ -46,7 +47,8 @@
 ## BLOCK HISTORY
 | Block | Name | Status | Date | Commit |
 |---|---|---|---|---|
-| 17-A-4.1 | Email Templates for Pickup + Cancellation | ✅ DONE | 2026-03-05 | pending |
+| FIX-1 | Fix Landing: Reserve stock + discount email validation | ✅ DONE | 2026-03-05 | 2bc9e18 |
+| 17-A-4.1 | Email Templates for Pickup + Cancellation | ✅ DONE | 2026-03-05 | a6413ea |
 | Cleanup-01 | framer-motion removal + Memory Bank | ✅ DONE | 2026-02-26 | pending |
 | 9b-A | Bugs + Fixes Urgentes A | ✅ DONE | 2026-02-26 | 7a0d980 |
 | 9b-B | Bugs + Fixes Urgentes B | ✅ DONE | 2026-02-26 | dc0d079 |

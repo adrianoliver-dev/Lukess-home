@@ -177,6 +177,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   const [receiptPreviewUrl, setReceiptPreviewUrl] = useState<string | null>(null)
   const [receiptError, setReceiptError] = useState('')
   const [showReceiptLightbox, setShowReceiptLightbox] = useState(false)
+  const [uploadedReceiptPath, setUploadedReceiptPath] = useState<string | null>(null)
 
   // Computed shipping
   const rawShippingCost: number | 'out_of_range' =
@@ -329,6 +330,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
         setReceiptFile(null)
         setReceiptPreviewUrl(null)
         setReceiptError('')
+        setUploadedReceiptPath(null)
       }, 300)
     }
   }, [isOpen])
@@ -499,6 +501,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
       }
 
       setReceiptUploadState('success')
+      setUploadedReceiptPath(data.url)
     } catch {
       setReceiptUploadState('error')
       setReceiptError('Error de conexión. Intenta de nuevo.')
@@ -511,6 +514,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
     if (receiptPreviewUrl) URL.revokeObjectURL(receiptPreviewUrl)
     setReceiptPreviewUrl(null)
     setReceiptError('')
+    setUploadedReceiptPath(null)
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -798,6 +802,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
           recipient_phone: formData.deliveryMethod === 'delivery' ? formData.recipientPhone.replace(/\s/g, '') : null,
           delivery_instructions: formData.deliveryMethod === 'delivery' ? formData.deliveryInstructions.trim() || null : null,
           payment_method: formData.selectedPayment === 'cash_on_pickup' ? 'cash_on_pickup' : 'qr',
+          payment_receipt_url: uploadedReceiptPath,
           discount_amount: formData.discountValidation?.valid ? formData.appliedDiscountAmount : 0,
           discount_code_id: formData.discountValidation?.valid ? formData.discountValidation.discount_code_id : null,
           discount_code: formData.discountValidation?.valid ? formData.discountCode.toUpperCase() : null,

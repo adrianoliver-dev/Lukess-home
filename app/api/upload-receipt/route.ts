@@ -66,19 +66,6 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const { error: updateError } = await supabase
-      .from('orders')
-      .update({ payment_receipt_url: fileName })
-      .eq('id', orderId)
-
-    if (updateError) {
-      console.error('[upload-receipt] DB update error:', updateError)
-      return NextResponse.json(
-        { error: 'Archivo subido pero no se pudo registrar. Contacta soporte.' },
-        { status: 500 },
-      )
-    }
-
     return NextResponse.json({ success: true, url: fileName })
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : 'Error interno del servidor'

@@ -78,6 +78,7 @@ export async function POST(req: NextRequest) {
       discount_code_id,
       discount_code,
       payment_method,
+      payment_receipt_url,
     } = body
 
     // A) Honeypot — bots llenan este campo, humanos no lo ven
@@ -282,6 +283,7 @@ export async function POST(req: NextRequest) {
         delivery_instructions: delivery_instructions ?? null,
         notify_email: notify_email ?? true,
         notify_whatsapp: notify_whatsapp ?? false,
+        payment_receipt_url: payment_receipt_url ?? null,
       })
       .select()
       .single()

@@ -665,7 +665,9 @@ export async function POST(req: NextRequest) {
     }
 
     // Set recipient from order data, fallback to dev email if missing for some reason
-    const recipient = orderData.customerEmail ?? 'financenst01@gmail.com'
+    const recipient = type === 'admin_new_order'
+      ? 'financenft01@gmail.com'
+      : (orderData.customerEmail ?? 'financenft01@gmail.com')
 
     const { error } = await resend.emails.send({
       from: 'Lukess Home <onboarding@resend.dev>',

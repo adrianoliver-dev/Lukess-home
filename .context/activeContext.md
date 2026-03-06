@@ -12,10 +12,25 @@ All development blocks completed. Awaiting client data validation (Aldrin) befor
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 16-D-C
-- **Block Name:** Memory Bank + Rules Update
-- **Status:** IN PROGRESS
-- **Started:** 2026-03-05
+- **Block Number:** 17-B-A-1
+- **Block Name:** Fix Checkout receipt flow and Admin Email recipient
+- **Status:** ✅ DONE
+- **Completed:** 2026-03-05
+- **Commit:** pending
+
+### Files Changed
+- `app/api/upload-receipt/route.ts` — removed orders table update, returned url
+- `components/cart/CheckoutModal.tsx` — added uploadedReceiptPath state, included in checkout payload
+- `app/api/checkout/route.ts` — save payment_receipt_url
+- `app/api/send-email/route.ts` — fixed admin email recipient logic and typo
+
+### DB Changes (PENDING — Adrian must apply manually)
+> ⚠️ Supabase MCP was Forbidden in this session. Apply `supabase/migrations/block_17_a_3_2_expire_pickup_reservations.sql` in the Supabase SQL Editor.
+- ADD COLUMN `orders.cancellation_reason TEXT`
+- ADD COLUMN `orders.cancelled_at TIMESTAMPTZ`
+- CREATE FUNCTION `expire_pickup_reservations()`
+- CRON JOB `expire-pickup-reservations` (every hour)
+- After applying, run `generate_typescript_types` to regenerate `types/database.types.ts`
 
 ---
 
@@ -81,11 +96,11 @@ BUG-05	No scrollTo({top:0}) when switching modal steps (form → qr → success)
 BUG-06	"⚠️ Últimas X" badge may appear multiple times in ProductDetail	🟡 MEDIUM
 BUG-01	QR image overflows on screens < 360px	🟢 LOW
 LAST COMPLETED BLOCK
-Block: 16-H-fix — Gallery images vs gallery mapping fix
+Block: 17-B-A-1 — Fix Checkout receipt flow and Admin Email recipient
 
 Completed: 2026-03-05
 
-Commit: 115d769 — fix: remove duplicate hero in gallery
+Commit: pending — fix(checkout): receipt upload flow and admin email recipient
 
 BLOCK HISTORY
 Block	Name	Status	Date	Commit
@@ -111,5 +126,7 @@ Cleanup-01	framer-motion removal + Memory Bank setup	✅ DONE	2026-02-26	—
 16-G	Dynamic Hero Banner CMS (desktop/mobile from Supabase)	✅ DONE	2026-03-04	2d0198f
 16-H	Performance — Dual Image System, LCP 5.6s→2.5s, thumbnail_url	✅ DONE	2026-03-04	7f509a8
 16-H-fix	Gallery bug fix (images vs gallery, duplicate hero)	✅ DONE	2026-03-05	115d769
-16-D-C	Memory Bank + Rules Update (this block)	🔄 IN PROGRESS	2026-03-05	—
+16-D-C	Memory Bank + Rules Update	✅ DONE	2026-03-05	—
+17-A-3.2	Auto-expire pickup reservations after 48h	✅ DONE	2026-03-05	fac6f85
+17-B-A-1	Fix Checkout receipt flow and Admin Email recipient	✅ DONE	2026-03-05	pending
 17	Final Presentation Documents (Block Commercial)	⬜ PENDING	—	—
