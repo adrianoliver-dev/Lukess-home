@@ -17,7 +17,7 @@ export type WhatsAppTemplateConfig = {
     headerImage?: string;
 };
 
-const ENTREGADO_HEADER_IMAGE = 'https://lukess-home.vercel.app/images/entregado.png';
+const ENTREGADO_HEADER_IMAGE = 'https://lrcggpdgrqltqbxqnjgh.supabase.co/storage/v1/object/public/banners/whatsapp/entregado.png';
 
 export function getWhatsAppTemplate(
     order: OrderForWhatsApp,
