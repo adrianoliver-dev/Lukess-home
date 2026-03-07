@@ -40,7 +40,7 @@ export async function sendWhatsAppMessage(params: {
             name: templateName,
             language: {
                 code: LANG,
-                policy: 'deterministic'
+                policy: 'fallback'
             },
             components,
         },

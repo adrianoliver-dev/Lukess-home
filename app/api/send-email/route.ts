@@ -390,20 +390,17 @@ function buildCompletionEmailHtml(data: OrderEmailData, method: 'delivery' | 'pi
 
   const discountBlock = data.discountCode
     ? `
-    <tr>
-      <td style="padding: 24px 40px 0;">
-        <div style="background-color: #111; border: 2px dashed #D4AF37; border-radius: 12px; padding: 24px; text-align: center;">
-          <p style="margin: 0; font-size: 14px; font-weight: 700; color: #e0e0e0;">Aquí tienes un regalo para tu próxima compra.</p>
-          <p style="margin: 16px 0 0; font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 2px;">Código de Descuento</p>
-          <p style="margin: 12px 0 0; font-size: 32px; font-weight: 900; color: #D4AF37; letter-spacing: 2px;">${data.discountCode}</p>
-        </div>
-        <div style="text-align: center; margin-top: 12px;">
-          <p style="margin: 0; font-size: 12px; color: #666;">* Válido por 3 días. De un solo uso.</p>
-        </div>
-      </td>
-    </tr>
-    `
-    : ''
+  <tr>
+    <td style="padding: 24px 40px 0;">
+      <div style="background: linear-gradient(135deg, #111111 0%, #1a1505 100%); border: 2px solid #D4AF37; border-radius: 12px; padding: 24px; text-align: center; box-shadow: 0 4px 20px rgba(212, 175, 55, 0.1);">
+        <p style="margin: 0; font-size: 13px; color: #D4AF37; text-transform: uppercase; letter-spacing: 2px; font-weight: 700;">🎁 Un regalo para tu próxima compra</p>
+        <p style="margin: 16px 0 0; font-size: 32px; font-weight: 900; color: #ffffff; letter-spacing: 4px; font-family: 'Courier New', monospace;">${data.discountCode}</p>
+        <p style="margin: 12px 0 0; font-size: 13px; color: #aaaaaa;">Aplica 10% de descuento automático en tu próximo carrito.</p>
+        <p style="margin: 4px 0 0; font-size: 11px; color: #666666;">* Válido por 3 días. De un solo uso.</p>
+      </div>
+    </td>
+  </tr>
+` : ''
 
   const rows = `
     ${buildHeader()}
