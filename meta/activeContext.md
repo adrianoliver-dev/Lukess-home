@@ -5,23 +5,24 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 17-I
-- **Block Name:** Landing Email Builder (Loyalty Code & Image Fix)
+- **Block Number:** 17-M
+- **Block Name:** QA WhatsApp Templates Alignment
 - **Status:** ✅ DONE
-- **Started:** 2026-03-06
+- **Started:** 2026-03-07
 - **Completed:** 2026-03-07
 
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** 17-I
-- **Block Name:** Landing Email Builder (Loyalty Code & Image Fix)
-- **Commit Landing:** 0f0a0f9
+- **Block Number:** 17-M
+- **Block Name:** QA WhatsApp Templates Alignment
+- **Commit Landing:** PENDING
 
 ### Files Changed
-- `components/cart/CheckoutModal.tsx` (MODIFIED — added reserve-order call, pickup confirmation email, newsletter subscription, and admin email in `handleCashOnPickupCheckout`)
-- `app/api/checkout/route.ts` (MODIFIED — server-side discount email ownership check before order creation)
-- `docs/TESTING_EMAILS.md` (NEW — instructions to reset newsletter/discount state for local email testing)
+- `c:\LukessHome\lukess-landing-ecommerce\lib\whatsapp\template-router.ts` (MODIFIED - Updated `pedido_reservado_pago_en_tienda_` to 3 variables, added `pedido_entregado_simple`).
+
+### DB Changes
+- None required
 
 ### Build Verification
 - TypeScript strict check passed (exit code 0)
@@ -47,7 +48,7 @@
 ## BLOCK HISTORY
 | Block | Name | Status | Date | Commit |
 |---|---|---|---|---|
-| 17-I | Landing Email Builder (Loyalty Code & Image Fix) | ✅ DONE | 2026-03-07 | 0f0a0f9 |
+| 17-I | Landing Email Builder & WhatsApp Updates | ✅ DONE | 2026-03-07 | f14e41f |
 | FIX-1 | Fix Landing: Reserve stock + discount email validation | ✅ DONE | 2026-03-05 | 2bc9e18 |
 | 17-A-4.1 | Email Templates for Pickup + Cancellation | ✅ DONE | 2026-03-05 | a6413ea |
 | Cleanup-01 | framer-motion removal + Memory Bank | ✅ DONE | 2026-02-26 | pending |

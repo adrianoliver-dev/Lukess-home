@@ -12,14 +12,14 @@ All development blocks completed. Awaiting client data validation (Aldrin) befor
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 17-I
-- **Block Name:** Landing Email Builder (Loyalty Code & Image Fix)
+- **Block Number:** 17-M
+- **Block Name:** QA WhatsApp Templates Alignment
 - **Status:** ✅ DONE
 - **Completed:** 2026-03-07
-- **Commit:** 0f0a0f9
+- **Commit:** 0f0a0f9 & cec6909 (WhatsApp Fix) & f14e41f (Template Sync)
 
 ### Files Changed
-- `app/api/send-email/route.ts` — Fixed image URL parsing and added loyalty discount code block to completion emails.
+- `lib/whatsapp/template-router.ts` — Updated `pedido_reservado_pago_en_tienda_` to 3 variables, added `pedido_entregado_simple`.
 
 ### DB Changes
 - None required.
@@ -88,11 +88,11 @@ BUG-05	No scrollTo({top:0}) when switching modal steps (form → qr → success)
 BUG-06	"⚠️ Últimas X" badge may appear multiple times in ProductDetail	🟡 MEDIUM
 BUG-01	QR image overflows on screens < 360px	🟢 LOW
 LAST COMPLETED BLOCK
-Block: 17-I — Landing Email Builder (Loyalty Code & Image Fix)
+Block: 17-M — QA WhatsApp Templates Alignment
 
 Completed: 2026-03-07
 
-Commit: 0f0a0f9 — feat(email): add loyalty discount and improve whatsapp error handling
+Commit: PENDING — fix(whatsapp): update template variables for pago en tienda and sync template-router
 
 BLOCK HISTORY
 Block	Name	Status	Date	Commit
@@ -123,5 +123,5 @@ Cleanup-01	framer-motion removal + Memory Bank setup	✅ DONE	2026-02-26	—
 17-B-A-1	Fix Checkout receipt flow and Admin Email recipient	✅ DONE	2026-03-05	3ea40c8
 17-C	Premium Email Templates	✅ DONE	2026-03-05	pending
 17-F	Checkout Bug Fix & Final Notification QA	✅ DONE	2026-03-06	pending
-17-I	Landing Email Builder (Loyalty Code & Image Fix)	✅ DONE	2026-03-07	0f0a0f9
+17-I	Landing Email Builder & WhatsApp Updates	✅ DONE	2026-03-07	f14e41f
 17	Final Presentation Documents (Block Commercial)	⬜ PENDING	—	—

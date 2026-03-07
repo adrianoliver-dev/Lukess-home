@@ -42,7 +42,7 @@ export function getWhatsAppTemplate(
             if (isCashOnPickup) {
                 return {
                     templateName: 'pedido_reservado_pago_en_tienda_',
-                    variables: [orderNumber, name]
+                    variables: [name, orderNumber, order.total.toFixed(2)]
                 };
             }
             return null;
@@ -72,9 +72,16 @@ export function getWhatsAppTemplate(
             };
 
         case 'completed':
+            if (nextPurchaseDiscountCode && nextPurchaseDiscountCode.trim() !== '') {
+                return {
+                    templateName: 'pedido_entregado',
+                    variables: [orderNumber, name, nextPurchaseDiscountCode],
+                    headerImage: ENTREGADO_HEADER_IMAGE
+                };
+            }
             return {
-                templateName: 'pedido_entregado',
-                variables: [orderNumber, name, nextPurchaseDiscountCode],
+                templateName: 'pedido_entregado_simple',
+                variables: [orderNumber, name],
                 headerImage: ENTREGADO_HEADER_IMAGE
             };
 
