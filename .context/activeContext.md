@@ -15,8 +15,8 @@ All development blocks completed. Awaiting client data validation (Aldrin) befor
 - **Block Number:** 17-I
 - **Block Name:** Landing Email Builder (Loyalty Code & Image Fix)
 - **Status:** ✅ DONE
-- **Completed:** 2026-03-06
-- **Commit:** pending
+- **Completed:** 2026-03-07
+- **Commit:** 0f0a0f9
 
 ### Files Changed
 - `app/api/send-email/route.ts` — Fixed image URL parsing and added loyalty discount code block to completion emails.
@@ -88,11 +88,11 @@ BUG-05	No scrollTo({top:0}) when switching modal steps (form → qr → success)
 BUG-06	"⚠️ Últimas X" badge may appear multiple times in ProductDetail	🟡 MEDIUM
 BUG-01	QR image overflows on screens < 360px	🟢 LOW
 LAST COMPLETED BLOCK
-Block: 17-F — Checkout Bug Fix & Final Notification QA
+Block: 17-I — Landing Email Builder (Loyalty Code & Image Fix)
 
-Completed: 2026-03-06
+Completed: 2026-03-07
 
-Commit: pending — fix(checkout): remove image_url from order_items payload
+Commit: 0f0a0f9 — feat(email): add loyalty discount and improve whatsapp error handling
 
 BLOCK HISTORY
 Block	Name	Status	Date	Commit
@@ -123,5 +123,5 @@ Cleanup-01	framer-motion removal + Memory Bank setup	✅ DONE	2026-02-26	—
 17-B-A-1	Fix Checkout receipt flow and Admin Email recipient	✅ DONE	2026-03-05	3ea40c8
 17-C	Premium Email Templates	✅ DONE	2026-03-05	pending
 17-F	Checkout Bug Fix & Final Notification QA	✅ DONE	2026-03-06	pending
-17-I	Landing Email Builder (Loyalty Code & Image Fix)	✅ DONE	2026-03-06	pending
+17-I	Landing Email Builder (Loyalty Code & Image Fix)	✅ DONE	2026-03-07	0f0a0f9
 17	Final Presentation Documents (Block Commercial)	⬜ PENDING	—	—

@@ -5,18 +5,18 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** FIX-1
-- **Block Name:** Fix Landing Page Issues (Reservations, Discounts, Receipts)
+- **Block Number:** 17-I
+- **Block Name:** Landing Email Builder (Loyalty Code & Image Fix)
 - **Status:** ✅ DONE
-- **Started:** 2026-03-05
-- **Completed:** 2026-03-05
+- **Started:** 2026-03-06
+- **Completed:** 2026-03-07
 
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** FIX-1
-- **Block Name:** Fix Landing Page Issues (Reservations, Discounts, Receipts)
-- **Commit Landing:** 2bc9e18
+- **Block Number:** 17-I
+- **Block Name:** Landing Email Builder (Loyalty Code & Image Fix)
+- **Commit Landing:** 0f0a0f9
 
 ### Files Changed
 - `components/cart/CheckoutModal.tsx` (MODIFIED — added reserve-order call, pickup confirmation email, newsletter subscription, and admin email in `handleCashOnPickupCheckout`)
@@ -47,6 +47,7 @@
 ## BLOCK HISTORY
 | Block | Name | Status | Date | Commit |
 |---|---|---|---|---|
+| 17-I | Landing Email Builder (Loyalty Code & Image Fix) | ✅ DONE | 2026-03-07 | 0f0a0f9 |
 | FIX-1 | Fix Landing: Reserve stock + discount email validation | ✅ DONE | 2026-03-05 | 2bc9e18 |
 | 17-A-4.1 | Email Templates for Pickup + Cancellation | ✅ DONE | 2026-03-05 | a6413ea |
 | Cleanup-01 | framer-motion removal + Memory Bank | ✅ DONE | 2026-02-26 | pending |
