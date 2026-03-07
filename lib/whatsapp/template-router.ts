@@ -17,10 +17,6 @@ export type WhatsAppTemplateConfig = {
     headerImage?: string;
 };
 
-/** URL for the header image on the `pedido_entregado` template */
-const ENTREGADO_HEADER_IMAGE =
-    'https://lukess-home.vercel.app/images/entregado.png'
-
 export function getWhatsAppTemplate(
     order: OrderForWhatsApp,
     newStatus: string,
@@ -37,13 +33,13 @@ export function getWhatsAppTemplate(
         case 'pending':
             return {
                 templateName: 'pedido_recibido',
-                variables: [name, orderNumber, order.total.toFixed(2)] // {{1}}=name, {{2}}=order, {{3}}=total
+                variables: [name, orderNumber, order.total.toFixed(2)]
             };
 
         case 'pending_payment':
             if (isCashOnPickup) {
                 return {
-                    templateName: 'pedido_reservado_pago_en_tienda',
+                    templateName: 'pedido_reservado_pago_en_tienda_',
                     variables: [orderNumber, name]
                 };
             }
@@ -57,33 +53,31 @@ export function getWhatsAppTemplate(
                 };
             }
             return {
-                templateName: 'pago_confirmado',
-                variables: [orderNumber, name] // {{1}}=order, {{2}}=name
+                templateName: 'pago_confirmado', // REMOVED _u
+                variables: [orderNumber, name]
             };
 
         case 'shipped':
-            // 'shipped' in DB represents 'En camino' or 'Listo para recoger'
             if (isPickup) {
                 return {
                     templateName: 'pedido_listo_recojo',
-                    variables: [orderNumber, name, order.pickup_location ?? 'tienda'] // {{3}}=location
+                    variables: [orderNumber, name, order.pickup_location ?? 'tienda']
                 };
             }
             return {
                 templateName: 'pedido_en_camino',
-                variables: [orderNumber, name, order.shipping_address ?? 'tu dirección'] // {{3}}=address
+                variables: [orderNumber, name, order.shipping_address ?? 'tu dirección']
             };
 
         case 'completed':
             return {
-                templateName: 'pedido_entregado',
-                variables: [orderNumber, name, nextPurchaseDiscountCode], // {{1}}=order, {{2}}=name, {{3}}=discount
-                headerImage: ENTREGADO_HEADER_IMAGE
+                templateName: 'pedido_entregado', // NO HEADER IMAGE
+                variables: [orderNumber, name, nextPurchaseDiscountCode]
             };
 
         case 'cancelled':
             return {
-                templateName: 'pedido_cancelado',
+                templateName: 'pedido_cancelado', // REMOVED _u
                 variables: [orderNumber, name, order.cancellation_reason ?? 'Motivo no especificado']
             };
 
