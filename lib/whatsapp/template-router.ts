@@ -17,6 +17,8 @@ export type WhatsAppTemplateConfig = {
     headerImage?: string;
 };
 
+const ENTREGADO_HEADER_IMAGE = 'https://lukess-home.vercel.app/images/entregado.png';
+
 export function getWhatsAppTemplate(
     order: OrderForWhatsApp,
     newStatus: string,
@@ -71,13 +73,14 @@ export function getWhatsAppTemplate(
 
         case 'completed':
             return {
-                templateName: 'pedido_entregado', // NO HEADER IMAGE
-                variables: [orderNumber, name, nextPurchaseDiscountCode]
+                templateName: 'pedido_entregado',
+                variables: [orderNumber, name, nextPurchaseDiscountCode],
+                headerImage: ENTREGADO_HEADER_IMAGE
             };
 
         case 'cancelled':
             return {
-                templateName: 'pedido_cancelado', // REMOVED _u
+                templateName: 'pedido_cancelado_u',
                 variables: [orderNumber, name, order.cancellation_reason ?? 'Motivo no especificado']
             };
 
