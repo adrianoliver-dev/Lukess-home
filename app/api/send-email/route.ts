@@ -14,8 +14,8 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 interface OrderItem {
   // Landing: item.product.name / item.product.price, plus images
   product?: { name?: string; price?: number; images?: string[]; image_url?: string }
-  // Inventario JOIN: item.products.name
-  products?: { name?: string }
+  // Inventario JOIN: item.products.name, image_url
+  products?: { name?: string; image_url?: string }
   // Landing alternativo: item.name / item.price
   name?: string
   price?: number
@@ -89,7 +89,7 @@ function buildProductRow(item: OrderItem): string {
   const color = item.color ?? null
 
   // Try to resolve the image from either the direct property or the product object
-  const imageUrl = item.image_url ?? item.product?.images?.[0] ?? item.product?.image_url ?? 'https://lukess-home.vercel.app/placeholder-product.jpg'
+  const imageUrl = item.products?.image_url ?? item.image_url ?? item.product?.images?.[0] ?? item.product?.image_url ?? 'https://lukess-home.vercel.app/placeholder-product.jpg'
 
   const details = [size, color].filter(Boolean).join(' · ')
 
@@ -388,6 +388,23 @@ function buildCompletionEmailHtml(data: OrderEmailData, method: 'delivery' | 'pi
     ? 'Tu pedido fue entregado con éxito. ¡Esperamos que disfrutes tu compra!'
     : '¡Gracias por recoger tu pedido! Esperamos que te encante.'
 
+  const discountBlock = data.discountCode
+    ? `
+    <tr>
+      <td style="padding: 24px 40px 0;">
+        <div style="background-color: #111; border: 2px dashed #D4AF37; border-radius: 12px; padding: 24px; text-align: center;">
+          <p style="margin: 0; font-size: 14px; font-weight: 700; color: #e0e0e0;">Aquí tienes un regalo para tu próxima compra.</p>
+          <p style="margin: 16px 0 0; font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 2px;">Código de Descuento</p>
+          <p style="margin: 12px 0 0; font-size: 32px; font-weight: 900; color: #D4AF37; letter-spacing: 2px;">${data.discountCode}</p>
+        </div>
+        <div style="text-align: center; margin-top: 12px;">
+          <p style="margin: 0; font-size: 12px; color: #666;">* Válido por 3 días. De un solo uso.</p>
+        </div>
+      </td>
+    </tr>
+    `
+    : ''
+
   const rows = `
     ${buildHeader()}
     <tr>
@@ -406,6 +423,7 @@ function buildCompletionEmailHtml(data: OrderEmailData, method: 'delivery' | 'pi
     ${buildOrderNumber(data.orderId)}
     ${data.items && data.items.length > 0 ? buildItemsTable(data.items) : ''}
     ${buildCostBreakdown(data)}
+    ${discountBlock}
     <tr>
       <td style="padding: 32px 40px; text-align: center;">
         <p style="margin: 0 0 16px; font-size: 15px; color: #aaa;">¿Te gustó tu compra? Volvé a visitarnos</p>

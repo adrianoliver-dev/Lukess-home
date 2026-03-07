@@ -12,14 +12,14 @@ All development blocks completed. Awaiting client data validation (Aldrin) befor
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 17-F
-- **Block Name:** Checkout Bug Fix & Final Notification QA
+- **Block Number:** 17-I
+- **Block Name:** Landing Email Builder (Loyalty Code & Image Fix)
 - **Status:** ✅ DONE
 - **Completed:** 2026-03-06
 - **Commit:** pending
 
 ### Files Changed
-- `app/api/checkout/route.ts` — Removed `image_url` from `orderItems` insert payload.
+- `app/api/send-email/route.ts` — Fixed image URL parsing and added loyalty discount code block to completion emails.
 
 ### DB Changes
 - None required.
@@ -123,4 +123,5 @@ Cleanup-01	framer-motion removal + Memory Bank setup	✅ DONE	2026-02-26	—
 17-B-A-1	Fix Checkout receipt flow and Admin Email recipient	✅ DONE	2026-03-05	3ea40c8
 17-C	Premium Email Templates	✅ DONE	2026-03-05	pending
 17-F	Checkout Bug Fix & Final Notification QA	✅ DONE	2026-03-06	pending
+17-I	Landing Email Builder (Loyalty Code & Image Fix)	✅ DONE	2026-03-06	pending
 17	Final Presentation Documents (Block Commercial)	⬜ PENDING	—	—
