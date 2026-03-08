@@ -257,6 +257,9 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
               setLocationState('confirmed')
             }
           }
+
+          if (data.notify_email !== null) setNotifyByEmail(data.notify_email)
+          if (data.notify_whatsapp !== null) setNotifyByWhatsapp(data.notify_whatsapp)
         }
       } catch (err) {
         console.error('Error fetching last order for checkout prefill:', err)
@@ -1218,7 +1221,10 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                           <label
                             className="flex items-center gap-3 cursor-pointer group"
                             onClick={() => {
-                              if (notifyByEmail && !notifyByWhatsapp) return
+                              if (notifyByEmail && !notifyByWhatsapp) {
+                                toast.error('Debes mantener al menos un método de notificación activo', { position: 'bottom-center' })
+                                return
+                              }
                               setNotifyByEmail(!notifyByEmail)
                               if (emailError && notifyByEmail) setEmailError('')
                             }}
@@ -1241,7 +1247,10 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                           <label
                             className="flex items-center gap-3 cursor-pointer group"
                             onClick={() => {
-                              if (notifyByWhatsapp && !notifyByEmail) return
+                              if (notifyByWhatsapp && !notifyByEmail) {
+                                toast.error('Debes mantener al menos un método de notificación activo', { position: 'bottom-center' })
+                                return
+                              }
                               setNotifyByWhatsapp(!notifyByWhatsapp)
                             }}
                           >
