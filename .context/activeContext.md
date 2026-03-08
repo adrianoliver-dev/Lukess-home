@@ -12,14 +12,16 @@ All development blocks completed. Awaiting client data validation (Aldrin) befor
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 17-M
-- **Block Name:** QA WhatsApp Templates Alignment
+- **Block Number:** 17-N
+- **Block Name:** Final QA & Notification Preferences Sync
 - **Status:** ✅ DONE
 - **Completed:** 2026-03-07
-- **Commit:** 0f0a0f9 & cec6909 (WhatsApp Fix) & f14e41f (Template Sync)
+- **Commit:** PENDING
 
 ### Files Changed
-- `lib/whatsapp/template-router.ts` — Updated `pedido_reservado_pago_en_tienda_` to 3 variables, added `pedido_entregado_simple`.
+- `components/cart/CheckoutModal.tsx` — Prevented double submit on primary checkout button.
+- `app/api/checkout/route.ts` — Awaited the initial WhatsApp API request to prevent Vercel promise leak.
+- `app/(dashboard)/pedidos/actions.ts` (Inventory) — Added `notify_email` condition to inventory email triggers.
 
 ### DB Changes
 - None required.
