@@ -86,6 +86,9 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   const hasManuallyEditedRecipient = useRef(false)
   const modalContentRef = useRef<HTMLDivElement>(null)
 
+  // Ref for double-click prevention
+  const doubleSubmitRef = useRef(false)
+
   const scrollModalToTop = (): void => {
     setTimeout(() => {
       modalContentRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
@@ -615,6 +618,8 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   }
 
   const handleCashOnPickupCheckout = async (fd: NonNullable<typeof formData>) => {
+    if (doubleSubmitRef.current) return
+    doubleSubmitRef.current = true
     setIsProcessing(true)
     const tempOrderId = crypto.randomUUID()
     setOrderId(tempOrderId)
@@ -667,6 +672,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
       if (!response.ok) {
         toast.error(data.error || 'Error al crear la orden', { position: 'bottom-center' })
         setIsProcessing(false)
+        doubleSubmitRef.current = false
         return
       }
 
@@ -763,6 +769,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
       toast.error('Error al procesar el pedido. Intenta de nuevo.', { position: 'bottom-center' })
     } finally {
       setIsProcessing(false)
+      doubleSubmitRef.current = false
     }
   }
 
@@ -772,6 +779,8 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
       return
     }
 
+    if (doubleSubmitRef.current) return
+    doubleSubmitRef.current = true
     setIsProcessing(true)
 
     try {
@@ -953,6 +962,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
       toast.error('Error al crear la orden: ' + msg, { position: 'bottom-center' })
     } finally {
       setIsProcessing(false)
+      doubleSubmitRef.current = false
     }
   }
 
@@ -2090,9 +2100,10 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
                       <button
                         onClick={handlePaymentConfirmed}
-                        className="w-full bg-green-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-green-700 transform hover:scale-105 transition-all shadow-sm"
+                        disabled={isProcessing}
+                        className="w-full bg-green-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-green-700 transform hover:scale-105 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                       >
-                        ✓ Ya Pagué
+                        {isProcessing ? 'Procesando...' : '✓ Ya Pagué'}
                       </button>
                     </div>
                   )}

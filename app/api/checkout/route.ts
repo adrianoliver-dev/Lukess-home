@@ -348,17 +348,18 @@ export async function POST(req: NextRequest) {
       const config = getWhatsAppTemplate(orderForWhatsApp, initialStatus)
 
       if (config) {
-        sendWhatsAppMessage({
-          to: formattedPhone,
-          templateName: config.templateName,
-          variables: config.variables,
-          headerImage: config.headerImage,
-        })
-          .then(async () => {
-            // Update DB with the whatsapp message sent
-            await supabase.from('orders').update({ whatsapp_last_status_sent: initialStatus }).eq('id', order.id)
+        try {
+          await sendWhatsAppMessage({
+            to: formattedPhone,
+            templateName: config.templateName,
+            variables: config.variables,
+            headerImage: config.headerImage,
           })
-          .catch((err) => console.error('[Checkout] WhatsApp Error:', err))
+          // Update DB with the whatsapp message sent
+          await supabase.from('orders').update({ whatsapp_last_status_sent: initialStatus }).eq('id', order.id)
+        } catch (err) {
+          console.error('[Checkout] WhatsApp Error:', err)
+        }
       }
     }
 
