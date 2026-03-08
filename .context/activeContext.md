@@ -16,12 +16,13 @@ All development blocks completed. Awaiting client data validation (Aldrin) befor
 - **Block Name:** Final QA & Notification Preferences Sync
 - **Status:** ✅ DONE
 - **Completed:** 2026-03-07
-- **Commit:** PENDING
+- **Commit:** `beb2e96` (Landing Build Fix) / `95a396d` (Landing) / `75a2ec0` (Inventory)
 
 ### Files Changed
-- `components/cart/CheckoutModal.tsx` — Prevented double submit on primary checkout button.
-- `app/api/checkout/route.ts` — Awaited the initial WhatsApp API request to prevent Vercel promise leak.
-- `app/(dashboard)/pedidos/actions.ts` (Inventory) — Added `notify_email` condition to inventory email triggers.
+- `components/cart/CheckoutModal.tsx` — Prevented double submit on primary checkout button utilizing `doubleSubmitRef.current` synchronously.
+- `app/api/checkout/route.ts` — Awaited the initial WhatsApp API request to prevent Vercel promise leak and ensured `pedido_recibido` gets sent correctly.
+- `app/(dashboard)/pedidos/actions.ts` (Inventory) — Added `notify_email` condition to inventory email triggers to respect user checkout preferences.
+- `tsconfig.json` & `.gitignore` — Moved loose `*.ts` testing scripts to `.scripts/` folder and excluded them from Next.js compilation to fix Vercel build error (Duplicate function implementation).
 
 ### DB Changes
 - None required.
