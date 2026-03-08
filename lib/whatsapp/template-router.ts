@@ -75,7 +75,7 @@ export function getWhatsAppTemplate(
             if (nextPurchaseDiscountCode && nextPurchaseDiscountCode.trim() !== '') {
                 return {
                     templateName: 'pedido_entregado',
-                    variables: [name, orderNumber, nextPurchaseDiscountCode],
+                    variables: [orderNumber, name, nextPurchaseDiscountCode],
                     headerImage: ENTREGADO_HEADER_IMAGE
                 };
             }
