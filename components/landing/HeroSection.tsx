@@ -60,7 +60,7 @@ export default async function HeroSection(): Promise<React.JSX.Element> {
                 <div className="w-full md:w-[55%] lg:w-[50%] md:pr-8 z-20">
                     {/* Promo badge */}
                     <div className="mb-5 md:mb-6 hero-promo-enter">
-                        <span className="inline-flex items-center gap-2 bg-red-600 text-white px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider shadow-lg shadow-red-600/30">
+                        <span className="inline-flex items-center gap-2 bg-red-600 text-white px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider border border-gray-200 shadow-sm shadow-red-600/30">
                             <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                             Hasta 50% OFF — Nueva Colección
                         </span>
@@ -69,7 +69,7 @@ export default async function HeroSection(): Promise<React.JSX.Element> {
                     {/* Headline */}
                     <h1 className="text-3xl sm:text-4xl lg:text-6xl font-extrabold text-white leading-[1.1] tracking-tight drop-shadow-md">
                         Ropa Masculina{' '}
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-400 to-accent-300">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-lukess-gold to-accent-300">
                             de Marca
                         </span>
                         <br className="hidden sm:block" />
@@ -88,7 +88,7 @@ export default async function HeroSection(): Promise<React.JSX.Element> {
                         {/* Primary CTA — COMPRAR AHORA */}
                         <Link
                             href="#catalogo"
-                            className="inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-extrabold text-base sm:text-lg uppercase tracking-wider py-4 px-10 rounded-xl shadow-xl shadow-red-600/25 transition-all duration-200 hover:scale-[1.03] active:scale-[0.98] w-full sm:w-auto text-center"
+                            className="inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-extrabold text-base sm:text-lg uppercase tracking-wider py-4 px-10 rounded-xl border border-gray-200 shadow-sm shadow-red-600/25 transition-all duration-200 hover:scale-[1.03] active:scale-[0.98] w-full sm:w-auto text-center"
                             aria-label="Ver catálogo de productos"
                         >
                             Comprar Ahora

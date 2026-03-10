@@ -139,7 +139,7 @@ const {
 ### CartButton
 - Transición suave en hover
 - Badge con `animate-bounce` de Tailwind
-- Colores: accent-500 para el badge
+- Colores: lukess-gold para el badge
 
 ### CartDrawer
 - Animación spring de Framer Motion

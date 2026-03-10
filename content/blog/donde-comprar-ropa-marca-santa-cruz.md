@@ -58,7 +58,7 @@ Contamos con diferentes puntos de atención para tu comodidad dentro del **Merca
 * Pasillo 3, Caseta 123
 * Pasillo 5, Caseta 228-229
 
-¿Preferís comprar desde casa? Escribinos a nuestro **WhatsApp: 72643753** para consultas de tallas, pedir fotos de nuestro stock actual y coordinar tu envío de inmediato.
+¿Preferís comprar desde casa? Escribinos a nuestro **WhatsApp: 70000000** para consultas de tallas, pedir fotos de nuestro stock actual y coordinar tu envío de inmediato.
 
 ## Preguntas Frecuentes
 
@@ -69,4 +69,4 @@ Las prendas originales destacan por la calidad de sus costuras, la fidelidad de 
 Mantenemos precios totalmente razonables gracias a nuestro sistema de importación directa. Encontrarás camisas originales entre 150 y 250 Bs, pantalones resistentes entre 200 y 300 Bs, y blazers elegantes entre 400 y 600 Bs.
 
 **¿Atienden domingos o feriados?**
-Sí, nuestras celdas ubicadas en el Mercado Mutualista están abiertas los fines de semana largos y en días festivos con normalidad. Ante cualquier duda, te sugerimos contactarnos por WhatsApp al 72643753.
+Sí, nuestras celdas ubicadas en el Mercado Mutualista están abiertas los fines de semana largos y en días festivos con normalidad. Ante cualquier duda, te sugerimos contactarnos por WhatsApp al 70000000.

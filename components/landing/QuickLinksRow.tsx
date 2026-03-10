@@ -20,7 +20,7 @@ export default function QuickLinksRow() {
                         <li key={cat.id} className="snap-start shrink-0">
                             <Link
                                 href={cat.href}
-                                className="group relative block w-36 h-24 md:w-52 md:h-32 rounded-xl overflow-hidden focus:outline-none focus:ring-2 focus:ring-accent-500 shadow-lg"
+                                className="group relative block w-36 h-24 md:w-52 md:h-32 rounded-xl overflow-hidden focus:outline-none focus:ring-2 focus:ring-lukess-gold border border-gray-200 shadow-sm"
                             >
                                 {/* Image */}
                                 <Image

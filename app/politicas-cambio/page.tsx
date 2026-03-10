@@ -71,7 +71,7 @@ export default function PoliticasCambioPage() {
           Todo cambio físico debe realizarse presencialmente en nuestras instalaciones para verificar la prenda:
         </p>
         <ol className="list-decimal list-inside text-gray-700 space-y-3 ml-4">
-          <li>Comunícate a nuestro WhatsApp <strong>72643753</strong> indicando tu número de pedido y el motivo del cambio.</li>
+          <li>Comunícate a nuestro WhatsApp <strong>70000000</strong> indicando tu número de pedido y el motivo del cambio.</li>
           <li>Dirígete a nuestras casetas principales (Puesto 123 o 228) en el Mercado Mutualista.</li>
           <li>Entrega la prenda para su inspección y elige tu nuevo producto.</li>
         </ol>

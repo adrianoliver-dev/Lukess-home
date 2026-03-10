@@ -59,7 +59,7 @@ export default async function HeroBanner(): Promise<React.JSX.Element> {
             {/* Content Container */}
             <div className="relative z-20 flex flex-col justify-end h-full px-6 pb-12 mx-auto max-w-[1920px] w-full sm:px-12 md:px-16 md:justify-center">
                 <div className="max-w-xl">
-                    <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white lg:text-7xl drop-shadow-lg text-balance">
+                    <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white lg:text-7xl drop-border border-gray-200 shadow-sm text-balance">
                         Ropa Masculina Premium
                         <br />
                         <span className="text-amber-400">en Santa Cruz</span>
@@ -76,7 +76,7 @@ export default async function HeroBanner(): Promise<React.JSX.Element> {
                 <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-6">
                     <Link
                         href="/#catalogo"
-                        className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-zinc-900 transition-all bg-white rounded-xl hover:scale-[1.03] hover:bg-zinc-100 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-zinc-300 active:scale-95"
+                        className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-zinc-900 transition-all bg-white rounded-xl hover:scale-[1.03] hover:bg-zinc-100 hover:border border-gray-200 shadow-sm focus:outline-none focus:ring-4 focus:ring-zinc-300 active:scale-95"
                     >
                         Explorar la Colección
                     </Link>

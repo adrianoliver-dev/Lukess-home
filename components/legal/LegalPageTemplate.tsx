@@ -36,7 +36,7 @@ export function LegalPageTemplate({ title, lastUpdated, children }: LegalPageTem
         </div>
 
         {/* Estandarized Footer CTA for all Info Pages */}
-        <div className="bg-gray-900 text-white rounded-xl p-8 md:p-10 text-center shadow-xl border border-gray-800">
+        <div className="bg-gray-900 text-white rounded-xl p-8 md:p-10 text-center border border-gray-200 shadow-sm border border-gray-800">
           <h3 className="font-bold text-2xl md:text-3xl mb-4 text-white">
             ¿Tenés alguna duda adicional?
           </h3>

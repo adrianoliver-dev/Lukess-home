@@ -159,7 +159,7 @@ export function Confetti({ isActive, duration = 3000 }: ConfettiProps) {
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: [0, 1.5, 2], opacity: [0, 0.5, 0] }}
             transition={{ duration: 0.8 }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-gradient-radial from-accent-400/50 to-transparent"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-gradient-radial from-lukess-gold/50 to-transparent"
           />
         </div>
       )}

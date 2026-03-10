@@ -25,7 +25,7 @@ export default function Footer() {
                 href="https://www.instagram.com/lukesshome"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-gray-800 hover:bg-accent-500 text-gray-400 hover:text-white rounded-full flex items-center justify-center transition-all"
+                className="w-10 h-10 bg-gray-800 hover:bg-lukess-gold text-gray-400 hover:text-white rounded-full flex items-center justify-center transition-all"
                 aria-label="Instagram de Lukess Home"
               >
                 <Instagram className="w-5 h-5" />
@@ -34,7 +34,7 @@ export default function Footer() {
                 href="https://www.facebook.com/share/1HsWDu9YgU/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-gray-800 hover:bg-accent-500 text-gray-400 hover:text-white rounded-full flex items-center justify-center transition-all"
+                className="w-10 h-10 bg-gray-800 hover:bg-lukess-gold text-gray-400 hover:text-white rounded-full flex items-center justify-center transition-all"
                 aria-label="Facebook de Lukess Home"
               >
                 <Facebook className="w-5 h-5" />
@@ -43,7 +43,7 @@ export default function Footer() {
                 href="https://www.tiktok.com/@lukess.home"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-gray-800 hover:bg-accent-500 text-gray-400 hover:text-white rounded-full flex items-center justify-center transition-all"
+                className="w-10 h-10 bg-gray-800 hover:bg-lukess-gold text-gray-400 hover:text-white rounded-full flex items-center justify-center transition-all"
                 aria-label="TikTok de Lukess Home"
               >
                 <svg
@@ -132,14 +132,14 @@ export default function Footer() {
             </h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-accent-500 mt-0.5 shrink-0" />
+                <MapPin className="w-4 h-4 text-lukess-gold mt-0.5 shrink-0" />
                 <span className="text-sm text-gray-400">
                   Mercado Mutualista<br />
                   Santa Cruz de la Sierra, Bolivia
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <Phone className="w-4 h-4 text-accent-500 mt-0.5 shrink-0" />
+                <Phone className="w-4 h-4 text-lukess-gold mt-0.5 shrink-0" />
                 <a
                   href={`tel:${formatWhatsAppNumber().replace(' ', '')}`}
                   className="text-sm text-gray-400 hover:text-white transition-colors"
@@ -148,16 +148,16 @@ export default function Footer() {
                 </a>
               </li>
               <li className="flex items-start gap-3">
-                <Mail className="w-4 h-4 text-accent-500 mt-0.5 shrink-0" />
+                <Mail className="w-4 h-4 text-lukess-gold mt-0.5 shrink-0" />
                 <a
-                  href="mailto:dev.lukesshome@gmail.com"
+                  href="mailto:demo@lukesshome.com"
                   className="text-sm text-gray-400 hover:text-white transition-colors"
                 >
-                  dev.lukesshome@gmail.com
+                  demo@lukesshome.com
                 </a>
               </li>
               <li className="flex items-start gap-3">
-                <Mail className="w-4 h-4 text-accent-500 mt-0.5 shrink-0" />
+                <Mail className="w-4 h-4 text-lukess-gold mt-0.5 shrink-0" />
                 <span className="text-sm text-gray-400">
                   Lun - Sáb: 8:00 AM - 10:00 PM<br />
                   Dom: 9:00 AM - 9:00 PM

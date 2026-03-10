@@ -3,14 +3,7 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --color-accent-500: #c89b6e;
-  /* resto de tus variables */
-}
-
-
-
-@theme {
-  --color-accent-500: #c89b6e;
+  --color-lukess-gold: #c89b6e;
 
   --color-whatsapp: #25d366;
   --color-whatsapp-dark: #1da851;

@@ -73,7 +73,7 @@ export function FooterNewsletter() {
                             </div>
                             <h2 className="text-3xl md:text-4xl font-black text-gray-900 leading-tight tracking-tight">
                                 Desbloquea{' '}
-                                <span className="text-accent-500 font-black">
+                                <span className="text-lukess-gold font-black">
                                     10% OFF
                                 </span>
                                 <br />
@@ -92,15 +92,15 @@ export function FooterNewsletter() {
                                         type="email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        placeholder="tucorreo@gmail.com"
+                                        placeholder="demo@lukesshome.com"
                                         required
                                         disabled={isSubmitting}
-                                        className="flex-1 bg-white border border-gray-300 hover:border-gray-400 focus:border-accent-500 text-gray-900 placeholder-gray-400 rounded-xl px-4 py-3.5 text-sm focus:outline-none transition-colors disabled:opacity-60 shadow-sm"
+                                        className="flex-1 bg-white border border-gray-300 hover:border-gray-400 focus:border-lukess-gold text-gray-900 placeholder-gray-400 rounded-xl px-4 py-3.5 text-sm focus:outline-none transition-colors disabled:opacity-60 shadow-sm"
                                     />
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="bg-gray-900 hover:bg-black text-white font-bold px-5 py-3.5 rounded-xl text-sm transition-all flex items-center gap-2 whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
+                                        className="bg-gray-900 hover:bg-black text-white font-bold px-5 py-3.5 rounded-xl text-sm transition-all flex items-center gap-2 whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed shadow-md hover:border border-gray-200 shadow-sm"
                                     >
                                         {isSubmitting ? (
                                             <Loader2 className="w-4 h-4 animate-spin" />

@@ -64,7 +64,7 @@ export function WishlistClient({ allProducts }: WishlistClientProps) {
       <motion.div
         initial={{ opacity: 0, y: -20, scale: 0.9 }}
         animate={{ opacity: t.visible ? 1 : 0, y: t.visible ? 0 : -20, scale: t.visible ? 1 : 0.9 }}
-        className="flex items-center gap-3 bg-white border border-gray-200 shadow-xl rounded-xl px-4 py-3"
+        className="flex items-center gap-3 bg-white border border-gray-200 border border-gray-200 shadow-sm rounded-xl px-4 py-3"
       >
         <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
           <Check className="w-5 h-5 text-gray-900" />

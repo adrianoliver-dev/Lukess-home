@@ -168,7 +168,7 @@ export default function UbicacionSection() {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-3 bg-whatsapp hover:bg-whatsapp-dark text-white px-6 py-4 rounded-2xl transition-all duration-300 hover:scale-[1.02] shadow-lg shadow-whatsapp/20 w-full sm:w-auto sm:inline-flex"
+                className="group flex items-center gap-3 bg-whatsapp hover:bg-whatsapp-dark text-white px-6 py-4 rounded-2xl transition-all duration-300 hover:scale-[1.02] border border-gray-200 shadow-sm shadow-whatsapp/20 w-full sm:w-auto sm:inline-flex"
               >
                 <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center shrink-0">
                   <MessageCircle className="w-5 h-5" />
@@ -203,9 +203,9 @@ export default function UbicacionSection() {
             {/* ── Columna derecha – Mapa ── */}
             <motion.div variants={slideRight} className="relative">
               {/* Marco decorativo */}
-              <div className="absolute -inset-2 bg-gradient-to-br from-gray-200 via-gray-100 to-accent-500/20 rounded-[20px] opacity-60 blur-sm" />
+              <div className="absolute -inset-2 bg-gradient-to-br from-gray-200 via-gray-100 to-lukess-gold/20 rounded-[20px] opacity-60 blur-sm" />
 
-              <div className="relative bg-white rounded-2xl border-2 border-gray-300 overflow-hidden shadow-xl shadow-gray-500/10">
+              <div className="relative bg-white rounded-2xl border-2 border-gray-300 overflow-hidden border border-gray-200 shadow-sm shadow-gray-500/10">
                 <iframe
                   src={MAPS_EMBED_SRC}
                   width="100%"

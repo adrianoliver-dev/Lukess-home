@@ -10,9 +10,9 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
 
 const variantStyles: Record<CardVariant, string> = {
   default: "bg-white shadow-md",
-  elevated: "bg-white shadow-xl",
+  elevated: "bg-white border border-gray-200 shadow-sm",
   outlined: "bg-white border border-gray-200",
-  glass: "bg-white/80 backdrop-blur-md shadow-lg border border-white/20",
+  glass: "bg-white/80 backdrop-blur-md border border-gray-200 shadow-sm border border-white/20",
 };
 
 const paddingStyles: Record<NonNullable<CardProps["padding"]>, string> = {
@@ -42,7 +42,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
           transition-all duration-300
           ${variantStyles[variant]}
           ${paddingStyles[padding]}
-          ${hover ? "hover:shadow-2xl hover:-translate-y-1" : ""}
+          ${hover ? "hover:border border-gray-200 shadow-sm hover:-translate-y-1" : ""}
           ${className}
         `}
         {...props}

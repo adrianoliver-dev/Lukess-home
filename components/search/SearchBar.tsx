@@ -96,7 +96,7 @@ export function SearchBar() {
         )}
         {isLoading && (
           <div className="absolute right-3 top-1/2 -translate-y-1/2">
-            <Loader2 className="w-5 h-5 text-accent-400 animate-spin" />
+            <Loader2 className="w-5 h-5 text-lukess-gold animate-spin" />
           </div>
         )}
       </div>
@@ -108,7 +108,7 @@ export function SearchBar() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="absolute top-full mt-2 w-full bg-white rounded-xl shadow-2xl border-2 border-gray-100 z-50 max-h-96 overflow-y-auto"
+            className="absolute top-full mt-2 w-full bg-white rounded-xl border border-gray-200 shadow-sm border-2 border-gray-100 z-50 max-h-96 overflow-y-auto"
           >
             {results.map((product) => {
               const stock = getTotalStock(product)
@@ -159,7 +159,7 @@ export function SearchBar() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="absolute top-full mt-2 w-full bg-white rounded-xl shadow-xl border-2 border-gray-100 p-4 text-center text-gray-500"
+          className="absolute top-full mt-2 w-full bg-white rounded-xl border border-gray-200 shadow-sm border-2 border-gray-100 p-4 text-center text-gray-500"
         >
           No se encontraron productos
         </motion.div>

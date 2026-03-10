@@ -155,7 +155,7 @@ export function AuthModal({
             transition={{ duration: 0.2, ease: 'easeOut' }}
             className="fixed inset-0 z-[61] flex items-center justify-center p-4 pointer-events-none"
           >
-            <div className="w-full max-w-md bg-[#111111] rounded-2xl shadow-2xl border border-gray-800 pointer-events-auto overflow-hidden">
+            <div className="w-full max-w-md bg-[#111111] rounded-2xl border border-gray-200 shadow-sm border border-gray-800 pointer-events-auto overflow-hidden">
               {/* Header */}
               <div className="px-6 pt-6 pb-4 border-b border-gray-800 flex items-center justify-between">
                 <div>
@@ -278,7 +278,7 @@ export function AuthModal({
                       onChange={(e) =>
                         setForm({ ...form, email: e.target.value })
                       }
-                      placeholder="tucorreo@gmail.com"
+                      placeholder="demo@lukesshome.com"
                       className={inputClass('email')}
                     />
                     {errors.email && (

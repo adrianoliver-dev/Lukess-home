@@ -38,7 +38,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
             e.stopPropagation();
             setIsZoomed(true);
           }}
-          className="absolute bottom-4 right-4 p-2 bg-white/90 rounded-full shadow-lg md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 hover:bg-white z-10 flex items-center justify-center border border-gray-100"
+          className="absolute bottom-4 right-4 p-2 bg-white/90 rounded-full border border-gray-200 shadow-sm md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 hover:bg-white z-10 flex items-center justify-center border border-gray-100"
           aria-label="Ampliar imagen"
         >
           <ZoomIn className="w-5 h-5 text-gray-900" />
@@ -49,14 +49,14 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
           <>
             <button
               onClick={goToPrev}
-              className="absolute left-2 top-1/2 -translate-y-1/2 p-2 bg-white/90 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg hover:bg-white"
+              className="absolute left-2 top-1/2 -translate-y-1/2 p-2 bg-white/90 rounded-full opacity-0 group-hover:opacity-100 transition-opacity border border-gray-200 shadow-sm hover:bg-white"
               aria-label="Imagen anterior"
             >
               <ChevronLeft className="w-5 h-5 text-gray-800" />
             </button>
             <button
               onClick={goToNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-white/90 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg hover:bg-white"
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-white/90 rounded-full opacity-0 group-hover:opacity-100 transition-opacity border border-gray-200 shadow-sm hover:bg-white"
               aria-label="Imagen siguiente"
             >
               <ChevronRight className="w-5 h-5 text-gray-800" />

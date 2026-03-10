@@ -41,7 +41,7 @@ export function WishlistButton({ productId, productName }: WishlistButtonProps) 
       whileHover={{ scale: 1.1 }}
       className={`absolute top-3 right-3 z-20 p-2.5 rounded-full backdrop-blur-sm transition-all duration-300 ${
         isFavorite
-          ? 'bg-red-500 text-white shadow-lg shadow-red-500/30'
+          ? 'bg-red-500 text-white border border-gray-200 shadow-sm shadow-red-500/30'
           : 'bg-white/90 text-gray-400 hover:text-red-500 hover:bg-white shadow-md'
       }`}
       aria-label={isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos'}

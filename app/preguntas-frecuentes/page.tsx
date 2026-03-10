@@ -21,7 +21,7 @@ export default function PreguntasFrecuentesPage() {
         <div className="space-y-6">
           <FAQItem
             question="¿Cómo puedo comprar en Lukess Home?"
-            answer="Tenés 3 opciones: (1) Navegar el catálogo web, agregar productos al carrito y hacer tu pedido online. (2) Escribirnos directo por WhatsApp al 72643753. (3) Visitar nuestras tiendas físicas en el Mercado Mutualista."
+            answer="Tenés 3 opciones: (1) Navegar el catálogo web, agregar productos al carrito y hacer tu pedido online. (2) Escribirnos directo por WhatsApp al 70000000. (3) Visitar nuestras tiendas físicas en el Mercado Mutualista."
           />
 
           <FAQItem

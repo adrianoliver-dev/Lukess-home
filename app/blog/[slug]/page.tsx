@@ -178,7 +178,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 />
 
                 {/* CTA Section */}
-                <div className="mt-16 p-8 bg-gradient-to-r from-accent-50 to-accent-100 rounded-lg text-center">
+                <div className="mt-16 p-8 bg-gray-50 rounded-lg text-center">
                     <h3 className="text-2xl font-bold mb-4">
                         ¿Te gustó este artículo?
                     </h3>

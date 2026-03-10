@@ -138,7 +138,7 @@ export default function PuestosSection() {
               <motion.div
                 key={puesto.id}
                 variants={cardVariants}
-                className="group relative bg-white rounded-2xl border-2 border-gray-100 hover:border-gray-400 p-6 lg:p-8 transition-all duration-300 hover:shadow-xl hover:shadow-gray-500/10 hover:-translate-y-1"
+                className="group relative bg-white rounded-2xl border-2 border-gray-100 hover:border-gray-400 p-6 lg:p-8 transition-all duration-300 hover:border border-gray-200 shadow-sm hover:shadow-gray-500/10 hover:-translate-y-1"
               >
                 {/* Número decorativo */}
                 <span className="absolute top-4 right-4 text-7xl font-black text-gray-100 group-hover:text-gray-200 transition-colors duration-300 leading-none select-none">

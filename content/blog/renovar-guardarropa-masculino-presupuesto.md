@@ -79,4 +79,4 @@ Encontranos en el **Mercado Mutualista**:
 * **Pasillo 3, Caseta 123**
 * **Pasillo 5, Caseta 228-229**
 
-¿Preferís ver el catálogo antes de venir? Escribinos al **WhatsApp 72643753** y te mandamos fotos del stock disponible hoy, con tallas y precios. Sin vuelta larga.
+¿Preferís ver el catálogo antes de venir? Escribinos al **WhatsApp 70000000** y te mandamos fotos del stock disponible hoy, con tallas y precios. Sin vuelta larga.

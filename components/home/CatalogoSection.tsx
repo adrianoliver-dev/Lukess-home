@@ -149,7 +149,7 @@ export function CatalogoSection() {
                   px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold
                   transition-all duration-300
                   ${activeFilter === cat
-                    ? "bg-gray-900 text-white shadow-lg shadow-gray-500/25 scale-105"
+                    ? "bg-gray-900 text-white border border-gray-200 shadow-sm shadow-gray-500/25 scale-105"
                     : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-800"
                   }
                 `}
@@ -275,7 +275,7 @@ export function CatalogoSection() {
               href={buildWhatsAppUrl("Hola Lukess Home, quiero consultar sobre otros productos")}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg shadow-secondary-800/25"
+              className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 border border-gray-200 shadow-sm shadow-secondary-800/25"
             >
               <MessageCircle className="w-4 h-4" />
               Pregunta por más productos

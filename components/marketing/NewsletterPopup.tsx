@@ -124,9 +124,9 @@ export function NewsletterPopup() {
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
           >
-            <div className="bg-zinc-950 border border-zinc-800 rounded-2xl shadow-2xl max-w-md w-full p-8 relative pointer-events-auto overflow-hidden">
+            <div className="bg-zinc-950 border border-zinc-800 rounded-2xl border border-gray-200 shadow-sm max-w-md w-full p-8 relative pointer-events-auto overflow-hidden">
               {/* Background glow */}
-              <div className="absolute -top-20 -right-20 w-48 h-48 bg-accent-500/20 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute -top-20 -right-20 w-48 h-48 bg-lukess-gold/20 rounded-full blur-3xl pointer-events-none" />
 
               {/* Close button */}
               <button
@@ -139,17 +139,17 @@ export function NewsletterPopup() {
 
               {/* Content */}
               <div className="space-y-6 relative">
-                <div className="inline-flex p-4 bg-accent-500/15 border border-accent-500/30 rounded-2xl">
-                  <Gift className="w-10 h-10 text-accent-400" />
+                <div className="inline-flex p-4 bg-lukess-gold/15 border border-lukess-gold/30 rounded-2xl">
+                  <Gift className="w-10 h-10 text-lukess-gold" />
                 </div>
 
                 <div>
-                  <p className="text-xs font-bold text-accent-400 uppercase tracking-widest mb-2">
+                  <p className="text-xs font-bold text-lukess-gold uppercase tracking-widest mb-2">
                     Oferta para nuevos clientes
                   </p>
                   <h3 className="text-3xl font-black text-white leading-tight tracking-tight">
                     Desbloquea{' '}
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-400 to-emerald-400">
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-lukess-gold to-emerald-400">
                       10% OFF
                     </span>
                     {' '}en tu primera compra.
@@ -164,8 +164,8 @@ export function NewsletterPopup() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="tucorreo@gmail.com"
-                    className="w-full bg-zinc-800 border-2 border-zinc-700 focus:border-accent-500 text-white placeholder-zinc-500 rounded-xl px-4 py-3 text-sm focus:outline-none transition-colors"
+                    placeholder="demo@lukesshome.com"
+                    className="w-full bg-zinc-800 border-2 border-zinc-700 focus:border-lukess-gold text-white placeholder-zinc-500 rounded-xl px-4 py-3 text-sm focus:outline-none transition-colors"
                     required
                     disabled={isSubmitting}
                   />
@@ -173,7 +173,7 @@ export function NewsletterPopup() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-white text-zinc-900 py-3.5 rounded-xl font-black text-sm hover:bg-zinc-100 transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full bg-white text-zinc-900 py-3.5 rounded-xl font-black text-sm hover:bg-zinc-100 transition-colors border border-gray-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {isSubmitting && <Loader2 className="w-4 h-4 animate-spin" />}
                     {isSubmitting ? 'Un momento...' : 'OBTENER MI 10% OFF →'}

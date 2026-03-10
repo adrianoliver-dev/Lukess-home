@@ -35,7 +35,7 @@ export default function TrustBanner(): React.JSX.Element {
                                 className="flex items-center gap-2.5 shrink-0 min-w-max"
                             >
                                 <Icon
-                                    className="w-4 h-4 md:w-5 md:h-5 text-accent-400 shrink-0"
+                                    className="w-4 h-4 md:w-5 md:h-5 text-lukess-gold shrink-0"
                                     aria-hidden="true"
                                 />
                                 <span className="text-xs sm:text-sm text-neutral-300 font-medium whitespace-nowrap">

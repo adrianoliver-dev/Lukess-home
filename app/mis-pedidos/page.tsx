@@ -366,7 +366,7 @@ function OrderCard({ order }: { order: Order }) {
                     href={order.maps_link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-accent-500 hover:underline inline-flex items-center gap-1 mt-1"
+                    className="text-xs text-lukess-gold hover:underline inline-flex items-center gap-1 mt-1"
                   >
                     <MapPin className="w-3 h-3" />
                     Ver ubicación en Maps
@@ -398,7 +398,7 @@ function OrderCard({ order }: { order: Order }) {
                     href={PICKUP_LOCATIONS.find(p => p.id === order.pickup_location)!.mapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-accent-500 hover:underline inline-flex items-center gap-1 mt-1"
+                    className="text-xs text-lukess-gold hover:underline inline-flex items-center gap-1 mt-1"
                   >
                     <MapPin className="w-3 h-3" />
                     Ver ubicación del puesto

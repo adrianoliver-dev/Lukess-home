@@ -102,7 +102,7 @@ export function QuickViewModal({
       <motion.div
         initial={{ opacity: 0, y: -20, scale: 0.9 }}
         animate={{ opacity: t.visible ? 1 : 0, y: t.visible ? 0 : -20, scale: t.visible ? 1 : 0.9 }}
-        className="flex items-center gap-3 bg-white border-2 border-green-200 shadow-xl rounded-xl px-4 py-3"
+        className="flex items-center gap-3 bg-white border-2 border-green-200 border border-gray-200 shadow-sm rounded-xl px-4 py-3"
       >
         <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
           <Check className="w-5 h-5 text-green-600" />
@@ -147,7 +147,7 @@ export function QuickViewModal({
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.2, ease: 'easeOut' }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden pointer-events-auto"
+              className="bg-white rounded-2xl border border-gray-200 shadow-sm w-full max-w-4xl max-h-[90vh] overflow-hidden pointer-events-auto"
             >
               {/* Header */}
               <div className="flex items-center justify-between p-4 border-b border-gray-200">
@@ -181,14 +181,14 @@ export function QuickViewModal({
                       <>
                         <button
                           onClick={prevImage}
-                          className="absolute left-2 top-1/2 -translate-y-1/2 p-2 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all"
+                          className="absolute left-2 top-1/2 -translate-y-1/2 p-2 bg-white/90 hover:bg-white rounded-full border border-gray-200 shadow-sm transition-all"
                           aria-label="Imagen anterior"
                         >
                           <ChevronLeft className="w-5 h-5 text-gray-800" />
                         </button>
                         <button
                           onClick={nextImage}
-                          className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all"
+                          className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-white/90 hover:bg-white rounded-full border border-gray-200 shadow-sm transition-all"
                           aria-label="Imagen siguiente"
                         >
                           <ChevronRight className="w-5 h-5 text-gray-800" />
@@ -214,12 +214,12 @@ export function QuickViewModal({
                     {/* Badges */}
                     <div className="absolute top-3 left-3 flex flex-col gap-2">
                       {product.is_new && (
-                        <span className="bg-gradient-to-r from-amber-400 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                        <span className="bg-gray-900 text-white px-3 py-1 rounded-md text-xs font-bold border border-gray-200 shadow-sm uppercase tracking-widest">
                           ✨ NUEVO
                         </span>
                       )}
                       {discount > 0 && (
-                        <span className="bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                        <span className="bg-gray-900 text-white px-3 py-1 rounded-md text-xs font-bold border border-gray-200 shadow-sm uppercase tracking-widest">
                           -{discount}% OFF
                         </span>
                       )}
@@ -261,7 +261,7 @@ export function QuickViewModal({
                     {product.brand && (
                       <>
                         <span className="text-gray-300">•</span>
-                        <span className="text-xs bg-accent-500/20 text-accent-500 px-2 py-0.5 rounded-full font-semibold">
+                        <span className="text-xs bg-lukess-gold/20 text-lukess-gold px-2 py-0.5 rounded-full font-semibold">
                           {product.brand}
                         </span>
                       </>
@@ -400,7 +400,7 @@ export function QuickViewModal({
                       disabled={addToCartDisabled}
                       className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl text-base font-bold transition-all duration-300 ${addToCartDisabled
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                        : 'bg-gradient-to-r from-gray-600 to-gray-700 text-white hover:from-gray-700 hover:to-gray-800 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]'
+                        : 'bg-gray-900 text-white hover:bg-black font-bold uppercase tracking-widest text-sm rounded-md transition-colors'
                         }`}
                     >
                       <ShoppingCart className="w-5 h-5" />

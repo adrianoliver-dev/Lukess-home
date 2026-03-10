@@ -46,7 +46,7 @@ export function CountdownTimer({ targetDate, message = 'Oferta termina en' }: Co
 
   if (!mounted) {
     return (
-      <div className="bg-gradient-to-r from-accent-500 to-accent-400 text-white px-4 py-3 rounded-lg shadow-lg">
+      <div className="bg-gray-900 text-white px-4 py-3 rounded-lg border border-gray-200 shadow-sm">
         <div className="flex items-center justify-center gap-3">
           <Clock className="w-5 h-5" />
           <span className="font-semibold">{message}</span>
@@ -62,7 +62,7 @@ export function CountdownTimer({ targetDate, message = 'Oferta termina en' }: Co
   }
 
   return (
-    <div className="bg-gradient-to-r from-accent-500 to-accent-400 text-white px-4 py-3 rounded-lg shadow-lg mb-12">
+    <div className="bg-gray-900 text-white px-4 py-3 rounded-lg border border-gray-200 shadow-sm mb-12">
       <div className="flex items-center justify-center gap-3 flex-wrap">
         <Clock className="w-5 h-5" />
         <span className="font-semibold">{message}:</span>

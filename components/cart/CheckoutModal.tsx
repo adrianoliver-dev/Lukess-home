@@ -533,7 +533,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
     const phoneRegex = /^\d{7,8}$/
     if (!phoneRegex.test(customerData.phone.replace(/\s/g, ''))) {
-      toast.error('Número de teléfono inválido (ej: 72643753)', { position: 'bottom-center' })
+      toast.error('Número de teléfono inválido (ej: 70000000)', { position: 'bottom-center' })
       return
     }
 
@@ -1034,11 +1034,11 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
               exit={{ scale: 0.9, opacity: 0 }}
               className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
             >
-              <div ref={modalContentRef} className="bg-white rounded-2xl shadow-2xl w-full max-w-lg pointer-events-auto max-h-[90vh] overflow-y-auto">
+              <div ref={modalContentRef} className="bg-white rounded-2xl border border-gray-200 shadow-sm w-full max-w-lg pointer-events-auto max-h-[90vh] overflow-y-auto">
                 {/* Header */}
                 <div
                   className={`p-6 border-b-2 border-gray-100 flex items-center justify-between rounded-t-2xl transition-colors ${step === 'success'
-                    ? 'bg-gradient-to-r from-green-500 to-green-600 text-white'
+                    ? 'bg-gray-900 text-white'
                     : 'bg-gray-900 text-white'
                     }`}
                 >
@@ -1159,7 +1159,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                               setCustomerData({ ...customerData, phone: e.target.value })
                             }
                             className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-gray-500 focus:outline-none"
-                            placeholder="72643753"
+                            placeholder="70000000"
                           />
                         </div>
 
@@ -1182,7 +1182,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                               ? 'border-red-400 focus:border-red-500'
                               : 'border-gray-200 focus:border-gray-500'
                               }`}
-                            placeholder="tucorreo@gmail.com"
+                            placeholder="demo@lukesshome.com"
                           />
                           {emailError && (
                             <p className="mt-1 text-xs text-red-500">{emailError}</p>
@@ -1230,7 +1230,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             }}
                           >
                             <div className={`w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-colors ${notifyByEmail
-                              ? 'bg-accent-500 border-accent-500'
+                              ? 'bg-lukess-gold border-lukess-gold'
                               : 'bg-transparent border-gray-500 group-hover:border-gray-300'
                               }`}>
                               {notifyByEmail && (
@@ -1255,7 +1255,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             }}
                           >
                             <div className={`w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-colors ${notifyByWhatsapp
-                              ? 'bg-accent-500 border-accent-500'
+                              ? 'bg-lukess-gold border-lukess-gold'
                               : 'bg-transparent border-gray-500 group-hover:border-gray-300'
                               }`}>
                               {notifyByWhatsapp && (
@@ -1522,7 +1522,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                         <button
                                           type="button"
                                           onClick={() => setDeliveryMethod('pickup')}
-                                          className="text-xs text-accent-500 font-semibold underline hover:no-underline w-full text-center"
+                                          className="text-xs text-lukess-gold font-semibold underline hover:no-underline w-full text-center"
                                         >
                                           🏪 Ver opciones de recojo →
                                         </button>
@@ -1589,7 +1589,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                           href={mapsLink}
                                           target="_blank"
                                           rel="noopener noreferrer"
-                                          className="inline-block text-xs text-accent-500 hover:underline"
+                                          className="inline-block text-xs text-lukess-gold hover:underline"
                                         >
                                           Ver en Maps →
                                         </a>
@@ -1792,7 +1792,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     onClick={(e) => e.stopPropagation()}
-                                    className="text-xs text-accent-500 hover:underline whitespace-nowrap flex-shrink-0 mt-0.5"
+                                    className="text-xs text-lukess-gold hover:underline whitespace-nowrap flex-shrink-0 mt-0.5"
                                   >
                                     {loc.mapsLabel}
                                   </a>
@@ -2053,7 +2053,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                 </p>
                               )}
                             </div>
-                            <label className="text-xs text-accent-500 hover:underline cursor-pointer flex-shrink-0">
+                            <label className="text-xs text-lukess-gold hover:underline cursor-pointer flex-shrink-0">
                               Cambiar imagen
                               <input
                                 type="file"
@@ -2128,7 +2128,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         transition={{ type: 'spring', duration: 0.8, bounce: 0.5 }}
                         className="relative"
                       >
-                        <div className="w-28 h-28 mx-auto bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center shadow-2xl shadow-green-500/30">
+                        <div className="w-28 h-28 mx-auto bg-gray-900 text-white rounded-full flex items-center justify-center border border-gray-200 shadow-sm shadow-green-500/30">
                           <motion.div
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
@@ -2151,11 +2151,11 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         transition={{ delay: 0.4 }}
                       >
                         <div className="flex items-center justify-center gap-2 mb-2">
-                          <PartyPopper className="w-6 h-6 text-accent-500" />
-                          <h3 className="text-3xl font-black bg-gradient-to-r from-green-600 to-gray-600 bg-clip-text text-transparent">
+                          <PartyPopper className="w-6 h-6 text-lukess-gold" />
+                          <h3 className="text-3xl font-black text-gray-900">
                             ¡Felicidades!
                           </h3>
-                          <PartyPopper className="w-6 h-6 text-accent-500 scale-x-[-1]" />
+                          <PartyPopper className="w-6 h-6 text-lukess-gold scale-x-[-1]" />
                         </div>
                         <p className="text-lg text-gray-600 font-medium">
                           Tu orden ha sido confirmada
@@ -2166,7 +2166,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.5 }}
-                        className="bg-gradient-to-r from-gray-50 to-accent-500/10 p-4 rounded-xl border-2 border-gray-200"
+                        className="bg-gray-50 p-4 rounded-xl border-2 border-gray-200"
                       >
                         <p className="text-sm text-gray-600 mb-1">Número de Orden</p>
                         <p className="text-2xl font-mono font-black text-gray-900 tracking-wider">
@@ -2222,7 +2222,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                 href={mapsLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-block text-xs text-accent-500 hover:underline"
+                                className="inline-block text-xs text-lukess-gold hover:underline"
                               >
                                 Ver mi ubicación en Maps →
                               </a>
@@ -2243,7 +2243,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                               href={selectedPickup.mapsUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-block text-xs text-accent-500 hover:underline"
+                              className="inline-block text-xs text-lukess-gold hover:underline"
                             >
                               {selectedPickup.mapsLabel}
                             </a>
@@ -2437,7 +2437,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                 key={benefit}
                                 className="flex items-center gap-2 text-sm text-gray-600"
                               >
-                                <span className="text-accent-500 font-bold">✓</span>
+                                <span className="text-lukess-gold font-bold">✓</span>
                                 {benefit}
                               </li>
                             ))}
@@ -2501,7 +2501,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
               src={receiptPreviewUrl}
               alt="Comprobante de pago"
               style={{ maxWidth: '90vw', maxHeight: '85vh' }}
-              className="rounded-xl shadow-2xl object-contain"
+              className="rounded-xl border border-gray-200 shadow-sm object-contain"
               onClick={(e) => e.stopPropagation()}
             />
           </motion.div>

@@ -18,7 +18,7 @@ export default function GarantiaAutenticidadPage() {
             <section className="mb-12">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">¿Cómo Garantizamos la Originalidad?</h2>
                 <div className="grid md:grid-cols-2 gap-6">
-                    <div className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-xl p-6">
+                    <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
                         <div className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center mb-4">
                             <span className="text-2xl">📦</span>
                         </div>
@@ -28,7 +28,7 @@ export default function GarantiaAutenticidadPage() {
                         </p>
                     </div>
 
-                    <div className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-xl p-6">
+                    <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
                         <div className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center mb-4">
                             <span className="text-2xl">🏷️</span>
                         </div>
@@ -38,7 +38,7 @@ export default function GarantiaAutenticidadPage() {
                         </p>
                     </div>
 
-                    <div className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-xl p-6">
+                    <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
                         <div className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center mb-4">
                             <span className="text-2xl">🔍</span>
                         </div>
@@ -48,7 +48,7 @@ export default function GarantiaAutenticidadPage() {
                         </p>
                     </div>
 
-                    <div className="bg-gradient-to-br from-gray-50 to-gray-100 border border-gray-200 rounded-xl p-6">
+                    <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
                         <div className="w-12 h-12 bg-gray-900 rounded-full flex items-center justify-center mb-4">
                             <span className="text-2xl">✅</span>
                         </div>

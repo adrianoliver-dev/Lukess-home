@@ -62,7 +62,7 @@ const showAddedToast = (productName: string) => {
     <motion.div
       initial={{ opacity: 0, x: 100, scale: 0.9 }}
       animate={{ opacity: t.visible ? 1 : 0, x: t.visible ? 0 : 100, scale: t.visible ? 1 : 0.9 }}
-      className="flex items-center gap-3 bg-white border-2 border-green-200 shadow-xl rounded-xl px-4 py-3 pointer-events-none"
+      className="flex items-center gap-3 bg-white border-2 border-green-200 border border-gray-200 shadow-sm rounded-xl px-4 py-3 pointer-events-none"
     >
       <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
         <Check className="w-5 h-5 text-green-600" />
@@ -389,7 +389,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                 onClick={() => { clearAllFilters(); setShowNew(true) }}
                 className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
                   showNew
-                    ? 'bg-gradient-to-r from-amber-400 to-orange-500 text-white shadow-lg shadow-amber-400/30 scale-105'
+                    ? 'bg-gray-900 text-white border border-gray-200 shadow-sm uppercase tracking-widest scale-105 rounded-md'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-800'
                 }`}
               >
@@ -400,7 +400,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                 onClick={() => { clearAllFilters(); setShowDiscount(true) }}
                 className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
                   showDiscount
-                    ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg shadow-red-500/30 scale-105'
+                    ? 'bg-gray-900 text-white border border-gray-200 shadow-sm uppercase tracking-widest scale-105 rounded-md'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-800'
                 }`}
               >
@@ -700,7 +700,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                 </div>
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">No se encontraron productos</h3>
                 <p className="text-gray-500 text-center mb-6 max-w-md">No hay productos que coincidan con los filtros seleccionados. Intenta ajustar tus criterios de búsqueda.</p>
-                <button onClick={clearAllFilters} className="inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg">
+                <button onClick={clearAllFilters} className="inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 border border-gray-200 shadow-sm">
                   <X className="w-4 h-4" />
                   Limpiar todos los filtros
                 </button>
@@ -787,7 +787,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
               <div className="text-center mt-8">
                 <button
                   onClick={() => setDisplayLimit(prev => prev + 12)}
-                  className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-900 text-white px-8 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+                  className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-900 text-white px-8 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 border border-gray-200 shadow-sm"
                 >
                   <Plus className="w-4 h-4" />
                   Cargar más productos ({filteredProducts.length - displayLimit} restantes)
@@ -801,7 +801,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                 href={buildWhatsAppUrl("Hola Lukess Home, quiero consultar sobre otros productos")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-lg shadow-secondary-800/25"
+                className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 border border-gray-200 shadow-sm shadow-secondary-800/25"
               >
                 <Plus className="w-4 h-4" />
                 Pregunta por más productos

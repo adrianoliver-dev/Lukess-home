@@ -19,7 +19,7 @@ export default function PrivacidadPage() {
         <p className="text-gray-700 mb-4">
           <strong>Razón Social:</strong> Lukess Home<br />
           <strong>Domicilio:</strong> Mercado Mutualista, Santa Cruz de la Sierra, Bolivia<br />
-          <strong>Contacto:</strong> +591 72643753 (WhatsApp)
+          <strong>Contacto:</strong> +591 70000000 (WhatsApp)
         </p>
         <p className="text-gray-700">
           Somos responsables del tratamiento seguro y confidencial de toda la información personal que nos proporcionas al usar nuestros servicios.
@@ -105,7 +105,7 @@ export default function PrivacidadPage() {
           <li><strong>Portabilidad:</strong> Recibir tus datos en formato estructurado para transferirlos a otro servicio.</li>
         </ul>
         <p className="text-gray-700 mt-4">
-          Para ejercer cualquiera de estos derechos, contáctanos al <strong>+591 72643753</strong> (WhatsApp) o envía un correo a través de nuestro formulario de contacto.
+          Para ejercer cualquiera de estos derechos, contáctanos al <strong>+591 70000000</strong> (WhatsApp) o envía un correo a través de nuestro formulario de contacto.
         </p>
       </section>
 
