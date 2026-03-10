@@ -168,13 +168,13 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
 
                 <div className="flex items-center justify-between">
                   <span className="text-gray-700 font-semibold">Total:</span>
-                  <span className="text-2xl font-bold text-gray-900">
+                  <span className="text-2xl font-black text-gray-900">
                     Bs {total.toFixed(2)}
                   </span>
                 </div>
                 <button
                   onClick={() => { onCheckout(); onClose(); }}
-                  className="w-full bg-gray-900 hover:bg-black text-white font-bold uppercase py-4 rounded-none transition-colors"
+                  className="w-full bg-gray-900 text-white hover:bg-black font-bold uppercase tracking-widest text-sm rounded-md transition-colors py-4"
                 >
                   Proceder al Pago
                 </button>

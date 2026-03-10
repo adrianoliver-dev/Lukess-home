@@ -1534,7 +1534,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                       <button
                                         type="button"
                                         onClick={handleConfirmLocation}
-                                        className="w-full bg-gray-900 hover:bg-black text-white font-bold py-2.5 rounded-xl text-sm transition-all"
+                                        className="w-full bg-gray-900 text-white hover:bg-black font-bold uppercase tracking-widest text-sm py-2.5 rounded-md transition-colors"
                                       >
                                         ✓ Confirmar esta ubicación
                                       </button>
@@ -1925,7 +1925,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
                         <div className="border-t border-gray-200 pt-2 flex items-center justify-between">
                           <span className="text-gray-700 font-semibold">Total a Pagar:</span>
-                          <span className="text-3xl font-bold text-gray-900">
+                          <span className="text-3xl font-black text-gray-900">
                             Bs {orderTotal.toFixed(2)}
                           </span>
                         </div>
@@ -1935,7 +1935,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                       <button
                         type="submit"
                         disabled={isContinueDisabled}
-                        className="w-full bg-gray-900 hover:bg-black text-white py-4 rounded-xl font-bold text-lg transform hover:scale-105 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                        className="w-full bg-gray-900 text-white hover:bg-black font-bold uppercase tracking-widest text-sm rounded-md transition-colors py-4 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {continueLabel}
                       </button>
