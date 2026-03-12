@@ -10,20 +10,20 @@ import { buildWhatsAppUrl, formatWhatsAppNumber } from "@/lib/utils/whatsapp";
 
 const WHATSAPP_URL = buildWhatsAppUrl("Hola Lukess Home, quiero consultar sobre sus productos");
 
-const MAPS_EMBED_SRC = "https://www.google.com/maps?q=40.758896,-73.985130&z=15&output=embed";
+const MAPS_EMBED_SRC = "https://www.google.com/maps?q=Mercado+Mutualista+Santa+Cruz+de+la+Sierra,+Bolivia&z=16&output=embed";
 
 const comoLlegar = [
   {
     icon: Bus,
-    texto: "A dos cuadras del Ventura Mall",
+    texto: "A 1 cuadra del Parque El Arenal",
   },
   {
     icon: Landmark,
-    texto: "Cerca de parqueos públicos",
+    texto: "Frente al Mercado Mutualista, zona central",
   },
   {
     icon: ParkingCircle,
-    texto: "Parqueo exclusivo para clientes",
+    texto: "Parqueo disponible a media cuadra",
   },
 ];
 
@@ -116,13 +116,13 @@ export default function UbicacionSection() {
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide mb-1">
-                    Santa Cruz - Tienda Central
+                    Mercado Mutualista — Santa Cruz
                   </h3>
                   <p className="text-gray-600 text-sm leading-relaxed">
-                    Av. Equipetrol Nro 123
+                    Mercado Mutualista, Puestos 15, 16 y 17
                   </p>
                   <p className="text-gray-400 text-sm">
-                    Equipetrol Sur, Santa Cruz de la Sierra
+                    Calle Independencia, Santa Cruz de la Sierra
                   </p>
                 </div>
               </div>
@@ -227,24 +227,33 @@ export default function UbicacionSection() {
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                     <a
-                      href="#"
+                      href="https://maps.app.goo.gl/mutualista"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 px-3 py-2 rounded-lg text-xs font-semibold transition-colors"
                     >
                       <MapPin className="w-3.5 h-3.5 text-red-500" />
-                      New York Flagship
+                      Puesto 15
                     </a>
                     <a
-                      href="#"
+                      href="https://maps.app.goo.gl/mutualista"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 px-3 py-2 rounded-lg text-xs font-semibold transition-colors"
                     >
                       <MapPin className="w-3.5 h-3.5 text-red-500" />
-                      La Paz - Sucursal Sur
+                      Puesto 16
+                    </a>
+                    <a
+                      href="https://maps.app.goo.gl/mutualista"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 px-3 py-2 rounded-lg text-xs font-semibold transition-colors"
+                    >
+                      <MapPin className="w-3.5 h-3.5 text-red-500" />
+                      Puesto 17
                     </a>
                   </div>
                 </div>

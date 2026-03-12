@@ -60,15 +60,15 @@ export default async function HeroBanner(): Promise<React.JSX.Element> {
             <div className="relative z-20 flex flex-col justify-end h-full px-6 pb-12 mx-auto max-w-[1920px] w-full sm:px-12 md:px-16 md:justify-center">
                 <div className="max-w-xl">
                     <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white lg:text-7xl drop-border border-gray-200 shadow-sm text-balance">
-                        Premium Menswear
+                        Ropa Masculina
                         <br />
-                        <span className="text-amber-400">Essentials</span>
+                        <span className="text-amber-400">Premium</span>
                     </h1>
                 </div>
 
                 <div className="mt-4 max-w-lg">
                     <p className="text-lg font-medium text-zinc-200 md:text-xl drop-shadow-md text-pretty">
-                        Elevate your wardrobe with our curated collection of luxury basics and timeless classics.
+                        Eleva tu guardarropa con nuestra colección exclusiva de básicos de lujo y clásicos atemporales.
                     </p>
                 </div>
 
@@ -77,7 +77,7 @@ export default async function HeroBanner(): Promise<React.JSX.Element> {
                         href="/#catalogo"
                         className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-zinc-900 transition-all bg-white rounded-xl hover:scale-[1.03] hover:bg-zinc-100 hover:border border-gray-200 shadow-sm focus:outline-none focus:ring-4 focus:ring-zinc-300 active:scale-95"
                     >
-                        Explore Collection
+                        Explorar Colección
                     </Link>
                     <div className="flex items-center gap-2 text-sm font-bold text-zinc-300 drop-shadow-sm">
                         <svg
@@ -93,7 +93,7 @@ export default async function HeroBanner(): Promise<React.JSX.Element> {
                                 d="M5 13l4 4L19 7"
                             />
                         </svg>
-                        <span>Free worldwide shipping on orders over Bs 150</span>
+                        <span>Envío gratis por compras mayores a Bs 400</span>
                     </div>
                 </div>
             </div>

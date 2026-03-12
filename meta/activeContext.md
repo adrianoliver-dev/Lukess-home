@@ -18,19 +18,19 @@
 - **Block Name:** Reversión a Español Neutro y Arreglo de Catálogo
 - **Commit Landing:** TRUE
 
-### Files Changed
-- `scripts/seed_es.mjs` y `scripts/revert_currency.mjs` (creados)
-- `components/landing/HeroSection.tsx`
-- `components/home/UbicacionSection.tsx`
-- `components/home/CTAFinalSection.tsx`
-- `components/landing/TrustBanner.tsx`
-- `components/landing/AnnouncementBar.tsx`
-- `components/cart/CheckoutModal.tsx`
-- Multiples assets revirtiendo `$` a `Bs` internamente.
+- `components/home/CatalogoClient.tsx` (limit 200, price limit 9999, bg-white)
+- `components/wishlist/WishlistClient.tsx` (bg-white, matching catalog)
+- `components/home/HeroBannerCarousel.tsx` (h-100dvh)
+- `components/landing/HeroBanner.tsx` (traducción español)
+- `components/landing/TrustBanner.tsx` (sucursales Mercado Mutualista)
+- `components/home/UbicacionSection.tsx` (finesse real SCZ, removed NY/La Paz)
+- `components/layout/Footer.tsx` (email demo-lukess@adrianoliver.dev)
 
 ### DB Changes
-- Eliminados todos los productos, categorías e inventario en inglés.
-- Nuevo seed dinámico cargado con 30 productos premium de ropa masculina (descripciones en español, categorizados, inventario completo).
+- Eliminados productos de prueba en inglés.
+- Precios reducidos para 7 productos premium que superaban los 900 Bs para normalizar el catálogo.
+- Desactivado producto "Traje Completo Tailored Fit" (SKU: TRA-SUT-001).
+- Inventario completo para 26 productos activos verificados.
 
 ### Build Verification
 - Build verificado localmente con éxito (`npm run build`).

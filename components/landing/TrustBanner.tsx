@@ -5,15 +5,15 @@ import { MapPin, Truck, ShieldCheck } from 'lucide-react'
 const TRUST_ITEMS = [
     {
         icon: MapPin,
-        label: 'Envíos Rápidos y Seguros a Toda Bolivia',
+        label: '3 Sucursales en Mercado Mutualista',
     },
     {
         icon: Truck,
-        label: 'Envío Gratis Nacional por compras mayores a Bs 150',
+        label: 'Envíos a todo Santa Cruz',
     },
     {
         icon: ShieldCheck,
-        label: 'Pagos Seguros vía QR y Transferencia Banacaria',
+        label: 'Pago Seguro QR o Efectivo',
     },
 ] as const
 
