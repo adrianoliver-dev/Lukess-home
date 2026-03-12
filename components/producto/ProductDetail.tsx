@@ -140,7 +140,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
   return (
     <>
       {/* Breadcrumbs */}
-      <div className="bg-gray-50 border-b border-gray-200">
+      <div className="bg-white border-b border-gray-200">
         <Container>
           <div className="py-3 flex items-center gap-2 text-sm">
             <Link href="/" className="text-gray-500 hover:text-gray-900 transition-colors">
@@ -376,15 +376,15 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
               <div className="space-y-3 pt-2">
                 <div className="flex items-center gap-3 text-sm text-gray-600">
                   <span className="text-base">🚚</span>
-                  <span>Free Worldwide Shipping (orders &gt; ${FREE_SHIPPING_THRESHOLD})</span>
+                  <span>Envío Gratis en Santa Cruz (compras &gt; Bs {FREE_SHIPPING_THRESHOLD})</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-gray-600">
                   <span className="text-base">🏬</span>
-                  <span>Complimentary Instore Pickup</span>
+                  <span>Pick-up Gratuito en Tienda (Mutualista)</span>
                 </div>
                 <div className="flex items-start gap-3 text-sm text-gray-600">
                   <span className="text-base mt-0.5">⏱️</span>
-                  <span>Orders with &ldquo;Store Pickup&rdquo; are reserved for a maximum of <strong>48 hours</strong>.</span>
+                  <span>Los pedidos con &ldquo;Retiro en Tienda&rdquo; se reservan por un máximo de <strong>48 horas</strong>.</span>
                 </div>
               </div>
             </div>
@@ -405,7 +405,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                       href={`/producto/${p.id}`}
                       className="group"
                     >
-                      <div className="relative aspect-[3/4] bg-gray-100 overflow-hidden mb-3">
+                      <div className="relative aspect-[3/4] bg-white overflow-hidden mb-3">
                         <Image
                           src={p.thumbnail_url || p.image_url || '/placeholder.png'}
                           alt={p.name}

@@ -18,7 +18,7 @@ export default function Footer() {
               Lukess
             </h3>
             <p className="text-sm text-gray-400 leading-relaxed mb-6">
-              Premium menswear essentials. Elevating everyday style with uncompromising quality and timeless design.
+              Básicos de lujo para el hombre moderno. Elevamos tu estilo cotidiano con calidad sin compromisos y diseño atemporal.
             </p>
             <div className="flex gap-3">
               <a
@@ -134,8 +134,8 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-lukess-gold mt-0.5 shrink-0" />
                 <span className="text-sm text-gray-400">
-                  123 Fashion Avenue<br />
-                  New York, NY 10001
+                  Mercado Mutualista, Puestos 15, 16 y 17<br />
+                  Santa Cruz de la Sierra, Bolivia
                 </span>
               </li>
               <li className="flex items-start gap-3">
@@ -189,7 +189,7 @@ export default function Footer() {
               <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center">
                 <Truck className="w-6 h-6 text-orange-500" />
               </div>
-              <span className="text-xs text-gray-400 font-medium">Worldwide Shipping</span>
+              <span className="text-xs text-gray-400 font-medium">Envíos a todo Santa Cruz</span>
             </div>
             <div className="flex flex-col items-center text-center gap-2">
               <div className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center">
@@ -203,7 +203,7 @@ export default function Footer() {
         {/* Copyright */}
         <div className="border-t border-gray-800 pt-6 text-center">
           <p className="text-xs text-gray-500">
-            © {currentYear} Lukess. All rights reserved.
+            © {currentYear} Lukess. Todos los derechos reservados.
           </p>
         </div>
       </Container>
