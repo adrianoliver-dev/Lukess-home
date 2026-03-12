@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     }
 
     const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg'
-    const fileName = `${orderId}-${Date.now()}.${ext}`
+    const fileName = `Bs {orderId}-${Date.now()}.${ext}`
 
     const supabase = getSupabaseAdmin()
 

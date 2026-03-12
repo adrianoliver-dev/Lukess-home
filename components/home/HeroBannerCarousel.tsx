@@ -39,7 +39,7 @@ export default function HeroBannerCarousel({
 
     return (
         <section
-            className="relative w-full h-[420px] md:h-[520px] lg:h-[620px] overflow-hidden bg-zinc-900"
+            className="relative w-full h-[100dvh] min-h-[500px] overflow-hidden bg-zinc-900"
             aria-label="Banner promocional"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}

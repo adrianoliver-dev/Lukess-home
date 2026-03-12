@@ -68,19 +68,19 @@ export default async function HeroSection(): Promise<React.JSX.Element> {
 
                     {/* Headline */}
                     <h1 className="text-3xl sm:text-4xl lg:text-6xl font-extrabold text-white leading-[1.1] tracking-tight drop-shadow-md">
-                        Ropa Masculina{' '}
+                        Ropa Masculina Premium{' '}
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-lukess-gold to-accent-300">
-                            de Marca
+                            Esencial
                         </span>
                         <br className="hidden sm:block" />
                         <span className="block mt-1 text-2xl sm:text-3xl lg:text-4xl font-semibold text-neutral-300">
-                            al Mejor Precio de Santa Cruz
+                            Lujo Accesible
                         </span>
                     </h1>
 
                     {/* Brand strip */}
                     <p className="text-sm sm:text-base text-neutral-400 mt-4 font-medium tracking-wide">
-                        Columbia · Fossil · Tommy · Lee · Wrangler
+                        Telas Premium · Confección Artesanal · Elegancia Atemporal
                     </p>
 
                     {/* CTAs */}
@@ -91,7 +91,7 @@ export default async function HeroSection(): Promise<React.JSX.Element> {
                             className="inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-extrabold text-base sm:text-lg uppercase tracking-wider py-4 px-10 rounded-xl border border-gray-200 shadow-sm shadow-red-600/25 transition-all duration-200 hover:scale-[1.03] active:scale-[0.98] w-full sm:w-auto text-center"
                             aria-label="Ver catálogo de productos"
                         >
-                            Comprar Ahora
+                            Comprar Colección
                         </Link>
 
                         {/* Secondary CTA — WhatsApp */}

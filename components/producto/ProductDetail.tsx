@@ -115,7 +115,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
 
     const sizeForCart = needsSize ? selectedSize : undefined
     addToCart(product, quantity, sizeForCart, selectedColor || undefined)
-    toast.success(`${quantity}x ${product.name} agregado al carrito`)
+    toast.success(`${quantity}x Bs {product.name} agregado al carrito`)
   }
 
   const handleWhatsApp = () => {
@@ -123,14 +123,14 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
     if (stock === 0) {
       message =
         'Hola! Me interesa este producto 👇\n' +
-        `*${product.name}*\n` +
-        `💰 Precio: Bs ${product.price.toFixed(2)}\n` +
+        `*Bs {product.name}*\n` +
+        `💰 Precio: $Bs {product.price.toFixed(2)}\n` +
         '¿Cuándo habrá stock disponible? 🙏'
     } else {
       message =
         'Hola! Me interesa este producto 👇\n' +
-        `*${product.name}*\n` +
-        `💰 Precio: Bs ${product.price.toFixed(2)}\n` +
+        `*Bs {product.name}*\n` +
+        `💰 Precio: $Bs {product.price.toFixed(2)}\n` +
         (selectedSize ? `📏 Talla: ${selectedSize}\n` : '') +
         '¿Me pueden dar más información? 🙏'
     }
@@ -376,15 +376,15 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
               <div className="space-y-3 pt-2">
                 <div className="flex items-center gap-3 text-sm text-gray-600">
                   <span className="text-base">🚚</span>
-                  <span>Envío gratis en Santa Cruz (pedidos &gt; Bs {FREE_SHIPPING_THRESHOLD})</span>
+                  <span>Free Worldwide Shipping (orders &gt; ${FREE_SHIPPING_THRESHOLD})</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-gray-600">
                   <span className="text-base">🏬</span>
-                  <span>Retiro gratis en Mercado Mutualista</span>
+                  <span>Complimentary Instore Pickup</span>
                 </div>
                 <div className="flex items-start gap-3 text-sm text-gray-600">
                   <span className="text-base mt-0.5">⏱️</span>
-                  <span>Los pedidos con &ldquo;Recojo en tienda&rdquo; se reservan por un máximo de <strong>48 horas</strong>. Pasado ese tiempo, la reserva se cancela automáticamente.</span>
+                  <span>Orders with &ldquo;Store Pickup&rdquo; are reserved for a maximum of <strong>48 hours</strong>.</span>
                 </div>
               </div>
             </div>
@@ -437,12 +437,12 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                                 Bs {getPriceWithDiscount(p).toFixed(2)}
                               </span>
                               <span className="text-xs text-gray-400 line-through">
-                                Bs {p.price.toFixed(2)}
+                                ${p.price.toFixed(2)}
                               </span>
                             </>
                           ) : (
                             <span className="text-sm font-bold text-gray-900">
-                              Bs {p.price.toFixed(2)}
+                              ${p.price.toFixed(2)}
                             </span>
                           )}
                         </div>

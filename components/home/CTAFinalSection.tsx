@@ -61,17 +61,16 @@ export default function CTAFinalSection() {
           {/* Badge */}
           <span className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-white/20 text-white/90 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase mb-6">
             <span className="w-2 h-2 rounded-full bg-lukess-gold animate-pulse" />
-            3 Puestos disponibles
+            Global Concierge
           </span>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 md:mb-6 leading-tight">
-            ¿Listo para Renovar{" "}
-            <span className="text-lukess-gold">Tu Estilo</span>?
+            Ready to Elevate{" "}
+            <span className="text-lukess-gold">Your Style</span>?
           </h2>
 
           <p className="text-white/80 text-base sm:text-lg md:text-xl max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed">
-            Visita cualquiera de nuestros 3 puestos en el Mercado Mutualista o
-            contáctanos por WhatsApp
+            Book a private consultation with our menswear specialists or visit our global flagship stores.
           </p>
 
           {/* Botón */}
@@ -82,17 +81,17 @@ export default function CTAFinalSection() {
             className="group inline-flex items-center gap-3 bg-white hover:bg-gray-50 text-gray-900 px-8 py-4 md:px-10 md:py-5 rounded-full text-base md:text-lg font-bold transition-all duration-300 hover:scale-105 border border-gray-200 shadow-sm shadow-black/20"
           >
             <MessageCircle className="w-5 h-5 md:w-6 md:h-6" />
-            Contactar Ahora
+            Book Consultation
             <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
           </a>
 
           {/* Info adicional */}
           <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-white/50 text-xs sm:text-sm">
-            <span>Respuesta inmediata</span>
+            <span>24/7 Support</span>
             <span className="hidden sm:inline">•</span>
-            <span>Sin compromiso</span>
+            <span>Style Advice</span>
             <span className="hidden sm:inline">•</span>
-            <span>Atención personalizada</span>
+            <span>Made to Measure</span>
           </div>
         </div>
       </motion.div>

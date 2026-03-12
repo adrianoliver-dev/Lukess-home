@@ -5,29 +5,35 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** TBD
-- **Block Name:** TBD
-- **Status:** ⬜ PENDING
-- **Started:** —
-- **Completed:** —
+- **Block Number:** B12.1.2
+- **Block Name:** Reversión a Español Neutro y Arreglo de Catálogo
+- **Status:** ✅ DONE
+- **Started:** 2026-03-12
+- **Completed:** 2026-03-12
 
 ---
 
 ## LAST COMPLETED BLOCK
-- **Block Number:** Audit-2
-- **Block Name:** Scrub Personal Data & Enforce Strict Minimalist Branding
+- **Block Number:** B12.1.2
+- **Block Name:** Reversión a Español Neutro y Arreglo de Catálogo
 - **Commit Landing:** TRUE
 
 ### Files Changed
-- `app/globals.css`
-- `components/ui/Button.tsx`
-- (Multiple `.tsx` and `.md` files updated for data scrubbing and UI components)
+- `scripts/seed_es.mjs` y `scripts/revert_currency.mjs` (creados)
+- `components/landing/HeroSection.tsx`
+- `components/home/UbicacionSection.tsx`
+- `components/home/CTAFinalSection.tsx`
+- `components/landing/TrustBanner.tsx`
+- `components/landing/AnnouncementBar.tsx`
+- `components/cart/CheckoutModal.tsx`
+- Multiples assets revirtiendo `$` a `Bs` internamente.
 
 ### DB Changes
-- None required
+- Eliminados todos los productos, categorías e inventario en inglés.
+- Nuevo seed dinámico cargado con 30 productos premium de ropa masculina (descripciones en español, categorizados, inventario completo).
 
 ### Build Verification
-- Build successful. UI verified.
+- Build verificado localmente con éxito (`npm run build`).
 
 ---
 

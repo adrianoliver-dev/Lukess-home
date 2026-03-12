@@ -233,12 +233,12 @@ function OrderCard({ order }: { order: Order }) {
   }
 
   const handleWhatsAppSupport = () => {
-    const msg = `Hola, quiero consultar sobre mi pedido #${orderNumber}`
+    const msg = `Hola, quiero consultar sobre mi pedido #Bs {orderNumber}`
     window.open(buildWhatsAppUrl(msg), '_blank')
   }
 
   return (
-    <div className={`border-2 rounded-lg p-6 mb-6 bg-white ${order.status === 'pending' ? 'border-yellow-200 bg-yellow-50/30' :
+    <div className={`border-2 rounded-lg p-6 mb-6 bg-white Bs {order.status === 'pending' ? 'border-yellow-200 bg-yellow-50/30' :
       order.status === 'completed' ? 'border-green-200 bg-green-50/30' :
         order.status === 'cancelled' ? 'border-red-200 bg-red-50/30' :
           'border-gray-200'
@@ -259,7 +259,7 @@ function OrderCard({ order }: { order: Order }) {
 
         {/* Status Badge */}
         <div className="flex gap-2 items-center flex-wrap">
-          <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider ${order.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
+          <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider Bs {order.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
             order.status === 'completed' ? 'bg-green-100 text-green-700' :
               order.status === 'cancelled' ? 'bg-red-100 text-red-700' :
                 'bg-gray-100 text-gray-600'
@@ -288,7 +288,7 @@ function OrderCard({ order }: { order: Order }) {
             return (
               <Link
                 key={item.id}
-                href={`/producto/${item.product_id}`}
+                href={`/producto/Bs {item.product_id}`}
                 className="flex items-center gap-3 group hover:bg-gray-50 p-2 -ml-2 rounded transition-colors"
               >
                 <div className="relative w-16 h-16 bg-gray-100 rounded overflow-hidden shrink-0 border border-gray-200">
@@ -310,12 +310,12 @@ function OrderCard({ order }: { order: Order }) {
                     {product?.name ?? 'Producto'}
                   </p>
                   <p className="text-xs text-gray-500">
-                    {shouldShowSize(item.size) && `Talla: ${item.size} · `}
+                    {shouldShowSize(item.size) && `Talla: Bs {item.size} · `}
                     Cantidad: {item.quantity}
                   </p>
                 </div>
                 <span className="text-sm font-bold text-gray-900">
-                  Bs {(item.unit_price * item.quantity).toFixed(2)}
+                  ${(item.unit_price * item.quantity).toFixed(2)}
                 </span>
               </Link>
             )
@@ -326,18 +326,18 @@ function OrderCard({ order }: { order: Order }) {
         <div className="flex flex-col items-start md:items-end justify-center pt-4 md:pt-0 md:pl-6 md:border-l border-gray-200">
           <div className="space-y-1 text-right w-full">
             <div className="text-xs text-gray-500">
-              Subtotal: Bs {(order.total - (order.shipping_cost || 0) + (order.discount_amount || order.discount || 0)).toFixed(2)}
+              Subtotal: ${(order.total - (order.shipping_cost || 0) + (order.discount_amount || order.discount || 0)).toFixed(2)}
             </div>
             {(order.discount_amount || order.discount) && (order.discount_amount || order.discount)! > 0 ? (
               <div className="text-xs text-red-500">
-                Descuento: -Bs {(order.discount_amount || order.discount)!.toFixed(2)}
+                Descuento: -${(order.discount_amount || order.discount)!.toFixed(2)}
               </div>
             ) : null}
             <div className="text-xs text-gray-500">
               Envío: {order.shipping_cost === 0 || !order.shipping_cost ? (
                 <span className="text-green-600 font-semibold">Gratis</span>
               ) : (
-                `Bs ${order.shipping_cost.toFixed(2)}`
+                `$Bs {order.shipping_cost.toFixed(2)}`
               )}
             </div>
             <div className="border-t border-gray-200 pt-1">
@@ -387,7 +387,7 @@ function OrderCard({ order }: { order: Order }) {
                   {PICKUP_LOCATIONS.find(p => p.id === order.pickup_location)?.name || order.pickup_location}
                 </p>
                 {/* Payment method label for pickup orders */}
-                <span className={`inline-flex items-center gap-1 mt-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold ${order.payment_method === 'cash_on_pickup'
+                <span className={`inline-flex items-center gap-1 mt-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold Bs {order.payment_method === 'cash_on_pickup'
                   ? 'bg-amber-100 text-amber-700'
                   : 'bg-blue-50 text-blue-700'
                   }`}>
@@ -664,7 +664,7 @@ export default function MisPedidosPage() {
           </h1>
           {isLoggedIn && customerName ? (
             <p className="text-sm text-gray-500">
-              Hola, {customerName} {orderCount !== null && `— ${orderCount} ${orderCount === 1 ? 'pedido' : 'pedidos'} en tu historial`}
+              Hola, {customerName} {orderCount !== null && `— Bs {orderCount} Bs {orderCount === 1 ? 'pedido' : 'pedidos'} en tu historial`}
             </p>
           ) : (
             <div className="max-w-2xl">

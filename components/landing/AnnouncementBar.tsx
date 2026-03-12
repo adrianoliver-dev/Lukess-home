@@ -17,7 +17,7 @@ export default function AnnouncementBar() {
           flex items-center justify-center h-8 px-4"
             >
                 <p className="text-[11px] font-medium tracking-wide uppercase text-center">
-                    🚚 Envío gratis en Santa Cruz en pedidos mayores a Bs 400
+                    🚚 Envío Gratis a nivel nacional por compras mayores a Bs 150
                 </p>
             </div>
         </>

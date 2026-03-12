@@ -33,10 +33,10 @@ export async function generateMetadata(
 
   return {
     title: product.name,
-    description: `Compra ${product.name} en Lukess Home. ${product.description ? product.description.slice(0, 100) : 'Ingresa ahora para ver colores, tallas y más detalles.'}`,
+    description: `Compra Bs {product.name} en Lukess Home. Bs {product.description ? product.description.slice(0, 100) : 'Ingresa ahora para ver colores, tallas y más detalles.'}`,
     openGraph: {
-      title: `${product.name} | Lukess Home`,
-      description: `Compra ${product.name} en Lukess Home.`,
+      title: `Bs {product.name} | Lukess Home`,
+      description: `Compra Bs {product.name} en Lukess Home.`,
       images: images.map(url => ({ url })),
     }
   }
@@ -94,7 +94,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     '@type': 'Product',
     name: product.name,
     image: product.image_url ? [product.image_url] : [],
-    description: `Compra ${product.name} en Lukess Home. ${product.description || ''}`,
+    description: `Compra Bs {product.name} en Lukess Home. Bs {product.description || ''}`,
     brand: {
       '@type': 'Brand',
       name: 'Lukess Home'
@@ -104,7 +104,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       price: product.price,
       priceCurrency: 'BOB',
       availability: inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-      url: `https://lukesshome.com/producto/${product.id}`
+      url: `https://lukesshome.com/producto/Bs {product.id}`
     }
   }
 

@@ -10,20 +10,20 @@ import { buildWhatsAppUrl, formatWhatsAppNumber } from "@/lib/utils/whatsapp";
 
 const WHATSAPP_URL = buildWhatsAppUrl("Hola Lukess Home, quiero consultar sobre sus productos");
 
-const MAPS_EMBED_SRC = "https://www.google.com/maps?q=-17.763809,-63.160756&z=18&output=embed";
+const MAPS_EMBED_SRC = "https://www.google.com/maps?q=40.758896,-73.985130&z=15&output=embed";
 
 const comoLlegar = [
   {
     icon: Bus,
-    texto: "Líneas de bus: 3, 6, 14, 15, 16, 27, 28, 48",
+    texto: "A dos cuadras del Ventura Mall",
   },
   {
     icon: Landmark,
-    texto: "Referencia: Tercer Anillo Externo",
+    texto: "Cerca de parqueos públicos",
   },
   {
     icon: ParkingCircle,
-    texto: "Amplio parqueo disponible",
+    texto: "Parqueo exclusivo para clientes",
   },
 ];
 
@@ -88,13 +88,13 @@ export default function UbicacionSection() {
           <motion.div variants={fadeInUp} className="text-center mb-12 md:mb-16">
             <span className="inline-flex items-center gap-2 bg-gray-100 text-gray-900 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase mb-4">
               <MapPin className="w-3.5 h-3.5" />
-              Ubicación
+              Ubicaciones
             </span>
 
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-              Encuéntranos en el{" "}
+              Visita nuestra {" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-gray-700">
-                Mercado Mutualista
+                Tienda Principal
               </span>
             </h2>
 
@@ -116,13 +116,13 @@ export default function UbicacionSection() {
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-wide mb-1">
-                    Dirección
+                    Santa Cruz - Tienda Central
                   </h3>
                   <p className="text-gray-600 text-sm leading-relaxed">
-                    Av. Mutualista y Tercer Anillo Externo
+                    Av. Equipetrol Nro 123
                   </p>
                   <p className="text-gray-400 text-sm">
-                    Santa Cruz de la Sierra, Bolivia
+                    Equipetrol Sur, Santa Cruz de la Sierra
                   </p>
                 </div>
               </div>
@@ -137,10 +137,10 @@ export default function UbicacionSection() {
                     Horario de Atención
                   </h3>
                   <p className="text-gray-600 text-sm">
-                    Lunes a Sábado: 8:00 AM - 10:00 PM
+                    Lunes a Sábado: 10:00 - 20:00
                   </p>
                   <p className="text-gray-600 text-sm">
-                    Domingo: 9:00 AM - 9:00 PM
+                    Domingo: 10:00 - 15:00
                   </p>
                 </div>
               </div>
@@ -174,9 +174,9 @@ export default function UbicacionSection() {
                   <MessageCircle className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold">Chatea con Nosotros</p>
+                  <p className="text-sm font-bold">Hablar con un Asesor</p>
                   <p className="text-xs text-white/80">
-                    Respuesta inmediata por WhatsApp
+                    Respuesta inmediata vía WhatsApp
                   </p>
                 </div>
               </a>
@@ -223,37 +223,28 @@ export default function UbicacionSection() {
                   <div className="flex items-center gap-2 mb-1">
                     <span className="w-2 h-2 rounded-full bg-gray-900 animate-pulse" />
                     <span className="text-sm text-gray-700 font-bold">
-                      Nuestros 3 Puestos en Google Maps:
+                      Nuestras Ubicaciones:
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <a
-                      href="https://maps.app.goo.gl/hjBRWHtFGePRphPB9"
+                      href="#"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 px-3 py-2 rounded-lg text-xs font-semibold transition-colors"
                     >
                       <MapPin className="w-3.5 h-3.5 text-red-500" />
-                      Puesto 1 (Caseta 47-48)
+                      New York Flagship
                     </a>
                     <a
-                      href="https://maps.app.goo.gl/C7HLiz6cWNjvMFh1A"
+                      href="#"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 px-3 py-2 rounded-lg text-xs font-semibold transition-colors"
                     >
                       <MapPin className="w-3.5 h-3.5 text-red-500" />
-                      Puesto 2 (Caseta 123)
-                    </a>
-                    <a
-                      href="https://maps.app.goo.gl/7nxUX1ofcJhmfWKC6"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 px-3 py-2 rounded-lg text-xs font-semibold transition-colors"
-                    >
-                      <MapPin className="w-3.5 h-3.5 text-red-500" />
-                      Puesto 3 (Caseta 228-229)
+                      La Paz - Sucursal Sur
                     </a>
                   </div>
                 </div>

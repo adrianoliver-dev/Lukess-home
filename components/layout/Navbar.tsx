@@ -467,7 +467,7 @@ export default function Navbar() {
       <button
         onClick={() => setIsCartOpen(true)}
         className="lg:hidden fixed bottom-6 right-6 z-40 w-14 h-14 bg-gray-900 text-white rounded-full border border-gray-200 shadow-sm flex items-center justify-center hover:bg-gray-800 transition-colors active:scale-95"
-        aria-label={`Ver carrito (${cartItemCount} productos)`}
+        aria-label={`Ver carrito (Bs {cartItemCount} productos)`}
       >
         <ShoppingCart className="w-6 h-6" />
         {cartItemCount > 0 && (

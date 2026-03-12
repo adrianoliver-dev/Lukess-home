@@ -161,7 +161,7 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
                       />
                     </div>
                     <p className="text-xs text-gray-500">
-                      Te faltan Bs {(FREE_SHIPPING_THRESHOLD - total).toFixed(2)} para envío gratis
+                      Te faltan ${(FREE_SHIPPING_THRESHOLD - total).toFixed(2)} para envío gratis
                     </p>
                   </div>
                 )}

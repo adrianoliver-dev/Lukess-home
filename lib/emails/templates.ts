@@ -19,7 +19,7 @@ export function pickupReservationReceivedEmail(data: {
     const itemName = item.name ?? item.products?.name ?? item.product?.name ?? 'Producto'
     const itemQty = item.quantity ?? item.qty ?? 1
     const itemPrice = item.unit_price ?? item.price ?? item.product?.price ?? 0
-    return `<li>${itemName} x${itemQty} — Bs ${(itemPrice * itemQty).toFixed(2)}</li>`
+    return `<li>Bs {itemName} xBs {itemQty} — $${(itemPrice * itemQty).toFixed(2)}</li>`
   }).join('')
 
   return `
@@ -65,14 +65,14 @@ export function pickupReservationReceivedEmail(data: {
           <!-- Order Items -->
           <h3 style="color:#111;font-size:14px;font-weight:700;margin:0 0 12px;text-transform:uppercase;letter-spacing:0.05em;">Tu Pedido:</h3>
           <ul style="list-style:none;padding:0;margin:0 0 24px;">
-            ${itemsList}
+            Bs {itemsList}
           </ul>
 
           <!-- Total -->
           <div style="border-top:2px solid #e5e7eb;padding-top:16px;">
             <div style="display:flex;justify-content:space-between;align-items:center;">
               <span style="color:#6b7280;font-size:14px;font-weight:600;text-transform:uppercase;">Total a Pagar:</span>
-              <span style="color:#111;font-size:28px;font-weight:800;">Bs ${data.total.toFixed(2)}</span>
+              <span style="color:#111;font-size:28px;font-weight:800;">$${data.total.toFixed(2)}</span>
             </div>
           </div>
 

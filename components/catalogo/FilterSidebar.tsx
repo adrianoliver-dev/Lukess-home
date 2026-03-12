@@ -157,7 +157,7 @@ export function FilterSidebar({ onFilterChange, brands, colors, sizes, categorie
                   : 'border border-gray-300 hover:border-gray-600 hover:text-gray-900'
                   }`}
               >
-                Bs {min}-{max}
+                ${min}-{max}
               </button>
             ))}
           </div>

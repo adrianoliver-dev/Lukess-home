@@ -19,21 +19,17 @@ export function calculateDistance(
 // Origin: Mercado Mutualista, Santa Cruz de la Sierra
 const ORIGIN = { lat: -17.762778, lng: -63.161667 }
 
-export const FREE_SHIPPING_THRESHOLD = 400  // Bs
-export const MAX_DELIVERY_DISTANCE_KM = 20  // km — beyond this: WhatsApp only
+export const FREE_SHIPPING_THRESHOLD = 150  // USD
+export const MAX_DELIVERY_DISTANCE_KM = 50000  // Worldwide
 
-// Returns shipping cost in Bs, or 'out_of_range' if > 20 km
+// Returns shipping cost in USD, or 'out_of_range'
 export function calculateShippingCost(
   distanceKm: number,
   orderTotal: number,
 ): number | 'out_of_range' {
   if (distanceKm > MAX_DELIVERY_DISTANCE_KM) return 'out_of_range'
   if (orderTotal >= FREE_SHIPPING_THRESHOLD) return 0
-  if (distanceKm <= 1) return 5
-  if (distanceKm <= 3) return 10
-  if (distanceKm <= 6) return 15
-  if (distanceKm <= 10) return 20
-  return 30  // 10–20 km
+  return 15 // Flat worldwide shipping
 }
 
 export function getDistanceFromMutualista(lat: number, lng: number): number {
@@ -46,30 +42,21 @@ export function getMapsLink(lat: number, lng: number): string {
 
 export const PICKUP_LOCATIONS = [
   {
-    id: 'puesto-1',
-    name: 'Puesto 1',
-    aisle: 'Pasillo -2',
-    stall: 'Caseta 47-48',
-    hours: 'Lun-Sáb: 8:00 AM - 10:00 PM · Dom: 9:00 AM - 9:00 PM',
-    mapsUrl: 'https://maps.app.goo.gl/hjBRWHtFGePRphPB9',
-    mapsLabel: 'Ver en Google Maps →',
+    id: 'store-ny',
+    name: 'New York Flagship',
+    aisle: '5th Ave',
+    stall: 'Store 101',
+    hours: 'Mon-Sat: 10:00 AM - 8:00 PM',
+    mapsUrl: '#',
+    mapsLabel: 'View on Maps →',
   },
   {
-    id: 'puesto-2',
-    name: 'Puesto 2',
-    aisle: 'Pasillo -3',
-    stall: 'Caseta 123',
-    hours: 'Lun-Sáb: 8:00 AM - 10:00 PM · Dom: 9:00 AM - 9:00 PM',
-    mapsUrl: 'https://maps.app.goo.gl/C7HLiz6cWNjvMFh1A',
-    mapsLabel: 'Ver en Google Maps →',
-  },
-  {
-    id: 'puesto-3',
-    name: 'Puesto 3',
-    aisle: 'Pasillo -5',
-    stall: 'Caseta 228-229',
-    hours: 'Lun-Sáb: 8:00 AM - 10:00 PM · Dom: 9:00 AM - 9:00 PM',
-    mapsUrl: 'https://maps.app.goo.gl/7nxUX1ofcJhmfWKC6',
-    mapsLabel: 'Ver en Google Maps →',
+    id: 'store-ldn',
+    name: 'London Boutique',
+    aisle: 'Regent Street',
+    stall: 'Store 42',
+    hours: 'Mon-Sat: 9:00 AM - 7:00 PM',
+    mapsUrl: '#',
+    mapsLabel: 'View on Maps →',
   },
 ] as const

@@ -64,7 +64,7 @@ export function SearchBar() {
   }, [query])
 
   const handleProductClick = (productId: string) => {
-    router.push(`/producto/${productId}`)
+    router.push(`/producto/Bs {productId}`)
     setQuery('')
     setIsOpen(false)
   }

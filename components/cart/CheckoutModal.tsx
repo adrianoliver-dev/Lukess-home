@@ -1884,7 +1884,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         )}
                       </div>
 
-                      {/* ── Order Summary ── */}
+                      {/* ── Resumen de Orden ── */}
                       <div className="bg-gray-100 p-4 rounded-lg border-2 border-gray-200 space-y-2">
                         <div className="flex items-center justify-between text-sm text-gray-600">
                           <span>Subtotal:</span>

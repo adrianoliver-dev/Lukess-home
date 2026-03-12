@@ -25,7 +25,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
       >
         <Image
           src={images[currentIndex]}
-          alt={`${productName} - Imagen ${currentIndex + 1}`}
+          alt={`Bs {productName} - Imagen ${currentIndex + 1}`}
           fill
           className="object-contain"
           priority={currentIndex === 0}

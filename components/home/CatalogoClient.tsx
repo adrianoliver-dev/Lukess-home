@@ -82,7 +82,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
   const [selectedColors, setSelectedColors] = useState<string[]>([])
   const [showFilters, setShowFilters] = useState(false)
   const [sidebarFilters, setSidebarFilters] = useState<Filters>({
-    priceRange: [0, 1000],
+    priceRange: [0, 9999],
     brands: [],
     colors: [],
     sizes: [],
@@ -94,7 +94,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
   const [showNew, setShowNew] = useState(false)
   const [showDiscount, setShowDiscount] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
-  const [displayLimit, setDisplayLimit] = useState(20)
+  const [displayLimit, setDisplayLimit] = useState(200)
 
   const [dynamicFilters, setDynamicFilters] = useState<FilterOptions | null>(initialFilters || null)
 
@@ -309,7 +309,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
     setShowNew(false)
     setShowDiscount(false)
     setSidebarFilters({
-      priceRange: [0, 1000],
+      priceRange: [0, 9999],
       brands: [],
       colors: [],
       sizes: [],
@@ -714,7 +714,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                     <div key={product.id} className="group bg-white border border-gray-100 overflow-hidden transition-all duration-200 hover:shadow-sm cursor-pointer">
                       <Link href={`/producto/${product.id}`} className="block">
                         {/* Imagen */}
-                        <div className="relative aspect-[4/5] overflow-hidden bg-gray-50 p-3">
+                        <div className="relative aspect-[4/5] overflow-hidden bg-white p-3">
                           <Image
                             src={product.thumbnail_url || product.image_url || '/placeholder.png'}
                             alt={`${product.name}${product.brand ? ` - ${product.brand}` : ''}${product.color ? ` ${product.color}` : ''}${product.sizes?.[0] ? ` talla ${product.sizes[0]}` : ''}`}

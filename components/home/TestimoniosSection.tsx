@@ -22,39 +22,39 @@ interface Testimonio {
 const testimonios: Testimonio[] = [
   {
     id: 1,
-    nombre: "Carlos Mendoza",
-    ciudad: "Santa Cruz",
+    nombre: "Charles M.",
+    ciudad: "New York",
     rating: 5,
     iniciales: "CM",
     texto:
-      "Compro en Lukess Home desde hace 5 años. La calidad de la ropa es excelente y los precios justos. Siempre encuentro lo que busco en sus 3 puestos.",
+      "I've been shopping here for 5 years. The quality is exceptional and the fit is perfect. Always a great experience at their flagship.",
   },
   {
     id: 2,
-    nombre: "Roberto Vásquez",
-    ciudad: "Santa Cruz",
+    nombre: "Robert V.",
+    ciudad: "London",
     rating: 5,
     iniciales: "RV",
     texto:
-      "Atención personalizada y variedad de tallas. Me vistieron para mi boda completo, desde la camisa hasta los zapatos. 100% recomendado.",
+      "Personalized attention and great variety. They outfitted me completely for my wedding. 100% recommended.",
   },
   {
     id: 3,
-    nombre: "Fernando Silva",
-    ciudad: "Warnes",
+    nombre: "Fernando S.",
+    ciudad: "Miami",
     rating: 5,
     iniciales: "FS",
     texto:
-      "La mejor tienda de ropa masculina en el Mercado Mutualista. Precios accesibles y ropa de calidad. Vale la pena el viaje desde Warnes.",
+      "The best menswear store I've visited. Premium quality. Absolutely worth the trip to the boutique.",
   },
   {
     id: 4,
-    nombre: "Diego Rojas",
-    ciudad: "Santa Cruz",
+    nombre: "David R.",
+    ciudad: "Los Angeles",
     rating: 5,
     iniciales: "DR",
     texto:
-      "10 años visitando Lukess Home y nunca me decepcionan. Tienen las últimas tendencias a precios que no vas a encontrar en otro lado.",
+      "Never disappointed. They have the latest trends and timeless classics that you won't easily find elsewhere.",
   },
 ];
 
@@ -222,18 +222,18 @@ export default function TestimoniosSection() {
           <motion.div variants={fadeInUp} className="text-center mb-12 md:mb-16">
             <span className="inline-flex items-center gap-2 bg-lukess-gold/10 text-lukess-gold px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase mb-4">
               <Star className="w-3.5 h-3.5 fill-lukess-gold text-lukess-gold" />
-              Testimonios
+              Testimonials
             </span>
 
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-              Lo Que Dicen Nuestros{" "}
+              What Our {" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-gray-700">
-                Clientes
+                Clients Say
               </span>
             </h2>
 
             <p className="text-gray-500 text-base md:text-lg max-w-xl mx-auto">
-              La satisfacción de nuestros clientes es nuestra prioridad
+              Client satisfaction is our ultimate priority.
             </p>
 
             <div className="flex items-center justify-center gap-3 mt-6">

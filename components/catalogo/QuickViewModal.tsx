@@ -240,7 +240,7 @@ export function QuickViewModal({
                         >
                           <Image
                             src={img}
-                            alt={`${product.name} - ${i + 1}`}
+                            alt={`Bs {product.name} - ${i + 1}`}
                             fill
                             sizes="80px"
                             className="object-contain p-1"
@@ -285,7 +285,7 @@ export function QuickViewModal({
                     {hasDiscount(product) ? (
                       <div className="flex items-baseline gap-3">
                         <span className="text-3xl md:text-4xl font-black text-red-600">
-                          Bs {priceWithDiscount.toFixed(2)}
+                          ${priceWithDiscount.toFixed(2)}
                         </span>
                         <span className="text-lg text-gray-400 line-through decoration-red-500">
                           Bs {product.price.toFixed(2)}
@@ -298,7 +298,7 @@ export function QuickViewModal({
                     )}
                     {discount > 0 && (
                       <p className="text-sm text-green-600 font-semibold mt-1">
-                        Ahorras Bs {(product.price * (discount / 100)).toFixed(2)}
+                        Ahorras ${(product.price * (discount / 100)).toFixed(2)}
                       </p>
                     )}
                   </div>
@@ -409,7 +409,7 @@ export function QuickViewModal({
 
                     {/* Ver detalles completos */}
                     <Link
-                      href={`/producto/${product.id}`}
+                      href={`/producto/Bs {product.id}`}
                       onClick={onClose}
                       className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold text-gray-800 border-2 border-gray-200 hover:bg-gray-100 hover:border-gray-400 transition-all"
                     >

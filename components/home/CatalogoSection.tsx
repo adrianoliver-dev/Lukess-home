@@ -91,7 +91,7 @@ export function CatalogoSection() {
     };
 
     addToCart(productForCart, 1);
-    toast.success(`${product.name} agregado al carrito`);
+    toast.success(`Bs {product.name} agregado al carrito`);
   };
 
   return (
@@ -191,7 +191,7 @@ export function CatalogoSection() {
                     {product.badge && (
                       <span
                         className={`absolute top-3 left-3 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider
-                          ${product.badge === "Nuevo"
+                          Bs {product.badge === "Nuevo"
                             ? "bg-black text-white"
                             : "bg-red-600 text-white"
                           }
@@ -211,10 +211,10 @@ export function CatalogoSection() {
                         Agregar
                       </button>
                       <a
-                        href={buildWhatsAppUrl(`Hola Lukess Home, me interesa el ${product.name} de ${product.price} Bs. ¿Está disponible?`)}
+                        href={buildWhatsAppUrl(`Hola Lukess Home, me interesa el Bs {product.name} de Bs {product.price} Bs. ¿Está disponible?`)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`Consultar sobre ${product.name} por WhatsApp`}
+                        aria-label={`Consultar sobre Bs {product.name} por WhatsApp`}
                         className="opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300 delay-75 inline-flex items-center gap-2 bg-whatsapp text-white px-4 py-2.5 text-xs font-semibold"
                       >
                         <MessageCircle className="w-3.5 h-3.5" />
@@ -236,8 +236,7 @@ export function CatalogoSection() {
                         {product.price}
                       </span>
                       <span className="text-xs text-gray-500 font-medium">
-                        Bs
-                      </span>
+                        $</span>
                     </div>
                   </div>
 
@@ -250,7 +249,7 @@ export function CatalogoSection() {
                       Agregar
                     </button>
                     <a
-                      href={buildWhatsAppUrl(`Hola Lukess Home, me interesa el ${product.name} de ${product.price} Bs. ¿Está disponible?`)}
+                      href={buildWhatsAppUrl(`Hola Lukess Home, me interesa el Bs {product.name} de Bs {product.price} Bs. ¿Está disponible?`)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-3 py-2 bg-whatsapp hover:bg-whatsapp-dark text-white transition-all flex items-center justify-center"

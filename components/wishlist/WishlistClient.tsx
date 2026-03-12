@@ -207,14 +207,11 @@ export function WishlistClient({ allProducts }: WishlistClientProps) {
                 const isOutOfStock = stock === 0
 
                 return (
-                  <motion.div
+                  <div
                     key={product.id}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    className="group bg-white border border-gray-200 hover:border-gray-900 transition-colors relative flex flex-col h-full"
+                    className="group bg-white border border-gray-100 overflow-hidden transition-all duration-200 hover:shadow-sm cursor-pointer relative"
                   >
-                    {/* Botón eliminar */}
+                    {/* Botón eliminar de favoritos */}
                     <button
                       onClick={() => {
                         removeFromWishlist(product.id)
@@ -223,79 +220,78 @@ export function WishlistClient({ allProducts }: WishlistClientProps) {
                           icon: '💔',
                         })
                       }}
-                      className="absolute top-2 right-2 z-20 p-2 bg-white/90 backdrop-blur hover:bg-white text-gray-400 hover:text-red-500 rounded-full transition-colors"
+                      className="absolute top-2 right-2 z-20 p-1.5 bg-white/90 backdrop-blur hover:bg-white text-red-400 hover:text-red-600 rounded-full transition-colors"
                       title="Eliminar de la lista"
                     >
                       <Heart className="w-4 h-4 fill-current" />
                     </button>
 
-                    <Link href={`/producto/${product.id}`} className="block relative aspect-[3/4] overflow-hidden bg-gray-50">
+                    <Link href={`/producto/${product.id}`} className="block">
                       {/* Imagen */}
-                      <Image
-                        src={product.image_url || '/placeholder.png'}
-                        alt={product.name}
-                        fill
-                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        loading="lazy"
-                      />
+                      <div className="relative aspect-[4/5] overflow-hidden bg-white p-3">
+                        <Image
+                          src={product.image_url || '/placeholder.png'}
+                          alt={product.name}
+                          fill
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                          className="object-contain object-center transition-transform duration-300 group-hover:scale-105"
+                          loading="lazy"
+                        />
 
-                      {/* Badges */}
-                      <ProductBadges
-                        isNew={product.is_new}
-                        discount={getDiscount(product) || undefined}
-                        lowStock={isOutOfStock ? 0 : stock}
-                        isBestSeller={product.is_best_seller}
-                        collection={product.collection}
-                      />
-                    </Link>
+                        {/* Badges */}
+                        <ProductBadges
+                          isNew={product.is_new}
+                          discount={getDiscount(product) || undefined}
+                          lowStock={isOutOfStock ? 0 : stock}
+                          isBestSeller={product.is_best_seller}
+                          collection={product.collection}
+                        />
 
-                    {/* Info */}
-                    <div className="p-4 flex flex-col flex-grow">
-                      {/* Categoría */}
-                      <span className="text-xs uppercase tracking-widest text-gray-500 mb-1.5 line-clamp-1">
-                        {product.categories?.name || 'Producto'}
-                      </span>
-
-                      {/* Nombre */}
-                      <Link href={`/producto/${product.id}`} className="block flex-grow">
-                        <h3 className="text-sm md:text-base font-semibold text-gray-900 mb-2 line-clamp-2 hover:underline decoration-2 underline-offset-4">
-                          {product.name}
-                        </h3>
-                      </Link>
-
-                      {/* Precio */}
-                      <div className="flex items-center gap-2 mb-4">
-                        {hasDiscount(product) ? (
-                          <>
-                            <span className="text-sm md:text-base font-bold text-gray-900">
-                              Bs {getPriceWithDiscount(product).toFixed(2)}
-                            </span>
-                            <span className="text-xs md:text-sm text-gray-400 line-through">
-                              Bs {product.price.toFixed(2)}
-                            </span>
-                          </>
-                        ) : (
-                          <span className="text-sm md:text-base font-bold text-gray-900">
-                            Bs {product.price.toFixed(2)}
-                          </span>
+                        {isOutOfStock && (
+                          <div className="absolute inset-0 bg-white/60 flex items-center justify-center z-10 pointer-events-none">
+                            <span className="text-gray-500 text-xs font-bold uppercase tracking-widest">Agotado</span>
+                          </div>
                         )}
                       </div>
 
-                      {/* Botones de acción inferior */}
-                      <button
-                        onClick={() => handleAddToCart(product)}
-                        disabled={isOutOfStock}
-                        className={`w-full py-2.5 text-xs md:text-sm font-bold uppercase tracking-wider transition-colors flex items-center justify-center gap-2 ${isOutOfStock
-                          ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                          : 'bg-gray-900 text-white hover:bg-black'
-                          }`}
+                      {/* Info */}
+                      <div className="px-3 pt-3 pb-2">
+                        {product.brand && (
+                          <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider mb-0.5">{product.brand}</p>
+                        )}
+                        <h3 className="text-sm text-gray-700 font-normal leading-snug line-clamp-1 mb-1.5 group-hover:text-black transition-colors">{product.name}</h3>
+                        <div className="flex items-baseline gap-2">
+                          {hasDiscount(product) ? (
+                            <>
+                              <span className="text-sm font-bold text-red-600">Bs {getPriceWithDiscount(product).toFixed(2)}</span>
+                              <span className="text-xs text-gray-400 line-through">Bs {product.price.toFixed(2)}</span>
+                            </>
+                          ) : (
+                            <span className="text-sm font-bold text-gray-900">Bs {product.price.toFixed(2)}</span>
+                          )}
+                        </div>
+                      </div>
+                    </Link>
+
+                    {/* CTA buttons — idéntico al catálogo */}
+                    <div className="px-3 pb-3 flex gap-2">
+                      <Link
+                        href={`/producto/${product.id}`}
+                        className={`flex-1 flex items-center justify-center gap-1.5 py-2 text-xs font-semibold transition-all ${
+                          isOutOfStock ? 'bg-gray-100 text-gray-400 pointer-events-none' : 'bg-gray-900 hover:bg-black text-white'
+                        }`}
                       >
-                        <ShoppingCart className="w-4 h-4" />
-                        {isOutOfStock ? 'Sin Stock' : 'Agregar'}
+                        {isOutOfStock ? 'Agotado' : 'Ver detalles'}
+                      </Link>
+                      <button
+                        onClick={() => handleWhatsAppConsult(product)}
+                        className="px-3 py-2 bg-whatsapp hover:bg-whatsapp-dark text-white transition-all"
+                        aria-label={`Consultar ${product.name} por WhatsApp`}
+                      >
+                        <MessageCircle className="w-3.5 h-3.5" />
                       </button>
                     </div>
-                  </motion.div>
+                  </div>
                 )
               })}
             </div>

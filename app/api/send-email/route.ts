@@ -74,7 +74,7 @@ function buildOrderNumber(orderId: string): string {
         <div style="background-color: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 16px 20px;">
           <p style="margin: 0; font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 1.5px;">Número de orden</p>
           <p style="margin: 6px 0 0; font-size: 24px; font-weight: 900; color: #D4AF37; font-family: 'Courier New', monospace; letter-spacing: 3px;">#${shortId}</p>
-          <p style="margin: 4px 0 0; font-size: 11px; color: #555; font-family: 'Courier New', monospace;">${orderId}</p>
+          <p style="margin: 4px 0 0; font-size: 11px; color: #555; font-family: 'Courier New', monospace;">Bs {orderId}</p>
         </div>
       </td>
     </tr>
@@ -99,15 +99,15 @@ function buildProductRow(item: OrderItem): string {
         <table cellpadding="0" cellspacing="0" width="100%">
           <tr>
             <td style="width: 80px; vertical-align: top;">
-              <img src="${imageUrl}" alt="${productName}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid #333;" />
+              <img src="${imageUrl}" alt="Bs {productName}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid #333;" />
             </td>
             <td style="padding-left: 12px; vertical-align: middle;">
-              <p style="margin: 0; font-size: 14px; font-weight: 600; color: #e0e0e0;">${productName}</p>
+              <p style="margin: 0; font-size: 14px; font-weight: 600; color: #e0e0e0;">Bs {productName}</p>
               ${details ? `<p style="margin: 4px 0 0; font-size: 12px; color: #888;">${details}</p>` : ''}
-              <p style="margin: 4px 0 0; font-size: 12px; color: #aaa;">Cantidad: ${qty} &times; Bs ${unitPrice.toFixed(2)}</p>
+              <p style="margin: 4px 0 0; font-size: 12px; color: #aaa;">Cantidad: ${qty} &times; $${unitPrice.toFixed(2)}</p>
             </td>
             <td style="text-align: right; vertical-align: middle; white-space: nowrap;">
-              <p style="margin: 0; font-size: 16px; font-weight: 700; color: #D4AF37;">Bs ${(unitPrice * qty).toFixed(2)}</p>
+              <p style="margin: 0; font-size: 16px; font-weight: 700; color: #D4AF37;">$${(unitPrice * qty).toFixed(2)}</p>
             </td>
           </tr>
         </table>
@@ -150,7 +150,7 @@ function buildCostBreakdown(data: OrderEmailData): string {
   const shippingValue = isPickup
     ? '<span style="color: #4caf50; font-weight: 700;">Gratis</span>'
     : hasShipping
-      ? `Bs ${shipping.toFixed(2)}`
+      ? `$Bs {shipping.toFixed(2)}`
       : '<span style="color: #4caf50; font-weight: 700;">Gratis</span>'
 
   const mapsUrl = data.locationUrl
@@ -166,12 +166,12 @@ function buildCostBreakdown(data: OrderEmailData): string {
           <!-- Subtotal productos -->
           <tr style="background-color: #1a1a1a;">
             <td style="padding: 10px 16px; color: #aaa; font-size: 13px; border-bottom: 1px solid #2a2a2a;">Productos</td>
-            <td style="padding: 10px 16px; color: #e0e0e0; font-size: 13px; text-align: right; border-bottom: 1px solid #2a2a2a; white-space: nowrap;">Bs ${subtotal.toFixed(2)}</td>
+            <td style="padding: 10px 16px; color: #e0e0e0; font-size: 13px; text-align: right; border-bottom: 1px solid #2a2a2a; white-space: nowrap;">$Bs {subtotal.toFixed(2)}</td>
           </tr>
           <!-- Envío -->
           <tr style="background-color: #1a1a1a;">
-            <td style="padding: 10px 16px; color: #aaa; font-size: 13px; border-bottom: ${hasDiscount ? '1px solid #2a2a2a' : '0'};">${shippingLabel}</td>
-            <td style="padding: 10px 16px; font-size: 13px; text-align: right; border-bottom: ${hasDiscount ? '1px solid #2a2a2a' : '0'}; white-space: nowrap;">${shippingValue}</td>
+            <td style="padding: 10px 16px; color: #aaa; font-size: 13px; border-bottom: ${hasDiscount ? '1px solid #2a2a2a' : '0'};">Bs {shippingLabel}</td>
+            <td style="padding: 10px 16px; font-size: 13px; text-align: right; border-bottom: ${hasDiscount ? '1px solid #2a2a2a' : '0'}; white-space: nowrap;">Bs {shippingValue}</td>
           </tr>
           ${hasDiscount ? `
           <!-- Descuento -->
@@ -179,13 +179,13 @@ function buildCostBreakdown(data: OrderEmailData): string {
             <td style="padding: 10px 16px; color: #aaa; font-size: 13px; border-bottom: 0;">
               Descuento${data.discountCode ? ` <span style="color: #D4AF37; font-family: 'Courier New', monospace; font-size: 11px;">[${data.discountCode}]</span>` : ''}
             </td>
-            <td style="padding: 10px 16px; color: #4caf50; font-size: 13px; font-weight: 700; text-align: right; border-bottom: 0; white-space: nowrap;">- Bs ${discount.toFixed(2)}</td>
+            <td style="padding: 10px 16px; color: #4caf50; font-size: 13px; font-weight: 700; text-align: right; border-bottom: 0; white-space: nowrap;">- $${discount.toFixed(2)}</td>
           </tr>
           ` : ''}
           <!-- Total -->
           <tr style="background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);">
             <td style="padding: 14px 16px; color: #aaa; font-size: 14px; font-weight: 700; border-top: 2px solid #D4AF37;">Total a pagar</td>
-            <td style="padding: 14px 16px; color: #D4AF37; font-size: 26px; font-weight: 900; text-align: right; border-top: 2px solid #D4AF37; white-space: nowrap;">Bs ${data.total.toFixed(2)}</td>
+            <td style="padding: 14px 16px; color: #D4AF37; font-size: 26px; font-weight: 900; text-align: right; border-top: 2px solid #D4AF37; white-space: nowrap;">$${data.total.toFixed(2)}</td>
           </tr>
         </table>
         ${mapsUrl ? `
@@ -513,23 +513,23 @@ function buildAdminNewOrderHtml(data: OrderEmailData): string {
           ` : ''}
           <tr style="background-color: #1a1a1a; border-bottom: 1px solid #2a2a2a;">
             <td style="padding: 10px 16px; color: #888; font-size: 13px;">Subtotal</td>
-            <td style="padding: 10px 16px; color: #e0e0e0; font-size: 13px;">Bs ${(data.subtotal ?? data.total).toFixed(2)}</td>
+            <td style="padding: 10px 16px; color: #e0e0e0; font-size: 13px;">$${(data.subtotal ?? data.total).toFixed(2)}</td>
           </tr>
           ${data.shippingCost ? `
           <tr style="background-color: #1a1a1a; border-bottom: 1px solid #2a2a2a;">
             <td style="padding: 10px 16px; color: #888; font-size: 13px;">Costo de Envío</td>
-            <td style="padding: 10px 16px; color: #e0e0e0; font-size: 13px;">Bs ${data.shippingCost.toFixed(2)}</td>
+            <td style="padding: 10px 16px; color: #e0e0e0; font-size: 13px;">$${data.shippingCost.toFixed(2)}</td>
           </tr>
           ` : ''}
           ${data.discountAmount ? `
           <tr style="background-color: #1a1a1a; border-bottom: 1px solid #2a2a2a;">
             <td style="padding: 10px 16px; color: #888; font-size: 13px;">Descuento Aplicado</td>
-            <td style="padding: 10px 16px; color: #4caf50; font-size: 13px;">-Bs ${data.discountAmount.toFixed(2)}</td>
+            <td style="padding: 10px 16px; color: #4caf50; font-size: 13px;">-$${data.discountAmount.toFixed(2)}</td>
           </tr>
           ` : ''}
           <tr style="background-color: #1a1a1a; border-bottom: 1px solid #2a2a2a;">
             <td style="padding: 10px 16px; color: #888; font-size: 13px;">Total</td>
-            <td style="padding: 10px 16px; color: #D4AF37; font-size: 15px; font-weight: 900;">Bs ${data.total.toFixed(2)}</td>
+            <td style="padding: 10px 16px; color: #D4AF37; font-size: 15px; font-weight: 900;">$${data.total.toFixed(2)}</td>
           </tr>
           <tr style="background-color: #1a1a1a; border-bottom: 1px solid #2a2a2a;">
             <td style="padding: 10px 16px; color: #888; font-size: 13px;">Entrega</td>
@@ -666,7 +666,7 @@ export async function POST(req: NextRequest) {
           break
 
         case 'pickup_completed':
-          subject = `🎉 ¡Gracias por tu compra, ${orderData.customerName}! | Lukess Home`
+          subject = `🎉 ¡Gracias por tu compra, Bs {orderData.customerName}! | Lukess Home`
           html = buildCompletionEmailHtml(orderData, 'pickup')
           break
 
