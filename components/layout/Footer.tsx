@@ -134,7 +134,7 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-lukess-gold mt-0.5 shrink-0" />
                 <span className="text-sm text-gray-400">
-                  Mercado Mutualista, Puestos 15, 16 y 17<br />
+                  Mercado Mutualista, Puestos 1, 2 y 3<br />
                   Santa Cruz de la Sierra, Bolivia
                 </span>
               </li>

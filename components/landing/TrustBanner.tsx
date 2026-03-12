@@ -9,7 +9,7 @@ const TRUST_ITEMS = [
     },
     {
         icon: Truck,
-        label: 'Envíos a todo Santa Cruz',
+        label: 'Envíos gratis por compras mayores a Bs 400',
     },
     {
         icon: ShieldCheck,

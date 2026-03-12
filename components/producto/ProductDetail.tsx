@@ -26,16 +26,6 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
   const [quantity, setQuantity] = useState(1)
   const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false)
 
-  useEffect(() => {
-    trackViewItem({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      category: product.categories?.name,
-      brand: product.brand ?? undefined,
-    })
-  }, [product.id]) // eslint-disable-line react-hooks/exhaustive-deps
-
   const getTotalStock = (p: Product): number => {
     return p.inventory?.reduce(
       (sum, inv) => sum + Math.max(0, inv.quantity - (inv.reserved_qty ?? 0)),
@@ -55,6 +45,39 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
     return result
   }
 
+  const INTERNAL_SIZES = ['Unitalla', 'Única', 'Unico']
+  const validSizes = (product.sizes ?? []).filter(
+    (s: string) => s && s.trim() !== '' && !INTERNAL_SIZES.includes(s)
+  )
+  const needsSize = validSizes.length > 0
+  const stock = getTotalStock(product)
+  const stockBySize = getStockBySize(product)
+  const isOutOfStock = stock === 0
+
+  useEffect(() => {
+    trackViewItem({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      category: product.categories?.name,
+      brand: product.brand ?? undefined,
+    })
+
+    // Auto-select color if only one available
+    if (product.colors && product.colors.length === 1) {
+      setSelectedColor(product.colors[0])
+    }
+
+    // Auto-select size if only one valid size available
+    if (validSizes.length === 1) {
+      const onlySize = validSizes[0]
+      const sizeStock = stockBySize[onlySize] ?? 0
+      if (sizeStock > 0) {
+        setSelectedSize(onlySize)
+      }
+    }
+  }, [product.id, product.colors, validSizes.length]) // eslint-disable-line react-hooks/exhaustive-deps
+
   const categoryName = product.categories?.name || ''
   const normalizeText = (text: string) =>
     text.toLowerCase()
@@ -64,18 +87,9 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
 
   const normalizedCategory = normalizeText(categoryName)
   const SIZE_GUIDE_CATEGORIES = ['camisa', 'polo', 'pantalon', 'jeans', 'short', 'cinturon', 'sombrero', 'gorra', 'belt']
-  const shouldShowSizeGuide = SIZE_GUIDE_CATEGORIES.some(cat => normalizedCategory.includes(cat))
+  const shouldShowSizeGuide = SIZE_GUIDE_CATEGORIES.some(cat => normalizedCategory.includes(cat) || normalizedCategory.includes('bermuda'))
 
-  const stock = getTotalStock(product)
-  const stockBySize = getStockBySize(product)
-  const isOutOfStock = stock === 0
   const discount = getDiscount(product)
-
-  const INTERNAL_SIZES = ['Unitalla', 'Única', 'Unico']
-  const validSizes = (product.sizes ?? []).filter(
-    (s: string) => s && s.trim() !== '' && !INTERNAL_SIZES.includes(s)
-  )
-  const needsSize = validSizes.length > 0
   const selectedSizeStock = needsSize && selectedSize ? (stockBySize[selectedSize] ?? 0) : stock
   const selectedSizeAgotada = needsSize && !!selectedSize && selectedSizeStock === 0
   const addToCartDisabled = isOutOfStock || (needsSize && !selectedSize) || selectedSizeAgotada
@@ -115,7 +129,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
 
     const sizeForCart = needsSize ? selectedSize : undefined
     addToCart(product, quantity, sizeForCart, selectedColor || undefined)
-    toast.success(`${quantity}x Bs {product.name} agregado al carrito`)
+    toast.success(`${quantity}x ${product.name} agregado al carrito`)
   }
 
   const handleWhatsApp = () => {
@@ -123,14 +137,14 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
     if (stock === 0) {
       message =
         'Hola! Me interesa este producto 👇\n' +
-        `*Bs {product.name}*\n` +
-        `💰 Precio: $Bs {product.price.toFixed(2)}\n` +
+        `*${product.name}*\n` +
+        `💰 Precio: Bs ${product.price.toFixed(2)}\n` +
         '¿Cuándo habrá stock disponible? 🙏'
     } else {
       message =
         'Hola! Me interesa este producto 👇\n' +
-        `*Bs {product.name}*\n` +
-        `💰 Precio: $Bs {product.price.toFixed(2)}\n` +
+        `*${product.name}*\n` +
+        `💰 Precio: Bs ${product.price.toFixed(2)}\n` +
         (selectedSize ? `📏 Talla: ${selectedSize}\n` : '') +
         '¿Me pueden dar más información? 🙏'
     }
@@ -139,7 +153,6 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
 
   return (
     <>
-      {/* Breadcrumbs */}
       <div className="bg-white border-b border-gray-200">
         <Container>
           <div className="py-3 flex items-center gap-2 text-sm">
@@ -156,15 +169,12 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
         </Container>
       </div>
 
-      {/* Product Detail */}
       <section className="py-8 md:py-12 bg-white">
         <Container>
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-            {/* Gallery */}
             <div>
               <ProductGallery
                 images={(() => {
-                  // images array already contains hero as first item
                   const allImages = product.images && product.images.length > 0
                     ? product.images
                     : [product.image_url || '/placeholder.png']
@@ -181,26 +191,21 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
               )}
             </div>
 
-            {/* Info */}
             <div className="space-y-5">
-              {/* Category */}
               <span className="text-xs font-semibold uppercase tracking-widest text-gray-500">
                 {product.categories?.name || 'Sin categoría'}
               </span>
 
-              {/* Title */}
               <h1 className="text-2xl md:text-3xl font-bold text-gray-900 leading-tight">
                 {product.name}
               </h1>
 
-              {/* Brand */}
               {product.brand && (
                 <p className="text-sm text-gray-500">
                   Marca: <span className="font-semibold text-gray-700">{product.brand}</span>
                 </p>
               )}
 
-              {/* Price */}
               <div className="flex items-baseline gap-3">
                 {hasDiscount(product) ? (
                   <>
@@ -221,7 +226,6 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                 )}
               </div>
 
-              {/* Stock */}
               {stock === 0 && (
                 <div className="flex items-center gap-2">
                   <Package className="w-4 h-4 text-gray-400" />
@@ -231,17 +235,14 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                 </div>
               )}
 
-              {/* Description */}
               {product.description && (
                 <p className="text-gray-600 text-sm leading-relaxed">
                   {product.description}
                 </p>
               )}
 
-              {/* Divider */}
               <hr className="border-gray-200" />
 
-              {/* Sizes */}
               {(needsSize || shouldShowSizeGuide) && (
                 <div>
                   <div className="flex items-center justify-between mb-3">
@@ -299,7 +300,6 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                 </div>
               )}
 
-              {/* Colors */}
               {product.colors && product.colors.length > 0 && (
                 <div>
                   <label className="block text-sm font-semibold text-gray-900 uppercase tracking-wider mb-3">
@@ -322,7 +322,6 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                 </div>
               )}
 
-              {/* Quantity */}
               {!isOutOfStock && !selectedSizeAgotada && (
                 <div>
                   <label className="block text-sm font-semibold text-gray-900 uppercase tracking-wider mb-3">
@@ -350,7 +349,6 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                 </div>
               )}
 
-              {/* Action Buttons */}
               <div className="flex flex-col gap-3 pt-2">
                 <button
                   onClick={handleAddToCart}
@@ -372,7 +370,6 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                 </button>
               </div>
 
-              {/* Trust Badges */}
               <div className="space-y-3 pt-2">
                 <div className="flex items-center gap-3 text-sm text-gray-600">
                   <span className="text-base">🚚</span>
@@ -390,7 +387,6 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
             </div>
           </div>
 
-          {/* Related Products */}
           {relatedProducts.length > 0 && (
             <div className="mt-20">
               <h2 className="text-2xl font-bold text-gray-900 mb-8">
@@ -442,7 +438,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                             </>
                           ) : (
                             <span className="text-sm font-bold text-gray-900">
-                              ${p.price.toFixed(2)}
+                              Bs {p.price.toFixed(2)}
                             </span>
                           )}
                         </div>
@@ -456,7 +452,6 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
         </Container>
       </section>
 
-      {/* Size Guide Modal */}
       <SizeGuideModal
         isOpen={isSizeGuideOpen}
         onClose={() => setIsSizeGuideOpen(false)}

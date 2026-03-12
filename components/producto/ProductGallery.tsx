@@ -20,7 +20,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
     <div className="space-y-4">
       {/* Imagen principal */}
       <div
-        className="relative aspect-[3/4] bg-gray-50 rounded-lg overflow-hidden group cursor-zoom-in"
+        className="relative aspect-[3/4] bg-white rounded-lg overflow-hidden group cursor-zoom-in"
         onClick={() => setIsZoomed(true)}
       >
         <Image

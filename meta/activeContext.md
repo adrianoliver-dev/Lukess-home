@@ -1,5 +1,5 @@
-# activeContext.md — lukess-home (Landing Page)
-**Last Updated:** 2026-03-04T16:30-04:00
+# activeContext.md —- Last Updated: 2026-03-12 15:45:00
+**Last Updated:** 2026-03-12 15:45:00
 **Updated By:** Antigravity Agent
 
 ---
@@ -23,10 +23,25 @@
 - `components/home/HeroBannerCarousel.tsx` (h-100dvh)
 - `components/landing/HeroBanner.tsx` (traducción español)
 - `components/landing/TrustBanner.tsx` (sucursales Mercado Mutualista)
-- `components/home/UbicacionSection.tsx` (finesse real SCZ, removed NY/La Paz)
-- `components/layout/Footer.tsx` (email demo-lukess@adrianoliver.dev)
+- [x] **B12.1.2: Reversión a Santa Cruz/Mutualista & Final Polish** (2026-03-12)
+  - UI 100% español (incluyendo CTA Final "Ready to Elevate").
+  - Ubicación real: Mercado Mutualista (Puestos 47-48, 123, 228-229).
+  - Reinstalado aviso de envío gratis (> 400 Bs) en `TrustBanner`.
+  - Fondos blancos uniformes en PDP y Wishlist.
+  - Email de contacto: `demo-lukess@adrianoliver.dev`.
 
-### DB Changes
+- [x] **Final Shipping & UX Refinements** (2026-03-12)
+- Revertido costo de envío: Bs 5 base + factor distancia (Bs 1.14/km) para Santa Cruz.
+- Implementada auto-selección de Talla y Color en `ProductDetail.tsx` cuando solo existe una opción válida.
+- Ajuste de Hero Banner: Altura `85vh` en desktop para mejor visibilidad del contenido inferior.
+- Unificación estética: Fondo blanco puro (`bg-white`) en contenedores de imágenes en PDP y Wishlist.
+- Verificación de Build exitosa y commit a `main`.
+
+- [x] **Refinamiento Santa Cruz & Visuales** (2026-03-12)
+  - Umbral envío gratis: 400 Bs global.
+  - Checkout: Restaurados 3 puestos (Caseta 47-48, 123, 228-229).
+  - Visual: Fondo imagen producto blanco (`bg-white`).
+  - UI: Hero height PC `85vh` (mayor visibilidad).
 - Eliminados productos de prueba en inglés.
 - Precios reducidos para 7 productos premium que superaban los 900 Bs para normalizar el catálogo.
 - Desactivado producto "Traje Completo Tailored Fit" (SKU: TRA-SUT-001).

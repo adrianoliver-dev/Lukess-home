@@ -19,17 +19,20 @@ export function calculateDistance(
 // Origin: Mercado Mutualista, Santa Cruz de la Sierra
 const ORIGIN = { lat: -17.762778, lng: -63.161667 }
 
-export const FREE_SHIPPING_THRESHOLD = 150  // USD
+export const FREE_SHIPPING_THRESHOLD = 400
 export const MAX_DELIVERY_DISTANCE_KM = 50000  // Worldwide
 
-// Returns shipping cost in USD, or 'out_of_range'
+// Returns shipping cost in Bs, or 'out_of_range'
 export function calculateShippingCost(
   distanceKm: number,
   orderTotal: number,
 ): number | 'out_of_range' {
   if (distanceKm > MAX_DELIVERY_DISTANCE_KM) return 'out_of_range'
   if (orderTotal >= FREE_SHIPPING_THRESHOLD) return 0
-  return 15 // Flat worldwide shipping
+  
+  const baseCost = 5
+  const costPerKm = 1.14 // Approx to get Bs 15 for 8.8km (5 + 8.8 * 1.14 = 15.03)
+  return Math.round(baseCost + (distanceKm * costPerKm))
 }
 
 export function getDistanceFromMutualista(lat: number, lng: number): number {
@@ -42,21 +45,30 @@ export function getMapsLink(lat: number, lng: number): string {
 
 export const PICKUP_LOCATIONS = [
   {
-    id: 'store-ny',
-    name: 'New York Flagship',
-    aisle: '5th Ave',
-    stall: 'Store 101',
-    hours: 'Mon-Sat: 10:00 AM - 8:00 PM',
-    mapsUrl: '#',
-    mapsLabel: 'View on Maps →',
+    id: 'puesto-1',
+    name: 'Puesto 1 (Caseta 47-48)',
+    aisle: 'Pasillo Principal',
+    stall: '47-48',
+    hours: 'Lun-Sáb: 8:00 AM - 10:00 PM',
+    mapsUrl: 'https://maps.app.goo.gl/hjBRWHtFGePRphPB9',
+    mapsLabel: 'Ver en Maps →',
   },
   {
-    id: 'store-ldn',
-    name: 'London Boutique',
-    aisle: 'Regent Street',
-    stall: 'Store 42',
-    hours: 'Mon-Sat: 9:00 AM - 7:00 PM',
-    mapsUrl: '#',
-    mapsLabel: 'View on Maps →',
+    id: 'puesto-2',
+    name: 'Puesto 2 (Caseta 123)',
+    aisle: 'Pasillo Central',
+    stall: '123',
+    hours: 'Lun-Sáb: 8:00 AM - 10:00 PM',
+    mapsUrl: 'https://maps.app.goo.gl/C7HLiz6cWNjvMFh1A',
+    mapsLabel: 'Ver en Maps →',
+  },
+  {
+    id: 'puesto-3',
+    name: 'Puesto 3 (Caseta 228-229)',
+    aisle: 'Sector Ropa',
+    stall: '228-229',
+    hours: 'Lun-Sáb: 8:00 AM - 10:00 PM',
+    mapsUrl: 'https://maps.app.goo.gl/7nxUX1ofcJhmfWKC6',
+    mapsLabel: 'Ver en Maps →',
   },
 ] as const
