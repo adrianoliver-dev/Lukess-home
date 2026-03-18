@@ -34,8 +34,8 @@ export async function POST(req: NextRequest) {
       // 1. Update order status to 'confirmed'
       const { data: order, error: updateError } = await supabase
         .from('orders')
-        .update({ 
-          status: 'confirmed', 
+        .update({
+          status: 'confirmed',
           payment_method: 'stripe',
           payment_receipt_url: session.payment_intent // Reference the Stripe payment intent
         })
