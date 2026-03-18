@@ -1,10 +1,13 @@
 import Stripe from 'stripe'
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('STRIPE_SECRET_KEY is not defined in .env.local')
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY
+
+if (!stripeSecretKey && process.env.NODE_ENV === 'production') {
+  console.warn('⚠️ STRIPE_SECRET_KEY no está definido en las variables de entorno de Vercel (Producción).')
 }
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2024-12-18.acacia' as any, // Using the latest or compatible version
+export const stripe = new Stripe(stripeSecretKey || '', {
+  apiVersion: '2024-12-18.acacia' as any,
   typescript: true,
 })
+
