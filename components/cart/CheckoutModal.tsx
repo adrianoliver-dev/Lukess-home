@@ -533,7 +533,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
     const phoneRegex = /^\d{7,8}$/
     if (!phoneRegex.test(customerData.phone.replace(/\s/g, ''))) {
-      toast.error('Número de teléfono inválido (ej: 70000000)', { position: 'bottom-center' })
+      toast.error('Número de teléfono inválido (ej: 75516136)', { position: 'bottom-center' })
       return
     }
 
@@ -1159,7 +1159,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                               setCustomerData({ ...customerData, phone: e.target.value })
                             }
                             className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-gray-500 focus:outline-none"
-                            placeholder="70000000"
+                            placeholder="75516136"
                           />
                         </div>
 

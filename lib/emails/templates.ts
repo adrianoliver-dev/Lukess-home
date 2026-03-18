@@ -207,7 +207,7 @@ export function orderCancelledEmail(data: {
             <p style="margin:4px 0 0;color:#991b1b;font-size:14px;">${displayReason}</p>
           </div>
           <p style="color:#6b7280;font-size:14px;line-height:1.6;margin:0 0 24px;">
-            Si crees que esto es un error o necesitas más información, no dudes en contactarnos por WhatsApp al <a href="https://wa.me/59170000000" style="color:#D4AF37;text-decoration:none;font-weight:700;">+591 70000000</a>.
+            Si crees que esto es un error o necesitas más información, no dudes en contactarnos por WhatsApp al <a href="https://wa.me/59175516136" style="color:#D4AF37;text-decoration:none;font-weight:700;">+591 75516136</a>.
           </p>
           <div style="text-align:center; padding-top: 16px;">
             <p style="margin: 0 0 16px; font-size: 15px; color: #6b7280;">Lo sentimos mucho. Si cambiás de opinión, todavía estamos acá</p>

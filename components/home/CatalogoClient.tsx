@@ -77,7 +77,12 @@ const showAddedToast = (productName: string) => {
 
 export function CatalogoClient({ initialProducts, initialFilters, categories: serverCategories, selectedCategory }: CatalogoClientProps) {
   // Estados de filtros - Ahora son arrays para multiselección
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(selectedCategory ? [selectedCategory] : [])
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(() => {
+    if (!selectedCategory || !serverCategories) return selectedCategory ? [selectedCategory] : [];
+    // Encontrar el match real en las categorías del servidor
+    const matched = serverCategories.find(c => c.toLowerCase() === selectedCategory.toLowerCase());
+    return matched ? [matched] : [selectedCategory];
+  })
   const [selectedBrands, setSelectedBrands] = useState<string[]>([])
   const [selectedColors, setSelectedColors] = useState<string[]>([])
   const [showFilters, setShowFilters] = useState(false)
@@ -139,8 +144,15 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
     } else if (filter === 'descuento' || filter === 'descuentos') {
       newShowDiscount = true
     } else if (filter) {
-      const formattedCategory = filter.charAt(0).toUpperCase() + filter.slice(1)
-      newCategories = [formattedCategory]
+      // Encontrar la categoría real (case-insensitive)
+      const matchedCategory = categories.find(c => c.toLowerCase() === filter.toLowerCase());
+      if (matchedCategory && matchedCategory !== 'Todos') {
+        newCategories = [matchedCategory];
+      } else {
+        // Fallback: capitalizar primera letra si no se encuentra (pero debería encontrarse)
+        const fallback = filter.charAt(0).toUpperCase() + filter.slice(1);
+        newCategories = [fallback];
+      }
     }
 
     setSelectedCategories(newCategories)

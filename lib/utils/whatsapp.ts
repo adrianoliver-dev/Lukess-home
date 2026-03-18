@@ -1,5 +1,5 @@
 // lib/utils/whatsapp.ts (Update: 2026-03-12 Force Deploy)
-export const WHATSAPP_NUMBER = "59170000000";
+export const WHATSAPP_NUMBER = "59175516136";
 
 export function formatWhatsAppNumber(): string {
     const number = WHATSAPP_NUMBER.replace(/^591/, '');

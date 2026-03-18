@@ -64,4 +64,4 @@ Estamos ubicados estratégicamente en el **Mercado Mutualista**, con tres puntos
 
 Pruébate los modelos, siente la calidad de la tela Omni-Wick™ y comprueba que lucir ropa premium en Santa Cruz no tiene por qué ser un lujo inalcanzable.
 
-¿Preferís ver colores y tallas desde tu celular? **Escribinos al WhatsApp 70000000** y te mostramos las bellezas que tenemos disponibles hoy mismo para envío a domicilio.
+¿Preferís ver colores y tallas desde tu celular? **Escribinos al WhatsApp 75516136** y te mostramos las bellezas que tenemos disponibles hoy mismo para envío a domicilio.

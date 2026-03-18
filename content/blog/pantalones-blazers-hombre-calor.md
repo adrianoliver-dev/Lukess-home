@@ -59,4 +59,4 @@ Ven y compruébalo sin compromiso. Te asesoramos personalmente para armar tu ten
 * **Pasillo 3, Caseta 123**
 * **Pasillo 5, Caseta 228-229**
 
-¿No tienes tiempo para visitarnos hoy? Tiranos un mensaje a nuestro **WhatsApp: 70000000**, te pasamos fotos de nuestros blazers y pantalones disponibles en tu talla, y te lo enviamos a la puerta de tu oficina.
+¿No tienes tiempo para visitarnos hoy? Tiranos un mensaje a nuestro **WhatsApp: 75516136**, te pasamos fotos de nuestros blazers y pantalones disponibles en tu talla, y te lo enviamos a la puerta de tu oficina.

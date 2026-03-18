@@ -29,7 +29,7 @@ for (const file of files) {
         let content = fs.readFileSync(fullPath, 'utf-8');
 
         // Replace phone numbers
-        content = content.replace(/72643753/g, "70000000");
+        content = content.replace(/72643753/g, "75516136");
 
         // Replace emails
         content = content.replace(/tucorreo@gmail\.com/g, "demo@lukesshome.com");

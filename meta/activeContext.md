@@ -5,11 +5,17 @@
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** B12.1.2
-- **Block Name:** Reversión a Español Neutro y Arreglo de Catálogo
+- **Block Number:** B12.1.3
+- **Name:** Stock Cleanup, Filter Fix & Contact Update
 - **Status:** ✅ DONE
-- **Started:** 2026-03-12
-- **Completed:** 2026-03-12
+- **Started:** 2026-03-18
+- **Completed:** 2026-03-18
+- **Changes:**
+  - Database: Eliminated stock (qty=0) and removed sizes 30, 32, 41 from products.
+  - Fix: Implemented case-insensitive category matching in `app/page.tsx` and `CatalogoClient.tsx`.
+  - Fix: Updated `QuickLinksRow.tsx` to match valid database categories.
+  - Global Update: Replaced all occurrences of old phone (70000000) with 75516136.
+  - Global Update: Replaced all occurrences of old email (demo-lukess@adrianoliver.dev) with lukess@adrianoliver.dev.
 
 ---
 
@@ -28,7 +34,7 @@
   - Ubicación real: Mercado Mutualista (Puestos 47-48, 123, 228-229).
   - Reinstalado aviso de envío gratis (> 400 Bs) en `TrustBanner`.
   - Fondos blancos uniformes en PDP y Wishlist.
-  - Email de contacto: `demo-lukess@adrianoliver.dev`.
+  - Email de contacto: `lukess@adrianoliver.dev`.
 
 - [x] **Final Shipping & UX Refinements** (2026-03-12)
 - Revertido costo de envío: Bs 5 base + factor distancia (Bs 1.14/km) para Santa Cruz.

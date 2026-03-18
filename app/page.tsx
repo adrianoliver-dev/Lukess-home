@@ -63,16 +63,20 @@ export default async function Home(
   }
 
   try {
+    activeCategories = await getActiveCategories()
+    
     let categoryForFilters: string | null = null;
     if (categoryParam) {
       if (categoryParam !== 'nuevo' && categoryParam !== 'descuento' && categoryParam !== 'descuentos') {
-        categoryForFilters = categoryParam.charAt(0).toUpperCase() + categoryParam.slice(1)
+        // Encontrar la categoría real (case-insensitive)
+        categoryForFilters = activeCategories.find(
+          c => c.toLowerCase() === categoryParam.toLowerCase()
+        ) || null;
       }
     }
 
     // ALWAYS call getDynamicFilters with current category
     dynamicFilters = await getDynamicFilters(categoryForFilters)
-    activeCategories = await getActiveCategories()
   } catch (err) {
     console.error('Error fetching categories or filters:', err)
   }

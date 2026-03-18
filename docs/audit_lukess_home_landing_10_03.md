@@ -346,7 +346,7 @@ Para levantar este ecosistema, los siguientes *secrets* son imperativos. Están 
     -   `WHATSAPP_PHONE_NUMBER_ID`, `WHATSAPP_ACCESS_TOKEN`, `WHATSAPP_API_VERSION`: Keys crudos provenientes del *dashboard* de desarrolladores de META-APP.
 
 3.  **Configuraciones Centrales del Landing Business:**
-    -   `NEXT_PUBLIC_WHATSAPP_NUMBER`: El teléfono maestro receptivo (`59170000000`). Jamás *hardcodeado* para agilidad técnica de swap, a la vez habilitado explusivamente bajo el prefijo `NEXT_PUBLIC` para visibilidad de los CTA frontend.
+    -   `NEXT_PUBLIC_WHATSAPP_NUMBER`: El teléfono maestro receptivo (`59175516136`). Jamás *hardcodeado* para agilidad técnica de swap, a la vez habilitado explusivamente bajo el prefijo `NEXT_PUBLIC` para visibilidad de los CTA frontend.
     -   `ADMIN_EMAIL`: Buzón receptor contable oculto (financenft01, correos bcc copias de seguridad).
     -   `NEXT_PUBLIC_SITE_URL`: Raíz de los webhooks y reenvíos HTTP (producción o dev local) y variables de redirección estática (Canonicalization).
 

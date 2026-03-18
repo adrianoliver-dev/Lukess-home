@@ -52,4 +52,4 @@ Estamos de Lunes a Domingo en:
 * **Pasillo 3, Caseta 123**
 * **Pasillo 5, Caseta 228-229**
 
-¿Querés consultar si tenemos tu talla en ese modelo que te encantó? Escribinos ahora mismo a nuestro **WhatsApp: 70000000** y te responderemos inmediatamente.
+¿Querés consultar si tenemos tu talla en ese modelo que te encantó? Escribinos ahora mismo a nuestro **WhatsApp: 75516136** y te responderemos inmediatamente.

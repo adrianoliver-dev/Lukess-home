@@ -132,7 +132,7 @@ export default function PoliticasEnvioPage() {
       <section className="mb-10">
         <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Verificación del Pedido</h2>
         <p className="text-gray-700">
-          <strong>Importante:</strong> Al recibir tu pedido, verifica que el producto y la talla coincidan con lo solicitado antes de que el courier se retire. Si detectas algún error, contáctanos de inmediato al <strong>+591 70000000</strong> para gestionar el cambio.
+          <strong>Importante:</strong> Al recibir tu pedido, verifica que el producto y la talla coincidan con lo solicitado antes de que el courier se retire. Si detectas algún error, contáctanos de inmediato al <strong>+591 75516136</strong> para gestionar el cambio.
         </p>
       </section>
 
@@ -146,7 +146,7 @@ export default function PoliticasEnvioPage() {
       <section>
         <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Cambios en la Dirección de Entrega</h2>
         <p className="text-gray-700">
-          Si necesitas cambiar la dirección de entrega después de confirmar el pedido, contáctanos lo antes posible al WhatsApp <strong>70000000</strong>. Solo podemos modificar la dirección si el pedido no ha sido despachado aún.
+          Si necesitas cambiar la dirección de entrega después de confirmar el pedido, contáctanos lo antes posible al WhatsApp <strong>75516136</strong>. Solo podemos modificar la dirección si el pedido no ha sido despachado aún.
         </p>
       </section>
     </LegalPageTemplate>

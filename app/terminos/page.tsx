@@ -19,7 +19,7 @@ export default function TerminosPage() {
         <p className="text-gray-700 mb-4">
           <strong>Razón Social:</strong> Lukess Home<br />
           <strong>Domicilio Comercial:</strong> Mercado Mutualista, Santa Cruz de la Sierra, Bolivia<br />
-          <strong>Contacto:</strong> +591 70000000 (WhatsApp)
+          <strong>Contacto:</strong> +591 75516136 (WhatsApp)
         </p>
         <p className="text-gray-700">
           Lukess Home es un negocio especializado en la venta de ropa masculina de marcas importadas reconocidas (Columbia, Nautica, Tommy Hilfiger, entre otras). Operamos a través de tres canales: tiendas físicas, catálogo en línea y pedidos por WhatsApp.
@@ -57,7 +57,7 @@ export default function TerminosPage() {
 
         <h3 className="text-lg font-semibold text-gray-900 mb-3">4.2. Pedidos por WhatsApp</h3>
         <p className="text-gray-700 mb-4">
-          Puedes realizar compras directamente contactándonos al +591 70000000. Nuestro equipo verificará disponibilidad, confirmará precio y coordinará entrega o retiro en tienda.
+          Puedes realizar compras directamente contactándonos al +591 75516136. Nuestro equipo verificará disponibilidad, confirmará precio y coordinará entrega o retiro en tienda.
         </p>
 
         <h3 className="text-lg font-semibold text-gray-900 mb-3">4.3. Compra en Tienda Física</h3>
@@ -76,7 +76,7 @@ export default function TerminosPage() {
         </p>
         <ul className="list-disc list-inside text-gray-700 space-y-2 ml-4 mt-3">
           <li><strong>QR Simple:</strong> Pago instantáneo desde cualquier app bancaria de Bolivia.</li>
-          <li><strong>Transferencia Bancaria:</strong> Solicitá los datos al WhatsApp 70000000.</li>
+          <li><strong>Transferencia Bancaria:</strong> Solicitá los datos al WhatsApp 75516136.</li>
           <li><strong>Efectivo o Tarjeta en Tienda:</strong> Disponible solo para retiro en el Mercado Mutualista.</li>
         </ul>
       </section>
