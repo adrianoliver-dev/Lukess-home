@@ -1,5 +1,5 @@
-# activeContext.md —- Last Updated: 2026-03-12 15:45:00
-**Last Updated:** 2026-03-12 15:45:00
+# activeContext.md —- Last Updated: 2026-03-18 19:30:00
+**Last Updated:** 2026-03-18 19:30:00
 **Updated By:** Antigravity Agent
 
 ---
@@ -12,6 +12,7 @@
 - **Completed:** 2026-03-18
 - **Changes:**
   - Database: Eliminated stock (qty=0) and removed sizes 30, 32, 41 from products.
+  - Fix: Updated `lib/products.ts` to remove sizes 30, 32, 41 from product definitions.
   - Fix: Implemented case-insensitive category matching in `app/page.tsx` and `CatalogoClient.tsx`.
   - Fix: Updated `QuickLinksRow.tsx` to match valid database categories.
   - Global Update: Replaced all occurrences of old phone (70000000) with 75516136.
@@ -19,22 +20,34 @@
 
 ---
 
-## LAST COMPLETED BLOCK
-- **Block Number:** B12.1.2
-- **Block Name:** Reversión a Español Neutro y Arreglo de Catálogo
-- **Commit Landing:** TRUE
+## CURRENT BLOCK
+- **Block Number:** B12.2
+- **Name:** Stripe Payment Integration
+- **Status:** ✅ DONE
+- **Started:** 2026-03-18
+- **Completed:** 2026-03-18
+- **Changes:**
+  - **Backend**: Implemented Stripe session creation in `app/api/checkout/route.ts` and configured `lib/stripe.ts`.
+  - **Webhook**: Created `/api/webhooks/stripe/route.ts` to handle payment confirmation, update order status to 'paid', and manage inventory.
+  - **Frontend**: Added Stripe as a payment option in `CheckoutModal.tsx` for both Delivery and Pickup methods.
+  - **UX/Feedback**: Added automatic redirection to Stripe Checkout and return handling in `Navbar.tsx` and `CheckoutModal.tsx`.
+  - **Cart**: Implemented automatic cart clearing upon successful payment return.
+  - **Security**: Added Stripe signature verification for webhooks.
 
-- `components/home/CatalogoClient.tsx` (limit 200, price limit 9999, bg-white)
-- `components/wishlist/WishlistClient.tsx` (bg-white, matching catalog)
-- `components/home/HeroBannerCarousel.tsx` (h-100dvh)
-- `components/landing/HeroBanner.tsx` (traducción español)
-- `components/landing/TrustBanner.tsx` (sucursales Mercado Mutualista)
-- [x] **B12.1.2: Reversión a Santa Cruz/Mutualista & Final Polish** (2026-03-12)
-  - UI 100% español (incluyendo CTA Final "Ready to Elevate").
-  - Ubicación real: Mercado Mutualista (Puestos 47-48, 123, 228-229).
-  - Reinstalado aviso de envío gratis (> 400 Bs) en `TrustBanner`.
-  - Fondos blancos uniformes en PDP y Wishlist.
-  - Email de contacto: `lukess@adrianoliver.dev`.
+---
+
+## LAST COMPLETED BLOCK
+- **Block Number:** B12.1.3
+- **Block Name:** Stock Cleanup, Filter Fix & Contact Update
+- **Status:** ✅ DONE
+- **Started:** 2026-03-18
+- **Completed:** 2026-03-18
+- **Changes:**
+  - Database: Eliminated stock (qty=0) and removed sizes 30, 32, 41 from products.
+  - Fix: Implemented case-insensitive category matching in `app/page.tsx` and `CatalogoClient.tsx`.
+  - Fix: Updated `QuickLinksRow.tsx` to match valid database categories.
+  - Global Update: Replaced all occurrences of old phone (70000000) with 75516136.
+  - Global Update: Replaced all occurrences of old email (demo-lukess@adrianoliver.dev) with lukess@adrianoliver.dev.
 
 - [x] **Final Shipping & UX Refinements** (2026-03-12)
 - Revertido costo de envío: Bs 5 base + factor distancia (Bs 1.14/km) para Santa Cruz.

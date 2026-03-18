@@ -75,7 +75,7 @@ export const products: Product[] = [
     price: 269,
     category: "Pantalones",
     images: ["/products/pantalon-drill-beige.png"],
-    sizes: ["28", "30", "32", "34", "36", "38"],
+    sizes: ["28", "34", "36", "38"],
     badge: "Popular",
   },
   {
@@ -99,7 +99,7 @@ export const products: Product[] = [
     price: 319,
     category: "Pantalones",
     images: ["/products/pantalon-jean-azul-moto.png"],
-    sizes: ["28", "30", "32", "34", "36", "38"],
+    sizes: ["28", "34", "36", "38"],
     badge: "Nuevo",
   },
   {
@@ -135,7 +135,7 @@ export const products: Product[] = [
     price: 299,
     category: "Pantalones",
     images: ["/products/pantalon-jean-indigo-oscuro.png"],
-    sizes: ["28", "30", "32", "34", "36", "38"],
+    sizes: ["28", "34", "36", "38"],
     badge: "Nuevo",
   },
   {
@@ -159,7 +159,7 @@ export const products: Product[] = [
     price: 129,
     category: "Accesorios",
     images: ["/products/cinturon-cuero-cafe.png"],
-    sizes: ["S (28-32)", "M (32-36)", "L (36-40)", "XL (40-44)"],
+    sizes: ["S (28)", "M (34-36)", "L (38-40)", "XL (42-44)"],
     badge: null,
   },
 ];

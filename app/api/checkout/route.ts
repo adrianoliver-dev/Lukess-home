@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import { revalidatePath } from 'next/cache'
 import { sendWhatsAppMessage } from '@/lib/whatsapp/send-message'
 import { getWhatsAppTemplate, OrderForWhatsApp } from '@/lib/whatsapp/template-router'
+import { stripe } from '@/lib/stripe'
 
 // ── Rate limiting en memoria ──────────────────────────────────────────────────
 // Simple Map por email e IP. Se resetea al reiniciar el servidor.
@@ -325,7 +326,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    if (notify_whatsapp && customer_phone) {
+    if (notify_whatsapp && customer_phone && payment_method !== 'stripe') {
 
       const rawPhone = customer_phone.replace(/\D/g, '')
       const formattedPhone = rawPhone.startsWith('591') ? rawPhone : `591${rawPhone}`
@@ -365,6 +366,57 @@ export async function POST(req: NextRequest) {
 
     revalidatePath('/', 'page')
     revalidatePath('/producto/[id]', 'page')
+
+    // E) If payment method is Stripe, create a checkout session
+    if (payment_method === 'stripe') {
+      try {
+        const session = await stripe.checkout.sessions.create({
+          payment_method_types: ['card'],
+          line_items: items.map((item: any) => ({
+            price_data: {
+              currency: 'bob',
+              product_data: {
+                name: `${item.product_name || 'Producto'} ${item.size ? `(${item.size})` : ''} ${item.color ? `- ${item.color}` : ''}`.trim(),
+                images: item.image_url ? [item.image_url] : [],
+              },
+              unit_amount: Math.round(item.unit_price * 100), // En centavos
+            },
+            quantity: item.quantity,
+          })).concat(
+            shipping_cost > 0 ? [{
+              price_data: {
+                currency: 'bob',
+                product_data: {
+                  name: 'Envío',
+                  images: [],
+                },
+                unit_amount: Math.round(shipping_cost * 100),
+              },
+              quantity: 1,
+            }] : []
+          ),
+          mode: 'payment',
+          success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/?success=true&orderId=${order.id}`,
+          cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/?canceled=true`,
+          metadata: {
+            order_id: order.id,
+          },
+          customer_email: customer_email || undefined,
+        })
+
+        return NextResponse.json({
+          orderId: order.id,
+          orderNumber: order.id.slice(0, 8).toUpperCase(),
+          checkoutUrl: session.url,
+        })
+      } catch (stripeError: any) {
+        console.error('[Stripe Session Error]:', stripeError)
+        return NextResponse.json({
+          error: 'Error al crear la sesión de pago: ' + stripeError.message,
+          code: 'stripe_error',
+        }, { status: 500 })
+      }
+    }
 
     return NextResponse.json({
       orderId: order.id,

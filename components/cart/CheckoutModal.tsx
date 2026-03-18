@@ -63,7 +63,7 @@ interface CheckoutModalProps {
 }
 
 type Step = 'form' | 'qr' | 'success'
-type PaymentMethod = 'qr' | 'libelula' | 'cash_on_pickup'
+type PaymentMethod = 'qr' | 'libelula' | 'cash_on_pickup' | 'stripe'
 type DeliveryMethod = 'delivery' | 'pickup'
 type LocationState = 'initial' | 'gps_loading' | 'gps_denied' | 'map_open' | 'confirmed'
 type ReceiptUploadState = 'idle' | 'uploading' | 'success' | 'error'
@@ -212,6 +212,27 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
     }
     setRecipientPhone((prev) => prev || customerData.phone)
   }, [customerData.name, customerData.phone])
+
+  // Handle Stripe Success Return
+  useEffect(() => {
+    if (!isOpen) return
+
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('success') === 'true' && params.get('orderId')) {
+      const orderIdParam = params.get('orderId') || ''
+      setStep('success')
+      setOrderId(orderIdParam)
+      setShowConfetti(true)
+      clearCart()
+      
+      // Clean up URL to avoid re-triggering if modal closes/opens
+      window.history.replaceState({}, '', '/')
+      
+      // Track Purchase for Stripe (since we skipped it in handleStripeCheckout)
+      // Note: We don't have the full order data easily here, but we can track the ID
+      // Real order data would be better tracked from the success page or webhook
+    }
+  }, [isOpen, clearCart])
 
   // Pre-fill from authenticated account
   useEffect(() => {
@@ -614,6 +635,9 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
     if (selectedPayment === 'cash_on_pickup') {
       // Skip QR screen — create order immediately then go to success
       await handleCashOnPickupCheckout(snapshotFormData)
+    } else if (selectedPayment === 'stripe') {
+      // Create order and redirect to Stripe
+      await handleStripeCheckout(snapshotFormData)
     } else {
       setStep('qr')
       scrollModalToTop()
@@ -771,6 +795,79 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
     } catch {
       toast.error('Error al procesar el pedido. Intenta de nuevo.', { position: 'bottom-center' })
     } finally {
+      setIsProcessing(false)
+      doubleSubmitRef.current = false
+    }
+  }
+
+  const handleStripeCheckout = async (fd: NonNullable<typeof formData>) => {
+    if (doubleSubmitRef.current) return
+    doubleSubmitRef.current = true
+    setIsProcessing(true)
+
+    try {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          website: fd.customerData.website,
+          user_id: user?.id ?? undefined,
+          customer_name: fd.customerData.name,
+          customer_phone: fd.customerData.phone.replace(/\s/g, ''),
+          customer_email: fd.customerData.email,
+          marketing_consent: fd.marketingConsent,
+          notify_email: fd.notifyByEmail,
+          notify_whatsapp: fd.notifyByWhatsapp,
+          subtotal: total,
+          shipping_cost: fd.shippingCost,
+          total: fd.orderTotal,
+          delivery_method: fd.deliveryMethod,
+          shipping_address: fd.deliveryMethod === 'delivery' ? fd.shippingAddress.trim() : null,
+          shipping_reference: fd.deliveryMethod === 'delivery' ? fd.shippingReference.trim() || null : null,
+          pickup_location: fd.deliveryMethod === 'pickup' ? fd.pickupLocation : null,
+          gps_lat: fd.gpsLat,
+          gps_lng: fd.gpsLng,
+          gps_distance_km: fd.gpsDistanceKm,
+          maps_link: fd.mapsLink || null,
+          recipient_name: fd.deliveryMethod === 'delivery' ? fd.recipientName.trim() : null,
+          recipient_phone: fd.deliveryMethod === 'delivery' ? fd.recipientPhone.replace(/\s/g, '') : null,
+          delivery_instructions: fd.deliveryMethod === 'delivery' ? fd.deliveryInstructions.trim() || null : null,
+          payment_method: 'stripe',
+          discount_amount: fd.discountValidation?.valid ? fd.appliedDiscountAmount : 0,
+          discount_code_id: fd.discountValidation?.valid ? fd.discountValidation.discount_code_id : null,
+          discount_code: fd.discountValidation?.valid ? fd.discountCode.toUpperCase() : null,
+          items: cart.map((item) => ({
+            product_id: item.product.id,
+            product_name: item.product.name,
+            quantity: item.quantity,
+            unit_price: item.product.price,
+            size: item.size || null,
+            color: item.color || null,
+            subtotal: item.product.price * item.quantity,
+            image_url: item.product.images?.[0] ?? item.product.image_url ?? null,
+          })),
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        toast.error(data.error || 'Error al crear la sesión de pago', { position: 'bottom-center' })
+        setIsProcessing(false)
+        doubleSubmitRef.current = false
+        return
+      }
+
+      if (data.checkoutUrl) {
+        window.location.href = data.checkoutUrl
+      } else {
+        toast.error('No se recibió la URL de pago', { position: 'bottom-center' })
+        setIsProcessing(false)
+        doubleSubmitRef.current = false
+      }
+    } catch (err) {
+      console.error('[Stripe Checkout Error]:', err)
+      toast.error('Error al procesar el pago. Intenta de nuevo.', { position: 'bottom-center' })
       setIsProcessing(false)
       doubleSubmitRef.current = false
     }
@@ -1851,6 +1948,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                           <div className="grid grid-cols-1 gap-2">
                             {[
                               { value: 'qr' as PaymentMethod, icon: '📱', label: 'Pagaré por QR', sub: 'Pago online antes de recoger' },
+                              { value: 'stripe' as PaymentMethod, icon: '💳', label: 'Pago con Tarjeta (Stripe)', sub: 'Crédito o Débito online' },
                               { value: 'cash_on_pickup' as PaymentMethod, icon: '🏪', label: 'Pagaré en el puesto', sub: 'Efectivo, QR o tarjeta al recoger' },
                             ].map((opt) => (
                               <button
@@ -1874,12 +1972,30 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                             ))}
                           </div>
                         ) : (
-                          <div className="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-xl p-3">
-                            <span className="text-2xl">📱</span>
-                            <div>
-                              <p className="font-semibold text-sm text-gray-800">Pago online</p>
-                              <p className="text-xs text-gray-500">Te mostraremos el QR para pagar</p>
-                            </div>
+                          <div className="grid grid-cols-1 gap-2">
+                            {[
+                               { value: 'qr' as PaymentMethod, icon: '📱', label: 'Pagar por QR', sub: 'Te mostraremos el código QR' },
+                               { value: 'stripe' as PaymentMethod, icon: '💳', label: 'Tarjeta Crédito/Débito', sub: 'Pago seguro con Stripe' },
+                             ].map((opt) => (
+                              <button
+                                key={opt.value}
+                                type="button"
+                                onClick={() => setSelectedPayment(opt.value)}
+                                className={`w-full flex items-center gap-3 p-3 rounded-xl border-2 text-left transition-all ${selectedPayment === opt.value
+                                  ? 'border-gray-900 bg-gray-50'
+                                  : 'border-gray-200 hover:border-gray-300'
+                                  }`}
+                              >
+                                <span className="text-2xl flex-shrink-0">{opt.icon}</span>
+                                <div>
+                                  <p className="font-semibold text-sm text-gray-800">{opt.label}</p>
+                                  <p className="text-xs text-gray-500">{opt.sub}</p>
+                                </div>
+                                {selectedPayment === opt.value && (
+                                  <CheckCircle className="w-4 h-4 text-gray-900 ml-auto flex-shrink-0" />
+                                )}
+                              </button>
+                            ))}
                           </div>
                         )}
                       </div>

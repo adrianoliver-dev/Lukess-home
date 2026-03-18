@@ -78,6 +78,20 @@ export default function Navbar() {
     };
   }, [isOpen]);
 
+  // Handle Stripe Success/Cancel Return
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('success') === 'true') {
+      setIsCheckoutOpen(true);
+    } else if (params.get('canceled') === 'true') {
+      import('react-hot-toast').then(({ toast }) => {
+        toast.error('Pago cancelado. Puedes intentarlo de nuevo.', { position: 'bottom-center' });
+      });
+      // Clean up URL
+      window.history.replaceState({}, '', '/');
+    }
+  }, []);
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string): void => {
     // Extract hash: works for both /#contacto and /?filter=gorras#catalogo
     const hashIndex = href.indexOf('#');
