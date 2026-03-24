@@ -4,7 +4,37 @@
 
 ---
 
-## CURRENT BLOCK
+- **Block Number:** B13
+- **Name:** Hover Fix & Quick Add to Cart
+- **Status:** ✅ DONE
+- **Started:** 2026-03-24
+- **Completed:** 2026-03-24
+- **Changes:**
+  - Fixed hover image swap bug with `hasSecondaryImage` guard (preventing blank areas).
+  - Integrated "Quick Add to Cart" button on catalog product cards.
+  - Implemented logic to detect variants: products with >1 size/color show "Ver opciones" (redirect to PDP), while single products allow direct adding.
+  - Desktop: Slide-up animation on hover (`translate-y-full` to `translate-y-0`).
+  - Mobile: Statically visible buttons at the bottom of the image.
+  - Added visual feedback ("✓ Agregado") for 1.5s after successful add.
+
+---
+
+## LAST COMPLETED BLOCK
+- **Block Number:** B12
+- **Name:** Product Card Hover Image Swap
+- **Status:** ✅ DONE
+- **Started:** 2026-03-24
+- **Completed:** 2026-03-24
+- **Changes:**
+  - Implemented smooth opacity crossfade (200ms) on catalog product cards.
+  - Added CSS media query `@media (hover: hover)` in `globals.css` to restrict effect to pointer devices.
+  - Primary image: `transition-all duration-300 group-hover:scale-105 hover-image-primary`.
+  - Secondary image: Absolute positioning with `opacity-0` and `transition-opacity`.
+  - Conditional rendering: Only swaps if a distinct second image exists in `product.images`.
+
+---
+
+## LAST COMPLETED BLOCK
 - **Block Number:** B11
 - **Name:** Visual Code Audit & Unification
 - **Status:** ✅ DONE

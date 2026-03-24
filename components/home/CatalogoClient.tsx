@@ -13,6 +13,7 @@ import toast from 'react-hot-toast'
 import { FilterSidebar, type Filters } from '@/components/catalogo/FilterSidebar'
 import { ProductBadges } from '@/components/catalogo/ProductBadges'
 import { WishlistButton } from '@/components/wishlist/WishlistButton'
+import Button from '@/components/ui/Button'
 import { buildWhatsAppUrl } from '@/lib/utils/whatsapp'
 import { hasActiveDiscount as hasDiscount, getDiscount, getPriceWithDiscount } from '@/lib/utils/price'
 import { type FilterOptions } from '@/app/actions/filters'
@@ -100,6 +101,7 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
   const [showDiscount, setShowDiscount] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [displayLimit, setDisplayLimit] = useState(200)
+  const [addingId, setAddingId] = useState<string | null>(null)
 
   const [dynamicFilters, setDynamicFilters] = useState<FilterOptions | null>(initialFilters || null)
 
@@ -722,8 +724,42 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                 {filteredProducts.slice(0, displayLimit).map((product, index) => {
                   const stock = getTotalStock(product)
                   const isOutOfStock = stock === 0
+
+                  const validSizes = (product.sizes ?? []).filter(
+                    (s: string) => s && s.trim() !== '' && !['Unitalla', 'Única', 'Unico'].includes(s)
+                  )
+                  const hasMultipleVariants = validSizes.length > 1 || (product.colors && product.colors.length > 1)
+
+                  const hasSecondaryImage = !!(
+                    product.images &&
+                    product.images.length > 1 &&
+                    product.images[1] &&
+                    product.images[1].trim() !== '' &&
+                    product.images[1] !== (product.thumbnail_url || product.image_url)
+                  )
+
+                  const handleQuickAdd = (e: React.MouseEvent) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    if (isOutOfStock) return;
+
+                    if (hasMultipleVariants) {
+                      router.push(`/producto/${product.id}`);
+                      return;
+                    }
+
+                    // Select first available size if any, otherwise undefined
+                    const sizeToAdd = validSizes.length > 0 ? validSizes[0] : undefined;
+                    const colorToAdd = product.colors && product.colors.length > 0 ? product.colors[0] : undefined;
+
+                    addToCart(product, 1, sizeToAdd, colorToAdd);
+                    setAddingId(product.id);
+                    setTimeout(() => setAddingId(null), 1500);
+                  };
+
                   return (
-                    <div key={product.id} className="group bg-white border border-gray-100 overflow-hidden transition-all duration-200 hover:shadow-sm cursor-pointer">
+                    <div key={product.id} className="group bg-white border border-gray-100 overflow-hidden transition-all duration-200 hover:shadow-sm cursor-pointer relative">
                       <Link href={`/producto/${product.id}`} className="block">
                         {/* Imagen */}
                         <div className="relative aspect-[4/5] overflow-hidden bg-white p-3">
@@ -733,16 +769,16 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                             alt={`${product.name}${product.brand ? ` - ${product.brand}` : ''}${product.color ? ` ${product.color}` : ''}${product.sizes?.[0] ? ` talla ${product.sizes[0]}` : ''}`}
                             fill
                             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                            className="object-contain object-center transition-all duration-300 group-hover:scale-105 hover-image-primary"
+                            className={`object-contain object-center transition-all duration-300 group-hover:scale-105 ${hasSecondaryImage ? 'hover-image-primary' : ''}`}
                             loading={index < 4 ? 'eager' : 'lazy'}
                             priority={index === 0}
                             quality={85}
                           />
 
                           {/* Imagen Secundaria (Hover - solo si existe y es distinta) */}
-                          {product.images && product.images.length > 1 && product.images[1] !== (product.thumbnail_url || product.image_url) && (
+                          {hasSecondaryImage && (
                             <Image
-                              src={product.images[1]}
+                              src={product.images![1]}
                               alt={`${product.name} - Vista secundaria`}
                               fill
                               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
@@ -751,6 +787,48 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                               quality={85}
                             />
                           )}
+
+                          {/* Quick Add Button */}
+                          <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300 pointer-events-none md:block hidden z-20">
+                            <Button
+                              onClick={handleQuickAdd}
+                              variant={hasMultipleVariants ? "secondary" : "primary"}
+                              size="sm"
+                              fullWidth
+                              disabled={isOutOfStock}
+                              className="pointer-events-auto h-9 text-[10px] shadow-lg backdrop-blur-sm bg-white/90 hover:bg-white text-gray-900 border-gray-200"
+                            >
+                              {isOutOfStock
+                                ? 'SIN STOCK'
+                                : addingId === product.id
+                                  ? '✓ AGREGADO'
+                                  : hasMultipleVariants
+                                    ? 'VER OPCIONES'
+                                    : '+ AGREGAR'
+                              }
+                            </Button>
+                          </div>
+
+                          {/* Quick Add Mobile (Always visible) */}
+                          <div className="absolute bottom-0 left-0 right-0 p-2 md:hidden block z-20 pointer-events-none">
+                            <Button
+                              onClick={handleQuickAdd}
+                              variant={hasMultipleVariants ? "secondary" : "primary"}
+                              size="sm"
+                              fullWidth
+                              disabled={isOutOfStock}
+                              className="pointer-events-auto h-8 text-[9px] shadow-md bg-white/95 text-gray-900 border-gray-200"
+                            >
+                              {isOutOfStock
+                                ? 'SIN STOCK'
+                                : addingId === product.id
+                                  ? '✓'
+                                  : hasMultipleVariants
+                                    ? 'VER'
+                                    : '+'
+                              }
+                            </Button>
+                          </div>
                           <ProductBadges
                             isNew={product.is_new}
                             isNewUntil={product.is_new_until}
