@@ -727,16 +727,30 @@ export function CatalogoClient({ initialProducts, initialFilters, categories: se
                       <Link href={`/producto/${product.id}`} className="block">
                         {/* Imagen */}
                         <div className="relative aspect-[4/5] overflow-hidden bg-white p-3">
+                          {/* Imagen Principal */}
                           <Image
                             src={product.thumbnail_url || product.image_url || '/placeholder.png'}
                             alt={`${product.name}${product.brand ? ` - ${product.brand}` : ''}${product.color ? ` ${product.color}` : ''}${product.sizes?.[0] ? ` talla ${product.sizes[0]}` : ''}`}
                             fill
                             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                            className="object-contain object-center transition-transform duration-300 group-hover:scale-105"
+                            className="object-contain object-center transition-all duration-300 group-hover:scale-105 hover-image-primary"
                             loading={index < 4 ? 'eager' : 'lazy'}
                             priority={index === 0}
                             quality={85}
                           />
+
+                          {/* Imagen Secundaria (Hover - solo si existe y es distinta) */}
+                          {product.images && product.images.length > 1 && product.images[1] !== (product.thumbnail_url || product.image_url) && (
+                            <Image
+                              src={product.images[1]}
+                              alt={`${product.name} - Vista secundaria`}
+                              fill
+                              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                              className="object-contain object-center transition-opacity duration-300 opacity-0 hover-image-secondary"
+                              loading="lazy"
+                              quality={85}
+                            />
+                          )}
                           <ProductBadges
                             isNew={product.is_new}
                             isNewUntil={product.is_new_until}

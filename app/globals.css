@@ -222,4 +222,14 @@
   .hero-promo-enter {
     animation: heroPromoEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
+
+  /* ===== Product Card Hover Image Swap ===== */
+  @media (hover: hover) {
+    .group:hover .hover-image-secondary {
+      opacity: 1 !important;
+    }
+    .group:hover .hover-image-primary {
+      opacity: 0 !important;
+    }
+  }
 }
