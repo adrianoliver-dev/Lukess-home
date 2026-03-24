@@ -95,21 +95,19 @@ export function AuthModal({
     try {
       if (tab === 'login') {
         await signInWithEmail(form.email, form.password)
-        toast.success(
-          `¡Bienvenido de nuevo\${customerName ? `, \${customerName}` : ''}!`,
-          { position: 'bottom-center', icon: '👋' }
-        )
+        const welcomeMsg = customerName ? `Bienvenido de nuevo, ${customerName}!` : 'Bienvenido de nuevo!'
+        toast.success(welcomeMsg, { position: 'bottom-center' })
       } else {
         const { session } = await signUpWithEmail(form.email, form.password, form.name)
         if (session) {
           toast.success(
-            '¡Cuenta creada y sesión iniciada!',
-            { position: 'bottom-center', icon: '🎉' }
+            'Cuenta creada y sesión iniciada',
+            { position: 'bottom-center' }
           )
         } else {
           toast.success(
-            '¡Cuenta creada! Revisa tu email para confirmar.',
-            { position: 'bottom-center', icon: '📩' }
+            'Cuenta creada. Revisa tu email para confirmar.',
+            { position: 'bottom-center' }
           )
         }
       }
@@ -129,7 +127,7 @@ export function AuthModal({
   }
 
   const inputClass = (field: string) =>
-    `w-full px-4 py-3 rounded-lg bg-surface-modal-inner border text-white placeholder-gray-500 focus:outline-none focus:ring-2 transition-colors text-sm \${errors[field]
+    `w-full px-4 py-3 rounded-lg bg-surface-modal-inner border text-white placeholder-gray-500 focus:outline-none focus:ring-2 transition-colors text-sm ${errors[field]
       ? 'border-red-500 focus:ring-red-500/30'
       : 'border-gray-700 focus:ring-lukess-gold/40 focus:border-lukess-gold'
     }`
@@ -155,7 +153,7 @@ export function AuthModal({
             transition={{ duration: 0.2, ease: 'easeOut' }}
             className="fixed inset-0 z-[61] flex items-center justify-center p-4 pointer-events-none"
           >
-            <div className="w-full max-w-md bg-surface-modal rounded-lg border border-gray-800 pointer-events-auto overflow-hidden">
+            <div className="w-full max-w-md bg-surface-modal rounded-lg border border-gray-200 shadow-sm border border-gray-800 pointer-events-auto overflow-hidden">
               {/* Header */}
               <div className="px-6 pt-6 pb-4 border-b border-gray-800 flex items-center justify-between">
                 <div>
@@ -242,7 +240,7 @@ export function AuthModal({
                         setTab(t)
                         setErrors({})
                       }}
-                      className={`flex-1 py-2 text-sm font-semibold rounded-md transition-all \${tab === t
+                      className={`flex-1 py-2 text-sm font-semibold rounded-md transition-all ${tab === t
                           ? 'bg-lukess-gold text-white shadow-sm'
                           : 'text-gray-400 hover:text-white'
                         }`}

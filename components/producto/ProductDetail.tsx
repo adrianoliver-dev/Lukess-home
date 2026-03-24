@@ -131,7 +131,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
 
     const sizeForCart = needsSize ? selectedSize : undefined
     addToCart(product, quantity, sizeForCart, selectedColor || undefined)
-    toast.success(`\${quantity}x \${product.name} agregado al carrito`)
+    toast.success(`${quantity}x ${product.name} agregado al carrito`)
   }
 
   const handleWhatsApp = () => {
@@ -139,15 +139,15 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
     if (stock === 0) {
       message =
         'Hola! Me interesa este producto 👇\n' +
-        `*\${product.name}*\n` +
-        `💰 Precio: Bs \${product.price.toFixed(2)}\n` +
+        `*${product.name}*\n` +
+        `💰 Precio: Bs ${product.price.toFixed(2)}\n` +
         '¿Cuándo habrá stock disponible? 🙏'
     } else {
       message =
         'Hola! Me interesa este producto 👇\n' +
-        `*\${product.name}*\n` +
-        `💰 Precio: Bs \${product.price.toFixed(2)}\n` +
-        (selectedSize ? `📏 Talla: \${selectedSize}\n` : '') +
+        `*${product.name}*\n` +
+        `💰 Precio: Bs ${product.price.toFixed(2)}\n` +
+        (selectedSize ? `📏 Talla: ${selectedSize}\n` : '') +
         '¿Me pueden dar más información? 🙏'
     }
     window.open(buildWhatsAppUrl(message), '_blank')
@@ -278,7 +278,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                               }
                             }}
                             disabled={sizeAgotada}
-                            className={`min-w-[48px] h-12 px-4 text-sm font-semibold border transition-all \${sizeAgotada
+                            className={`min-w-[48px] h-12 px-4 text-sm font-semibold border transition-all ${sizeAgotada
                               ? 'opacity-30 cursor-not-allowed line-through border-gray-200 text-gray-400 bg-gray-50'
                               : isSelected
                                 ? 'bg-gray-900 text-white border-gray-900'
@@ -314,12 +314,12 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                         <button
                           key={color}
                           onClick={() => setSelectedColor(color)}
-                          className={`w-10 h-10 rounded-full border-2 transition-all shadow-sm \${selectedColor === color
+                          className={`w-10 h-10 rounded-full border-2 transition-all shadow-sm ${selectedColor === color
                             ? 'border-gray-900 scale-110 ring-2 ring-lukess-gold ring-offset-2'
                             : 'border-gray-200 hover:scale-105'
                             }`}
                           style={{ backgroundColor: hex }}
-                          aria-label={`Seleccionar color \${color}`}
+                          aria-label={`Seleccionar color ${color}`}
                           title={color}
                         />
                       )
@@ -379,16 +379,13 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
 
               <div className="space-y-3 pt-2">
                 <div className="flex items-center gap-3 text-sm text-gray-600">
-                  <span className="text-base">🚚</span>
-                  <span>Envío Gratis en Santa Cruz (compras &gt; Bs {FREE_SHIPPING_THRESHOLD})</span>
+                  <span className="text-base text-gray-400">Envío Gratis en Santa Cruz (compras &gt; Bs {FREE_SHIPPING_THRESHOLD})</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-gray-600">
-                  <span className="text-base">🏬</span>
-                  <span>Pick-up Gratuito en Tienda (Mutualista)</span>
+                  <span className="text-base text-gray-400">Pick-up Gratuito en Tienda (Mutualista)</span>
                 </div>
                 <div className="flex items-start gap-3 text-sm text-gray-600">
-                  <span className="text-base mt-0.5">⏱️</span>
-                  <span>Los pedidos con &ldquo;Retiro en Tienda&rdquo; se reservan por un máximo de <strong>48 horas</strong>.</span>
+                  <span className="text-base mt-0.5 text-gray-400">Los pedidos con &ldquo;Retiro en Tienda&rdquo; se reservan por un máximo de <strong>48 horas</strong>.</span>
                 </div>
               </div>
             </div>
@@ -405,7 +402,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                   return (
                     <Link
                       key={p.id}
-                      href={`/producto/\${p.id}`}
+                      href={`/producto/${p.id}`}
                       className="group"
                     >
                       <div className="relative aspect-[3/4] bg-white overflow-hidden mb-3">
@@ -441,7 +438,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                                 Bs {getPriceWithDiscount(p).toFixed(2)}
                               </span>
                               <span className="text-xs text-gray-400 line-through">
-                                Bs {p.price.toFixed(2)}
+                                ${p.price.toFixed(2)}
                               </span>
                             </>
                           ) : (

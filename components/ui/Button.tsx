@@ -49,10 +49,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           rounded-md
           disabled:opacity-50 disabled:cursor-not-allowed
           active:scale-[0.98] transition-all duration-150
-          \${variantStyles[variant]}
-          \${sizeStyles[size]}
-          \${fullWidth ? "w-full" : ""}
-          \${className}
+          ${variantStyles[variant]}
+          ${sizeStyles[size]}
+          ${fullWidth ? "w-full" : ""}
+          ${className}
         `}
         {...props}
       >

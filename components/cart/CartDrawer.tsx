@@ -157,17 +157,17 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
               <div className="bg-gray-50 border-t border-gray-200 p-4 space-y-3">
                 {/* Shipping progress bar */}
                 {total >= FREE_SHIPPING_THRESHOLD ? (
-                  <p className="text-xs font-semibold text-green-600">🎉 ¡Envío gratis desbloqueado!</p>
+                  <p className="text-xs font-semibold text-green-600">¡Envío gratis desbloqueado!</p>
                 ) : (
                   <div>
                     <div className="w-full bg-gray-200 rounded-full h-1.5 mb-1.5">
                       <div
                         className="bg-gray-900 h-1.5 rounded-full transition-all"
-                        style={{ width: `\${Math.min((total / FREE_SHIPPING_THRESHOLD) * 100, 100)}%` }}
+                        style={{ width: `${Math.min((total / FREE_SHIPPING_THRESHOLD) * 100, 100)}%` }}
                       />
                     </div>
                     <p className="text-xs text-gray-500">
-                      Te faltan Bs \${(FREE_SHIPPING_THRESHOLD - total).toFixed(2)} para envío gratis
+                      Te faltan ${(FREE_SHIPPING_THRESHOLD - total).toFixed(2)} para envío gratis
                     </p>
                   </div>
                 )}
