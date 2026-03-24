@@ -3,6 +3,7 @@ import { X, Minus, Plus, Trash2, ShoppingBag } from 'lucide-react'
 import { useCart } from '@/lib/context/CartContext'
 import { motion, AnimatePresence } from 'motion/react'
 import Image from 'next/image'
+import Button from '@/components/ui/Button'
 import { FREE_SHIPPING_THRESHOLD } from '@/lib/utils/shipping'
 
 import { hasActiveDiscount, getPriceWithDiscount } from '@/lib/utils/price'
@@ -61,6 +62,7 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
               <button
                 onClick={onClose}
                 className="p-1 rounded-lg transition-colors text-gray-900 hover:text-black"
+                aria-label="Cerrar carrito"
               >
                 <X className="w-6 h-6" />
               </button>
@@ -87,6 +89,7 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
                             src={item.product.image_url || '/placeholder.png'}
                             alt={item.product.name}
                             fill
+                            sizes="80px"
                             className="object-cover"
                           />
                         </div>
@@ -119,7 +122,8 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
                           <div className="flex items-center gap-2 mt-2">
                             <button
                               onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                              className="w-7 h-7 flex items-center justify-center bg-white border-2 border-gray-300 rounded-lg hover:border-gray-500 transition-colors"
+                              className="w-11 h-11 flex items-center justify-center bg-white border-2 border-gray-300 rounded-lg hover:border-gray-500 transition-colors"
+                              aria-label="Disminuir cantidad"
                             >
                               <Minus className="w-4 h-4" />
                             </button>
@@ -127,13 +131,15 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
                             <button
                               onClick={() => updateQuantity(item.id, item.quantity + 1)}
                               disabled={item.quantity >= availableStock}
-                              className="w-7 h-7 flex items-center justify-center bg-white border-2 border-gray-300 rounded-lg hover:border-gray-500 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                              className="w-11 h-11 flex items-center justify-center bg-white border-2 border-gray-300 rounded-lg hover:border-gray-500 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                              aria-label="Aumentar cantidad"
                             >
                               <Plus className="w-4 h-4" />
                             </button>
                             <button
                               onClick={() => removeFromCart(item.id)}
-                              className="ml-auto p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                              className="ml-auto p-2.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                              aria-label="Eliminar del carrito"
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
@@ -157,11 +163,11 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
                     <div className="w-full bg-gray-200 rounded-full h-1.5 mb-1.5">
                       <div
                         className="bg-gray-900 h-1.5 rounded-full transition-all"
-                        style={{ width: `${Math.min((total / FREE_SHIPPING_THRESHOLD) * 100, 100)}%` }}
+                        style={{ width: `\${Math.min((total / FREE_SHIPPING_THRESHOLD) * 100, 100)}%` }}
                       />
                     </div>
                     <p className="text-xs text-gray-500">
-                      Te faltan ${(FREE_SHIPPING_THRESHOLD - total).toFixed(2)} para envío gratis
+                      Te faltan Bs \${(FREE_SHIPPING_THRESHOLD - total).toFixed(2)} para envío gratis
                     </p>
                   </div>
                 )}
@@ -172,12 +178,14 @@ export function CartDrawer({ isOpen, onClose, onCheckout }: CartDrawerProps) {
                     Bs {total.toFixed(2)}
                   </span>
                 </div>
-                <button
+                <Button
                   onClick={() => { onCheckout(); onClose(); }}
-                  className="w-full bg-gray-900 text-white hover:bg-black font-bold uppercase tracking-widest text-sm rounded-md transition-colors py-4"
+                  variant="primary"
+                  fullWidth
+                  className="py-4"
                 >
                   Proceder al Pago
-                </button>
+                </Button>
               </div>
             )}
           </motion.div>

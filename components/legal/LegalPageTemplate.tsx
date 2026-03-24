@@ -36,7 +36,7 @@ export function LegalPageTemplate({ title, lastUpdated, children }: LegalPageTem
         </div>
 
         {/* Estandarized Footer CTA for all Info Pages */}
-        <div className="bg-gray-900 text-white rounded-xl p-8 md:p-10 text-center border border-gray-200 shadow-sm border border-gray-800">
+        <div className="bg-gray-900 text-white rounded-xl p-8 md:p-10 text-center border border-gray-800">
           <h3 className="font-bold text-2xl md:text-3xl mb-4 text-white">
             ¿Tenés alguna duda adicional?
           </h3>
@@ -48,7 +48,7 @@ export function LegalPageTemplate({ title, lastUpdated, children }: LegalPageTem
               href={buildWhatsAppUrl("Hola, tengo dudas sobre cómo comprar en Lukess Home")}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex justify-center items-center gap-2 bg-[#25D366] text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-[#20bd5a] transition-all shadow-[0_0_20px_rgba(37,211,102,0.3)] hover:shadow-[0_0_25px_rgba(37,211,102,0.5)] transform hover:-translate-y-1"
+              className="w-full sm:w-auto inline-flex justify-center items-center gap-2 bg-whatsapp text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-whatsapp-dark transition-all shadow-[0_0_20px_rgba(37,211,102,0.3)] hover:shadow-[0_0_25px_rgba(37,211,102,0.5)] transform hover:-translate-y-1"
             >
               <span className="text-2xl">📱</span> Hablar por WhatsApp
             </a>

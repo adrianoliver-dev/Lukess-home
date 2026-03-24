@@ -96,7 +96,7 @@ export function AuthModal({
       if (tab === 'login') {
         await signInWithEmail(form.email, form.password)
         toast.success(
-          `¡Bienvenido de nuevo${customerName ? `, ${customerName}` : ''}!`,
+          `¡Bienvenido de nuevo\${customerName ? `, \${customerName}` : ''}!`,
           { position: 'bottom-center', icon: '👋' }
         )
       } else {
@@ -129,9 +129,9 @@ export function AuthModal({
   }
 
   const inputClass = (field: string) =>
-    `w-full px-4 py-3 rounded-lg bg-[#1a1a1a] border text-white placeholder-gray-500 focus:outline-none focus:ring-2 transition-colors text-sm ${errors[field]
+    `w-full px-4 py-3 rounded-lg bg-surface-modal-inner border text-white placeholder-gray-500 focus:outline-none focus:ring-2 transition-colors text-sm \${errors[field]
       ? 'border-red-500 focus:ring-red-500/30'
-      : 'border-gray-700 focus:ring-[#c89b6e]/40 focus:border-[#c89b6e]'
+      : 'border-gray-700 focus:ring-lukess-gold/40 focus:border-lukess-gold'
     }`
 
   return (
@@ -155,13 +155,13 @@ export function AuthModal({
             transition={{ duration: 0.2, ease: 'easeOut' }}
             className="fixed inset-0 z-[61] flex items-center justify-center p-4 pointer-events-none"
           >
-            <div className="w-full max-w-md bg-[#111111] rounded-2xl border border-gray-200 shadow-sm border border-gray-800 pointer-events-auto overflow-hidden">
+            <div className="w-full max-w-md bg-surface-modal rounded-lg border border-gray-800 pointer-events-auto overflow-hidden">
               {/* Header */}
               <div className="px-6 pt-6 pb-4 border-b border-gray-800 flex items-center justify-between">
                 <div>
                   <span className="text-lg font-extrabold tracking-tight text-white">
                     LUKESS{' '}
-                    <span className="text-[#c89b6e] text-xs tracking-[0.25em] font-medium">
+                    <span className="text-lukess-gold text-xs tracking-[0.25em] font-medium">
                       HOME
                     </span>
                   </span>
@@ -194,7 +194,7 @@ export function AuthModal({
                 <button
                   onClick={handleGoogleLogin}
                   disabled={isGoogleLoading}
-                  className="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-100 text-gray-900 font-semibold py-3 rounded-xl transition-all text-sm disabled:opacity-60"
+                  className="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-100 text-gray-900 font-semibold py-3 rounded-lg transition-all text-sm disabled:opacity-60"
                 >
                   {isGoogleLoading ? (
                     <>
@@ -234,7 +234,7 @@ export function AuthModal({
                 </div>
 
                 {/* Tabs */}
-                <div className="flex rounded-lg bg-[#1a1a1a] p-1 gap-1">
+                <div className="flex rounded-lg bg-surface-modal-inner p-1 gap-1">
                   {(['login', 'register'] as TabMode[]).map((t) => (
                     <button
                       key={t}
@@ -242,8 +242,8 @@ export function AuthModal({
                         setTab(t)
                         setErrors({})
                       }}
-                      className={`flex-1 py-2 text-sm font-semibold rounded-md transition-all ${tab === t
-                          ? 'bg-[#c89b6e] text-white shadow-sm'
+                      className={`flex-1 py-2 text-sm font-semibold rounded-md transition-all \${tab === t
+                          ? 'bg-lukess-gold text-white shadow-sm'
                           : 'text-gray-400 hover:text-white'
                         }`}
                     >
@@ -351,7 +351,7 @@ export function AuthModal({
                   <button
                     type="submit"
                     disabled={isEmailLoading}
-                    className="w-full bg-[#c89b6e] hover:bg-[#b8895e] text-white font-bold py-3 rounded-xl transition-all text-sm disabled:opacity-60 flex items-center justify-center gap-2"
+                    className="w-full bg-lukess-gold hover:bg-lukess-gold-dark text-white font-bold py-3 rounded-lg transition-all text-sm disabled:opacity-60 flex items-center justify-center gap-2"
                   >
                     {isEmailLoading && (
                       <Loader2 className="w-4 h-4 animate-spin" />

@@ -102,7 +102,7 @@ export function QuickViewModal({
       <motion.div
         initial={{ opacity: 0, y: -20, scale: 0.9 }}
         animate={{ opacity: t.visible ? 1 : 0, y: t.visible ? 0 : -20, scale: t.visible ? 1 : 0.9 }}
-        className="flex items-center gap-3 bg-white border-2 border-green-200 border border-gray-200 shadow-sm rounded-xl px-4 py-3"
+        className="flex items-center gap-3 bg-white border border-gray-200 shadow-sm rounded-xl px-4 py-3"
       >
         <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
           <Check className="w-5 h-5 text-green-600" />
@@ -200,11 +200,11 @@ export function QuickViewModal({
                             <button
                               key={i}
                               onClick={() => setCurrentImageIndex(i)}
-                              className={`h-1.5 rounded-full transition-all ${i === currentImageIndex
+                              className={`h-1.5 rounded-full transition-all \${i === currentImageIndex
                                 ? 'bg-gray-900 w-6'
                                 : 'bg-gray-300 w-1.5 hover:bg-gray-400'
                                 }`}
-                              aria-label={`Ver imagen ${i + 1}`}
+                              aria-label={`Ver imagen \${i + 1}`}
                             />
                           ))}
                         </div>
@@ -214,12 +214,12 @@ export function QuickViewModal({
                     {/* Badges */}
                     <div className="absolute top-3 left-3 flex flex-col gap-2">
                       {product.is_new && (
-                        <span className="bg-gray-900 text-white px-3 py-1 rounded-md text-xs font-bold border border-gray-200 shadow-sm uppercase tracking-widest">
+                        <span className="bg-lukess-gold text-gray-900 px-3 py-1 rounded-md text-xs font-bold uppercase tracking-widest shadow-sm">
                           ✨ NUEVO
                         </span>
                       )}
                       {discount > 0 && (
-                        <span className="bg-gray-900 text-white px-3 py-1 rounded-md text-xs font-bold border border-gray-200 shadow-sm uppercase tracking-widest">
+                        <span className="bg-discount text-white px-3 py-1 rounded-md text-xs font-semibold uppercase tracking-widest shadow-sm">
                           -{discount}% OFF
                         </span>
                       )}
@@ -233,14 +233,14 @@ export function QuickViewModal({
                         <button
                           key={i}
                           onClick={() => setCurrentImageIndex(i)}
-                          className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${i === currentImageIndex
+                          className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 transition-all \${i === currentImageIndex
                             ? 'border-gray-600 scale-105'
                             : 'border-gray-200 hover:border-gray-300'
                             }`}
                         >
                           <Image
                             src={img}
-                            alt={`Bs {product.name} - ${i + 1}`}
+                            alt={`\${product.name} - \${i + 1}`}
                             fill
                             sizes="80px"
                             className="object-contain p-1"
@@ -285,7 +285,7 @@ export function QuickViewModal({
                     {hasDiscount(product) ? (
                       <div className="flex items-baseline gap-3">
                         <span className="text-3xl md:text-4xl font-black text-red-600">
-                          ${priceWithDiscount.toFixed(2)}
+                          Bs {priceWithDiscount.toFixed(2)}
                         </span>
                         <span className="text-lg text-gray-400 line-through decoration-red-500">
                           Bs {product.price.toFixed(2)}
@@ -298,7 +298,7 @@ export function QuickViewModal({
                     )}
                     {discount > 0 && (
                       <p className="text-sm text-green-600 font-semibold mt-1">
-                        Ahorras ${(product.price * (discount / 100)).toFixed(2)}
+                        Ahorras Bs {(product.price * (discount / 100)).toFixed(2)}
                       </p>
                     )}
                   </div>
@@ -307,13 +307,13 @@ export function QuickViewModal({
                   <div className="mb-6">
                     <div className="flex items-center gap-2">
                       <Package className="w-4 h-4 text-gray-400" />
-                      <span className={`text-sm font-bold ${stock === 0
+                      <span className={`text-sm font-bold \${stock === 0
                         ? 'text-red-600'
                         : stock < 10
                           ? 'text-amber-600'
                           : 'text-green-600'
                         }`}>
-                        {stock === 0 ? '🚫 Sin stock' : stock < 10 ? `⚠️ Solo ${stock} unidades` : '✓ Disponible'}
+                        {stock === 0 ? '🚫 Sin stock' : stock < 10 ? `⚠️ Solo \${stock} unidades` : '✓ Disponible'}
                       </span>
                     </div>
                   </div>
@@ -331,7 +331,7 @@ export function QuickViewModal({
                             key={color}
                             onClick={() => setSelectedColor(color)}
                             disabled={isOutOfStock}
-                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all border-2 ${selectedColor === color
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all border-2 \${selectedColor === color
                               ? 'border-gray-600 bg-gray-900 text-white shadow-md scale-105'
                               : isOutOfStock
                                 ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed'
@@ -366,7 +366,7 @@ export function QuickViewModal({
                             key={size}
                             onClick={() => !isOutOfStock && setSelectedSize(size)}
                             disabled={isOutOfStock}
-                            className={`px-4 py-2 rounded-lg text-sm font-bold transition-all border-2 min-w-[60px] ${selectedSize === size
+                            className={`px-4 py-2 rounded-lg text-sm font-bold transition-all border-2 min-w-[60px] \${selectedSize === size
                               ? 'border-gray-600 bg-gray-900 text-white shadow-md scale-105'
                               : isOutOfStock
                                 ? 'border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed opacity-40 line-through'
@@ -398,7 +398,7 @@ export function QuickViewModal({
                     <button
                       onClick={handleAddToCart}
                       disabled={addToCartDisabled}
-                      className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl text-base font-bold transition-all duration-300 ${addToCartDisabled
+                      className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl text-base font-bold transition-all duration-300 \${addToCartDisabled
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                         : 'bg-gray-900 text-white hover:bg-black font-bold uppercase tracking-widest text-sm rounded-md transition-colors'
                         }`}
@@ -409,7 +409,7 @@ export function QuickViewModal({
 
                     {/* Ver detalles completos */}
                     <Link
-                      href={`/producto/Bs {product.id}`}
+                      href={`/producto/\${product.id}`}
                       onClick={onClose}
                       className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold text-gray-800 border-2 border-gray-200 hover:bg-gray-100 hover:border-gray-400 transition-all"
                     >
