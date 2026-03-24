@@ -1,6 +1,6 @@
 import { type ButtonHTMLAttributes, forwardRef } from "react";
 
-type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "accent";
+type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "accent" | "whatsapp";
 type ButtonSize = "sm" | "md" | "lg";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -11,14 +11,16 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-gray-900 text-white hover:bg-black font-bold uppercase tracking-widest text-sm transition-colors",
+    "bg-gray-900 text-white hover:bg-black font-bold uppercase tracking-widest text-sm",
   secondary:
-    "bg-gray-100 text-gray-900 hover:bg-gray-200 font-bold uppercase tracking-widest text-sm transition-colors",
+    "bg-gray-100 text-gray-900 hover:bg-gray-200 font-bold uppercase tracking-widest text-sm",
   outline:
-    "border border-gray-200 text-gray-900 hover:border-gray-900 font-bold uppercase tracking-widest text-sm transition-colors",
-  ghost: "text-gray-600 hover:text-gray-900 hover:bg-gray-50 uppercase tracking-widest text-sm font-bold transition-colors",
+    "border border-gray-200 text-gray-900 hover:border-gray-900 font-bold uppercase tracking-widest text-sm",
+  ghost: "text-gray-600 hover:text-gray-900 hover:bg-gray-50 uppercase tracking-widest text-sm font-bold",
   accent:
-    "bg-gray-900 text-white hover:bg-black font-bold uppercase tracking-widest text-sm transition-colors border border-lukess-gold",
+    "bg-gray-900 text-white hover:bg-black font-bold uppercase tracking-widest text-sm border border-lukess-gold",
+  whatsapp:
+    "bg-whatsapp hover:bg-whatsapp-dark text-white font-bold uppercase tracking-widest text-sm",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
@@ -46,10 +48,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           inline-flex items-center justify-center gap-2
           rounded-md
           disabled:opacity-50 disabled:cursor-not-allowed
-          ${variantStyles[variant]}
-          ${sizeStyles[size]}
-          ${fullWidth ? "w-full" : ""}
-          ${className}
+          active:scale-[0.98] transition-all duration-150
+          \${variantStyles[variant]}
+          \${sizeStyles[size]}
+          \${fullWidth ? "w-full" : ""}
+          \${className}
         `}
         {...props}
       >

@@ -4,6 +4,22 @@
 
 @theme {
   --color-lukess-gold: #c89b6e;
+  --color-lukess-gold-dark: #b8895e;
+  --color-lukess-gold-light: #dcb594;
+  
+  --color-surface-card: #ffffff;
+  --color-surface-modal: #111111;
+  --color-surface-modal-inner: #1a1a1a;
+  
+  --color-border-default: #e5e7eb;
+  --color-border-subtle: #f3f4f6;
+  
+  --color-text-primary: #111827;
+  --color-text-secondary: #4b5563;
+  --color-text-muted: #9ca3af;
+  
+  --color-success: #16a34a;
+  --color-discount: #171717;
 
   --color-whatsapp: #25d366;
   --color-whatsapp-dark: #1da851;
