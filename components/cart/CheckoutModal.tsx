@@ -95,6 +95,11 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
     }, 50)
   }
 
+  // Scroll to top on step change
+  useEffect(() => {
+    scrollModalToTop()
+  }, [step])
+
   const [customerData, setCustomerData] = useState({
     name: '',
     phone: '',
@@ -1606,7 +1611,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                                           href={outOfRangeWaUrl}
                                           target="_blank"
                                           rel="noopener noreferrer"
-                                          className="flex items-center justify-center gap-2 w-full bg-[#25d366] hover:bg-[#1fb855] text-white text-xs font-semibold py-2 rounded-lg shadow-sm transition-all"
+                                          className="flex items-center justify-center gap-2 w-full bg-whatsapp hover:bg-whatsapp-dark text-white text-xs font-semibold py-2 rounded-lg shadow-sm transition-all"
                                         >
                                           <MessageCircle className="w-3.5 h-3.5" />
                                           Cotizar envío por WhatsApp
