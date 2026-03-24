@@ -8,11 +8,13 @@ import { ShoppingCart, MessageCircle, Package, TrendingUp, ChevronRight, Home, R
 import { FREE_SHIPPING_THRESHOLD } from '@/lib/utils/shipping'
 import Image from 'next/image'
 import Link from 'next/link'
+import Button from '@/components/ui/Button'
 import toast from 'react-hot-toast'
 import { ProductGallery } from './ProductGallery'
 import { SizeGuideModal } from './SizeGuideModal'
 import { buildWhatsAppUrl } from '@/lib/utils/whatsapp'
 import { hasActiveDiscount as hasDiscount, getDiscount, getPriceWithDiscount } from '@/lib/utils/price'
+import { getHexForColor } from '@/lib/utils/colors'
 
 interface ProductDetailProps {
   product: Product
@@ -129,7 +131,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
 
     const sizeForCart = needsSize ? selectedSize : undefined
     addToCart(product, quantity, sizeForCart, selectedColor || undefined)
-    toast.success(`${quantity}x ${product.name} agregado al carrito`)
+    toast.success(`\${quantity}x \${product.name} agregado al carrito`)
   }
 
   const handleWhatsApp = () => {
@@ -137,15 +139,15 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
     if (stock === 0) {
       message =
         'Hola! Me interesa este producto 👇\n' +
-        `*${product.name}*\n` +
-        `💰 Precio: Bs ${product.price.toFixed(2)}\n` +
+        `*\${product.name}*\n` +
+        `💰 Precio: Bs \${product.price.toFixed(2)}\n` +
         '¿Cuándo habrá stock disponible? 🙏'
     } else {
       message =
         'Hola! Me interesa este producto 👇\n' +
-        `*${product.name}*\n` +
-        `💰 Precio: Bs ${product.price.toFixed(2)}\n` +
-        (selectedSize ? `📏 Talla: ${selectedSize}\n` : '') +
+        `*\${product.name}*\n` +
+        `💰 Precio: Bs \${product.price.toFixed(2)}\n` +
+        (selectedSize ? `📏 Talla: \${selectedSize}\n` : '') +
         '¿Me pueden dar más información? 🙏'
     }
     window.open(buildWhatsAppUrl(message), '_blank')
@@ -215,7 +217,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                     <span className="text-lg text-gray-400 line-through ml-0">
                       Bs {product.price.toFixed(2)}
                     </span>
-                    <span className="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+                    <span className="bg-discount text-white text-xs font-semibold px-2 py-0.5 rounded-md">
                       -{discount}%
                     </span>
                   </>
@@ -276,7 +278,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                               }
                             }}
                             disabled={sizeAgotada}
-                            className={`min-w-[48px] h-12 px-4 text-sm font-semibold border transition-all ${sizeAgotada
+                            className={`min-w-[48px] h-12 px-4 text-sm font-semibold border transition-all \${sizeAgotada
                               ? 'opacity-30 cursor-not-allowed line-through border-gray-200 text-gray-400 bg-gray-50'
                               : isSelected
                                 ? 'bg-gray-900 text-white border-gray-900'
@@ -303,21 +305,25 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
               {product.colors && product.colors.length > 0 && (
                 <div>
                   <label className="block text-sm font-semibold text-gray-900 uppercase tracking-wider mb-3">
-                    Color
+                    Color: <span className="text-gray-500 font-normal capitalize">{selectedColor || 'Seleccionar'}</span>
                   </label>
-                  <div className="flex flex-wrap gap-2">
-                    {product.colors.map((color) => (
-                      <button
-                        key={color}
-                        onClick={() => setSelectedColor(color)}
-                        className={`min-w-[48px] h-12 px-4 text-sm font-semibold border transition-all ${selectedColor === color
-                          ? 'bg-gray-900 text-white border-gray-900'
-                          : 'bg-white text-gray-700 border-gray-300 hover:border-gray-900'
-                          }`}
-                      >
-                        {color}
-                      </button>
-                    ))}
+                  <div className="flex flex-wrap gap-3">
+                    {product.colors.map((color) => {
+                      const hex = getHexForColor(color)
+                      return (
+                        <button
+                          key={color}
+                          onClick={() => setSelectedColor(color)}
+                          className={`w-10 h-10 rounded-full border-2 transition-all shadow-sm \${selectedColor === color
+                            ? 'border-gray-900 scale-110 ring-2 ring-lukess-gold ring-offset-2'
+                            : 'border-gray-200 hover:scale-105'
+                            }`}
+                          style={{ backgroundColor: hex }}
+                          aria-label={`Seleccionar color \${color}`}
+                          title={color}
+                        />
+                      )
+                    })}
                   </div>
                 </div>
               )}
@@ -350,24 +356,25 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
               )}
 
               <div className="flex flex-col gap-3 pt-2">
-                <button
+                <Button
                   onClick={handleAddToCart}
                   disabled={addToCartDisabled}
-                  className={`w-full py-4 font-bold text-sm uppercase tracking-wider transition-colors flex items-center justify-center gap-2 ${addToCartDisabled
-                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                    : 'bg-gray-900 hover:bg-black text-white'
-                    }`}
+                  variant="primary"
+                  fullWidth
+                  className="py-4"
                 >
                   <ShoppingCart className="w-5 h-5" />
                   {addToCartLabel}
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={handleWhatsApp}
-                  className="w-full py-4 border border-whatsapp text-whatsapp hover:bg-whatsapp/5 font-bold text-sm uppercase tracking-wider transition-colors flex items-center justify-center gap-2"
+                  variant="whatsapp"
+                  fullWidth
+                  className="py-4"
                 >
                   <MessageCircle className="w-5 h-5" />
                   Consultar por WhatsApp
-                </button>
+                </Button>
               </div>
 
               <div className="space-y-3 pt-2">
@@ -398,7 +405,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                   return (
                     <Link
                       key={p.id}
-                      href={`/producto/${p.id}`}
+                      href={`/producto/\${p.id}`}
                       className="group"
                     >
                       <div className="relative aspect-[3/4] bg-white overflow-hidden mb-3">
@@ -406,15 +413,16 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                           src={p.thumbnail_url || p.image_url || '/placeholder.png'}
                           alt={p.name}
                           fill
+                          sizes="(max-width: 768px) 50vw, 25vw"
                           className="object-contain object-center group-hover:scale-105 transition-transform duration-500"
                         />
                         {relatedStock === 0 && (
-                          <div className="absolute top-2 left-2 bg-gray-900 text-white px-2 py-1 text-xs font-semibold">
+                          <div className="absolute top-2 left-2 bg-gray-900 text-white px-2 py-0.5 text-xs font-semibold rounded-md">
                             AGOTADO
                           </div>
                         )}
                         {hasDiscount(p) && relatedStock > 0 && (
-                          <div className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 text-xs font-bold">
+                          <div className="absolute top-2 right-2 bg-discount text-white px-2 py-0.5 text-xs font-semibold rounded-md">
                             -{getDiscount(p)}%
                           </div>
                         )}
@@ -433,7 +441,7 @@ export function ProductDetail({ product, relatedProducts }: ProductDetailProps) 
                                 Bs {getPriceWithDiscount(p).toFixed(2)}
                               </span>
                               <span className="text-xs text-gray-400 line-through">
-                                ${p.price.toFixed(2)}
+                                Bs {p.price.toFixed(2)}
                               </span>
                             </>
                           ) : (
