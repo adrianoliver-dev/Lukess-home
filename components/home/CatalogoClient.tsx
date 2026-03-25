@@ -127,89 +127,127 @@ function QuickAddModal({
   onClose: () => void;
   onAdd: (product: Product, size?: string, color?: string) => void;
 }) {
-  if (!product) return null;
-
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [selectedColor, setSelectedColor] = useState<string>('');
 
-  const validSizes = (product.sizes ?? []).filter(
-    (s: string) => s && s.trim() !== '' && !['Unitalla', 'Única', 'Unico'].includes(s)
-  );
+  const validSizes = useMemo(() => {
+    return (product?.sizes ?? []).filter(
+      (s: string) => s && s.trim() !== '' && !['Unitalla', 'Única', 'Unico'].includes(s)
+    );
+  }, [product?.sizes]);
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && product) {
       if (validSizes.length === 1) setSelectedSize(validSizes[0]);
       if (product.colors && product.colors.length === 1) setSelectedColor(product.colors[0]);
     } else {
       setSelectedSize('');
       setSelectedColor('');
     }
-  }, [isOpen, product.id, product.colors, validSizes.length]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isOpen, product, product?.colors, validSizes]);
 
-  const isAddDisabled = !!((validSizes.length > 0 && !selectedSize) || (product.colors && product.colors.length > 0 && !selectedColor));
+  const stockBySize = useMemo(() => {
+    const result: Record<string, number> = {};
+    if (!product?.inventory) return result;
+    for (const inv of product.inventory) {
+      const size = inv.size ?? '';
+      if (!size) continue;
+      result[size] = (result[size] ?? 0) + Math.max(0, inv.quantity - (inv.reserved_qty ?? 0));
+    }
+    return result;
+  }, [product?.inventory]);
+
+  const isAddDisabled = !!((validSizes.length > 0 && !selectedSize) || (product?.colors && product.colors.length > 0 && !selectedColor));
+
+  if (!product) return null;
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div key="modal-overlay" className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
           />
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            initial={{ opacity: 0, scale: 0.95, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-sm bg-white rounded-2xl overflow-hidden shadow-2xl"
+            exit={{ opacity: 0, scale: 0.95, y: 10 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
+            className="relative bg-white rounded-2xl shadow-2xl w-full max-w-[400px] overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-6">
-              <div className="flex justify-between items-start mb-6">
-                <div className="flex gap-4">
-                  <div className="relative w-16 h-20 bg-gray-50 rounded-lg overflow-hidden border border-gray-100">
-                    <Image
-                      src={product.thumbnail_url || product.image_url || '/placeholder.png'}
-                      alt={product.name}
-                      fill
-                      className="object-contain p-1"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-gray-900 leading-tight mb-1">{product.name}</h3>
-                    <p className="text-sm font-bold text-lukess-gold">Bs {product.price.toFixed(2)}</p>
-                  </div>
-                </div>
-                <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded-full transition-colors">
-                  <X className="w-5 h-5 text-gray-400" />
-                </button>
+            {/* Header */}
+            <div className="p-4 border-b border-gray-100 flex items-center gap-4">
+              <div className="relative w-16 h-16 bg-gray-50 rounded-lg overflow-hidden flex-shrink-0">
+                <Image
+                  src={product.thumbnail_url || product.image_url || '/placeholder.png'}
+                  alt={product.name}
+                  fill
+                  className="object-contain p-2"
+                />
               </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-bold text-gray-900 text-sm mb-0.5 truncate">{product.name}</h3>
+                <p className="text-lukess-gold font-bold text-sm">Bs {product.price.toFixed(2)}</p>
+              </div>
+              <button 
+                onClick={onClose}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <X className="w-5 h-5 text-gray-400" />
+              </button>
+            </div>
 
+            <div className="p-6">
+              {/* Sizes */}
               {validSizes.length > 0 && (
                 <div className="mb-6">
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Talla</p>
+                  <div className="flex justify-between items-center mb-3">
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Talla</span>
+                    {selectedSize && (
+                      <span className="text-[10px] font-bold text-lukess-gold uppercase tracking-widest">Seleccionado: {selectedSize}</span>
+                    )}
+                  </div>
                   <div className="grid grid-cols-4 gap-2">
-                    {validSizes.map((size) => (
-                      <button
-                        key={size}
-                        onClick={() => setSelectedSize(size)}
-                        className={`py-2 text-xs font-bold rounded-lg border transition-all ${
-                          selectedSize === size
-                            ? 'bg-gray-900 border-gray-900 text-white shadow-md'
-                            : 'bg-white border-gray-100 text-gray-400 hover:border-gray-900 hover:text-gray-900'
-                        }`}
-                      >
-                        {size}
-                      </button>
-                    ))}
+                    {validSizes.map((size) => {
+                      const isSelected = selectedSize === size;
+                      const stock = stockBySize[size] ?? 0;
+                      const isOutOfStock = stock <= 0;
+
+                      return (
+                        <button
+                          key={size}
+                          onClick={() => !isOutOfStock && setSelectedSize(size)}
+                          disabled={isOutOfStock}
+                          className={`py-2 text-xs font-bold rounded-lg border transition-all ${
+                            isSelected
+                              ? 'bg-gray-900 border-gray-900 text-white shadow-md'
+                              : isOutOfStock
+                                ? 'bg-gray-50 border-gray-100 text-gray-300 cursor-not-allowed'
+                                : 'bg-white border-gray-100 text-gray-400 hover:border-gray-900 hover:text-gray-900'
+                          }`}
+                        >
+                          {size}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               )}
 
+              {/* Colors */}
               {product.colors && product.colors.length > 0 && (
                 <div className="mb-8">
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Color: <span className="text-gray-900">{selectedColor}</span></p>
+                  <div className="flex justify-between items-center mb-3">
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Color</span>
+                    {selectedColor && (
+                      <span className="text-[10px] font-bold text-lukess-gold uppercase tracking-widest">{selectedColor}</span>
+                    )}
+                  </div>
                   <div className="flex flex-wrap gap-3">
                     {product.colors.map((color) => {
                       const isSelected = selectedColor === color;
@@ -236,9 +274,10 @@ function QuickAddModal({
                 }}
                 disabled={isAddDisabled}
                 fullWidth
-                className="py-6 text-xs font-bold tracking-widest uppercase"
+                variant={isAddDisabled ? "outline" : "primary"}
+                className="py-6 text-xs font-bold tracking-[0.2em] uppercase"
               >
-                Agregar al Carrito
+                {isAddDisabled ? 'SELECCIONA UNA TALLA' : 'AGREGAR AL CARRITO'}
               </Button>
             </div>
           </motion.div>
