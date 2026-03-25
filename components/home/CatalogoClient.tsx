@@ -1,919 +1,249 @@
-'use client'
-import { useState, useMemo, useCallback, useEffect } from 'react'
-import Container from '@/components/ui/Container'
-import { ShoppingBag, Tag, MessageCircle, Plus, Filter, X, Palette, Ruler, Building2, SlidersHorizontal, Check, Sparkles, Percent, Leaf } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useSearchParams, useRouter, usePathname } from 'next/navigation'
-import { Product } from '@/lib/types'
-import { useCart } from '@/lib/context/CartContext'
-import toast from 'react-hot-toast'
-import { FilterSidebar, type Filters } from '@/components/catalogo/FilterSidebar'
-import { ProductBadges } from '@/components/catalogo/ProductBadges'
-import { WishlistButton } from '@/components/wishlist/WishlistButton'
-import Button from '@/components/ui/Button'
-import { buildWhatsAppUrl } from '@/lib/utils/whatsapp'
-import { hasActiveDiscount as hasDiscount, getDiscount, getPriceWithDiscount } from '@/lib/utils/price'
-import { type FilterOptions } from '@/app/actions/filters'
+'use client';
+
+import React, { useState, useMemo, useEffect } from 'react';
+import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ShoppingBag, Star, X, Loader2, ChevronRight } from 'lucide-react';
+import { Product } from '@/lib/types';
+import { useCart } from '@/lib/context/CartContext';
+import { Button } from '@/components/ui/Button';
+import Link from 'next/link';
 
 interface CatalogoClientProps {
-  initialProducts: Product[]
-  initialFilters?: FilterOptions | null
-  categories?: string[]
-  selectedCategory?: string | null
+  initialProducts: Product[];
 }
 
-/* ───────── Variantes de animación ───────── */
+export default function CatalogoClient({ initialProducts }: CatalogoClientProps) {
+  const { addToCart } = useCart();
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isQuickAddOpen, setIsQuickAddOpen] = useState(false);
+  const [addedProductId, setAddedProductId] = useState<string | null>(null);
 
-const sectionVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.03, delayChildren: 0 },
-  },
-} as const
+  const handleQuickAdd = (e: React.MouseEvent, product: Product) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-const headingVariants = {
-  hidden: { opacity: 0, y: -20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' as const },
-  },
-}
+    // Check if product has meaningful variants (sizes or colors)
+    const hasVariants = (product.sizes && product.sizes.length > 0 && product.sizes.some(s => !['Unitalla', 'Única', 'Unico'].includes(s))) || 
+                       (product.colors && product.colors.length > 0);
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 10 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.2, ease: 'easeOut' as const },
-  },
-  exit: {
-    opacity: 0,
-    transition: { duration: 0.1, ease: 'easeIn' as const },
-  },
-}
-
-// Toast personalizado que no bloquea - Posición bottom-right
-const showAddedToast = (productName: string) => {
-  toast.custom((t) => (
-    <motion.div
-      initial={{ opacity: 0, x: 100, scale: 0.9 }}
-      animate={{ opacity: t.visible ? 1 : 0, x: t.visible ? 0 : 100, scale: t.visible ? 1 : 0.9 }}
-      className="flex items-center gap-3 bg-white border-2 border-green-200 border border-gray-200 shadow-sm rounded-xl px-4 py-3 pointer-events-none"
-    >
-      <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-        <Check className="w-5 h-5 text-green-600" />
-      </div>
-      <div>
-        <p className="font-semibold text-gray-900 text-sm">Agregado al carrito</p>
-        <p className="text-xs text-gray-500 truncate max-w-[180px]">{productName}</p>
-      </div>
-    </motion.div>
-  ), { duration: 1500, position: 'bottom-right' })
-}
-
-export function CatalogoClient({ initialProducts, initialFilters, categories: serverCategories, selectedCategory }: CatalogoClientProps) {
-  // Estados de filtros - Ahora son arrays para multiselección
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(() => {
-    if (!selectedCategory || !serverCategories) return selectedCategory ? [selectedCategory] : [];
-    // Encontrar el match real en las categorías del servidor
-    const matched = serverCategories.find(c => c.toLowerCase() === selectedCategory.toLowerCase());
-    return matched ? [matched] : [selectedCategory];
-  })
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([])
-  const [selectedColors, setSelectedColors] = useState<string[]>([])
-  const [showFilters, setShowFilters] = useState(false)
-  const [sidebarFilters, setSidebarFilters] = useState<Filters>({
-    priceRange: [0, 9999],
-    brands: [],
-    colors: [],
-    sizes: [],
-    inStock: false,
-    category: null,
-    hasDiscount: null,
-  })
-  const [stockFilter, setStockFilter] = useState<'all' | 'inStock' | 'lowStock'>('all')
-  const [showNew, setShowNew] = useState(false)
-  const [showDiscount, setShowDiscount] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
-  const [displayLimit, setDisplayLimit] = useState(200)
-  const [addingId, setAddingId] = useState<string | null>(null)
-
-  const [dynamicFilters, setDynamicFilters] = useState<FilterOptions | null>(initialFilters || null)
-
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const pathname = usePathname()
-
-  const { addToCart } = useCart()
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.05,
-    rootMargin: '50px'
-  })
-
-  const sortOrder = searchParams?.get('sort') || 'recent'
-
-  useEffect(() => {
-    if (!searchParams) return
-
-    const busqueda = searchParams.get('busqueda') || ''
-    const filter = searchParams.get('filter') || searchParams.get('category') || ''
-
-    if (busqueda !== searchQuery) {
-      if (busqueda) {
-        setSelectedCategories([])
-        setSelectedBrands([])
-        setSelectedColors([])
-        setStockFilter('all')
-        setShowNew(false)
-        setShowDiscount(false)
-      }
-      setSearchQuery(busqueda)
+    if (hasVariants) {
+      setSelectedProduct(product);
+      setIsQuickAddOpen(true);
+    } else {
+      // Direct add for simple products
+      const size = product.sizes?.[0];
+      const color = product.colors?.[0];
+      addToCart(product, size, color);
+      
+      setAddedProductId(product.id);
+      setTimeout(() => setAddedProductId(null), 1500);
     }
+  };
 
-    let newCategories: string[] = []
-    let newBrands: string[] = []
-    let newShowNew = false
-    let newShowDiscount = false
-
-    if (filter === 'nuevo') {
-      newShowNew = true
-    } else if (filter === 'descuento' || filter === 'descuentos') {
-      newShowDiscount = true
-    } else if (filter) {
-      // Encontrar la categoría real (case-insensitive)
-      const matchedCategory = categories.find(c => c.toLowerCase() === filter.toLowerCase());
-      if (matchedCategory && matchedCategory !== 'Todos') {
-        newCategories = [matchedCategory];
-      } else {
-        // Fallback: capitalizar primera letra si no se encuentra (pero debería encontrarse)
-        const fallback = filter.charAt(0).toUpperCase() + filter.slice(1);
-        newCategories = [fallback];
-      }
-    }
-
-    setSelectedCategories(newCategories)
-    setSelectedBrands(newBrands)
-    setShowNew(newShowNew)
-    setShowDiscount(newShowDiscount)
-    setSidebarFilters({
-      priceRange: [0, 1000],
-      brands: [],
-      colors: [],
-      sizes: [],
-      inStock: false,
-      category: null,
-      hasDiscount: null,
-    })
-    setStockFilter('all')
-    setSelectedColors([])
-    if (!busqueda) setSearchQuery('')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams])
-
-  useEffect(() => {
-    setDynamicFilters(initialFilters || null)
-  }, [initialFilters])
-
-  const isProductNew = useCallback((product: Product): boolean => {
-    return product.is_new === true && (
-      !product.is_new_until || new Date(product.is_new_until) > new Date()
-    )
-  }, [])
-
-  const getSavings = useCallback((product: Product): number => {
-    const discount = getDiscount(product)
-    return product.price * (discount / 100)
-  }, [])
-
-  const categories = useMemo(() => {
-    if (serverCategories && serverCategories.length > 0) {
-      return ['Todos', ...serverCategories.sort()]
-    }
-    const cats = new Set<string>()
-    initialProducts.forEach(p => {
-      if (p.categories?.name) cats.add(p.categories.name)
-    })
-    return ['Todos', ...Array.from(cats).sort()]
-  }, [initialProducts, serverCategories])
-
-  const brands = useMemo(() => {
-    if (selectedCategories.length > 0) {
-      return dynamicFilters?.brands.length ? ['Todas', ...dynamicFilters.brands.sort()] : [];
-    }
-    if (dynamicFilters && dynamicFilters.brands.length > 0) {
-      return ['Todas', ...dynamicFilters.brands.sort()]
-    }
-    const brandSet = new Set<string>()
-    initialProducts.forEach(p => {
-      if (p.brand) brandSet.add(p.brand)
-    })
-    const sortedBrands = Array.from(brandSet).sort()
-    return ['Todas', ...sortedBrands.slice(0, 8)]
-  }, [initialProducts, dynamicFilters, selectedCategories])
-
-  const colors = useMemo(() => {
-    if (selectedCategories.length > 0) {
-      return dynamicFilters?.colors.length ? ['Todos', ...dynamicFilters.colors.sort()] : [];
-    }
-    if (dynamicFilters && dynamicFilters.colors.length > 0) {
-      return ['Todos', ...dynamicFilters.colors.sort()]
-    }
-    const availableColors = new Set<string>()
-    initialProducts.forEach(p => {
-      if (p.color) {
-        availableColors.add(p.color)
-      }
-    })
-    return ['Todos', ...Array.from(availableColors).sort()]
-  }, [initialProducts, dynamicFilters, selectedCategories])
-
-  const sizes = useMemo(() => {
-    if (selectedCategories.length > 0) {
-      return dynamicFilters?.sizes.length ? dynamicFilters.sizes.sort() : [];
-    }
-    if (dynamicFilters && dynamicFilters.sizes.length > 0) {
-      return dynamicFilters.sizes.sort()
-    }
-    const availableSizes = new Set<string>()
-    initialProducts.forEach(p => {
-      if (p.sizes && Array.isArray(p.sizes)) {
-        p.sizes.forEach(s => availableSizes.add(s))
-      }
-    })
-    return Array.from(availableSizes).sort()
-  }, [initialProducts, dynamicFilters, selectedCategories])
-
-  const getTotalStock = useCallback((product: Product): number => {
-    return product.inventory?.reduce(
-      (sum, inv) => sum + Math.max(0, inv.quantity - (inv.reserved_qty ?? 0)),
-      0
-    ) || 0
-  }, [])
-
-  const filteredProducts = useMemo(() => {
-    let filtered = initialProducts.filter(p => {
-      if (searchQuery.trim()) {
-        const query = searchQuery.toLowerCase()
-        const matchesName = p.name.toLowerCase().includes(query)
-        const matchesBrand = p.brand?.toLowerCase().includes(query)
-        const matchesCategory = p.categories?.name.toLowerCase().includes(query)
-        const matchesDescription = p.description?.toLowerCase().includes(query)
-        const matchesSKU = p.sku?.toLowerCase().includes(query)
-        const matchesColor = p.color?.toLowerCase().includes(query)
-        const matchesSize = p.sizes?.some(size =>
-          size.toLowerCase().includes(query)
-        )
-        const matchesKeywords =
-          (query === 'nuevo' || query === 'nuevos') && p.is_new === true ||
-          (query === 'descuento' || query === 'descuentos' || query === 'oferta' || query === 'ofertas') && hasDiscount(p)
-        if (!matchesName && !matchesBrand && !matchesCategory && !matchesDescription &&
-          !matchesSKU && !matchesColor && !matchesSize && !matchesKeywords) {
-          return false
-        }
-      }
-      if (showNew && !isProductNew(p)) return false
-      if (showDiscount && !hasDiscount(p)) return false
-      if (p.price < sidebarFilters.priceRange[0] || p.price > sidebarFilters.priceRange[1]) return false
-      if (sidebarFilters.sizes.length > 0 && (!p.sizes || !p.sizes.some(s => sidebarFilters.sizes.includes(s)))) return false
-      const stock = getTotalStock(p)
-      if (sidebarFilters.inStock && stock === 0) return false
-      if (sidebarFilters.hasDiscount && !hasDiscount(p)) return false
-      if (selectedCategories.length > 0 && !selectedCategories.includes(p.categories?.name || '')) return false
-      if (selectedBrands.length > 0 && !selectedBrands.includes(p.brand || '')) return false
-      if (selectedColors.length > 0 && !selectedColors.includes(p.color || '')) return false
-      if (stockFilter === 'inStock' && stock === 0) return false
-      if (stockFilter === 'lowStock' && (stock === 0 || stock >= 5)) return false
-      return true
-    })
-
-    const sorted = [...filtered].sort((a, b) => {
-      const stockA = getTotalStock(a)
-      const stockB = getTotalStock(b)
-      if (stockA === 0 && stockB > 0) return 1
-      if (stockA > 0 && stockB === 0) return -1
-      return 0
-    })
-    return sorted
-  }, [selectedCategories, selectedBrands, selectedColors, stockFilter, showNew, showDiscount, searchQuery, sidebarFilters, initialProducts, getTotalStock, isProductNew])
-
-  const activeFiltersCount = useMemo(() => {
-    let count = 0
-    count += selectedCategories.length
-    count += selectedBrands.length
-    count += selectedColors.length
-    count += sidebarFilters.sizes.length
-    if (stockFilter !== 'all') count++
-    if (showNew) count++
-    if (showDiscount) count++
-    if (searchQuery.trim()) count++
-    return count
-  }, [selectedCategories, selectedBrands, selectedColors, sidebarFilters.sizes, stockFilter, showNew, showDiscount, searchQuery])
-
-  const clearAllFilters = () => {
-    setSelectedCategories([])
-    setSelectedBrands([])
-    setSelectedColors([])
-    setStockFilter('all')
-    setShowNew(false)
-    setShowDiscount(false)
-    setSidebarFilters({
-      priceRange: [0, 9999],
-      brands: [],
-      colors: [],
-      sizes: [],
-      inStock: false,
-      category: null,
-      hasDiscount: null,
-    })
-    setSearchQuery('')
-    router.push('/#catalogo', { scroll: false })
-  }
-
-  const handleAddToCart = (product: Product) => {
-    const stock = getTotalStock(product)
-    if (stock === 0) {
-      toast.error('Producto sin stock', { position: 'bottom-center', duration: 1500 })
-      return
-    }
-    addToCart(product, 1)
-    showAddedToast(product.name)
-  }
-
-  const formatPrice = (n: number) => n.toFixed(2)
-
-  const handleWhatsAppConsult = (product: Product) => {
-    const totalStock = getTotalStock(product)
-    const message =
-      totalStock === 0
-        ? 'Hola! Me interesa este producto 👇\n' +
-        `*${product.name}*\n` +
-        `💰 Precio: Bs ${formatPrice(product.price)}\n` +
-        '¿Cuándo habrá stock disponible? 🙏'
-        : 'Hola! Me interesa este producto 👇\n' +
-        `*${product.name}*\n` +
-        `💰 Precio: Bs ${formatPrice(product.price)}\n` +
-        '¿Me pueden dar más información? 🙏'
-    window.open(buildWhatsAppUrl(message), '_blank')
-  }
+  const handleAddToCart = (product: Product, size?: string, color?: string) => {
+    addToCart(product, size, color);
+    setAddedProductId(product.id);
+    setTimeout(() => setAddedProductId(null), 1500);
+  };
 
   return (
-    <section id="catalogo" className="py-20 md:py-28 bg-white">
-      <Container>
-        <motion.div
-          ref={ref}
-          variants={sectionVariants}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
-        >
-          {/* ── Encabezado ── */}
-          <motion.div
-            variants={headingVariants}
-            className="text-center mb-10 md:mb-14"
-          >
-            <span className="inline-flex items-center gap-2 bg-gray-100 text-gray-900 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase mb-4">
-              <ShoppingBag className="w-3.5 h-3.5" />
-              Catálogo
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-              Nuestros{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-gray-700">
-                Productos
-              </span>
-            </h2>
-            <p className="text-gray-500 text-base md:text-lg max-w-xl mx-auto">
-              Calidad y estilo para el hombre moderno
-            </p>
-            <div className="flex items-center justify-center gap-3 mt-6">
-              <span className="h-px w-10 bg-gradient-to-r from-transparent to-gray-300" />
-              <span className="w-1.5 h-1.5 rounded-full bg-gray-500" />
-              <span className="h-px w-10 bg-gradient-to-l from-transparent to-gray-300" />
-            </div>
-          </motion.div>
+    <div className="bg-[#fcfcfc] py-12 md:py-20 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+          {initialProducts.map((product) => {
+            const hasVariants = (product.sizes && product.sizes.length > 0 && product.sizes.some(s => !['Unitalla', 'Única', 'Unico'].includes(s))) || 
+                               (product.colors && product.colors.length > 0);
+            
+            const isAdded = addedProductId === product.id;
 
-          {/* ── Barra de Filtros ── */}
-          <motion.div variants={headingVariants} className="mb-8 md:mb-12">
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-4">
-              <button
-                onClick={() => { clearAllFilters(); setShowNew(true) }}
-                className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
-                  showNew
-                    ? 'bg-gray-900 text-white border border-gray-200 shadow-sm uppercase tracking-widest scale-105 rounded-md'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-800'
-                }`}
-              >
-                <Sparkles className="w-4 h-4" />
-                Nuevo
-              </button>
-              <button
-                onClick={() => { clearAllFilters(); setShowDiscount(true) }}
-                className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${
-                  showDiscount
-                    ? 'bg-gray-900 text-white border border-gray-200 shadow-sm uppercase tracking-widest scale-105 rounded-md'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-800'
-                }`}
-              >
-                <Percent className="w-4 h-4" />
-                Descuentos
-              </button>
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-4">
-              <button
-                onClick={() => setShowFilters(!showFilters)}
-                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all shadow-md ${
-                  showFilters ? 'bg-gray-800 text-white' : 'bg-gray-700 text-white hover:bg-gray-800'
-                }`}
-              >
-                <SlidersHorizontal className="w-4 h-4" />
-                Filtros
-                {activeFiltersCount > 0 && (
-                  <span className="bg-white text-gray-800 text-xs font-bold px-2 py-0.5 rounded-full">
-                    {activeFiltersCount}
-                  </span>
-                )}
-              </button>
-              {activeFiltersCount > 0 && (
-                <button
-                  onClick={clearAllFilters}
-                  className="inline-flex items-center gap-1 px-4 py-2 rounded-full text-sm font-medium text-red-600 hover:bg-red-50 transition-all border border-red-200"
-                  aria-label="Limpiar todos los filtros activos"
-                >
-                  <X className="w-4 h-4" />
-                  Limpiar filtros
-                </button>
-              )}
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-4">
-              <span className="text-sm font-semibold text-gray-700">
-                {filteredProducts.length} producto{filteredProducts.length !== 1 ? 's' : ''} encontrado{filteredProducts.length !== 1 ? 's' : ''}
-              </span>
-              <div className="flex items-center gap-2">
-                <label htmlFor="sort-order" className="text-sm text-gray-600 font-medium">Ordenar por:</label>
-                <select
-                  id="sort-order"
-                  value={sortOrder}
-                  onChange={(e) => {
-                    const params = new URLSearchParams(searchParams?.toString())
-                    params.set('sort', e.target.value)
-                    router.push(`${pathname}?${params.toString()}#catalogo`, { scroll: false })
-                  }}
-                  className="px-3 py-1.5 text-sm border-2 border-gray-200 rounded-lg focus:border-gray-500 focus:outline-none bg-white cursor-pointer"
-                >
-                  <option value="recent">Más recientes</option>
-                  <option value="price-asc">Menor precio</option>
-                  <option value="price-desc">Mayor precio</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Filtros activos visuales */}
-            {activeFiltersCount > 0 && (
-              <div className="px-4 mt-4">
-                <div className="flex flex-wrap gap-2 items-center">
-                  <span className="text-xs font-semibold text-gray-600">Filtros activos:</span>
-                  {searchQuery && (
-                    <span className="inline-flex items-center gap-1 bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">
-                      🔍 "{searchQuery}"
-                      <button onClick={() => { setSearchQuery(''); window.history.pushState(null, '', '/#catalogo') }} className="hover:text-blue-900" aria-label="Remover filtro de búsqueda">
-                        <X className="w-3 h-3" />
-                      </button>
-                    </span>
-                  )}
-                  {selectedCategories.map(cat => (
-                    <span key={cat} className="inline-flex items-center gap-1 bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-xs font-medium">
-                      {cat}
-                      <button onClick={() => setSelectedCategories(selectedCategories.filter(c => c !== cat))} className="hover:text-gray-900" aria-label={`Remover filtro ${cat}`}>
-                        <X className="w-3 h-3" />
-                      </button>
-                    </span>
-                  ))}
-                  {selectedBrands.map(brand => (
-                    <span key={brand} className="inline-flex items-center gap-1 bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-medium">
-                      {brand}
-                      <button onClick={() => setSelectedBrands(selectedBrands.filter(b => b !== brand))} className="hover:text-amber-900" aria-label={`Remover filtro ${brand}`}>
-                        <X className="w-3 h-3" />
-                      </button>
-                    </span>
-                  ))}
-                  {selectedColors.map(color => (
-                    <span key={color} className="inline-flex items-center gap-1 bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-xs font-medium">
-                      {color}
-                      <button onClick={() => setSelectedColors(selectedColors.filter(c => c !== color))} className="hover:text-pink-900" aria-label={`Remover filtro ${color}`}>
-                        <X className="w-3 h-3" />
-                      </button>
-                    </span>
-                  ))}
-                  {sidebarFilters.sizes.map(size => (
-                    <span key={size} className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
-                      Talla {size}
-                      <button onClick={() => setSidebarFilters({ ...sidebarFilters, sizes: sidebarFilters.sizes.filter(s => s !== size) })} className="hover:text-green-900" aria-label={`Remover filtro talla ${size}`}>
-                        <X className="w-3 h-3" />
-                      </button>
-                    </span>
-                  ))}
-                  {showNew && (
-                    <span className="inline-flex items-center gap-1 bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-medium">
-                      ✨ Nuevo
-                      <button onClick={() => setShowNew(false)} className="hover:text-amber-900" aria-label="Remover filtro Nuevo">
-                        <X className="w-3 h-3" />
-                      </button>
-                    </span>
-                  )}
-                  {showDiscount && (
-                    <span className="inline-flex items-center gap-1 bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-medium">
-                      % Descuentos
-                      <button onClick={() => setShowDiscount(false)} className="hover:text-red-900" aria-label="Remover filtro Descuentos">
-                        <X className="w-3 h-3" />
-                      </button>
-                    </span>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* Panel de filtros completo */}
-            <AnimatePresence>
-              {showFilters && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="overflow-hidden"
-                >
-                  <div className="mt-6 p-6 bg-gray-50 rounded-2xl border border-gray-200">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                      <div>
-                        <div className="flex items-center justify-between mb-3">
-                          <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-                            <Tag className="w-4 h-4 text-gray-600" />
-                            Categoría {selectedCategories.length > 0 && `(${selectedCategories.length})`}
-                          </label>
-                          {selectedCategories.length > 0 && (
-                            <button onClick={() => setSelectedCategories([])} className="text-xs text-red-600 hover:text-red-700 font-medium">Limpiar</button>
-                          )}
-                        </div>
-                        <div className="space-y-2">
-                          {categories.filter(c => c !== 'Todos').map((cat) => (
-                            <label key={cat} className="flex items-center gap-2 cursor-pointer group">
-                              <input
-                                type="checkbox"
-                                checked={selectedCategories.includes(cat)}
-                                onChange={(e) => {
-                                  const params = new URLSearchParams(searchParams?.toString())
-                                  if (e.target.checked) {
-                                    setSelectedCategories([...selectedCategories, cat])
-                                    params.set('filter', cat.toLowerCase())
-                                  } else {
-                                    setSelectedCategories(selectedCategories.filter(c => c !== cat))
-                                    params.delete('filter')
-                                  }
-                                  router.push(`${pathname}?${params.toString()}#catalogo`, { scroll: false })
-                                }}
-                                className="w-4 h-4 accent-primary-600 rounded"
-                              />
-                              <span className="text-sm group-hover:text-gray-900 transition-colors">{cat}</span>
-                            </label>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div>
-                        <div className="flex items-center justify-between mb-3">
-                          <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-                            <Building2 className="w-4 h-4 text-gray-600" />
-                            Marca {selectedBrands.length > 0 && `(${selectedBrands.length})`}
-                          </label>
-                          {selectedBrands.length > 0 && (
-                            <button onClick={() => setSelectedBrands([])} className="text-xs text-red-600 hover:text-red-700 font-medium">Limpiar</button>
-                          )}
-                        </div>
-                        <div className="space-y-2 max-h-48 overflow-y-auto">
-                          {brands.filter(b => b !== 'Todas').map((brand) => (
-                            <label key={brand} className="flex items-center gap-2 cursor-pointer group">
-                              <input
-                                type="checkbox"
-                                checked={selectedBrands.includes(brand)}
-                                onChange={(e) => {
-                                  if (e.target.checked) setSelectedBrands([...selectedBrands, brand])
-                                  else setSelectedBrands(selectedBrands.filter(b => b !== brand))
-                                }}
-                                className="w-4 h-4 accent-primary-600 rounded"
-                              />
-                              <span className="text-sm group-hover:text-gray-900 transition-colors">{brand}</span>
-                            </label>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div>
-                        <div className="flex items-center justify-between mb-3">
-                          <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-                            <Palette className="w-4 h-4 text-gray-600" />
-                            Color {selectedColors.length > 0 && `(${selectedColors.length})`}
-                          </label>
-                          {selectedColors.length > 0 && (
-                            <button onClick={() => setSelectedColors([])} className="text-xs text-red-600 hover:text-red-700 font-medium">Limpiar</button>
-                          )}
-                        </div>
-                        <div className="flex flex-wrap gap-3">
-                          {colors.filter(c => c !== 'Todos').map((color) => {
-                            const COLOR_MAP: Record<string, string> = {
-                              'Negro': '#111111', 'Blanco': '#FFFFFF', 'Gris': '#808080',
-                              'Gris oscuro': '#555555', 'Gris claro': '#D1D5DB', 'Azul': '#2563EB',
-                              'Azul marino': '#1e3a5f', 'Azul oscuro': '#1e40af', 'Azul cielo': '#38BDF8',
-                              'Celeste': '#87CEEB', 'Verde': '#16A34A', 'Verde militar': '#4B5320',
-                              'Verde menta': '#34D399', 'Rojo': '#DC2626', 'Vino': '#7f1d1d',
-                              'Rosado': '#EC4899', 'Rosa': '#F9A8D4', 'Beige': '#F5F0E8',
-                              'Café': '#78350F', 'Marrón': '#92400E', 'Amarillo': '#EAB308',
-                              'Mostaza': '#CA8A04', 'Naranja': '#EA580C', 'Morado': '#7C3AED',
-                              'Lila': '#A78BFA', 'Dorado': '#F59E0B', 'Plateado': '#9CA3AF',
-                            };
-                            const normalizedColor = color.charAt(0).toUpperCase() + color.slice(1).toLowerCase();
-                            const hex = COLOR_MAP[normalizedColor] || COLOR_MAP[color];
-                            const isSelected = selectedColors.includes(color);
-                            const isLight = hex === '#FFFFFF' || hex === '#F5F0E8' || hex === '#F9A8D4' || hex === '#D1D5DB';
-                            return (
-                              <button
-                                key={color}
-                                title={color}
-                                onClick={() => {
-                                  if (isSelected) setSelectedColors(selectedColors.filter(c => c !== color));
-                                  else setSelectedColors([...selectedColors, color]);
-                                }}
-                                className={`relative w-8 h-8 rounded-full transition-all duration-150 focus:outline-none flex items-center justify-center
-                                  ${isSelected ? 'ring-4 ring-gray-900 scale-110' : 'ring-1 ring-gray-300 hover:scale-110 hover:ring-gray-400'}
-                                  ${isLight ? 'border border-gray-300' : ''}`}
-                                style={hex ? { backgroundColor: hex } : {}}
-                                aria-label={color}
-                              >
-                                {!hex && (
-                                  <span className="absolute inset-0 rounded-full" style={{ background: 'conic-gradient(red, yellow, green, cyan, blue, magenta, red)', zIndex: 0 }} />
-                                )}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3">
-                          <Ruler className="w-4 h-4 text-gray-600" />
-                          Talla
-                        </label>
-                        <div className="flex flex-wrap gap-2">
-                          {sizes.map((size) => (
-                            <button
-                              key={size}
-                              onClick={() => {
-                                const newSizes = sidebarFilters.sizes.includes(size)
-                                  ? sidebarFilters.sizes.filter(s => s !== size)
-                                  : [...sidebarFilters.sizes, size]
-                                setSidebarFilters({ ...sidebarFilters, sizes: newSizes })
-                              }}
-                              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all min-w-[40px] ${
-                                sidebarFilters.sizes.includes(size) ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                              }`}
-                            >
-                              {size}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-3">
-                          <Ruler className="w-4 h-4 text-gray-600" />
-                          Disponibilidad
-                        </label>
-                        <div className="flex flex-wrap gap-2">
-                          <button onClick={() => setStockFilter('all')} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${stockFilter === 'all' ? 'bg-gray-900 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:border-gray-300'}`}>Todos</button>
-                          <button onClick={() => setStockFilter('inStock')} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${stockFilter === 'inStock' ? 'bg-green-500 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:border-green-300'}`}>En Stock</button>
-                          <button onClick={() => setStockFilter('lowStock')} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${stockFilter === 'lowStock' ? 'bg-amber-500 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:border-amber-300'}`}>Últimas unidades</button>
-                        </div>
-                      </div>
-                    </div>
+            return (
+              <div key={product.id} className="group relative bg-white rounded-lg p-2 transition-all hover:shadow-xl">
+                <Link href={`/producto/${product.id}`} className="block relative aspect-[4/5] overflow-hidden rounded-md mb-4 bg-gray-50">
+                  <Image
+                    src={product.thumbnail_url || product.image_url || '/placeholder.png'}
+                    alt={product.name}
+                    fill
+                    className="object-contain p-4 group-hover:scale-110 transition-transform duration-500"
+                  />
+                  
+                  {/* Overlay for Desktop */}
+                  <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/20 to-transparent flex flex-col gap-2 hidden md:flex">
+                    <Button 
+                      variant="primary" 
+                      onClick={(e) => handleQuickAdd(e, product)}
+                      className="w-full text-[10px] tracking-widest font-bold h-10"
+                    >
+                      {isAdded ? '✓ AGREGADO' : hasVariants ? 'VER OPCIONES' : 'COMPRA RÁPIDA'}
+                    </Button>
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
+                </Link>
 
-          {/* ── Grid de productos ── */}
-          <div>
-            {filteredProducts.length === 0 ? (
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col items-center justify-center py-20 px-4">
-                <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
-                  <ShoppingBag className="w-12 h-12 text-gray-400" />
+                <div className="px-2 pb-2">
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-[10px] font-bold text-lukess-gold uppercase tracking-widest">{product.brand}</span>
+                  </div>
+                  <h3 className="text-sm font-medium text-gray-900 line-clamp-1 mb-2">{product.name}</h3>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-sm font-bold text-gray-900">Bs {product.price.toFixed(2)}</span>
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">No se encontraron productos</h3>
-                <p className="text-gray-500 text-center mb-6 max-w-md">No hay productos que coincidan con los filtros seleccionados. Intenta ajustar tus criterios de búsqueda.</p>
-                <button onClick={clearAllFilters} className="inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 border border-gray-200 shadow-sm">
-                  <X className="w-4 h-4" />
-                  Limpiar todos los filtros
+
+                {/* Mobile Button - Static at bottom */}
+                <div className="md:hidden mt-2">
+                  <Button 
+                    variant={isAdded ? "success" : "primary"}
+                    fullWidth 
+                    onClick={(e) => handleQuickAdd(e, product)}
+                    className="text-[9px] tracking-widest font-bold h-10 py-0"
+                  >
+                    {isAdded ? '✓ AGREGADO' : hasVariants ? 'VER OPCIONES' : 'COMPRAR'}
+                  </Button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <QuickAddModal
+        isOpen={isQuickAddOpen}
+        onClose={() => setIsQuickAddOpen(false)}
+        product={selectedProduct!}
+        onAdd={handleAddToCart}
+      />
+    </div>
+  );
+}
+
+function QuickAddModal({
+  product,
+  isOpen,
+  onClose,
+  onAdd
+}: {
+  product: Product;
+  isOpen: boolean;
+  onClose: () => void;
+  onAdd: (product: Product, size?: string, color?: string) => void;
+}) {
+  if (!product) return null;
+
+  const [selectedSize, setSelectedSize] = useState<string>('');
+  const [selectedColor, setSelectedColor] = useState<string>('');
+
+  const validSizes = (product.sizes ?? []).filter(
+    (s: string) => s && s.trim() !== '' && !['Unitalla', 'Única', 'Unico'].includes(s)
+  );
+
+  useEffect(() => {
+    if (isOpen) {
+      if (validSizes.length === 1) setSelectedSize(validSizes[0]);
+      if (product.colors && product.colors.length === 1) setSelectedColor(product.colors[0]);
+    } else {
+      setSelectedSize('');
+      setSelectedColor('');
+    }
+  }, [isOpen, product.id, product.colors, validSizes.length]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const isAddDisabled = !!((validSizes.length > 0 && !selectedSize) || (product.colors && product.colors.length > 0 && !selectedColor));
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            className="relative w-full max-w-sm bg-white rounded-2xl overflow-hidden shadow-2xl"
+          >
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-6">
+                <div className="flex gap-4">
+                  <div className="relative w-16 h-20 bg-gray-50 rounded-lg overflow-hidden border border-gray-100">
+                    <Image
+                      src={product.thumbnail_url || product.image_url || '/placeholder.png'}
+                      alt={product.name}
+                      fill
+                      className="object-contain p-1"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-gray-900 leading-tight mb-1">{product.name}</h3>
+                    <p className="text-sm font-bold text-lukess-gold">Bs {product.price.toFixed(2)}</p>
+                  </div>
+                </div>
+                <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded-full transition-colors">
+                  <X className="w-5 h-5 text-gray-400" />
                 </button>
-              </motion.div>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 lg:gap-6">
-                {filteredProducts.slice(0, displayLimit).map((product, index) => {
-                  const stock = getTotalStock(product)
-                  const isOutOfStock = stock === 0
+              </div>
 
-                  const validSizes = (product.sizes ?? []).filter(
-                    (s: string) => s && s.trim() !== '' && !['Unitalla', 'Única', 'Unico'].includes(s)
-                  )
-                  const hasMultipleVariants = validSizes.length > 1 || (product.colors && product.colors.length > 1)
+              {validSizes.length > 0 && (
+                <div className="mb-6">
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Talla</p>
+                  <div className="grid grid-cols-4 gap-2">
+                    {validSizes.map((size) => (
+                      <button
+                        key={size}
+                        onClick={() => setSelectedSize(size)}
+                        className={`py-2 text-xs font-bold rounded-lg border transition-all ${
+                          selectedSize === size
+                            ? 'bg-gray-900 border-gray-900 text-white shadow-md'
+                            : 'bg-white border-gray-100 text-gray-400 hover:border-gray-900 hover:text-gray-900'
+                        }`}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
-                  const hasSecondaryImage = !!(
-                    product.images &&
-                    product.images.length > 1 &&
-                    product.images[1] &&
-                    product.images[1].trim() !== '' &&
-                    product.images[1] !== (product.thumbnail_url || product.image_url)
-                  )
-
-                  const handleQuickAdd = (e: React.MouseEvent) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    if (isOutOfStock) return;
-
-                    if (hasMultipleVariants) {
-                      router.push(`/producto/${product.id}`);
-                      return;
-                    }
-
-                    // Select first available size if any, otherwise undefined
-                    const sizeToAdd = validSizes.length > 0 ? validSizes[0] : undefined;
-                    const colorToAdd = product.colors && product.colors.length > 0 ? product.colors[0] : undefined;
-
-                    addToCart(product, 1, sizeToAdd, colorToAdd);
-                    setAddingId(product.id);
-                    setTimeout(() => setAddingId(null), 1500);
-                  };
-
-                  return (
-                    <div key={product.id} className="group bg-white border border-gray-100 overflow-hidden transition-all duration-200 hover:shadow-sm cursor-pointer relative">
-                      <Link href={`/producto/${product.id}`} className="block">
-                        {/* Imagen */}
-                        <div className="relative aspect-[4/5] overflow-hidden bg-white p-3">
-                          {/* Imagen Principal */}
-                          <Image
-                            src={product.thumbnail_url || product.image_url || '/placeholder.png'}
-                            alt={`${product.name}${product.brand ? ` - ${product.brand}` : ''}${product.color ? ` ${product.color}` : ''}${product.sizes?.[0] ? ` talla ${product.sizes[0]}` : ''}`}
-                            fill
-                            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                            className={`object-contain object-center transition-all duration-300 group-hover:scale-105 ${hasSecondaryImage ? 'hover-image-primary' : ''}`}
-                            loading={index < 4 ? 'eager' : 'lazy'}
-                            priority={index === 0}
-                            quality={85}
-                          />
-
-                          {/* Imagen Secundaria (Hover - solo si existe y es distinta) */}
-                          {hasSecondaryImage && (
-                            <Image
-                              src={product.images![1]}
-                              alt={`${product.name} - Vista secundaria`}
-                              fill
-                              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                              className="object-contain object-center transition-opacity duration-300 opacity-0 hover-image-secondary"
-                              loading="lazy"
-                              quality={85}
-                            />
-                          )}
-
-                          {/* Quick Add Button */}
-                          <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300 pointer-events-none md:block hidden z-20">
-                            <Button
-                              onClick={handleQuickAdd}
-                              variant={hasMultipleVariants ? "secondary" : "primary"}
-                              size="sm"
-                              fullWidth
-                              disabled={isOutOfStock}
-                              className="pointer-events-auto h-9 text-[10px] shadow-lg backdrop-blur-sm bg-white/90 hover:bg-white text-gray-900 border-gray-200"
-                            >
-                              {isOutOfStock
-                                ? 'SIN STOCK'
-                                : addingId === product.id
-                                  ? '✓ AGREGADO'
-                                  : hasMultipleVariants
-                                    ? 'VER OPCIONES'
-                                    : '+ AGREGAR'
-                              }
-                            </Button>
-                          </div>
-
-                          {/* Quick Add Mobile (Always visible) */}
-                          <div className="absolute bottom-0 left-0 right-0 p-2 md:hidden block z-20 pointer-events-none">
-                            <Button
-                              onClick={handleQuickAdd}
-                              variant={hasMultipleVariants ? "secondary" : "primary"}
-                              size="sm"
-                              fullWidth
-                              disabled={isOutOfStock}
-                              className="pointer-events-auto h-8 text-[9px] shadow-md bg-white/95 text-gray-900 border-gray-200"
-                            >
-                              {isOutOfStock
-                                ? 'SIN STOCK'
-                                : addingId === product.id
-                                  ? '✓'
-                                  : hasMultipleVariants
-                                    ? 'VER'
-                                    : '+'
-                              }
-                            </Button>
-                          </div>
-                          <ProductBadges
-                            isNew={product.is_new}
-                            isNewUntil={product.is_new_until}
-                            discount={getDiscount(product) || undefined}
-                            discountExpiresAt={product.discount_expires_at}
-                            isBestSeller={product.is_best_seller}
-                            collection={product.collection}
-                          />
-                          <WishlistButton productId={product.id} productName={product.name} />
-                          {isOutOfStock && (
-                            <div className="absolute inset-0 bg-white/60 flex items-center justify-center z-10 pointer-events-none">
-                              <span className="text-gray-500 text-xs font-bold uppercase tracking-widest">Agotado</span>
-                            </div>
-                          )}
-                        </div>
-                        {/* Info */}
-                        <div className="px-3 pt-3 pb-2">
-                          {product.brand && (
-                            <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wider mb-0.5">{product.brand}</p>
-                          )}
-                          <h3 className="text-sm text-gray-700 font-normal leading-snug line-clamp-1 mb-1.5 group-hover:text-black transition-colors">{product.name}</h3>
-                          <div className="flex items-baseline gap-2">
-                            {hasDiscount(product) ? (
-                              <>
-                                <span className="text-sm font-bold text-red-600">Bs {getPriceWithDiscount(product).toFixed(2)}</span>
-                                <span className="text-xs text-gray-400 line-through">Bs {product.price.toFixed(2)}</span>
-                              </>
-                            ) : (
-                              <span className="text-sm font-bold text-gray-900">Bs {product.price.toFixed(2)}</span>
-                            )}
-                          </div>
-                        </div>
-                      </Link>
-                      {/* CTA buttons */}
-                      <div className="px-3 pb-3 flex gap-2">
-                        <Link
-                          href={`/producto/${product.id}`}
-                          onClick={(e) => e.stopPropagation()}
-                          className={`flex-1 flex items-center justify-center gap-1.5 py-2 text-xs font-semibold transition-all ${
-                            isOutOfStock ? 'bg-gray-100 text-gray-400 pointer-events-none' : 'bg-gray-900 hover:bg-black text-white'
+              {product.colors && product.colors.length > 0 && (
+                <div className="mb-8">
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Color: <span className="text-gray-900">{selectedColor}</span></p>
+                  <div className="flex flex-wrap gap-3">
+                    {product.colors.map((color) => {
+                      const isSelected = selectedColor === color;
+                      return (
+                        <button
+                          key={color}
+                          onClick={() => setSelectedColor(color)}
+                          className={`group relative w-8 h-8 rounded-full border-2 p-0.5 transition-all ${
+                            isSelected ? 'border-lukess-gold scale-110' : 'border-transparent hover:border-gray-200'
                           }`}
                         >
-                          {isOutOfStock ? 'Agotado' : 'Ver detalles'}
-                        </Link>
-                        <button
-                          onClick={(e) => { e.stopPropagation(); handleWhatsAppConsult(product) }}
-                          className="px-3 py-2 bg-whatsapp hover:bg-whatsapp-dark text-white transition-all"
-                          aria-label={`Consultar ${product.name} por WhatsApp`}
-                        >
-                          <MessageCircle className="w-3.5 h-3.5" />
+                          <div className="w-full h-full rounded-full border border-black/5" style={{ backgroundColor: color.toLowerCase() }} />
                         </button>
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            )}
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
 
-            {filteredProducts.length > 0 && filteredProducts.length > displayLimit && (
-              <div className="text-center mt-8">
-                <button
-                  onClick={() => setDisplayLimit(prev => prev + 12)}
-                  className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-900 text-white px-8 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 border border-gray-200 shadow-sm"
-                >
-                  <Plus className="w-4 h-4" />
-                  Cargar más productos ({filteredProducts.length - displayLimit} restantes)
-                </button>
-              </div>
-            )}
-
-            <motion.div variants={headingVariants} className="text-center mt-12 md:mt-16">
-              <p className="text-gray-400 text-sm mb-4">¿No encontraste lo que buscas? Tenemos mucho más en tienda</p>
-              <a
-                href={buildWhatsAppUrl("Hola Lukess Home, quiero consultar sobre otros productos")}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 border border-gray-200 shadow-sm shadow-secondary-800/25"
+              <Button
+                onClick={() => {
+                  onAdd(product, selectedSize || undefined, selectedColor || undefined);
+                  onClose();
+                }}
+                disabled={isAddDisabled}
+                fullWidth
+                className="py-6 text-xs font-bold tracking-widest uppercase"
               >
-                <Plus className="w-4 h-4" />
-                Pregunta por más productos
-              </a>
-            </motion.div>
-          </div>
-        </motion.div>
-      </Container>
-    </section>
-  )
+                Agregar al Carrito
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
 }
