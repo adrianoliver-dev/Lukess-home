@@ -58,6 +58,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         reserved_qty,
         location_id,
         size,
+        color,
         locations(name)
       )
     `
@@ -78,7 +79,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       `
       *,
       categories(name),
-      inventory(quantity, reserved_qty)
+      inventory(quantity, reserved_qty, size, color)
     `
     )
     .eq('category_id', product.category_id)
@@ -89,12 +90,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   const inStock = product.inventory && product.inventory.some((i: any) => i.quantity - (i.reserved_qty || 0) > 0)
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://lukess-home.vercel.app'
+  
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: product.name,
     image: product.image_url ? [product.image_url] : [],
-    description: `Compra Bs {product.name} en Lukess Home. Bs {product.description || ''}`,
+    description: product.description || `Compra ${product.name} en Lukess Home.`,
     brand: {
       '@type': 'Brand',
       name: 'Lukess Home'
@@ -104,7 +107,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       price: product.price,
       priceCurrency: 'BOB',
       availability: inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-      url: `https://lukesshome.com/producto/Bs {product.id}`
+      url: `${baseUrl}/producto/${product.id}`
     }
   }
 

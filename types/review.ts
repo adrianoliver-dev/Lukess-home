@@ -8,3 +8,4 @@ export interface Review {
   verified_purchase: boolean;
   created_at: string;
 }
+

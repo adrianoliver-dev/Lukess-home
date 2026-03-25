@@ -35,7 +35,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         if (insertError) {
             if (insertError.code === '23505') {
                 // Already subscribed — not an error for the user, just skip
-                console.log(`[api/subscribe] Skipped: ${email} is already subscribed (23505).`)
+                // Already subscribed — not an error for the user, just skip
+
                 return NextResponse.json({ error: 'already_subscribed' }, { status: 409, headers: CORS_HEADERS })
             }
             console.error('[api/subscribe] Supabase insert error:', insertError)
@@ -45,7 +46,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         // Generate unique welcome discount code
         const discountCode = await generateWelcomeDiscount(email)
 
-        console.log(`[api/subscribe] Success: New subscriber ${email} joined. Generated discount: ${discountCode}`)
+
 
         // Fire welcome email — wrapped in its own try/catch so email failures never crash the response
         if (discountCode) {

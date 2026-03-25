@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import type { Banner } from "@/lib/banners";
+import Image from "next/image";
 
 interface HeroBannerCarouselProps {
     banners: Banner[];
@@ -51,29 +52,21 @@ export default function HeroBannerCarousel({
             >
                 {banners.map((banner, i) => {
                     const imageContent = (
-                        <picture className="w-full h-full">
-                            {/* Mobile version */}
-                            <source
-                                media="(max-width: 768px)"
-                                srcSet={
-                                    banner.mobile_image_url ??
-                                    banner.desktop_image_url ??
-                                    banner.image_url
+                        <div className="relative w-full h-full">
+                            <Image
+                                src={
+                                    i === 0 && banner.mobile_image_url
+                                        ? banner.mobile_image_url
+                                        : (banner.desktop_image_url ?? banner.image_url)
                                 }
-                            />
-                            {/* Desktop version */}
-                            <source
-                                media="(min-width: 769px)"
-                                srcSet={banner.desktop_image_url ?? banner.image_url}
-                            />
-                            {/* Fallback img */}
-                            <img
-                                src={banner.desktop_image_url ?? banner.image_url}
                                 alt={banner.title ?? "Banner promocional"}
-                                className="w-full h-full object-cover"
-                                loading={i === 0 ? "eager" : "lazy"}
+                                fill
+                                priority={i === 0}
+                                className="object-cover"
+                                sizes="100vw"
+                                quality={90}
                             />
-                        </picture>
+                        </div>
                     );
 
                     const hasLink =

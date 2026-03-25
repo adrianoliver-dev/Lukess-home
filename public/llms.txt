@@ -1,0 +1,38 @@
+# Lukess Home
+
+> E-commerce de ropa masculina premium en Santa Cruz de la Sierra, Bolivia.
+> Básicos de lujo para el hombre moderno: camisas, polos, pantalones, accesorios.
+
+## Información General
+
+- URL: https://lukess-home.vercel.app
+- Email: lukess@adrianoliver.dev
+- Teléfono: +591 75516136
+- Ubicación: Mercado Mutualista, Puestos 1, 2 y 3 — Santa Cruz de la Sierra, Bolivia
+- Horario: Lun-Sáb 8:00–22:00 | Dom 9:00–21:00
+
+## Productos
+
+Vendemos ropa masculina premium importada. Categorías disponibles:
+- Poleras y camisas básicas
+- Camisas formales y Oxford
+- Pantalones y chinos
+- Abrigos y chaquetas
+- Trajes clásicos
+- Accesorios y calzado
+
+## Métodos de Pago
+
+- Pago por QR (transferencia bancaria)
+- Tarjeta de crédito/débito (Stripe)
+- Efectivo en tienda (pickup)
+
+## Envíos
+
+- Envío gratuito en Santa Cruz para compras mayores a Bs 400
+- Retiro gratuito en tienda disponible
+
+## Blog
+
+Artículos sobre moda masculina, guías de estilo y consejos de cuidado de prendas
+disponibles en /blog.

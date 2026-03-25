@@ -4,6 +4,49 @@
 
 ---
 
+- **Block Number:** B14
+- **Name:** Quick Add Fix & Sticky Mobile Bar
+- **Status:** ✅ DONE
+- **Started:** 2026-03-24
+- **Completed:** 2026-03-24
+- **Changes:**
+  - **Robust Fix**: Solved click interference by using layered z-index (`z-10` links, `z-30/40` buttons) and explicit `preventDefault` on Quick Add.
+  - **Hover Fix**: Migrated image swap to Tailwind `group-hover` classes for 100% reliability in the new DOM structure.
+  - **Mobile UI**: Redesigned mobile Quick Add as a Floating Action Button (FAB) to avoid "white rectangle" confusion and improve premium feel.
+  - **Feature**: Implemented sticky mobile "Add to Cart" bar in `ProductDetail.tsx`.
+
+---
+
+- **Block Number:** B15
+- **Name:** Quick Add Select Modal & Product Reviews System
+- **Status:** ✅ DONE (2026-03-24)
+- **Started:** 2026-03-24
+- **Completed:** 2026-03-24
+- **Changes:**
+  - **Quick Add Modal**: Implemented a lightweight mini-modal in `CatalogoClient.tsx` for products with variants. Allows size/color selection without leaving the catalog.
+  - **Reviews API**: Created `app/api/reviews/route.ts` with Zod validation.
+  - **Reviews UI**: Added comprehensive Reviews section in `ProductDetail.tsx` with rating summary and distribution bars.
+  - **Files Modified**: 
+    - `components/home/CatalogoClient.tsx`
+    - `components/producto/ProductDetail.tsx`
+    - `app/api/reviews/route.ts`
+    - `types/review.ts`
+    - `supabase/migrations/reviews.sql`
+  - **DB Changes**: Applied `public.reviews` table with RLS to project `lrcggpdgrqltqbxqnjgh`.
+- **Block Number:** B15-FIX
+- **Name:** Build & Inventory Stock Fixes
+- **Status:** ✅ DONE (2026-03-24)
+- **Started:** 2026-03-24
+- **Completed:** 2026-03-24
+- **Changes:**
+  - **Build Fix**: Resolved Vercel build failure by correcting `Button` named imports to default imports in `CatalogoClient.tsx` and `ProductDetail.tsx`.
+  - **Stock Fix**: Added missing `size` and `color` columns to Supabase inventory queries in `app/page.tsx` and `app/producto/[id]/page.tsx`.
+  - **Verification**: Local build succeeded and browser verification confirmed size selection works for variant products (e.g. Pantalón Chino).
+  - **Next Block**: B16 — Checkout Enhancements & Order Tracking.
+
+---
+
+## LAST COMPLETED BLOCK
 - **Block Number:** B13
 - **Name:** Hover Fix & Quick Add to Cart
 - **Status:** ✅ DONE
@@ -129,10 +172,9 @@
 ---
 
 ## NEXT BLOCK
-- **Block:** TBD
-- **Name:** TBD
-- **Dependencies:** None
-- **Scope:** Address open issues or proceed to next feature.
+- **Block:** B16
+- **Name:** Checkout Enhancements & Order Tracking
+- **Scope:** Enhance the post-purchase experience and streamline checkout further.
 
 ---
 

@@ -5,8 +5,8 @@ export default function robots(): MetadataRoute.Robots {
         rules: {
             userAgent: '*',
             allow: '/',
-            disallow: '/api/',
+            disallow: ['/api/', '/auth/', '/mis-pedidos/'],
         },
-        sitemap: 'https://lukess-home.vercel.app/sitemap.xml',
+        sitemap: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://lukess-home.vercel.app'}/sitemap.xml`,
     }
 }

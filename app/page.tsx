@@ -3,12 +3,23 @@ import Container from "@/components/ui/Container";
 import HeroBanner from "@/components/landing/HeroBanner";
 import TrustBanner from "@/components/landing/TrustBanner";
 
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+
+const UbicacionSection = dynamic(() => import("@/components/home/UbicacionSection"), { 
+  loading: () => <div className="h-96 w-full animate-pulse bg-gray-50/50" />,
+});
+const CTAFinalSection = dynamic(() => import("@/components/home/CTAFinalSection"), { 
+  loading: () => <div className="h-64 w-full animate-pulse bg-gray-50/50" />,
+});
+const NewsletterPopup = dynamic(() => import("@/components/marketing/NewsletterPopup").then((mod) => mod.NewsletterPopup), { 
+  loading: () => <div className="h-64 w-full animate-pulse bg-gray-50/50" />
+});
+
 import { CatalogoClient } from "@/components/home/CatalogoClient";
-import UbicacionSection from "@/components/home/UbicacionSection";
-import CTAFinalSection from "@/components/home/CTAFinalSection";
-import { NewsletterPopup } from "@/components/marketing/NewsletterPopup";
 import { getDynamicFilters } from "@/app/actions/filters";
 import { getActiveCategories } from "@/app/actions/categories";
+import { HomeClientWrapper } from "@/components/home/HomeClientWrapper";
 
 export default async function Home(
   props: {
@@ -36,6 +47,8 @@ export default async function Home(
             quantity,
             reserved_qty,
             location_id,
+            size,
+            color,
             locations(name)
           )
         `)
@@ -81,20 +94,60 @@ export default async function Home(
     console.error('Error fetching categories or filters:', err)
   }
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://lukess-home.vercel.app'
+
+  const localBusinessLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ClothingStore',
+    name: 'Lukess Home',
+    description: 'Ropa masculina premium. Básicos de lujo para el hombre moderno.',
+    url: baseUrl,
+    telephone: '+59175516136',
+    email: 'lukess@adrianoliver.dev',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Mercado Mutualista, Puestos 1, 2 y 3',
+      addressLocality: 'Santa Cruz de la Sierra',
+      addressCountry: 'BO'
+    },
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        opens: '08:00',
+        closes: '22:00'
+      },
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: 'Sunday',
+        opens: '09:00',
+        closes: '21:00'
+      }
+    ]
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessLd) }}
+      />
       <HeroBanner />
       <TrustBanner />
 
-      <CatalogoClient
-        key={categoryParam || 'all'}
-        initialProducts={products}
-        initialFilters={dynamicFilters}
-        categories={activeCategories}
-        selectedCategory={categoryParam || null}
-      />
-      <UbicacionSection />
-      <CTAFinalSection />
+      <Suspense fallback={<div className="h-96 w-full animate-pulse bg-gray-50/50" />}>
+        <CatalogoClient
+          key={categoryParam || 'all'}
+          initialProducts={products}
+          initialFilters={dynamicFilters}
+          categories={activeCategories}
+          selectedCategory={categoryParam || null}
+        />
+      </Suspense>
+      <HomeClientWrapper>
+        <UbicacionSection />
+        <CTAFinalSection />
+      </HomeClientWrapper>
 
       {/* Popup newsletter */}
       <NewsletterPopup />

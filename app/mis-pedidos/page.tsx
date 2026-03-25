@@ -167,7 +167,7 @@ function formatDate(dateString: string) {
 }
 
 function OrderCard({ order }: { order: Order }) {
-  console.log('[OrderCard] Rendering order:', order.id, 'items:', order.order_items?.length)
+
   const { addToCart } = useCart()
   const [isReordering, setIsReordering] = useState(false)
   const orderNumber = order.id.slice(0, 8).toUpperCase()

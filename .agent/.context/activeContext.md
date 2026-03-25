@@ -12,17 +12,22 @@ All development blocks completed. Awaiting client data validation (Aldrin) befor
 ---
 
 ## CURRENT BLOCK
-- **Block Number:** 17-N
-- **Block Name:** Final QA & Notification Preferences Sync
+- **Block Number:** B11.A.4
+- **Block Name:** Performance Fixes & SEO Complete
 - **Status:** ✅ DONE
-- **Completed:** 2026-03-07
+- **Completed:** 2026-03-25
 - **Commit:** `beb2e96` (Landing Build Fix) / `95a396d` (Landing) / `75a2ec0` (Inventory)
 
 ### Files Changed
-- `components/cart/CheckoutModal.tsx` — Prevented double submit on primary checkout button utilizing `doubleSubmitRef.current` synchronously.
-- `app/api/checkout/route.ts` — Awaited the initial WhatsApp API request to prevent Vercel promise leak and ensured `pedido_recibido` gets sent correctly.
-- `app/(dashboard)/pedidos/actions.ts` (Inventory) — Added `notify_email` condition to inventory email triggers to respect user checkout preferences.
-- `tsconfig.json` & `.gitignore` — Moved loose `*.ts` testing scripts to `.scripts/` folder and excluded them from Next.js compilation to fix Vercel build error (Duplicate function implementation).
+- `components/home/HeroBannerCarousel.tsx` — Refactored to use Next.js `<Image>` with correct `priority` logic for the first slide to improve LCP.
+- `app/layout.tsx` — Deferred GTM/GA4 using `next/script` with `strategy="lazyOnload"`.
+- `components/analytics/MicrosoftClarity.tsx` — Refactored to use `next/script` with `strategy="lazyOnload"`.
+- `app/page.tsx` & `components/home/HomeClientWrapper.tsx` — Implemented `IntersectionObserver` for Google Maps lazy loading (saving ~435KB on initial load) and added `LocalBusiness` JSON-LD.
+- `package.json` — Updated `browserslist` target for modern browsers.
+- `app/producto/[id]/page.tsx` — Refined `Product` JSON-LD schema.
+- `public/llms.txt` — [NEW] Created AI search engine documentation.
+- `app/sitemap.ts` — Updated with static routes and dynamic blog post integration.
+- `app/robots.ts` — Secured `/auth` and `/mis-pedidos` paths.
 
 ### DB Changes
 - None required.

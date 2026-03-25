@@ -54,7 +54,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }
 
   const addToCart = (product: Product, quantity: number, size?: string, color?: string) => {
-    const itemId = `Bs {product.id}-${size || 'nosize'}-${color || 'nocolor'}`
+    const itemId = `${product.id}-${size || 'nosize'}-${color || 'nocolor'}`
     const existingItem = cart.find(item => item.id === itemId)
     const currentQtyInCart = existingItem?.quantity ?? 0
     const availableStock = getAvailableStock(product, size)

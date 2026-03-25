@@ -1,4 +1,3 @@
--- Create reviews table
 CREATE TABLE IF NOT EXISTS public.reviews (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   product_id UUID NOT NULL REFERENCES public.products(id) ON DELETE CASCADE,
@@ -28,3 +27,7 @@ CREATE POLICY "Allow authenticated users to insert reviews"
 CREATE POLICY "Allow users to update their own reviews"
   ON public.reviews FOR UPDATE
   USING (auth.uid() = user_id);
+
+-- Index for fast product lookups
+CREATE INDEX IF NOT EXISTS reviews_product_id_idx ON public.reviews(product_id);
+

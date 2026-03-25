@@ -1,72 +1,81 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-import { z } from 'zod';
+import { NextRequest, NextResponse } from 'next/server'
+import { createClient } from '@/lib/supabase/server'
+import { z } from 'zod'
 
 const reviewSchema = z.object({
   product_id: z.string().uuid(),
-  rating: z.number().min(1).max(5),
-  comment: z.string().max(500).optional(),
-});
+  rating: z.number().int().min(1).max(5),
+  reviewer_name: z.string().min(1).max(50),
+  comment: z.string().max(500).optional().nullable(),
+})
 
 export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const productId = searchParams.get('productId');
+  try {
+    const { searchParams } = new URL(req.url)
+    const productId = searchParams.get('product_id') || searchParams.get('productId')
 
-  if (!productId) {
-    return NextResponse.json({ error: 'Product ID is required' }, { status: 400 });
+    if (!productId) {
+      return NextResponse.json({ error: 'product_id is required' }, { status: 400 })
+    }
+
+    const supabase = await createClient()
+
+    const { data: reviews, error } = await supabase
+      .from('reviews')
+      .select('*')
+      .eq('product_id', productId)
+      .order('created_at', { ascending: false })
+
+    if (error) throw error
+
+    const totalCount = reviews.length
+    const averageRating = totalCount > 0
+      ? reviews.reduce((sum, r) => sum + r.rating, 0) / totalCount
+      : 0
+
+    return NextResponse.json({
+      reviews,
+      averageRating: parseFloat(averageRating.toFixed(1)),
+      totalCount
+    })
+  } catch (error) {
+    console.error('[API Reviews GET] Error:', error)
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
-
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from('reviews')
-    .select('*')
-    .eq('product_id', productId)
-    .order('created_at', { ascending: false });
-
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
-
-  return NextResponse.json(data);
 }
 
 export async function POST(req: NextRequest) {
-  const supabase = await createClient();
-  
-  // Check auth
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
   try {
-    const body = await req.json();
-    const validatedData = reviewSchema.parse(body);
+    const body = await req.json()
+    const validated = reviewSchema.safeParse(body)
 
-    const { data, error } = await supabase
+    if (!validated.success) {
+      return NextResponse.json({ error: validated.error.flatten() }, { status: 400 })
+    }
+
+    const supabase = await createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+
+    const { product_id, rating, reviewer_name, comment } = validated.data
+
+    const { data: review, error } = await supabase
       .from('reviews')
-      .insert([
-        {
-          product_id: validatedData.product_id,
-          user_id: user.id,
-          reviewer_name: user.user_metadata?.full_name || user.email?.split('@')[0] || 'Usuario',
-          rating: validatedData.rating,
-          comment: validatedData.comment,
-          verified_purchase: false, // In a real app, check order history
-        },
-      ])
+      .insert({
+        product_id,
+        user_id: session?.user?.id || null,
+        reviewer_name: session?.user?.user_metadata?.full_name || reviewer_name,
+        rating,
+        comment,
+        verified_purchase: false, // Could be determined by checking orders in a real scenario
+      })
       .select()
-      .single();
+      .single()
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    if (error) throw error
 
-    return NextResponse.json(data);
-  } catch (err) {
-    if (err instanceof z.ZodError) {
-      return NextResponse.json({ error: err.errors }, { status: 400 });
-    }
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ success: true, review })
+  } catch (error) {
+    console.error('[API Reviews POST] Error:', error)
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }

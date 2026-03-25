@@ -9,9 +9,14 @@ import { getActiveCategories } from "@/app/actions/categories";
 import Container from "@/components/ui/Container";
 import { CartButton } from "@/components/cart/CartButton";
 import { CartDrawer } from "@/components/cart/CartDrawer";
-import { CheckoutModal } from "@/components/cart/CheckoutModal";
+import dynamic from "next/dynamic";
 import { WishlistIcon } from "@/components/wishlist/WishlistIcon";
 import { AuthModal } from "@/components/auth/AuthModal";
+
+const CheckoutModal = dynamic(
+  () => import("@/components/cart/CheckoutModal").then((mod) => mod.CheckoutModal),
+  { ssr: false }
+);
 import { useCart } from "@/lib/context/CartContext";
 import { useAuth } from "@/lib/context/AuthContext";
 
